@@ -1,0 +1,50 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>檢舉列表資料 - listOneRptdlist.html</title>
+
+<head th:insert="~{/back-end/rptdlist/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>檢舉列表資料 - listOneEmp.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/rptdlist/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneRptdlist-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		
+		<span>檢舉編號</span><span th:text="${rptdlistVO.rptdNum}"></span><br/>
+		<span>訂單編號</span><span th:text="${rptdlistVO.rptdOrdernum}"></span><br/>
+		<span>檢舉日期</span><span th:text="${rptdlistVO.rptdDate}"></span><br/>
+		<span>檢舉標題</span><span th:text="${rptdlistVO.rptdTitle}"></span><br/>
+		<span>檢舉內容</span><span th:text="${rptdlistVO.rptdContent}"></span><br/>
+		<span>處理狀態</span><span th:text="${rptdlistVO.rptdStat}"></span><br/>
+		<span>檢舉存在狀態</span><span th:text="${rptdlistVO.rptdIsValid}"></span><br/>
+		
+	</div>
+
+
+</body>
+</html>

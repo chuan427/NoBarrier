@@ -1,0 +1,46 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>產業類別資料 - listOneIndustry.html</title>
+
+<head th:insert="~{/back-end/industry/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>產業類別資料 - listOneIndustry.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/industry/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneIndustry-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		<span>產業編號:</span><span th:text="${industryVO.industryNum}"></span><br/>
+		<span>產業名稱:</span><span th:text="${industryVO.industryName}"></span><br/>
+		<span>產業描述:</span><span th:text="${industryVO.industryDes}"></span><br/>
+		<span>產業狀態:</span><span th:text="${industryVO.industryIsValid}"></span><br/>
+		
+	</div>
+
+
+</body>
+</html>

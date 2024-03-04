@@ -1,0 +1,54 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>員工資料 - listOneEmp.html</title>
+
+<head th:insert="~{/back-end/emp/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>員工個人資料 - listOneEmp.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/emp/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneQuo-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		
+		<span>報價單編號</span><span th:text="${quoVO.quoNum}"></span><br/>
+		<span>報價日期</span><span th:text="${quoVO.quoDate}"></span><br/>
+		<span>報價品項名稱</span><span th:text="${quoVO.quoProdname}"></span><br/>
+		<span>報價品項單位</span><span th:text="${quoVO.quoUnitname}"></span><br/>
+		<span>商品數量</span><span th:text="${quoVO.quoProdqty}"></span><br/>
+		<span>品項單價</span><span th:text="${quoVO.quoUnitprice}"></span><br/>
+		<span>總金額</span><span th:text="${quoVO.quoTotalprice}"></span><br/>
+		<span>方案詳情</span><span th:text="${quoVO.quoInfo}"></span><br/>
+		<span>需求編號</span><span th:text="${quoVO.reqOrderVO.reqNum}"></span><br/>
+		<span>賣家會員編號</span><span th:text="${quoVO.userVO.userId}"></span><br/>
+		<span>報價單存在狀態</span><span th:text="${quoVO.quoIsValid}"></span><br/>
+		
+	</div>
+
+
+</body>
+</html>

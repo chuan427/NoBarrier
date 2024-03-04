@@ -1,0 +1,121 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>報價單資料管理 - select_page.html</title>
+
+<head th:insert="~{/back-end/rptdlist/included-fragment}"></head> <!-- 使用included-fragment.html網頁的全部 -->
+<style type="text/css">
+
+	button {
+		padding: 5px;
+	}
+	form {
+		display: table;
+	}
+	form div {
+		display: table-row;
+	}
+	label, input, span, select {
+		display: table-cell;
+		margin: 2px;
+		text-align: left;		
+	}
+	input[type=text], input[type=password], select, textarea {
+		width: 200px;
+		margin: 2px;
+	}
+	form div div {
+		display: table-cell;
+	}
+	.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+	div.a {
+        display: inline-block;
+        width: 50%;
+        height: auto;
+        padding: 5px;
+        border: 0px solid blue;    
+        background-color: white; 
+    }
+    div.b {
+        display: inline-block;
+        width: 45%;
+        height: auto;
+        padding: 5px;
+        border: 1px solid blue;    
+        background-color: white;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>檢舉列表管理 - select_page.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/back1.gif}">回index.html</a></h3></div>
+</nav>
+
+	<h4><span>檢舉列表查詢:</span></h4>
+	<!-- 錯誤表列 -->
+	<div class="errorblock" th:utext="${errorMessage}">${errorMessage}</div><br>
+	<div class="a">
+	  <ul>
+		<li><h5><a href='listAllRptdlist'>List</a> all ReportedLists. <br><br></h5></li>
+
+		<li>
+			<form method="post" th:action="@{getOne_For_Display}">
+				輸入檢舉列表編號:
+				<input type="text" name="rptdNum" th:value="${param.rptdNum}" > 
+				<input type="submit" value="送出"> (輸入如1,2,3)
+			</form><br>
+		</li>
+
+		
+		
+		
+		<li><form method="post" th:action="@{getOne_For_Display}">
+				選擇檢舉列表編號:
+				<select name="rptdNum">
+				     <option th:each="rptdlistVO : ${rptdlistListData}" th:value="${rptdlistVO.rptdNum}" th:text="${rptdlistVO.rptdNum}" />
+			    </select>
+				<input type="submit" value="送出">
+			</form><br>
+		</li>
+
+      </ul>
+    
+
+	
+	
+      <h4><span>檢舉列表管理</span></h4>
+	  <ul>
+		  <li><h5><a href='addRptdlist'>Add</a> a new ReportedList.</h5></li>
+	  </ul>
+	</div>
+    
+    <!-- 旗標getOne_For_Display見EmpnoController.java的第58行 -->
+    <div class="b" th:if="${getOne_For_Display}">
+        <!--使用listOneEmp.html網頁的listOneEmp-div片段--> <!-- 見listOneEmp.html的第35行的th:fragment="listOneEmp-div" --> <!-- 使用th:replace也可 -->
+        <div th:insert="~{/back-end/rptdlist/listOneRptdlist :: listOneRptdlist-div}"></div>
+    </div>
+
+</body>
+</html>

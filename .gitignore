@@ -1,0 +1,27 @@
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+
+
+### VS Code ###
+.vscode/
+
+.settings/
+bin/
+.classpath
+.project
+.DS_Store
+target/
+build/
+/.apt_generated/
+/.apt_generated_tests/
