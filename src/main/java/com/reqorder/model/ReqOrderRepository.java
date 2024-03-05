@@ -9,7 +9,7 @@ public interface ReqOrderRepository extends JpaRepository<ReqOrderVO, Integer>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "delete from reqOrder where reqNum =?1", nativeQuery = true)
+	@Query(value = "delete from reqorder where reqNum =?1", nativeQuery = true)
 	void deleteByReqNum(int ReqNum);
 	
 }

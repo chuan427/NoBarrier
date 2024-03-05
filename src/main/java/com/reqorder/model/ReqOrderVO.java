@@ -24,7 +24,7 @@ import com.quo.model.QuoVO;
 import com.user.model.UserVO;
 
 @Entity // 要加上@Entity才能成為JPA的一個Entity類別
-@Table(name = "reqOrder") // 代表這個class是對應到資料庫的實體table，目前對應的table是reqOrder
+@Table(name = "reqorder") // 代表這個class是對應到資料庫的實體table，目前對應的table是reqOrder
 public class ReqOrderVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
