@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.forumpost.model.ForumPostService;
+import com.forumpost.model.ForumPostVO;
+import com.forumreply.model.ForumReplyService;
+import com.forumreply.model.ForumReplyVO;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.productinformation.model.ProductInformationService;
@@ -47,6 +51,12 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired
 	UserService userSvc;
+
+	@Autowired
+	ForumPostService forumPostSvc;
+
+	@Autowired
+	ForumReplyService forumReplySvc;
 	
 //	@Autowired
 //	NotificationService notificationSvc;
@@ -194,6 +204,46 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 	
+	//------------------------ForumPost--------------------------------------
+	
+	@GetMapping("/forumPost/select_page1")
+	public String select_page1(Model model) {
+		return "back-end/forumPost/select_page1";
+	}
+
+	@GetMapping("/forumPost/listAllForumPost")
+	public String listAllForumPost(Model model) {
+		return "back-end/forumPost/listAllForumPost";
+	}
+
+	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<ForumPostVO> referenceListData1(Model model) {
+
+		List<ForumPostVO> list = forumPostSvc.getAll();
+		return list;
+	}
+
+	// -----------------------ForumReply-----------------------------------------
+
+	@GetMapping("/forumReply/select_page2")
+	public String select_page2(Model model) {
+		return "back-end/forumReply/select_page2";
+	}
+
+	@GetMapping("/forumReply/listAllForumReply")
+	public String listAllForumReply(Model model) {
+		return "back-end/forumReply/listAllForumReply";
+	}
+
+	@ModelAttribute("forumReplyListData") // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<ForumReplyVO> referenceListData2(Model model) {
+
+		List<ForumReplyVO> list = forumReplySvc.getAll();
+		return list;
+
+	}
+	
+	
 	//---------------------------------------------------------------------
 	
 //	@GetMapping("/notification/select_page")
@@ -212,4 +262,7 @@ public class IndexController_inSpringBoot {
 //		List<NotificationVO> list = notificationSvc.getAll();
 //		return list;
 //	}
+	
+	
+	
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.industry.model.IndustryVO;
+import com.forumpost.model.ForumPostVO;
 import com.reqorder.model.ReqOrderVO;
 
 
@@ -45,5 +45,9 @@ public class UserService {
 		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
 			return getOneUser(userId).getReqOrder();
 		}
+		
+		public Set<ForumPostVO> getForumPostByfpUserid(Integer fpUserid){
+		return getOneUser(fpUserid).getForumPost();
+	}
 		
 }
