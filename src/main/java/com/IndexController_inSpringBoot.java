@@ -121,14 +121,14 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ------------------------------------------
-	@GetMapping("/reqOrder/select_page")
+	@GetMapping("/reqorder/select_page")
 	public String select_page_reqorder(Model model) {
-		return "back-end/reqOrder/select_page";
+		return "back-end/reqorder/select_page";
 	}
 
-	@GetMapping("/reqOrder/listAllReqOrder")
+	@GetMapping("/reqorder/listAllReqOrder")
 	public String listAllReqOrder(Model model) {
-		return "back-end/reqOrder/listAllReqOrder";
+		return "back-end/reqorder/listAllReqOrder";
 	}
 
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用

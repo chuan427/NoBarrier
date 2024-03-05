@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>所有需求單資料 - listAllReqOrder.html</title>
 <script th:src="@{/js/jquery-1.11.3.min.js}"></script> <!-- 左側jquery為table分頁用 -->
-<head th:insert="~{/back-end/reqOrder/included-fragment}"></head>
+<head th:insert="~{/back-end/reqorder/included-fragment}"></head>
 <style type="text/css">
 
     table {
@@ -108,7 +108,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		 <div align="center"> <h2>所有商品資料 - listAllReqOrder.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/reqOrder/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <h3><a class="navbar-brand" th:href="@{/reqorder/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
 <div align="center">
@@ -147,12 +147,12 @@
 				<td th:text="${reqOrderVO.userVO.userId} + '-[' + ${reqOrderVO.userVO.comName} + ']'"></td>
 				<td th:text="${reqOrderVO.reqIsValid}"></td>
 			<td>
-			  <form method="post" th:action="@{/reqOrder/getOne_For_Update}" style="margin-bottom: 0px;">
+			  <form method="post" th:action="@{/reqorder/getOne_For_Update}" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="reqNum" th:value="${reqOrderVO.reqNum}"></form>
 			</td>
 			<td>
-			  <form method="post" th:action="@{/reqOrder/delete}" style="margin-bottom: 0px;">
+			  <form method="post" th:action="@{/reqorder/delete}" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="reqNum" th:value="${reqOrderVO.reqNum}"></form>
 			</td>
