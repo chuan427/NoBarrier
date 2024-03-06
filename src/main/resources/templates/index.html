@@ -10,19 +10,23 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>No Barrier Tech</title>
 
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
+
 <link rel="stylesheet" th:href="@{/css/index.css}" />
 
 <link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
-<script th:src="@{/out-statics/out-js/app4.js}" /></script>
+<!-- <script th:src="@{/out-statics/out-js/app4.js}" ></script> -->
 </head>
 <body>
 
 	<!-- <header> -->
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="homepage.html"
+            <a th:href="@{/}"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 
                     <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
@@ -30,12 +34,12 @@
                 <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
             </a>
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="index.html" class="nav-link ">關於我們</a></li>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-                <li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a href="customer_service.html" class="nav-link">聯絡我們</a></li>
-                <li class="nav-item"><a href="sign_in.html" class="nav-link">登入</a></li>
+                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
 
                 <!-- 漢堡選單 -->
@@ -222,10 +226,10 @@
     <div class="container">
         <footer class="py-3 my-4">
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">關於我們</a></li>
-                <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a href="com.html" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
-                <li class="nav-item"><a href="customer_service.html" class="nav-link px-2 text-body-secondary">聯絡我們</a>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
+                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
                 </li>
             </ul>
             <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
@@ -245,10 +249,5 @@
 			<a th:href="@{/productInformation/select_page}"
 				style="text-decoration: underline; color: black;">ProductInformation</a>
 		</h3> -->
-
-
-	<script th:src="@{/js/home.js}"></script>
-	<script th:src="@{/js/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 </body>
 </html>
