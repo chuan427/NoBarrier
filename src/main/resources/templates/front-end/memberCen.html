@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>member_center</title>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+  <style>
+    main {
+      width: 100%;
+      /* 設定寬度為100% */
+      max-width: 1200px;
+      /* 設定最大寬度，可以根據需要調整 */
+      margin: 0 auto;
+      /* 水平居中 */
+      height: 500px;
+      /* 設定高度，可以根據需要調整 */
+      overflow: auto;
+      /* 添加捲軸，如果內容超出高度 */
+    }
+
+    .pass_show {
+      position: relative;
+    }
+
+    .pass_show .ptxt {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      z-index: 1;
+      color: #f36c01;
+      margin-top: -10px;
+      cursor: pointer;
+      transition: 0.3s ease all;
+    }
+
+    .pass_show .ptxt:hover {
+      color: #333333;
+    }
+
+    .button-add {
+      min-width: 100px;
+    }
+
+    .container-add-style {
+      width: calc(100% - 130px);
+    }
+
+    .header-add-style {
+      margin-bottom: 20px;
+    }
+
+    .footer-add-style {
+      margin-bottom: 0 !important;
+    }
+
+    .button-add-style-2 {
+      border-radius: 5px !important;
+      bottom: 6px;
+      line-height: 0;
+      font-size: 14px;
+      width: 63px;
+    }
+
+    /* 小型設備（手機） */
+    @media (max-width: 767.98px) {
+      /* 樣式設定 */
+    }
+
+    /* 中型設備（平板） */
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      /* 樣式設定 */
+    }
+
+    /* 大型設備（桌面） */
+    @media (min-width: 992px) {
+      /* 樣式設定 */
+    }
+
+    .navbar-toggler-icon.small {
+      font-size: 0.6rem;
+    }
+
+    .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+      background-color: #7e8287 !important;
+    }
+
+    .list-group1 {
+      display: none;
+      /* 隱藏通知列表 */
+    }
+
+    .list-group1.show {
+      display: block;
+      /* 顯示通知列表 */
+    }
+
+    .notification-dropdown {
+      position: absolute;
+      top: 60px;
+      /* 距離 header 的頂部距離 */
+      right: 10px;
+      /* 距離 header 的右側距離 */
+      background-color: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      z-index: 1000;
+      /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+    }
+
+    .notification-dropdown.show {
+      display: block;
+    }
+
+    .notification-icon {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      padding: 5px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <header> -->
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="homepage.html"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg width="50" height="50">
+          <image href="image/new-logo.svg" width=100% height=100% />
+        </svg>
+        <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="homepage.html" class="nav-link">關於我們</a></li>
+        <li class="nav-item"><a href="homepage.html" class="nav-link">最新消息</a></li>
+        <li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+        <li class="nav-item"><a href="customer_service.html" class="nav-link">聯絡我們</a></li>
+        <li class="nav-item"><a href="homepage.html" class="nav-link">登出</a></li>
+        <div class="notification-container">
+          <div id="notificationIcon" class="notification-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-bell"
+              viewBox="0 0 16 16">
+              <path
+                d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+            </svg>
+            <span id="notificationBadge" class="notification-badge">0</span>
+          </div>
+          <div id="notificationDropdown" class="notification-dropdown">
+            <a href="#">
+              <h3>Notification Title 1</h3>
+              <p>Notification Content 1</p>
+            </a>
+            <a href="#">
+              <h3>Notification Title 2</h3>
+              <p>Notification Content 2</p>
+            </a>
+            <a href="#">
+              <h3>Notification Title 3</h3>
+              <p>Notification Content 3</p>
+            </a>
+          </div>
+        </div>
+        <div class="user-profile" style="margin-left: 10px;"><a href="req_userpage.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+              class="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
+          </a>
+        </div>
+        <!-- 漢堡選單 -->
+        <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon small"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+              aria-labelledby="offcanvasNavbarLightLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">會員中心</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="memberCen.html">資料修改</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">帳戶資訊</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">更改密碼</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">產業類別編輯</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">介紹頁面</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="editmember_ad_view.html">預覽頁面</a></li>
+                      <li><a class="dropdown-item" href="editmember_ad.html">編輯頁面</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">首頁廣告預約列表</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">首頁廣告購買</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="transaction_stat.html">交易狀態</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">月對帳單</a>
+                  </li>
+                </ul>
+                <form class="d-flex mt-3" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </ul>
+    </header>
+  </div>
+
+  <div class="container">
+    <main>
+      <div class="d-flex align-items-start">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+          <button class="nav-link active button-add" id="v-pills-home-tab" data-bs-toggle="pill"
+            data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">
+            資料修改
+          </button>
+          <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile"
+            type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">
+            帳戶資訊
+          </button>
+          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages"
+            type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">
+            更改密碼
+          </button>
+          <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
+            type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+            類別通知
+          </button>
+        </div>
+
+        <!-- 加了 container-add-style -->
+        <div class="tab-content container-add-style" id="v-pills-tabContent">
+          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+            <form class="row g-3">
+              <div class="col-6">
+                <label for="inputAddress" class="form-label">公司登記名稱</label>
+                <div class="form-control">毫**礙有限公司</div>
+              </div>
+              <div class="col-6">
+                <label for="inputAddress" class="form-label">公司登記統編</label>
+                <div class="form-control">987*****1</div>
+              </div>
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">公司登記地址</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="台北市中山區南京東路三段***號*樓" />
+              </div>
+              <div class="col-md-12">
+                <label for="inputEmail4" class="form-label">公司登記郵件</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="nobar********@system.com" />
+              </div>
+
+              <div class="col-md-4">
+                <label for="inputState1" class="form-label">公司類別1</label>
+                <select id="inputState1" class="form-select">
+                  <option selected>Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="inputState2" class="form-label">公司類別2</label>
+                <select id="inputState2" class="form-select">
+                  <option selected>Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="inputState3" class="form-label">公司類別3</label>
+                <select id="inputState3" class="form-select">
+                  <option selected>Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <button type="submit" class="btn btn-secondary">
+                  確認修改
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <div class="acc-very-big" style="display: flex">
+              <div class="acc-big-left">
+                <div class="acc-medium" id="acc-1">
+                  <div class="acc-title">帳戶1</div>
+                  <div class="acc-body" style="display: flex">
+                    <div class="acc-content">
+                      <p>台新</p>
+                      <p>812-*********83377</p>
+                    </div>
+                    <div class="acc-trash-can">
+                      <a href="#"><img src="/image/trashcan.png" alt="trashcan-icon" height="16px" /></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc-medium" id="acc-2">
+                  <div class="acc-title">帳戶2</div>
+                  <div class="acc-body" style="display: flex">
+                    <div class="acc-content">
+                      <p>台新</p>
+                      <p>812-*********83377</p>
+                    </div>
+                    <div class="acc-trash-can">
+                      <a href="#"><img src="/image/trashcan.png" alt="trashcan-icon" height="16px" /></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="acc-medium" id="acc-3">
+                  <div class="acc-title">帳戶3</div>
+                  <div class="acc-body" style="display: flex">
+                    <div class="acc-content">
+                      <p>台新</p>
+                      <p>812-*********83377</p>
+                    </div>
+                    <div class="acc-trash-can">
+                      <a href="#"><img src="/image/trashcan.png" alt="trashcan-icon" height="16px" /></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="acc-space" style="width: 50px"></div>
+              <div class="acc-big-right">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput1" class="form-label">自訂代稱</label>
+                      <input type="text" class="form-control form-control-sm" id="exampleFormControlInput1"
+                        placeholder="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="mb-3">
+                      <label for="bank-chose" class="form-label">銀行代碼</label>
+                      <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="bank-chose">
+                        <option disabled selected>銀行代碼選擇</option>
+                        <option value="004">004 臺灣銀行</option>
+                        <option value="005">005 台灣土地銀行</option>
+                        <option value="006">006 合作金庫銀行</option>
+                        <option value="007">007 第一商業銀行</option>
+                        <option value="008">008 華南商業銀行</option>
+                        <option value="009">009 彰化商業銀行</option>
+                        <option value="010">
+                          010 花旗(台灣)(原華僑銀行)
+                        </option>
+                        <option value="011">011 上海商業銀行</option>
+                        <option value="012">012 台北富邦銀行</option>
+                        <option value="013">013 國泰世華商業銀行</option>
+                        <option value="016">016 高雄銀行</option>
+                        <option value="017">017 兆豐國際商業銀行</option>
+                        <option value="021">021 花旗銀行</option>
+                        <option value="024">024 美國運通銀行</option>
+                        <option value="025">025 首都銀行</option>
+                        <option value="039">039 荷蘭銀行</option>
+                        <option value="040">040 中華開發</option>
+                        <option value="050">050 台灣中小企業銀行</option>
+                        <option value="052">
+                          052 渣打國際商銀(原新竹商銀)
+                        </option>
+                        <option value="053">053 台中商業銀行</option>
+                        <option value="054">054 京城商銀</option>
+                        <option value="057">057 台東區中小企業銀行</option>
+                        <option value="072">072 德意志銀行</option>
+                        <option value="073">073 東亞銀行</option>
+                        <option value="081">081 匯豐銀行</option>
+                        <option value="101">101 稻江商銀</option>
+                        <option value="102">102 華泰商業銀行</option>
+                        <option value="103">103 新光商業銀行</option>
+                        <option value="104">104 台北市第五信用合作社</option>
+                        <option value="106">106 台北市第九信用合作社</option>
+                        <option value="108">108 陽信商業銀行</option>
+                        <option value="114">114 基隆第一信用合作社</option>
+                        <option value="115">115 基隆第二信用合作社</option>
+                        <option value="118">118 板信商業銀行</option>
+                        <option value="119">
+                          119 台北縣淡水第一信用合作社
+                        </option>
+                        <option value="120">120 台北縣淡水信用合作社</option>
+                        <option value="124">124 宜蘭信用合作社</option>
+                        <option value="127">127 桃園信用合作社</option>
+                        <option value="130">130 新竹第一信用合作社</option>
+                        <option value="132">132 新竹第三信用合作社</option>
+                        <option value="139">139 苗栗縣竹南信用合作社</option>
+                        <option value="146">146 台中市第二信用合作社</option>
+                        <option value="147">147 三信商業銀行</option>
+                        <option value="158">158 彰化第一信用合作社</option>
+                        <option value="161">161 彰化第五信用合作社</option>
+                        <option value="162">162 彰化第六信用合作社</option>
+                        <option value="163">163 彰化第十信用合作社</option>
+                        <option value="165">165 彰化縣鹿港信用合作社</option>
+                        <option value="178">178 嘉義市第三信用合作社</option>
+                        <option value="179">179 嘉義市第四信用合作社</option>
+                        <option value="188">188 台南第三信用合作社</option>
+                        <option value="203">203 高雄第二信用合作社</option>
+                        <option value="204">204 高雄第三信用合作社</option>
+                        <option value="215">215 花蓮第一信用合作社</option>
+                        <option value="216">216 花蓮第二信用合作社</option>
+                        <option value="222">222 澎湖縣第一信用合作社</option>
+                        <option value="223">223 澎湖縣第二信用合作社</option>
+                        <option value="224">224 金門縣信用合作社</option>
+                        <option value="700">700 中華郵政</option>
+                        <option value="803">803 聯邦商業銀行</option>
+                        <option value="804">804 滙豐銀行(原中華銀行)</option>
+                        <option value="805">805 遠東商業銀行</option>
+                        <option value="806">806 元大銀行</option>
+                        <option value="807">807 永豐銀行</option>
+                        <option value="808">808 玉山商業銀行</option>
+                        <option value="809">809 萬泰商業銀行</option>
+                        <option value="810">810 星辰銀行(原寶華銀行)</option>
+                        <option value="812">812 台新國際商業銀行</option>
+                        <option value="814">814 大眾商業銀行</option>
+                        <option value="815">815 日盛國際商業銀行</option>
+                        <option value="816">816 安泰商業銀行</option>
+                        <option value="822">822 中國信託商業銀行</option>
+                        <option value="825">825 慶豐商業銀</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="mb-3">
+                      <label for="exampleFormControlInput2" class="form-label">帳號</label>
+                      <input type="text" class="form-control form-control-sm" id="exampleFormControlInput2"
+                        placeholder="" />
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-secondary">
+                  新增帳戶
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-4">
+                  <form action="#">
+                    <!--需要再添加的form型式-->
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <div class="input-group mb-3 pass_show">
+                      <input type="password" value="faisalkhan@123" class="form-control" id="currentPassword"
+                        placeholder="Current Password" />
+                      <button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">
+                        Show
+                      </button>
+                    </div>
+
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <div class="input-group mb-3 pass_show">
+                      <input type="password" value="faisal.khan@123" class="form-control" id="newPassword"
+                        placeholder="New Password" />
+                      <button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">
+                        Show
+                      </button>
+                    </div>
+
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <div class="input-group mb-3 pass_show">
+                      <input type="password" value="faisal.khan@123" class="form-control" id="confirmPassword"
+                        placeholder="Confirm Password" />
+                      <button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">
+                        Show
+                      </button>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">
+                      確認修改
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                var showPasswordButtons =
+                  document.querySelectorAll(".pass_show .ptxt");
+
+                showPasswordButtons.forEach(function (button) {
+                  button.addEventListener("click", function () {
+                    var passwordInput = this.previousElementSibling;
+                    passwordInput.type =
+                      passwordInput.type === "password" ? "text" : "password";
+                    this.textContent =
+                      passwordInput.type === "password" ? "Show" : "Hide";
+                  });
+                });
+              });
+            </script>
+          </div>
+          <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+            <!---->
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
+                    <label class="form-check-label" for="checkbox1">Checkbox 1</label>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
+                    <label class="form-check-label" for="checkbox2">Checkbox 2</label>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
+                    <label class="form-check-label" for="checkbox3">Checkbox 3</label>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="checkbox4" />
+                    <label class="form-check-label" for="checkbox3">Checkbox 4</label>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
+                        <label class="form-check-label" for="checkbox1">Checkbox 1</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
+                        <label class="form-check-label" for="checkbox2">Checkbox 2</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
+                        <label class="form-check-label" for="checkbox3">Checkbox 3</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="checkbox4" />
+                        <label class="form-check-label" for="checkbox3">Checkbox 4</label>
+                      </div>
+                    </div>
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkbox1" />
+                            <label class="form-check-label" for="checkbox1">Checkbox 1</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkbox2" />
+                            <label class="form-check-label" for="checkbox2">Checkbox 2</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkbox3" />
+                            <label class="form-check-label" for="checkbox3">Checkbox 3</label>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="checkbox4" />
+                            <label class="form-check-label" for="checkbox3">Checkbox 4</label>
+                          </div>
+                        </div>
+
+                        <!-- checkbox在這 -->
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button type="submit" class="btn btn-secondary">
+                        確認修改
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    </main>
+  </div>
+
+  <!-- <footer> -->
+  <div class="container">
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">關於我們</a></li>
+        <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">最新消息</a></li>
+        <li class="nav-item"><a href="com.html" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+        <li class="nav-item"><a href="customer_service.html" class="nav-link px-2 text-body-secondary">聯絡我們</a>
+        </li>
+      </ul>
+      <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
+    </footer>
+  </div>
+
+  
+  <script src="js/home.js"></script>
+  <script src="js/notification.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
