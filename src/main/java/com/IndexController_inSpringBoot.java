@@ -17,8 +17,12 @@ import com.ad.model.AdVO;
 import com.addday.AdDate;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.newsmodel.NewsService;
+import com.newsmodel.NewsVO;
 import com.productinformation.model.ProductInformationService;
 import com.productinformation.model.ProductInformationVO;
+import com.questionList.model.QueListService;
+import com.questionList.model.QueListVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
@@ -51,10 +55,13 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	UserService userSvc;
-
 	@Autowired
-	AdService adSvc;
+	NewsService newsSvc;	@Autowired
+	AdService adSvc;	@Autowired
+	QueListService queSvc;
 
+
+	
 //	@Autowired
 //	NotificationService notificationSvc;
 
@@ -83,9 +90,22 @@ public class IndexController_inSpringBoot {
 		return "index"; // view
 	}
 
-	@GetMapping("/login")
+	 //登入頁面
+	@GetMapping("/login/loginPage")  
 	public String toLoginPage() {
 		return "back-end/login/loginPage"; // view
+	}
+	
+	//廠商資訊
+	@GetMapping("/com")      			
+	public String toCom() {
+		return "front-end/com"; // view
+	}
+	
+	//聯絡我們
+	@GetMapping("/customer_service")      			
+	public String customer_service() {
+	return "front-end/customer_service"; // view
 	}
 
 	// =========== 以下第57~62行是提供給
@@ -259,4 +279,39 @@ public class IndexController_inSpringBoot {
 //		List<NotificationVO> list = notificationSvc.getAll();
 //		return list;
 //	}
+//	-----------------------------QuetsionList-------------------------------
+	@GetMapping("/que/select_page")
+	public String select_page3(Model model) {
+		return "back-end/que/select_page";
+	}
+
+	@GetMapping("/que/listAllQue")
+	public String listAllQue(Model model) {
+		return "back-end/que/listAllQue";
+	}
+
+	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData3(Model model) {
+
+		List<QueListVO> list = queSvc.getAll();
+		return list;
+	}
+//	------------------------------news-----------------------------------------
+	@GetMapping("/news/select_page")
+	public String select_page_news(Model model) {
+		return "back-end/news/select_page";
+	}
+
+	@GetMapping("/news/listAllNews")
+	public String listAllNews(Model model) {
+		return "back-end/news/listAllNews";
+	}
+
+	@ModelAttribute("newsListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<NewsVO> referenceListData_news(Model model) {
+
+		List<NewsVO> list = newsSvc.getAll();
+		return list;
+	}
+	
 }
