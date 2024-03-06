@@ -1,0 +1,335 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>員工資料新增 - addEmp.html</title>
+<head th:insert="~{/back-end/ad/header}"></head>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/index.css}" /> -->
+
+<link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
+<!-- <script th:src="@{/out-statics/out-js/app4.js}" /></script> -->
+<style type="text/css">
+button {
+	padding: 5px;
+}
+
+form {
+	display: table;
+}
+
+form div {
+	display: table-row;
+}
+
+label, input, span, select {
+	display: table-cell;
+	margin: 5px;
+	text-align: left;
+}
+
+input[type=text], input[type=password], select, textarea {
+	width: 200px;
+	margin: 5px;
+}
+
+form div div {
+	display: table-cell;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.dateContainer {
+	display: block;
+}
+</style>
+</head>
+
+<body>
+
+	<!-- 	<nav -->
+	<!-- 		class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center"> -->
+	<!-- 		<div align="center"> -->
+	<!-- 			<h2>員工資料新增 - addEmp.html</h2> -->
+	<!-- 			<h3> -->
+	<!-- 				<a class="navbar-brand" th:href="@{/ad/select_page}"><img -->
+	<!-- 					th:src="@{/images/back1.gif}">回查詢頁</a> -->
+	<!-- 			</h3> -->
+	<!-- 		</div> -->
+	<!-- 	</nav> -->
+	<!-- <header> -->
+	<!--     <div class="container"> -->
+	<!--         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom"> -->
+	<!--             <a href="homepage.html" -->
+	<!--                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> -->
+
+	<!--                     <img th:src="@{/images/new-logo.svg}" width="50" height="50" /> -->
+
+	<!--                 <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span> -->
+	<!--             </a> -->
+	<!--             <ul class="nav nav-pills"> -->
+	<!--                 <li class="nav-item"><a href="index.html" class="nav-link ">關於我們</a></li> -->
+	<!--                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li> -->
+	<!--                 <li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li> -->
+	<!--                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li> -->
+	<!--                 <li class="nav-item"><a href="customer_service.html" class="nav-link">聯絡我們</a></li> -->
+	<!--                 <li class="nav-item"><a href="sign_in.html" class="nav-link">登入</a></li> -->
+	<!--                 <li class="nav-item"><a href="#" class="nav-link">註冊</a></li> -->
+
+	<!--                 漢堡選單 -->
+	<!--                 <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar"> -->
+	<!--                     <div class="container-fluid"> -->
+	<!--                         <a class="navbar-brand" href="#"></a> -->
+	<!--                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" -->
+	<!--                             data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight" -->
+	<!--                             aria-label="Toggle navigation"> -->
+	<!--                             <span class="navbar-toggler-icon small"></span> -->
+	<!--                         </button> -->
+	<!--                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" -->
+	<!--                             aria-labelledby="offcanvasNavbarLightLabel"> -->
+	<!--                             <div class="offcanvas-header"> -->
+	<!--                                 <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5> -->
+	<!--                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" -->
+	<!--                                     aria-label="Close"></button> -->
+	<!--                             </div> -->
+	<!--                             <div class="offcanvas-body"> -->
+	<!--                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"> -->
+	<!--                                     <li class="nav-item dropdown"> -->
+	<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
+	<!--                                             data-bs-toggle="dropdown" aria-expanded="false">會員中心</a> -->
+	<!--                                         <ul class="dropdown-menu"> -->
+	<!--                                             <li><a class="dropdown-item" href="#">資料修改</a></li> -->
+	<!--                                             <li><a class="dropdown-item" href="#">帳戶資訊</a></li> -->
+	<!--                                             <li><a class="dropdown-item" href="#">更改密碼</a></li> -->
+	<!--                                             <li><a class="dropdown-item" href="#">產業類別編輯</a></li> -->
+	<!--                                         </ul> -->
+	<!--                                     </li> -->
+	<!--                                     <li class="nav-item dropdown"> -->
+	<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
+	<!--                                             data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a> -->
+	<!--                                         <ul class="dropdown-menu"> -->
+	<!--                                             <li><a class="dropdown-item" href="editmember_ad_view.html">預覽頁面</a></li> -->
+	<!--                                             <li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li> -->
+	<!--                                         </ul> -->
+	<!--                                     </li> -->
+	<!--                                     <li class="nav-item dropdown"> -->
+	<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
+	<!--                                             data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a> -->
+	<!--                                         <ul class="dropdown-menu"> -->
+	<!--                                             <li><a class="dropdown-item" href="#">首頁廣告購買</a></li> -->
+	<!--                                         </ul> -->
+	<!--                                     </li> -->
+	<!--                                     <li class="nav-item"> -->
+	<!--                                         <a class="nav-link" href="#">交易狀態</a> -->
+	<!--                                     </li> -->
+	<!--                                     <li class="nav-item"> -->
+	<!--                                         <a class="nav-link" href="#">月對帳單</a> -->
+	<!--                                     </li> -->
+	<!--                                 </ul> -->
+	<!--                                 <form class="d-flex mt-3" role="search"> -->
+	<!--                                     <input class="form-control me-2" type="search" placeholder="Search" -->
+	<!--                                         aria-label="Search"> -->
+	<!--                                     <button class="btn btn-outline-success" type="submit">Search</button> -->
+	<!--                                 </form> -->
+	<!--                             </div> -->
+	<!--                         </div> -->
+	<!--                     </div> -->
+	<!--                 </nav> -->
+	<!--             </ul> -->
+	<!--         </header> -->
+	<!--     </div> -->
+	<h3 style="text-align: center;">
+		<a class="navbar-brand" th:href="@{/}"><img
+			th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a>
+	</h3>
+	<div align="center">
+		<h3>
+			<b>請填寫所有欄位皆為必填欄位，3Q</b>
+		</h3>
+		<form th:action="@{insert}" method="post" th:object="${adDate}"
+			enctype="multipart/form-data">
+
+
+			<div>
+				<label>廣告價格:</label> <input type="text" th:field="*{adPriceadd}"
+					readonly="readonly" onclick="hideContent('adPriceadd.errors')"
+					class="adprice-add" /> <span class="error"
+					th:utext="${errorMessage1}" id="adPriceadd.errors"></span>
+			</div>
+
+
+			<!-- 						<div> -->
+			<!-- 							<label>廣告價格:</label> <input type="text" th:field="*{adPriceadd}" -->
+			<!-- 								onclick="hideContent('adPriceadd.errors');" /> <br /> <span -->
+			<!-- 								th:if="${#fields.hasErrors('adPriceadd')}" -->
+			<!-- 								th:errors="*{adPriceadd}" class="error" id="adPriceadd.errors"></span> -->
+			<!-- 						</div> -->
+
+
+			<div>
+				<label>上架廣告圖片:</label> <input type="file" id="adImageadd"
+					name="adImageadd" onclick="previewImage()" multiple="multiple"
+					onchange="hideContent('adImageadd.errors');" /> <span
+					class="error" th:utext="${errorMessage}" id="adImageadd.errors"></span>
+				<h2 id="errorMessage"></h2>
+				<div id="blob_holder"></div>
+
+			</div>
+
+			<!-- 			<div> -->
+			<!-- 							<label>上架廣告圖片:</label> <input type="file" th:field="*{adImageadd}" -->
+			<!-- 								onclick="previewImage()" multiple="multiple" -->
+			<!-- 								onchange="hideContent('adImageadd.errors');" /> <span -->
+			<!-- 								th:if="${#fields.hasErrors('adImageadd')}" -->
+			<!-- 								th:errors="*{adImageadd}" class="error" id="adImageadd.errors"></span> -->
+			<!-- 							<span class="error" th:utext="${errorMessage}" -->
+			<!-- 								id="adImageadd.errors">${errorMessage}</span> -->
+			<!-- 							<h2 id="errorMessage"></h2> -->
+			<!-- 							<div id="blob_holder"></div> -->
+			<!-- 			</div> -->
+
+			<label>廣告日期:</label> <input type="date"
+				th:field="*{advertisements[0].adsDays}"
+				onclick="hideContent('advertisements[0].adsDays.errors');" /> <span
+				class="error" th:utext="${errorMessage2}"
+				id="advertisements[0].adsDays.errors"></span>
+			<div>
+				<div></div>
+				<div>
+					<div id="dateContainer"></div>
+				</div>
+				<div></div>
+			</div>
+
+			<div>
+				<button type="button" onclick="addEmployee()">新增日期</button>
+			</div>
+
+			<div>
+				<div></div>
+				<div>
+					<button type="submit" id="submit">送出新增</button>
+				</div>
+				<div></div>
+			</div>
+		</form>
+
+	</div>
+
+	<!-- 	    <footer> -->
+	<!--     <div class="container"> -->
+	<!--         <footer class="py-3 my-4"> -->
+	<!--             <ul class="nav justify-content-center border-bottom pb-3 mb-3"> -->
+	<!--                 <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">關於我們</a></li> -->
+	<!--                 <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">最新消息</a></li> -->
+	<!--                 <li class="nav-item"><a href="com.html" class="nav-link px-2 text-body-secondary">廠商資訊</a></li> -->
+	<!--                 <li class="nav-item"><a href="customer_service.html" class="nav-link px-2 text-body-secondary">聯絡我們</a> -->
+	<!--                 </li> -->
+	<!--             </ul> -->
+	<!--             <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p> -->
+	<!--         </footer> -->
+	<!--     </div> -->
+
+	<footer th:insert="~{/back-end/ad/footer}"></footer>
+
+	<!-- JavaScript part -->
+	<!-- 		<script th:src="@{/js/home.js}"></script> -->
+	<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
+	<!-- 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script> -->
+	<script type="text/javascript">
+		//清除提示信息
+		function hideContent(d) {
+			document.getElementById(d).style.display = "none";
+		}
+
+		//照片上傳-預覽用
+		var filereader_support = typeof FileReader != 'undefined';
+		if (!filereader_support) {
+			alert("No FileReader support");
+		}
+		acceptedTypes = {
+			'image/png' : true,
+			'image/jpeg' : true,
+			'image/gif' : true
+		};
+		function previewImage() {
+			var upfile1 = document.getElementById("adImageadd");
+			upfile1.addEventListener("change", function(event) {
+				var files = event.target.files || event.dataTransfer.files;
+				for (var i = 0; i < files.length; i++) {
+					previewfile(files[i])
+				}
+			}, false);
+		}
+		function previewfile(file) {
+			if (filereader_support === true
+					&& acceptedTypes[file.type] === true) {
+				var reader = new FileReader();
+				reader.onload = function(event) {
+					var image = new Image();
+					image.src = event.target.result;
+					image.width = 100;
+					image.height = 75;
+					image.border = 2;
+					if (blob_holder.hasChildNodes()) {
+						blob_holder.removeChild(blob_holder.childNodes[0]);
+					}
+					blob_holder.appendChild(image);
+				};
+				reader.readAsDataURL(file);
+				document.getElementById('submit').disabled = false;
+			} else {
+				blob_holder.innerHTML = "<div  style='text-align: left;'>"
+						+ "● filename: "
+						+ file.name
+						+ "<br>"
+						+ "● ContentTyp: "
+						+ file.type
+						+ "<br>"
+						+ "● size: "
+						+ file.size
+						+ "bytes"
+						+ "<br>"
+						+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+				document.getElementById('submit').disabled = true;
+			}
+		}
+
+		var adateIndex = 1; // 全局變量來跟蹤員工的索引
+		var defaultPrice = 50;
+		document.querySelector(".adprice-add").value = defaultPrice;
+		function addEmployee() {
+			const container = document.getElementById('dateContainer');
+
+			// 创建 input 元素
+			const input = document.createElement('input');
+			input.type = 'date';
+			input.name = 'advertisements[' + adateIndex + '].adsDays'; // 使用连续索引 
+			container.appendChild(input);
+			container.appendChild(document.createElement('br'));
+			adateIndex++; // 增加索引计数
+
+			document.querySelector(".adprice-add").value = defaultPrice
+					* (adateIndex);
+
+		}
+	</script>
+
+
+</body>
+</html>

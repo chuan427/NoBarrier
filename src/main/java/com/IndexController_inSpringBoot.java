@@ -1,5 +1,6 @@
 package com;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ad.model.AdService;
+import com.ad.model.AdVO;
+import com.addday.AdDate;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.newsmodel.NewsService;
@@ -39,23 +43,21 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	RptdlistService rptdlistSvc;
-	
-	@Autowired
-	ReqOrderService reqOrderSvc;
-	
-	@Autowired
-	IndustryService industrySvc;
-	
-	@Autowired
-	ProductInformationService productInformationSvc;
-	
-	@Autowired
-	UserService userSvc;
 
 	@Autowired
-	NewsService newsSvc;
-	
+	ReqOrderService reqOrderSvc;
+
 	@Autowired
+	IndustryService industrySvc;
+
+	@Autowired
+	ProductInformationService productInformationSvc;
+
+	@Autowired
+	UserService userSvc;
+	@Autowired
+	NewsService newsSvc;	@Autowired
+	AdService adSvc;	@Autowired
 	QueListService queSvc;
 
 
@@ -87,7 +89,7 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("message", name);
 		return "index"; // view
 	}
-	
+
 	 //登入頁面
 	@GetMapping("/login/loginPage")  
 	public String toLoginPage() {
@@ -199,8 +201,8 @@ public class IndexController_inSpringBoot {
 		List<ProductInformationVO> list = productInformationSvc.getAll();
 		return list;
 	}
-	
-	//------------------------------------------
+
+	// ------------------------------------------
 
 	@GetMapping("/user/select_page")
 	public String select_page_user(Model model) {
@@ -218,9 +220,49 @@ public class IndexController_inSpringBoot {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
-	
-	//---------------------------------------------------------------------
-	
+
+//	-----------------------------------------------------------------------
+
+	@GetMapping("/ad/select_page")
+	public String select_page_ad(Model model) {
+		return "back-end/ad/select_page";
+	}
+
+	@GetMapping("/ad/listAllEmp")
+	public String listAllEmp(Model model) {
+		return "back-end/ad/listAllEmp";
+	}
+
+	@GetMapping("/ad/addEmp")
+	public String addEmp1(Model model) {
+		AdDate adDate = new AdDate();
+		model.addAttribute("adDate", adDate);
+		model.addAttribute("defaultAdPrice", 50);
+		return "back-end/ad/addEmp";
+	}
+
+	@ModelAttribute("adListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<AdVO> referenceListData_ad(Model model) {
+
+		List<AdVO> list = adSvc.getAll();
+		return list;
+	}
+
+	@ModelAttribute("adListDataindex")
+	protected List<AdVO> referenceListData_ad1(Model model) {
+		List<AdVO> list = adSvc.getAll();
+		List<AdVO> filteredList = new ArrayList<>();
+		// 过滤出 adIsValid 为 1 的记录
+		for (AdVO ad : list) {
+			if (ad.getAdIsValid() == 1) {
+				filteredList.add(ad);
+			}
+		}
+		return filteredList;
+	}
+
+	// ---------------------------------------------------------------------
+//	
 //	@GetMapping("/notification/select_page")
 //	public String select_page_notification(Model model) {
 //		return "back-end/notification/select_page";
