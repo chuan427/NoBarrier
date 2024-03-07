@@ -14,9 +14,9 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>員工資料新增 - addEmp.html</title>
-<head th:insert="~{/back-end/ad/header}"></head>
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<head th:insert="~{/front-end/header}"></head>
+<!-- <link rel="stylesheet" -->
+<!-- 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" /> -->
 <!-- <link rel="stylesheet" th:href="@{/css/index.css}" /> -->
 
 <link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
@@ -205,6 +205,7 @@ form div div {
 
 			<label>廣告日期:</label> <input type="date"
 				th:field="*{advertisements[0].adsDays}"
+				oninput="checkDateValidity(this);"
 				onclick="hideContent('advertisements[0].adsDays.errors');" /> <span
 				class="error" th:utext="${errorMessage2}"
 				id="advertisements[0].adsDays.errors"></span>
@@ -245,7 +246,7 @@ form div div {
 	<!--         </footer> -->
 	<!--     </div> -->
 
-	<footer th:insert="~{/back-end/ad/footer}"></footer>
+	<footer th:insert="~{/front-end/footer}"></footer>
 
 	<!-- JavaScript part -->
 	<!-- 		<script th:src="@{/js/home.js}"></script> -->
@@ -310,23 +311,44 @@ form div div {
 			}
 		}
 
-		var adateIndex = 1; // 全局變量來跟蹤員工的索引
+		var adateIndex = 1; // 全局變量來跟蹤廣告日期的索引
 		var defaultPrice = 50;
+
+		// 設定初始價格
 		document.querySelector(".adprice-add").value = defaultPrice;
+
 		function addEmployee() {
-			const container = document.getElementById('dateContainer');
+		    const container = document.getElementById('dateContainer');
 
-			// 创建 input 元素
-			const input = document.createElement('input');
-			input.type = 'date';
-			input.name = 'advertisements[' + adateIndex + '].adsDays'; // 使用连续索引 
-			container.appendChild(input);
-			container.appendChild(document.createElement('br'));
-			adateIndex++; // 增加索引计数
+		    // 創建 input 元素
+		    const input = document.createElement('input');
+		    input.type = 'date';
+		    input.name = 'advertisements[' + adateIndex + '].adsDays'; // 使用連續索引
+		    input.oninput = function() {
+		        checkDateValidity(this); // 呼叫檢查日期有效性的函數
+		    };
+		    container.appendChild(input);
+		    container.appendChild(document.createElement('br'));
+		    adateIndex++; // 增加索引計數
 
-			document.querySelector(".adprice-add").value = defaultPrice
-					* (adateIndex);
+		    // 更新價格
+		    document.querySelector(".adprice-add").value = defaultPrice * adateIndex;
+		}
 
+
+		function checkDateValidity(input) {
+			input.addEventListener("change", function() {
+				const selectedDate = new Date(input.value);
+				const currentDate = new Date();
+				// 只比對日期部分
+				if (selectedDate.toISOString().slice(0, 10) < currentDate
+						.toISOString().slice(0, 10)) {
+					input.setCustomValidity("廣告日期不可小於當前日期");
+				} else {
+					input.setCustomValidity("");
+				}
+
+			});
 		}
 	</script>
 
