@@ -248,19 +248,6 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	@ModelAttribute("adListDataindex")
-	protected List<AdVO> referenceListData_ad1(Model model) {
-		List<AdVO> list = adSvc.getAll();
-		List<AdVO> filteredList = new ArrayList<>();
-		// 过滤出 adIsValid 为 1 的记录
-		for (AdVO ad : list) {
-			if (ad.getAdIsValid() == 1) {
-				filteredList.add(ad);
-			}
-		}
-		return filteredList;
-	}
-
 	// ---------------------------------------------------------------------
 //	
 //	@GetMapping("/notification/select_page")

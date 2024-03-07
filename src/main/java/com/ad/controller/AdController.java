@@ -72,15 +72,16 @@ public class AdController {
 		}
 		if (addate.getAdPriceadd() == null)
 			model.addAttribute("errorMessage1", "廣告金額: 請輸入金額");
-		
+
+		Set<Date> uniqueAdsDays = new LinkedHashSet<>();
 		for (AdvertisementsVO adv : addate.getAdvertisements()) {
-	        if (adv.getAdsDays() == null) {
-	            model.addAttribute("errorMessage2", "廣告日期: 請選擇日期");
-	            return "back-end/ad/addEmp";
-	        }
-	    }
-				
-		
+		    if (adv.getAdsDays() == null || !uniqueAdsDays.add(adv.getAdsDays())) {
+		        model.addAttribute("errorMessage2",
+		                adv.getAdsDays() == null ? "廣告日期: 請選擇日期" : "廣告日期重複: " + adv.getAdsDays() + "請重新選取");
+		        return "back-end/ad/addEmp";
+		    }
+		}
+
 		if (parts[0].isEmpty() || addate.getAdPriceadd() == null) {
 			return "back-end/ad/addEmp";
 		}

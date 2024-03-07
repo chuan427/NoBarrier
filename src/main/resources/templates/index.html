@@ -10,7 +10,8 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>No Barrier Tech</title>
 
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
 <script th:src="@{/js/home.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
@@ -22,46 +23,40 @@
 <!-- <script th:src="@{/out-statics/out-js/app4.js}" ></script> -->
 <style>
 .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+	background-image:
+		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 
 .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+	background-image:
+		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
 </style>
 </head>
 <body>
 
 	<!-- <header> -->
-<div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a th:href="@{/}"
-                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                
-                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
-             
-                <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
-            </a>
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
-                <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
-                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+	<div class="container">
+		<header
+			class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+			<a th:href="@{/}"
+				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+
 				<img th:src="@{/images/new-logo.svg}" width="50" height="50" /> <span
 				class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
 			</a>
 			<ul class="nav nav-pills">
-				<li class="nav-item"><a href="index.html" class="nav-link ">關於我們</a></li>
+				<li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
 				<li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-				<li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li>
+				<li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
 				<li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-				<li class="nav-item"><a href="customer_service.html"
+				<li class="nav-item"><a th:href="@{/customer_service}"
 					class="nav-link">聯絡我們</a></li>
-				<li class="nav-item"><a href="sign_in.html" class="nav-link">登入</a></li>
+				<li class="nav-item"><a th:href="@{/login/loginPage}"
+					class="nav-link">登入</a></li>
 				<li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+				<!-- 				<img th:src="@{/images/new-logo.svg}" width="50" height="50" /> <span -->
+				<!-- 				class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span> -->
 
 				<!-- 漢堡選單 -->
 				<nav class="navbar bg-custom-color"
@@ -141,44 +136,39 @@
 	<!-- carousel -->
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
-		<!-- 				<div class="carousel-indicators"> -->
-		<!-- 					<th:block th:each="adVO, adIndex : ${adListData}"> -->
-		<!-- 						<button type="button" data-bs-target="#carouselExampleIndicators" -->
-		<!-- 							th:data-bs-slide-to="${adIndex.index}" -->
-		<!-- 							th:class="${adIndex.index == 0 ? 'active' : ''}" -->
-		<!-- 							aria-label="Slide (adIndex.index + 1)"></button> -->
-		<!-- 					</th:block> -->
-		<!-- 				</div> -->
-
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=0" height="300px"
-					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
+				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt= 'Slide 1' style="margin: 0 auto;">
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
 				<th:block th:if="${adVO.adIsValid == 1}">
 
-					<!--  判断是否有广告日期与当天日期相同 -->
 					<th:block th:each="advertisement : ${adVO.advertisements}">
-						<th:block th:if="${advertisement.adsDays == #dates.createToday()}">
+					
+						<th:block
+							th:if="${#dates.format(advertisement.adsDays, 'yyyy-MM-dd') == #dates.format(#dates.createToday(), 'yyyy-MM-dd')}">
 							<!-- 根据索引设置轮播项的样式 -->
 							<div
-								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
+								th:class="carousel-item">
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index})}"
+								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index + 1})}"
 									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
+									th:alt="'Slide ' + (${adIndex.index + 1})"
+									style="margin: 0 auto;">
 							</div>
 						</th:block>
 					</th:block>
+
 				</th:block>
 			</th:block>
 		</div>
 
 		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="color: black;">
+			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"
+			style="color: black;">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
 				class="visually-hidden">Previous</span>
 		</button>
@@ -266,27 +256,31 @@
                         <path
 							d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
                     </svg>
-</a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- <footer> -->
-    <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
-                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
-                </li>
-            </ul>
-            <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
-        </footer>
-    </div>
-    
-    
-		<!-- <h3>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- <footer> -->
+	<div class="container">
+		<footer class="py-3 my-4">
+			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+				<li class="nav-item"><a th:href="@{/}"
+					class="nav-link px-2 text-body-secondary">關於我們</a></li>
+				<li class="nav-item"><a th:href="@{/}"
+					class="nav-link px-2 text-body-secondary">最新消息</a></li>
+				<li class="nav-item"><a th:href="@{/com}"
+					class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+				<li class="nav-item"><a th:href="@{/customer_service}"
+					class="nav-link px-2 text-body-secondary">聯絡我們</a></li>
+			</ul>
+			<p class="text-center text-body-secondary">&copy; 2023 NO BARRIER
+				TECH Company, Inc</p>
+		</footer>
+	</div>
+
+
+	<!-- <h3>
 
 
 			<a th:href="@{/reqorder/select_page}"
