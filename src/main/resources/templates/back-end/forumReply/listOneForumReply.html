@@ -29,16 +29,16 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		 <div align="center"> <h2>貼文詳細資訊 - listOneForumReply.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/forumPost/select_page2}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <h3><a class="navbar-brand" th:href="@{/forumReply/select_page2}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
 	<div align="center" th:fragment="listOneForumReply-div"> <!-- 此div被select_page.html第128行insert用 -->
 		<h3><span>查詢結果 :</span></h3>
 		<span>貼文回覆編號:</span><span th:text="${forumReplyVO.frNum}"></span><br/>
 		<span>貼文編號:</span><span th:text="${forumReplyVO.forumPostVO.fpNum} + '-[' + ${forumReplyVO.forumPostVO.fpTitle} + ']'"></span><br/>
-		<span>會員編號:</span><span th:text="${forumReplyVO.frUserid}"></span><br/>
+		<span>會員編號:</span><span th:text="${forumReplyVO.userVO.userId} + '-[' + ${forumReplyVO.userVO.comName} + ']'"></span><br/>
 		<span>回覆內容:</span><span th:text="${forumReplyVO.frContent}"></span><br/>
-		<span>貼文圖片:</span><span><img th:src="@{/forumReply/DBGifReader} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></span><br/>
+		<span>貼文圖片:</span><span><img th:src="@{/forumReply/DBGifReader4} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></span><br/>
 		<span>回文按讚數:</span><span th:text="${forumReplyVO.frStat}"></span><br/>
 		<span>回覆貼文發佈時間:</span><span th:text="${forumReplyVO.frTime}"></span><br/>	
 		<span>回覆貼文最後編輯時間:</span><span th:text="${forumReplyVO.frUpdate}"></span><br/>

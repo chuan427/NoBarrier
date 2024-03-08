@@ -1,9 +1,6 @@
-
-
 package com.blob.reader;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import javax.sql.DataSource;
 
 @Controller
 @RequestMapping("/ad")

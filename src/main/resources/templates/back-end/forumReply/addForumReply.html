@@ -56,14 +56,7 @@
 
 	
 		<form th:action="@{insert}" method="post" th:object="${forumReplyVO}" enctype="multipart/form-data">
-			
-			
-			<div>
-			<label>回覆貼文編號:</label>
-			<input type="text" th:field="*{frNum}" onclick="hideContent('frNum.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('frNum')}" th:errors="*{frNum}" class="error" id="frNum.errors"></span>
-			</div>
-			
+
 			
 			<div>
 			<label>貼文編號:</label>
@@ -73,11 +66,12 @@
 			<span th:if="${#fields.hasErrors('forumPostVO.fpNum')}" th:errors="*{forumPostVO.fpNum}" class="error" id="forumPostVO.fpNum.errors"></span>
 			</div>
 			
-			
 			<div>
 			<label>會員編號:</label>
-			<input type="text" th:field="*{frUserid}" onclick="hideContent('frUserid.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('frUserid')}" th:errors="*{frUserid}" class="error" id="frUserid.errors"></span>
+			<select th:field="*{userVO.userId}">
+				<option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" />
+			</select>
+			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
 			</div>
 			
 			<div>

@@ -50,7 +50,7 @@
 		 <div align="center"> <h2>論壇貼文修改 - update_forumPost_input.html</h2>
 		 <h3><a class="navbar-brand" th:href="@{/forumPost/select_page1}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
-<!-- 24個欄位 -->
+
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
 		<form th:action="@{update}" method="post" th:object="${forumPostVO}" enctype="multipart/form-data">
@@ -88,31 +88,14 @@
 			<div>
 			<label>修改圖片:</label>
 			<input type="file" th:field="*{fpImage}" onclick="previewImage()" multiple="multiple" />
-            <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
-			<div id="blob_holder"><img th:src="@{/forumPost/DBGifReader} + '?fpNum=' + ${forumPostVO.fpNum}" width="100px"></div>
-			</div>
-			
-			<div>
-   		 	<label>文章愛心數:</label>
-    		<span th:text="*{fpLike}"></span><br/>
-    		<span th:if="${#fields.hasErrors('fpLike')}" th:errors="*{fpLike}" class="error" id="fpLike.errors"></span>
+        	<span  th:if="${#fields.hasErrors('fpImage')}" th:errors="*{fpImage}" class="error" id="fpImage.errors"></span>
+			<div id="blob_holder"><img th:src="@{/forumPost/DBGifReader3} + '?fpNum=' + ${forumPostVO.fpNum}" width="100px"></div>
 			</div>
 				
 			
-<!-- 			<div> -->
-<!-- 			<label>文章狀態:</label> -->
-<!-- 			<input type="text" th:field="*{fpStat}" onclick="hideContent('fpStat.errors');" /><br/> -->
-<!-- 			<span  th:if="${#fields.hasErrors('fpStat')}" th:errors="*{fpStat}" class="error" id="fpStat.errors"></span> -->
-<!-- 			</div> -->
-			
-			
-<!-- 			<div> -->
-<!--     		<label>文章最後修改時間:</label> -->
-<!--     		<span th:text="*{fpUpdate}"></span><br/> -->
-<!--     		<span th:if="${#fields.hasErrors('fpUpdate')}" th:errors="*{fpUpdate}" class="error" id="fpUpdate.errors"></span> -->
-<!-- 			</div> -->
-			
-			
+<!-- 		不要被修改的欄位 -->
+			<input type="text" th:field="*{fpLike}" hidden onclick="hideContent('fpLike.errors');" /><br/>
+			<input type="text" th:field="*{fpStat}" hidden onclick="hideContent('fpStat.errors');" /><br/>
 			
 
 			

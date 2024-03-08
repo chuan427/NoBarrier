@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.forumreply.model.ForumReplyVO;
+import com.forumreport.model.ForumReportVO;
 
 
 @Service("forumPostService")
@@ -43,5 +44,9 @@ public class ForumPostService {
 		
 		public Set<ForumReplyVO> getForumReplyByfrFpnum(Integer frFpNum){
 			return getOneForumPost(frFpNum).getForumReply();
+		}
+		
+		public Set<ForumReportVO> getForumReportByfrpFpNum(Integer frpFpNum){
+			return getOneForumPost(frpFpNum).getForumReport();
 		}
 }

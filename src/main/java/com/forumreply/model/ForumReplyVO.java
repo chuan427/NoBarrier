@@ -1,40 +1,45 @@
 package com.forumreply.model;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import org.hibernate.annotations.Where;
-
 import com.forumpost.model.ForumPostVO;
+import com.forumreport.model.ForumReportVO;
+import com.user.model.UserVO;
 
 @Entity // 要加上@Entity才能成為JPA的一個Entity類別
 @Table(name = "forumReply") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
-@Where(clause = "frStat = 1")
 public class ForumReplyVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer frNum;
 	private ForumPostVO forumPostVO;
-	private Integer frUserid;
+	private UserVO userVO;
 	private String frContent;
 	private byte[] frImage;
 	private Timestamp frTime;
 	private Timestamp frUpdate;
 	private Integer frLike;
 	private Integer frStat;
-	
-	
-	
-//	private Integer frFpnum;
-//	private Integer frIsValid;
+	private Set<ForumReportVO> forumReport = new HashSet<ForumReportVO>();
+
+//	private Integer frUserid; //與user關聯
+//	private Integer frFpnum;  //與ForumPost關聯
+
 
 	public ForumReplyVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 	}
@@ -62,13 +67,14 @@ public class ForumReplyVO implements java.io.Serializable {
 		this.forumPostVO = forumPostVO;
 	}
 
-	@Column(name = "frUserid")
-	public Integer getFrUserid() {
-		return this.frUserid;
+	@ManyToOne
+	@JoinColumn(name = "frUserid", referencedColumnName = "userId")
+	public UserVO getUserVO() {
+		return userVO;
 	}
-	
-	public void setFrUserid(Integer frUserid) {
-		this.frUserid = frUserid;
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
 	}
 
 	@Column(name = "frContent")
@@ -80,15 +86,6 @@ public class ForumReplyVO implements java.io.Serializable {
 	public void setFrContent(String frContent) {
 		this.frContent = frContent;
 	}
-
-//	@Column(name = "fpTime")
-//	public Date getFpTime() {
-//		return fpTime;
-//	}
-//
-//	public void setFpTime(Date fpTime) {
-//		this.fpTime = fpTime;
-//	}
 
 	@Column(name = "frLike")
 	public Integer getFrLike() {
@@ -109,6 +106,7 @@ public class ForumReplyVO implements java.io.Serializable {
 		this.frImage = frImage;
 	}
 
+	@Column(name = "frTime" ,  updatable = false)
 	public void setFrTime(Timestamp frTime) {
 		this.frTime = frTime;
 	}
@@ -117,6 +115,7 @@ public class ForumReplyVO implements java.io.Serializable {
 		return this.frTime;
 	}
 
+	@Column(name = "frUpdate")
 	public Timestamp getFrUpdate() {
 		return this.frUpdate;
 	}
@@ -132,6 +131,24 @@ public class ForumReplyVO implements java.io.Serializable {
 	public void setFrStat(Integer frStat) {
 		this.frStat = frStat;
 	}
+
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "forumReplyVO")
+	@OrderBy("frpFrnum asc")
+	public Set<ForumReportVO> getForumReport() {
+		return forumReport;
+	}
+
+	public void setForumReport(Set<ForumReportVO> forumReport) {
+		this.forumReport = forumReport;
+	}
+
+	
+	
+	
+	
+	
+	
 	
 //	@PrePersist
 //	protected void onCreate() {
@@ -152,6 +169,14 @@ public class ForumReplyVO implements java.io.Serializable {
 //		this.frTime = frTime;
 //	}
 
+//	public Integer getFrUserid() {
+//	return this.frUserid;
+//	}
+//
+//	public void setFrUserid(Integer frUserid) {
+//	this.frUserid = frUserid;
+//	}
+
 //	@Column(name = "frFpnum")
 //	public Integer getFrFpnum() {
 //		return frFpnum;
@@ -160,14 +185,5 @@ public class ForumReplyVO implements java.io.Serializable {
 //	public void setFrFpnum(Integer frFpnum) {
 //		this.frFpnum = frFpnum;
 //	}
-
-//		@Column(name = "frIsValid")
-//		public Integer getFrIsValid() {
-//			return frIsValid;
-//		}
-//		
-//		public void setFrIsValid(Integer frIsValid) {
-//			this.frIsValid = frIsValid;
-//		}
 
 }

@@ -66,12 +66,24 @@
 			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
 			</div>
 			
+			<br>
+			<br>			
+			
 			<div>
-			<label>產業類別:</label>
-			<input type="text" th:field="*{fpCategory}" onclick="hideContent('fpCategory.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('fpCategory')}" th:errors="*{fpCategory}" class="error" id="fpCategory.errors"></span>
-			</div>
-		
+   			 <label for="fpCategory">檢舉類型:</label>
+    			<select id="fpCategory" th:field="*{fpCategory}">
+        		<option value="1">1.金屬加工類</option>
+        		<option value="2">2.稀有零件討論</option>
+        		<option value="3">3.xxxxxxx</option>
+        		<option value="4">4.xxxxxxx</option>
+       			<option value="5">5.xxxxxxx</option>
+       		 	<option value="6">6.xxxxxxx</option>
+       		 	<option value="7">7.xxxxxxx</option>
+    			</select><br/>
+			
+			<br>
+			<br>
+			<br>	
 			
 			<div>
 			<label>文章標題:</label>
@@ -96,18 +108,18 @@
 			</div>
 			
 			
-			<div>
-   		 	<label>發表文章愛心:</label>
-    		<input type="text" th:field="*{fpLike}" onclick="hideContent('fpLike.errors');" /><br/>
-    		<span th:if="${#fields.hasErrors('fpLike')}" th:errors="*{fpLike}" class="error" id="fpLike.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!--    		 	<label>發表文章愛心:</label> -->
+<!--     		<input type="text" th:field="*{fpLike}" onclick="hideContent('fpLike.errors');" /><br/> -->
+<!--     		<span th:if="${#fields.hasErrors('fpLike')}" th:errors="*{fpLike}" class="error" id="fpLike.errors"></span> -->
+<!-- 			</div> -->
 				
 			
-			<div>
-			<label>文章狀態:</label>
-			<input type="text" th:field="*{fpStat}" onclick="hideContent('fpStat.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('fpStat')}" th:errors="*{fpStat}" class="error" id="fpStat.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 			<label>文章狀態:</label> -->
+<!-- 			<input type="text" th:field="*{fpStat}" onclick="hideContent('fpStat.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('fpStat')}" th:errors="*{fpStat}" class="error" id="fpStat.errors"></span> -->
+<!-- 			</div> -->
 					
 	
 			

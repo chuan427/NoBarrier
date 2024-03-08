@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.forumpost.model.ForumPostService;
 import com.forumpost.model.ForumPostVO;
 import com.forumreply.model.ForumReplyService;
+import com.forumreport.model.ForumReportService;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -31,13 +32,16 @@ import com.user.model.UserVO;
 public class ForumPostController {
 
 	@Autowired
+	UserService userSvc;
+	
+	@Autowired
 	ForumPostService forumPostSvc;
-
+	
 	@Autowired
 	ForumReplyService forumReplySvc;
 	
 	@Autowired
-	UserService usersvc;
+	ForumReportService forumReportSvc;
 
 	/*
 	 * This method will serve as addEmp.html handler.
@@ -130,9 +134,9 @@ public class ForumPostController {
 			return "back-end/forumPost/update_ForumPost_input";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		ForumPostVO originalTime = forumPostSvc.getOneForumPost(forumPostVO.getFpNum());
-		forumPostVO.setFpTime(originalTime.getFpTime());
+//		EmpService empSvc = new EmpService();
+//		ForumPostVO originalTime = forumPostSvc.getOneForumPost(forumPostVO.getFpNum());
+//		forumPostVO.setFpTime(originalTime.getFpTime());
 		long currentTimeMillis = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
 		forumPostVO.setFpUpdate(currentTimestamp);
@@ -147,7 +151,7 @@ public class ForumPostController {
 	
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData(){
-		List<UserVO> list = usersvc.getAll();
+		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
 
@@ -155,6 +159,7 @@ public class ForumPostController {
 	 * This method will be called on listAllUser.html form submission, handling POST
 	 * request
 	 */
+	
 	@PostMapping("delete")
 	public String delete(@RequestParam("fpNum") String fpNum, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -168,8 +173,19 @@ public class ForumPostController {
 		return "back-end/forumPost/listAllForumPost"; // 刪除完成後轉交listAllUser.html
 	}
 	
+	// 去除BindingResult中某個欄位的FieldError紀錄
+	public BindingResult removeFieldError(ForumPostVO forumPostVO, BindingResult result, String removedFieldname) {
+		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
+		result = new BeanPropertyBindingResult(forumPostVO, "forumPostVO");
+		for (FieldError fieldError : errorsListToKeep) {
+			result.addError(fieldError);
+		}
+		return result;
+	}
 	
 	
+
 	
 
 	/*
@@ -198,15 +214,6 @@ public class ForumPostController {
 //		return map;
 //	}
 
-	// 去除BindingResult中某個欄位的FieldError紀錄
-	public BindingResult removeFieldError(ForumPostVO forumPostVO, BindingResult result, String removedFieldname) {
-		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
-		result = new BeanPropertyBindingResult(forumPostVO, "forumPostVO");
-		for (FieldError fieldError : errorsListToKeep) {
-			result.addError(fieldError);
-		}
-		return result;
-	}
+
 
 }

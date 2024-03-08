@@ -24,15 +24,26 @@ import com.forumpost.model.ForumPostService;
 import com.forumpost.model.ForumPostVO;
 import com.forumreply.model.ForumReplyService;
 import com.forumreply.model.ForumReplyVO;
+import com.forumreport.model.ForumReportService;
+import com.user.model.UserService;
+import com.user.model.UserVO;
 
 @Controller
 @RequestMapping("/forumReply")
 public class ForumReplyController {
 
 	@Autowired
-	ForumReplyService forumReplySvc;
+	UserService userSvc;
+	
 	@Autowired
 	ForumPostService forumPostSvc;
+	
+	@Autowired
+	ForumReplyService forumReplySvc;
+	
+	@Autowired
+	ForumReportService forumReportSvc;
+	
 
 	/*
 	 * This method will serve as addEmp.html handler.
@@ -122,8 +133,9 @@ public class ForumReplyController {
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
-		ForumReplyVO originalTime = forumReplySvc.getOneForumReply(forumReplyVO.getFrNum());
-		forumReplyVO.setFrTime(originalTime.getFrTime());
+//		ForumReplyVO originalTime = forumReplySvc.getOneForumReply(forumReplyVO.getFrNum());
+//		forumReplyVO.setFrTime(originalTime.getFrTime());
+		
 		long currentTimeMillis = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
 		forumReplyVO.setFrUpdate(currentTimestamp);
@@ -135,11 +147,19 @@ public class ForumReplyController {
 		return "back-end/forumReply/listOneForumReply"; // 修改成功後轉交listOneUser.html
 	}
 	
+	@ModelAttribute("userListData")
+	protected List<UserVO> referenceListData1(){
+		List<UserVO> list = userSvc.getAll();
+		return list;
+	}
+	
 	@ModelAttribute("forumPostListData")
 	protected List<ForumPostVO> referenceListData(){
 		List<ForumPostVO> list = forumPostSvc.getAll();
 		return list;
 	}
+	
+
 	
 	
 	

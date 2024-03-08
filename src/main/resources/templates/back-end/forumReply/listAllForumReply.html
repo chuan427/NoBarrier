@@ -116,15 +116,15 @@
 
 <b>● 符 合 查 詢 條 件 如 下 所 示 : 共 <font color=red th:text="${forumReplyListData.size}"></font> 筆</b></div>
 	<div style="padding: 5px; width:4000px; height:35px; background-color:#CCCCFF; margin-top:5px; margin-bottom:5px; margin-left:auto; margin-right:auto; border: 1px solid #000000;">
-			<span style="padding: 50px;">留言編號</span>
-			<span style="padding: 40px;">貼文編號</span>
-			<span style="padding: 40px;">會員編號</span>
-			<span style="padding: 40px;">回覆內容</span>
-			<span style="padding: 65px;">留言圖片</span>
-			<span style="padding: 35px;">回覆發佈時間</span>
-			<span style="padding: 35px;">貼文最後編輯時間時間</span>
-			<span style="padding: 20px;">留言按讚數</span>
-			<span style="padding: 20px;">回覆貼文狀態</span>
+			<span style="padding: 5px;">留言編號</span>
+			<span style="padding: 50px;">貼文編號</span>
+			<span style="padding: 10px;">會員編號</span>
+			<span style="padding: 50px;">回覆內容</span>
+			<span style="padding: 80px;">留言圖片</span>
+			<span style="padding: 15px;">回覆發佈時間</span>
+			<span style="padding: 15px;">貼文最後編輯時間時間</span>
+			<span style="padding: 5px;">留言按讚數</span>
+			<span style="padding: 5px;">回覆貼文狀態</span>
 			<span style="padding: 40px;">修改</span>
 			<span style="padding: 0px 0px 0px 50px;">刪除</span>
 		</div>
@@ -134,13 +134,13 @@
 			<tr>
 				<td th:text="${forumReplyVOStat.count}" width="-50px"></td>
 				<td th:text="${forumReplyVO.frNum}"></td>
-				<td th:text="${forumReplyVO.forumPostVO.fpNum} + '-[' + ${forumReplyVO.forumPostVO.fpTitle} + ']'"></td>
-				<td th:text="${forumReplyVO.frUserid}"></td>
+				<td th:text="${forumReplyVO.userVO.userId} + '-[' + ${forumReplyVO.userVO.comName} + ']'"></td>
 				<td th:text="${forumReplyVO.frContent}"></td>
-				<td><img th:src="@{/forumReply/DBGifReader} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></td>
+				<td><img th:src="@{/forumReply/DBGifReader4} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></td>
 				<td th:text="${forumReplyVO.frTime}"></td>
 				<td th:text="${forumReplyVO.frUpdate}"></td>
 				<td th:text="${forumReplyVO.frLike}"></td>
+				<td th:text="${forumReplyVO.frStat}"></td>
 
 
 			<td>

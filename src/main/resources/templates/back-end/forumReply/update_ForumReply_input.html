@@ -58,13 +58,16 @@
 			<div>
 			<label>回覆貼文編號:</label>
 			<input type="text" th:field="*{frNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
-			</div>			
+			</div>		
 			
+			<div>
+			<label>貼文編號:</label>
+			<input type="text" th:field="*{forumPostVO.fpNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			</div>	
 			
 			<div>
 			<label>會員編號:</label>
-			<input type="text" th:field="*{frUserid}" onclick="hideContent('fpUserid.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('frUserid')}" th:errors="*{frUserid}" class="error" id="frUserid.errors"></span>
+			<input type="text" th:field="*{userVO.userId}" style="border:0px ; font-weight: bold;" readonly /><br/>
 			</div>
 			
 			<div>
@@ -78,7 +81,7 @@
 			<label>修改圖片:</label>
 			<input type="file" th:field="*{frImage}" onclick="previewImage()" multiple="multiple" />
             <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
-			<div id="blob_holder"><img th:src="@{/forumReply/DBGifReader1} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></div>
+			<div id="blob_holder"><img th:src="@{/forumReply/DBGifReader4} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></div>
 			</div>
 			
 			

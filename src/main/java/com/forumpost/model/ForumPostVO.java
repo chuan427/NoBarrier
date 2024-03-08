@@ -20,14 +20,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Where;
-
 import com.forumreply.model.ForumReplyVO;
+import com.forumreport.model.ForumReportVO;
 import com.user.model.UserVO;
 
 @Entity // 要加上@Entity才能成為JPA的一個Entity類別
 @Table(name = "forumPost") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
-//@Where(clause = "fpStat = 1")
 public class ForumPostVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer fpNum;
@@ -41,11 +39,12 @@ public class ForumPostVO implements java.io.Serializable {
 	private Integer fpLike;
 	private Integer fpStat;
 	private Set<ForumReplyVO> forumReply = new HashSet<ForumReplyVO>();
+	private Set<ForumReportVO> forumReport = new HashSet<ForumReportVO>();
 
 //	private Integer fpIsValid;
 //	private Integer fpUserid;
 
-	public ForumPostVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
+	public ForumPostVO() { 
 	}
 
 	@Id // @Id代表這個屬性是這個Entity的唯一識別屬性，並且對映到Table的主鍵
@@ -103,8 +102,6 @@ public class ForumPostVO implements java.io.Serializable {
 	}
 
 	@Column(name = "fpStat")
-//	@NotEmpty(message="評價總筆數: 請勿空白")
-//	@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
 	public Integer getFpStat() {
 		return this.fpStat;
 	}
@@ -114,7 +111,6 @@ public class ForumPostVO implements java.io.Serializable {
 	}
 
 	@Column(name = "fpImage")
-//	@NotEmpty(message="特賣商品圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 	public byte[] getFpImage() {
 		return fpImage;
 	}
@@ -123,7 +119,7 @@ public class ForumPostVO implements java.io.Serializable {
 		this.fpImage = fpImage;
 	}
 
-	@Column(name = "fpTime")
+	@Column(name = "fpTime" , updatable = false)
 	public Timestamp getFpTime() {
 		return fpTime;
 	}
@@ -162,6 +158,18 @@ public class ForumPostVO implements java.io.Serializable {
 	public void setForumReply(Set<ForumReplyVO> forumReply) {
 		this.forumReply = forumReply;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "forumPostVO")
+	@OrderBy("frpFpnum asc")
+	public Set<ForumReportVO> getForumReport() {
+		return forumReport;
+	}
+
+	public void setForumReport(Set<ForumReportVO> forumReport) {
+		this.forumReport = forumReport;
+	}
+	
+	
 
 //	@PrePersist
 //	protected void onCreate() {
@@ -174,7 +182,7 @@ public class ForumPostVO implements java.io.Serializable {
 //	}
 //
 //	@Column(name = "fpTime")
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 //	public LocalDateTime getFpTime() {
 //		return fpTime;
 //	}
@@ -185,6 +193,5 @@ public class ForumPostVO implements java.io.Serializable {
 //
 //	public void setFpUserid(Integer fpUserid) {
 //		this.fpUserid = fpUserid;
-
 	
 }

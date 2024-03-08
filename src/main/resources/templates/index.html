@@ -1,144 +1,117 @@
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>index.html - Spring Boot - Maven - Spring MVC - Thymeleaf
-	Demo</title>
 <title>No Barrier Tech</title>
 
-<link rel="stylesheet"
-	th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
-	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
 <script th:src="@{/js/home.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+<script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css}" />
 
 
 <link rel="stylesheet" th:href="@{/css/index.css}" />
 
 <link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
-<script th:src="@{/out-statics/out-js/app4.js}" /></script>
 <!-- <script th:src="@{/out-statics/out-js/app4.js}" ></script> -->
 <style>
 .carousel-control-prev-icon {
-	background-image:
-		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 
 .carousel-control-next-icon {
-	background-image:
-		url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
 </style>
 </head>
 <body>
 
-	<nav
-		class="navbar navbar-expand-md navbar-dark bg-dark fixed-top justify-content-center"
-		onclick="changeColor()" th:fragment="mynavbar">
-		<div align="center">
-			<h2 style="font-size: 30px; width: max-content;">
-				<span class="hello-color" th:text="'Hello, ' + ${message} +' : '"></span>
-				Spring Boot + Spring MVC + Thymeleaf （ <img width="95px"
-					height="80px" th:src="@{/images/spring boot.png}"> + <img
-					width="95px" height="80px" th:src="@{/images/spring mvc.png}">
-				+ <img width="110px" height="30px" th:src="@{/images/thymeleaf.png}">
-				）
-			</h2>
-			<h3>
-				<a class="navbar-brand" href="https://start.spring.io/"> Spring
-					Boot Quickstart 官網 : https://start.spring.io </a>
-			</h3>
 	<!-- <header> -->
-	<div class="container">
-		<header
-			class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-			<a th:href="@{/}"
-				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-
-				<img th:src="@{/images/new-logo.svg}" width="50" height="50" /> <span
-				class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
-			</a>
-			<ul class="nav nav-pills">
-				<li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
-				<li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-				<li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
-				<li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-				<li class="nav-item"><a th:href="@{/customer_service}"
-					class="nav-link">聯絡我們</a></li>
-				<li class="nav-item"><a th:href="@{/login/loginPage}"
-					class="nav-link">登入</a></li>
-				<li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
-
-
-<!-- 				漢堡選單 -->
-<!-- 				<nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar"> -->
-<!--                     <div class="container-fluid"> -->
-<!--                         <a class="navbar-brand" href="#"></a> -->
-<!--                         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" -->
-<!--                             data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight" -->
-<!--                             aria-label="Toggle navigation"> -->
-<!--                             <span class="navbar-toggler-icon small"></span> -->
-<!--                         </button> -->
-<!--                         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" -->
-<!--                             aria-labelledby="offcanvasNavbarLightLabel"> -->
-<!--                             <div class="offcanvas-header"> -->
-<!--                                 <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5> -->
-<!--                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" -->
-<!--                                     aria-label="Close"></button> -->
-<!--                             </div> -->
-<!--                             <div class="offcanvas-body"> -->
-<!--                                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3"> -->
-<!--                                     <li class="nav-item dropdown"> -->
-<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
-<!--                                             data-bs-toggle="dropdown" aria-expanded="false">會員中心</a> -->
-<!--                                         <ul class="dropdown-menu"> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/user/memberCen}">資料修改</a></li> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/user/memberCen}">帳戶資訊</a></li> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/user/memberCen}">更改密碼</a></li> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/user/memberCen}">產業類別編輯</a></li> -->
-<!--                                         </ul> -->
-<!--                                     </li> -->
-<!--                                     <li class="nav-item dropdown"> -->
-<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
-<!--                                             data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a> -->
-<!--                                         <ul class="dropdown-menu"> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/com/editmember_ad_view}">預覽頁面</a></li> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/com/editmember}">編輯頁面</a></li> -->
-<!--                                         </ul> -->
-<!--                                     </li> -->
-<!--                                     <li class="nav-item dropdown"> -->
-<!--                                         <a class="nav-link dropdown-toggle" href="#" role="button" -->
-<!--                                             data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a> -->
-<!--                                         <ul class="dropdown-menu"> -->
-<!--                                             <li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li> -->
-<!--                                         </ul> -->
-<!--                                     </li> -->
-<!--                                     <li class="nav-item"> -->
-<!--                                         <a class="nav-link" th:href="@{order/transaction_stat}">交易狀態</a> -->
-<!--                                     </li> -->
-<!--                                     <li class="nav-item"> -->
-<!--                                         <a class="nav-link" href="#">月對帳單</a> -->
-<!--                                     </li> -->
-<!--                                 </ul> -->
-<!--                                 <form class="d-flex mt-3" role="search"> -->
-<!--                                     <input class="form-control me-2" type="search" placeholder="Search" -->
-<!--                                         aria-label="Search"> -->
-<!--                                     <button class="btn btn-outline-success" type="submit">Search</button> -->
-<!--                                 </form> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                     </div> -->
-<!--                 </nav> -->
-            </ul>
-        </header>
-    </div>
+<div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a th:href="@{/}"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                
+                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
+             
+                <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
+            </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
+                <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
+                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+                
+				<!-- 漢堡選單 -->
+				<nav class="navbar bg-custom-color"
+					aria-label="Light offcanvas navbar">
+					<div class="container-fluid">
+						<a class="navbar-brand" href="#"></a>
+						<button class="navbar-toggler" type="button"
+							data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
+							aria-controls="offcanvasNavbarLight"
+							aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon small"></span>
+						</button>
+						<div class="offcanvas offcanvas-end" tabindex="-1"
+							id="offcanvasNavbarLight"
+							aria-labelledby="offcanvasNavbarLightLabel">
+							<div class="offcanvas-header">
+								<h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO
+									BARRIER TECH</h5>
+								<button type="button" class="btn-close"
+									data-bs-dismiss="offcanvas" aria-label="Close"></button>
+							</div>
+							<div class="offcanvas-body">
+								<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" href="#">資料修改</a></li>
+											<li><a class="dropdown-item" href="#">帳戶資訊</a></li>
+											<li><a class="dropdown-item" href="#">更改密碼</a></li>
+											<li><a class="dropdown-item" href="#">產業類別編輯</a></li>
+										</ul></li>
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item"
+												href="editmember_ad_view.html">預覽頁面</a></li>
+											<li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li>
+										</ul></li>
+									<li class="nav-item dropdown"><a
+										class="nav-link dropdown-toggle" href="#" role="button"
+										data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
+										<ul class="dropdown-menu">
+											<li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li>
+										</ul></li>
+									<li class="nav-item"><a class="nav-link" href="#">交易狀態</a>
+									</li>
+									<li class="nav-item"><a class="nav-link" href="#">月對帳單</a>
+									</li>
+								</ul>
+								<form class="d-flex mt-3" role="search">
+									<input class="form-control me-2" type="search"
+										placeholder="Search" aria-label="Search">
+									<button class="btn btn-outline-success" type="submit">Search</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</ul>
+		</header>
+	</div>
 
 	<!-- 關於我們 -->
 	<section class="py-3 text-center container">
@@ -150,93 +123,49 @@
 				<p class="lead text-body-secondary"></p>
 			</div>
 		</div>
-	</nav>
 	</section>
 
-	<!-- 	<main role="main" class="container"> -->
-	<div class="starter-template">
-		<span class="color1" id="title1">前端展示層(View) - 搭配Thymeleaf模板引擎
-			- 改用HTML</span>
-		<h1>
-			<a href="https://spring.io/projects/spring-boot" class="index-green"
-				id="title2">Spring Boot</a> <font color=black>+</font> <a
-				href="https://maven.apache.org/">Maven</a> -> <a
-				href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html"
-				class="index-green" id="title3">Spring MVC</a> <font color=black>+</font>
-			<a href="https://www.thymeleaf.org" class="index-green" id="title4">Thymeleaf</a>
-			-> <a href="https://www.tibame.com/course/33">Java WebApp</a>
-		</h1>
-		<hr>
-		<br>
 	<!-- carousel -->
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
+		<!-- 				<div class="carousel-indicators"> -->
+		<!-- 					<th:block th:each="adVO, adIndex : ${adListData}"> -->
+		<!-- 						<button type="button" data-bs-target="#carouselExampleIndicators" -->
+		<!-- 							th:data-bs-slide-to="${adIndex.index}" -->
+		<!-- 							th:class="${adIndex.index == 0 ? 'active' : ''}" -->
+		<!-- 							aria-label="Slide (adIndex.index + 1)"></button> -->
+		<!-- 					</th:block> -->
+		<!-- 				</div> -->
+
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
-					class="d-block w-30" alt= 'Slide 1' style="margin: 0 auto;">
+				<img src="/ad/DBGifReader?adOrdernum=0" height="300px"
+					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
 				<th:block th:if="${adVO.adIsValid == 1}">
 
-		<h3>
-			<a th:href="@{/quo/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-Quo</a>
-		</h3>
-		<h3>
-			<a th:href="@{/rptdlist/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-ReportedList</a>
-		</h3>
-		<h3>
-			<a th:href="@{/productInformation/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-Productinformation</a>
-		</h3>
-		<h3>
-			<a th:href="@{/industry/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-Industry</a>
-		</h3>
-		<h3>
-			<a th:href="@{/user/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-User</a>
-		</h3>
-		<h3>
-			<a th:href="@{/reqOrder/select_page}"
-				style="text-decoration: underline; color: black;">Click here to
-				Spring MVC + Thymeleaf Project-Reqorder</a>
-		</h3>
+					<!--  判断是否有广告日期与当天日期相同 -->
 					<th:block th:each="advertisement : ${adVO.advertisements}">
-					
-						<th:block
-							th:if="${#dates.format(advertisement.adsDays, 'yyyy-MM-dd') == #dates.format(#dates.createToday(), 'yyyy-MM-dd')}">
+						<th:block th:if="${advertisement.adsDays == #dates.createToday()}">
 							<!-- 根据索引设置轮播项的样式 -->
 							<div
-								th:class="carousel-item">
+								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index + 1})}"
+								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index})}"
 									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index + 1})"
-									style="margin: 0 auto;">
+									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
 							</div>
 						</th:block>
 					</th:block>
-
-
-
-
 				</th:block>
 			</th:block>
 		</div>
 
 		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"
-			style="color: black;">
+			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="color: black;">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
 				class="visually-hidden">Previous</span>
 		</button>
@@ -246,61 +175,54 @@
 				class="visually-hidden">Next</span>
 		</button>
 	</div>
-	<div>
-		<form th:action="@{/login}" method="get">
-			<button type="submit" class="loginBtn">登入</button>
-		</form>
-	</div>
-
-	<div style="float: right; left: -90%; position: relative;">
-		開發順序:
-		<ol style="float: left; left: 100%; position: relative;">
-
-			<li th:each="myList : ${myList}" th:utext="${myList}"></li>
-	<!-- 最新消息 -->
-	<section id="latest-news" class="py-5 text-center container"
-		style="background-color: lightgray; max-width: 100%;">
-		<div class="row py-lg-5">
-			<div class="col-lg-6 col-md-8 mx-auto">
-				<h1>最新消息</h1>
-				<div style="margin-top: 30px;"></div>
-				<p class="lead text-body-secondary"></p>
-				<table class="table" style="width: 800px;">
-					<thead>
-						<tr>
-							<th scope="col">日期</th>
-							<th scope="col">標題</th>
-							<th scope="col">內容</th>
-						</tr>
-					</thead>
-					<tbody id="table-body"></tbody>
-				</table>
-				<nav id="pagination" aria-label="Page navigation">
-					<ul class="pagination justify-content-center"></ul>
-				</nav>
-			</div>
-		</div>
-	</section>
-
-		</ol>
-
-	<!-- 服務項目 -->
-	<section class="py-5 text-center container"
-		style="background-color: rgb(200, 199, 199); max-width: 100%;">
-		<div class="row featurette">
-			<div class="col-md-7 mx-auto">
-				<h1 class="featurette-heading fw-normal lh-1">
-					服務項目 <span class="text-body-secondary"></span>
-				</h1>
-				<div style="margin-top: 30px;"></div>
-				<p class="lead" style="font-size: 25px;">從提出需求、議價、訂購到配送，提供用戶獲得更有效率的服務。</p>
-			</div>
-			<div class="col-md-7 mx-auto">
-				<svg
-					class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid"
-					width="500" height="300" xmlns="http://www.w3.org/2000/svg"
-					role="img" aria-label="Placeholder: 500x500"
-					preserveAspectRatio="xMidYMid slice" focusable="false">
+     <!-- 最新消息 -->
+    <section id="latest-news" class="py-5 text-center container" style="background-color: RGB(223, 203, 189); max-width: 100%;">
+        <div class="row py-lg-5" >
+            <div class="col-lg-8 col-md-8 mx-auto">
+                <h1>最新消息</h1>
+                <div style="margin-top: 30px;"></div>
+                <p class="lead text-body-secondary"></p>
+                <table class="table" id="example" style="width: 800px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">日期</th>
+                            <th scope="col">標題</th>
+                            <th scope="col">內容</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    <th:block th:each="newsVO : ${newsListData}">
+							<tr>
+<!-- 			  					 <td th:text="${newsVO.newsNum}"></td> -->
+								 <td th:text="${newsVO.newsDate}"></td>
+								 <td th:text="${newsVO.newsTitle}"></td>
+								 <td th:text="${newsVO.newsContent}"></td>
+<!-- 								 <td th:text="${newsVO.newsIsValid}"></td> -->
+							</tr>
+		  				</th:block>
+                    </tbody>
+                </table>
+                <nav id="pagination" aria-label="Page navigation">
+                    <ul class="pagination justify-content-center"></ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    
+    
+     <!-- 服務項目 -->
+    <section class="py-5 text-center container" style="background-color: rgb(200, 199, 199); max-width: 100%;">
+        <div class="row featurette">
+            <div class="col-md-7 mx-auto">
+                <h1 class="featurette-heading fw-normal lh-1">服務項目 <span class="text-body-secondary"></span>
+                </h1>
+                <div style="margin-top: 30px;"></div>
+                <p class="lead" style="font-size: 25px;">從提出需求、議價、訂購到配送，提供用戶獲得更有效率的服務。</p>
+            </div>
+            <div class="col-md-7 mx-auto">
+                <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid" width="500"
+                    height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500"
+                    preserveAspectRatio="xMidYMid slice" focusable="false">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%"
 						fill="var(--bs-secondary-bg)" />
@@ -322,6 +244,38 @@
 			</div>
 		</div>
 	</section>
+	<script>
+	$(document).ready(function() {
+		$('#example').DataTable({
+			"lengthMenu": [3 ,5,7, 9, 11],
+			"searching": false,  //搜尋功能, 預設是開啟
+		    "paging": true,     //分頁功能, 預設是開啟
+		    "ordering": false,   //排序功能, 預設是開啟
+		    "language": {
+		        "processing": "處理中...",
+		        "loadingRecords": "載入中...",
+		        "lengthMenu": "顯示 _MENU_ 筆結果",
+		        "zeroRecords": "沒有符合的結果",
+		        "info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+		        "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
+		        "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
+		        "infoPostFix": "",
+		        "search": "搜尋:",
+		        "paginate": {
+		            "first": "第一頁",
+		            "previous": "上一頁",
+		            "next": "下一頁",
+		            "last": "最後一頁"
+		        },
+		        "aria": {
+		            "sortAscending":  ": 升冪排列",
+		            "sortDescending": ": 降冪排列",
+		        }
+		    }
+		});
+	});
+	
+	</script>
 
 	<!-- 回到頂端 -->
 	<div class="container">
@@ -334,32 +288,27 @@
                         <path
 							d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
                     </svg>
-				</a>
-			</div>
-		</div>
-	</div>
-	<!--     </main> -->
-
-	<!-- <footer> -->
-	<div class="container">
-		<footer class="py-3 my-4">
-			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
-				<li class="nav-item"><a th:href="@{/}"
-					class="nav-link px-2 text-body-secondary">關於我們</a></li>
-				<li class="nav-item"><a th:href="@{/}"
-					class="nav-link px-2 text-body-secondary">最新消息</a></li>
-				<li class="nav-item"><a th:href="@{/com}"
-					class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
-				<li class="nav-item"><a th:href="@{/customer_service}"
-					class="nav-link px-2 text-body-secondary">聯絡我們</a></li>
-			</ul>
-			<p class="text-center text-body-secondary">&copy; 2023 NO BARRIER
-				TECH Company, Inc</p>
-		</footer>
-	</div>
-
-
-	<!-- <h3>
+</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <footer> -->
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
+                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
+                </li>
+            </ul>
+            <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
+        </footer>
+    </div>
+    
+    
+		<!-- <h3>
 
 
 			<a th:href="@{/reqorder/select_page}"
@@ -373,5 +322,6 @@
 			<a th:href="@{/productInformation/select_page}"
 				style="text-decoration: underline; color: black;">ProductInformation</a>
 		</h3> -->
+
 </body>
 </html>

@@ -62,14 +62,8 @@ import com.reqorder.model.ReqOrderVO;
 		private Set<QuoVO> quotations = new HashSet<QuoVO>();
 		private Set<ProductInformationVO> productInformation = new HashSet<ProductInformationVO>();
 		private Set<QueListVO> quelists = new HashSet<QueListVO>();
-		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>()
-<<<<<<< .mine
+		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>();
 
-
-=======
-
-		
->>>>>>> .theirs
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 		}
 		
