@@ -1,0 +1,47 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>客服問提列表 - listOneQue.html</title>
+
+<head th:insert="~{/back-end/que/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>客服問題列表 - listOneQue.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/que/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneQue-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		<span>問題編號:</span><span th:text="${queListVO.queNum}"></span><br/>
+		<span>問題時間:</span><span th:text="${#dates.format(queListVO.queNotitime, 'yyyy-MM-dd hh-mm:ss')}"></span><br/>
+		<span>問題敘述:</span><span th:text="${queListVO.queDes}"></span><br/>
+		<span>會員編號:</span><span th:text="${queListVO.userVO.userId}"></span><br/>
+		<span>問題圖片:</span><span><img th:src="@{/que/DBGifReader} + '?queNum=' + ${queListVO.queNum}" width="100px"></span><br/>
+		<span>問題處理狀態:</span><span th:text="${queListVO.queStat}"></span><br/>
+	</div>
+
+
+</body>
+</html>

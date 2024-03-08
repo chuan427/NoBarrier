@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- <html lang="en"> -->
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>廠商資訊</title>
+<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
+
+#back-to-top-btn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+	/* 確保按鈕在其他內容上方顯示 */
+}
+
+#back-to-top-btn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+	/* 確保按鈕在其他內容上方顯示 */
+}
+
+.form-select {
+	max-width: 300px;
+	/* 設定最大寬度 */
+	margin: 0 auto;
+	/* 左右置中 */
+}
+.table tr:nth-child(even) {
+    background-color: lightgray !important;
+}
+
+.table tr:nth-child(odd) {
+    background-color: white !important;
+}
+
+</style>
+</head>
+
+<body>
+<head th:insert="~{/front-end/header}"></head>   <!--這是header-->
+	<!-- <breadcrumb> -->
+	<div class="container my-5">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
+				<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/com}">廠商資訊</a></li>
+			</ol>
+		</nav>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                    <!-- ●●js  for jquery datatables 用 -->
+	<script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>              <!-- ●●js  for jquery datatables 用 -->
+	<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css}" />
+	<section class="py-5 text-center container" style="background-color: rgb(225, 220, 220); max-width: 100%;">
+        <div class="row py-lg-5">
+<!--             <div class="col-lg-6 col-md-8 mx-auto"> -->
+                <h1 class="fw-light">廠商資訊</h1>
+                <p class="lead text-body-secondary"></p>
+                <table class="table" id="example">
+                    <thead>
+                        <tr>
+                            <th scope="col">序號</th>
+                            <th scope="col">公司編號</th>
+                            <th scope="col">公司名稱</th>
+                            <th scope="col">公司地址</th>
+                            <th scope="col">產業類別</th>
+                            <th scope="col">詳情</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    	<th:block th:each="userVO : ${UserListData}">
+							<tr>
+			  					 <td th:text="${userVOStat.count}"></td>
+								 <td th:text="${userVO.userId}"></td>
+								 <td th:text="${userVO.comName}"></td>
+								 <td th:text="${userVO.comAddress}"></td>
+								  <td>
+<!--     								<span th:text="${userVO.comIndustry1}"></span> -->
+    							<script th:inline="javascript">
+       										 /* 取得 userVO.comIndustry1 的值 */
+       								 var industry = '[[${userVO.comIndustry1}]]';
+        
+      										 /* 使用 switch case 判斷並加入相應的文字描述 */
+        								switch (industry) {
+            								case '1':
+             								  	document.write('工業加工');
+              									break;
+           								 	case '2':
+                								document.write('金屬物件');
+                								break;
+           								 	case '3':
+             									document.write('機械材料');
+             									break;
+           									 case '4':
+             									document.write('電子元件');
+             									break;	
+           									case '5':
+                								document.write('照明配件');
+                								break;
+           									case '6':
+                								document.write('塑膠零件');
+                								break;
+           									case '7':
+                								document.write('螺絲和緊固件');
+                								break;
+       						 					}
+   									 </script>
+									</td>
+								<td><a th:href="@{/user/listAllUser}">詳情</a></td>
+							</tr>
+		  				</th:block>
+                    </tbody>
+                </table>
+                <nav id="pagination" aria-label="Page navigation">
+                    <ul class="pagination justify-content-center"></ul>
+                </nav>
+            </div>
+    </section>
+<script>
+	$(document).ready(function() {
+		$('#example').DataTable({
+			"lengthMenu": [5 ,10, 20, 50, 100],
+			"searching": true,  //搜尋功能, 預設是開啟
+		    "paging": true,     //分頁功能, 預設是開啟
+		    "ordering": true,   //排序功能, 預設是開啟
+		    "rowCallback": function(row, data, index) {
+		        // 在這裡進行行回調，設定每一行的樣式
+		        if (index % 2 === 0) {
+		            // 偶數行
+		            $(row).addClass('even-row');
+		        } else {
+		            // 奇數行
+		            $(row).addClass('odd-row');
+		        }
+		    },
+		    "language": {
+		        "processing": "處理中...",
+		        "loadingRecords": "載入中...",
+		        "lengthMenu": "顯示 _MENU_ 筆結果",
+		        "zeroRecords": "沒有符合的結果",
+		        "info": "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+		        "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
+		        "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
+		        "infoPostFix": "",
+		        "search": "搜尋:",
+		        "paginate": {
+		            "first": "第一頁",
+		            "previous": "上一頁",
+		            "next": "下一頁",
+		            "last": "最後一頁"
+		        },
+		        "aria": {
+		            "sortAscending":  ": 升冪排列",
+		            "sortDescending": ": 降冪排列",
+		        }
+		    }
+		});
+	});
+	
+</script>
+<!-- 	<!-- 產業類別選單 --> 
+<!-- 	<select class="form-select" id="industry-select" -->
+<!-- 		onchange="filterTable()" aria-label="Default select example"> -->
+<!-- 		<option selected>請選擇欲搜尋的產業類別</option> -->
+<!-- 		<option value="工業加工">工業加工</option> -->
+<!-- 		<option value="金屬物件">金屬物件</option> -->
+<!-- 		<option value="機械材料">機械材料</option> -->
+<!-- 		<option value="電子元件">電子元件</option> -->
+<!-- 		<option value="照明配件">照明配件</option> -->
+<!-- 		<option value="塑膠零件">塑膠零件</option> -->
+<!-- 		<option value="螺絲和緊固件">螺絲和緊固件</option> -->
+<!-- 		<option value="其他">其他</option> -->
+<!-- 	</select> -->
+
+<!-- 	<div style="margin-top: 30px;"></div> -->
+
+<!-- 	<!-- 搜尋公司 -->
+<!-- 	<form class="d-flex justify-content-center mt-3" role="search" -->
+<!-- 		action="com_homepage.html" method="GET" -->
+<!-- 		style="max-width: 500px; margin: 0 auto;"> -->
+<!-- 		<input class="form-control me-2" type="search" placeholder="Search" -->
+<!-- 			aria-label="Search" name="company"> -->
+<!-- 		<button class="btn btn-outline-success" type="submit">Search</button> -->
+<!-- 	</form> -->
+
+<!-- 	<div style="margin-top: 50px;"></div> -->
+<!-- 	<!-- 廠商資訊 -->
+<!-- 	<section class="py-5 text-center container" -->
+<!-- 		style="background-color: lightgray; max-width: 100%;"> -->
+<!-- 		<div class="row py-lg-5"> -->
+<!-- 			<div class="col-lg-6 col-md-8 mx-auto"> -->
+<!-- 				<h1 class="fw-light">廠商資訊</h1> -->
+<!-- 				<p class="lead text-body-secondary"></p> -->
+<!-- 				<table class="table"> -->
+<!-- 					<thead> -->
+<!-- 						<tr> -->
+<!-- 							<th scope="col">序號</th> -->
+<!-- 							<th scope="col">公司名稱</th> -->
+<!-- 							<th scope="col">公司地址</th> -->
+<!-- 							<th scope="col">產業類別</th> -->
+<!-- 							<th scope="col">詳情</th> -->
+<!-- 						</tr> -->
+<!-- 					</thead> -->
+<!-- 					<tbody id="table-body"></tbody> -->
+<!-- 				</table> -->
+<!-- 				<nav id="pagination" aria-label="Page navigation"> -->
+<!-- 					<ul class="pagination justify-content-center"></ul> -->
+<!-- 				</nav> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</section> -->
+
+	<!-- 回到頂端 -->
+	<div class="container">
+		<div class="row justify-content-end">
+			<div class="col-auto">
+				<a href="#" id="back-to-top-btn"> <svg
+						xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+						fill="currentColor" class="bi bi-arrow-up-circle-fill"
+						viewBox="0 0 16 16">
+                        <path
+							d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z" />
+                    </svg>
+				</a>
+			</div>
+		</div>
+	</div>
+
+<!-- 	</div> -->
+<head th:insert="~{/front-end/footer}"></head>  <!--這是footer-->
+<!-- 	<script th:src="@{/js/com.js}"></script> -->
+<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
+<!-- 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script> -->
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package com;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,14 +12,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.forumpost.model.ForumPostService;
-import com.forumpost.model.ForumPostVO;
-import com.forumreply.model.ForumReplyService;
+import com.ad.model.AdService;
+import com.ad.model.AdVO;
+import com.addday.AdDate;
 import com.forumreply.model.ForumReplyVO;
+
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.newsmodel.NewsService;
+import com.newsmodel.NewsVO;
 import com.productinformation.model.ProductInformationService;
 import com.productinformation.model.ProductInformationVO;
+import com.questionList.model.QueListService;
+import com.questionList.model.QueListVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
@@ -39,25 +45,26 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	RptdlistService rptdlistSvc;
-	
-	@Autowired
-	ReqOrderService reqOrderSvc;
-	
-	@Autowired
-	IndustryService industrySvc;
-	
-	@Autowired
-	ProductInformationService productInformationSvc;
-	
-	@Autowired
-	UserService userSvc;
 
 	@Autowired
+	ReqOrderService reqOrderSvc;
+
+	@Autowired
+	IndustryService industrySvc;
+
+	@Autowired
+	ProductInformationService productInformationSvc;
+
+	@Autowired
+	UserService userSvc;
+	@Autowired
+	NewsService newsSvc;	@Autowired
+	AdService adSvc;	@Autowired
+	QueListService queSvc;	@Autowired
 	ForumPostService forumPostSvc;
 
 	@Autowired
-	ForumReplyService forumReplySvc;
-	
+	ForumReplyService forumReplySvc;	
 //	@Autowired
 //	NotificationService notificationSvc;
 
@@ -85,10 +92,23 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("message", name);
 		return "index"; // view
 	}
-	
-	@GetMapping("/login")
+
+	 //登入頁面
+	@GetMapping("/login/loginPage")  
 	public String toLoginPage() {
 		return "back-end/login/loginPage"; // view
+	}
+	
+	//廠商資訊
+	@GetMapping("/com")      			
+	public String toCom() {
+		return "front-end/com"; // view
+	}
+	
+	//聯絡我們
+	@GetMapping("/customer_service")      			
+	public String customer_service() {
+	return "front-end/customer_service"; // view
 	}
 
 	// =========== 以下第57~62行是提供給
@@ -131,14 +151,14 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ------------------------------------------
-	@GetMapping("/reqOrder/select_page")
+	@GetMapping("/reqorder/select_page")
 	public String select_page_reqorder(Model model) {
-		return "back-end/reqOrder/select_page";
+		return "back-end/reqorder/select_page";
 	}
 
-	@GetMapping("/reqOrder/listAllReqOrder")
+	@GetMapping("/reqorder/listAllReqOrder")
 	public String listAllReqOrder(Model model) {
-		return "back-end/reqOrder/listAllReqOrder";
+		return "back-end/reqorder/listAllReqOrder";
 	}
 
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
@@ -184,8 +204,8 @@ public class IndexController_inSpringBoot {
 		List<ProductInformationVO> list = productInformationSvc.getAll();
 		return list;
 	}
-	
-	//------------------------------------------
+
+	// ------------------------------------------
 
 	@GetMapping("/user/select_page")
 	public String select_page_user(Model model) {
@@ -203,7 +223,34 @@ public class IndexController_inSpringBoot {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
-	
+//	-----------------------------------------------------------------------
+
+	@GetMapping("/ad/select_page")
+	public String select_page_ad(Model model) {
+		return "back-end/ad/select_page";
+	}
+
+	@GetMapping("/ad/listAllEmp")
+	public String listAllEmp(Model model) {
+		return "back-end/ad/listAllEmp";
+	}
+
+	@GetMapping("/ad/addEmp")
+	public String addEmp1(Model model) {
+		AdDate adDate = new AdDate();
+		model.addAttribute("adDate", adDate);
+		model.addAttribute("defaultAdPrice", 50);
+		return "back-end/ad/addEmp";
+	}
+
+	@ModelAttribute("adListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<AdVO> referenceListData_ad(Model model) {
+
+		List<AdVO> list = adSvc.getAll();
+		return list;
+	}
+
+	// ---------------------------------------------------------------------
 	//------------------------ForumPost--------------------------------------
 	
 	@GetMapping("/forumPost/select_page1")
@@ -245,8 +292,7 @@ public class IndexController_inSpringBoot {
 	
 	
 	//---------------------------------------------------------------------
-	
-//	@GetMapping("/notification/select_page")
+	//	@GetMapping("/notification/select_page")
 //	public String select_page_notification(Model model) {
 //		return "back-end/notification/select_page";
 //	}
@@ -262,7 +308,39 @@ public class IndexController_inSpringBoot {
 //		List<NotificationVO> list = notificationSvc.getAll();
 //		return list;
 //	}
+//	-----------------------------QuetsionList-------------------------------
+	@GetMapping("/que/select_page")
+	public String select_page3(Model model) {
+		return "back-end/que/select_page";
+	}
+
+	@GetMapping("/que/listAllQue")
+	public String listAllQue(Model model) {
+		return "back-end/que/listAllQue";
+	}
+
+	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData3(Model model) {
+
+		List<QueListVO> list = queSvc.getAll();
+		return list;
+	}
+//	------------------------------news-----------------------------------------
+	@GetMapping("/news/select_page")
+	public String select_page_news(Model model) {
+		return "back-end/news/select_page";
+	}
+
+	@GetMapping("/news/listAllNews")
+	public String listAllNews(Model model) {
+		return "back-end/news/listAllNews";
+	}
+
+	@ModelAttribute("newsListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<NewsVO> referenceListData_news(Model model) {
+
+		List<NewsVO> list = newsSvc.getAll();
+		return list;
+	}
 	
-	
-	
-}
+}}

@@ -1,0 +1,26 @@
+ /* 小型設備（手機） */
+        @media (max-width: 767.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 中型設備（平板） */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 大型設備（桌面） */
+        @media (min-width: 992px) {
+            /* 樣式設定 */
+        }
+
+        .navbar-toggler-icon.small {
+            font-size: 0.6rem;
+        }
+
+        #back-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            /* 確保按鈕在其他內容上方顯示 */
+        }

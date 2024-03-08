@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>register3</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <style>
+    /* Add your custom styles here */
+    /* 仅在包含有.wrapper-container类的元素下生效 */
+    .wrapper-container .container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .button-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      margin-right: 20px;
+    }
+
+    .button-wrapper {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .button-wrapper button {
+      margin-bottom: 5px;
+    }
+
+    .clickable-element {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: lightblue;
+      cursor: pointer;
+    }
+
+    .info-container {
+      flex: 1;
+    }
+
+    .input-container {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .clearBtn {
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+
+    .button-container-inner {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+
+    .button-wrapper {
+      width: 25%;
+    }
+
+    .info-container {
+      min-height: 450px;
+    }
+
+    .button-wrapper .form-check {
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    .form-check input.form-check-input {
+      margin: 0 auto;
+    }
+
+    div.wrapper-container {
+      padding-top: 20px;
+      padding-left: 30px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- <header> -->
+  <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="homepage.html"
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg width="50" height="50">
+          <image href="image/new-logo.svg" width=100% height=100% />
+        </svg>
+        <span class="fs-4">NO BARRIER TECH</span>
+      </a>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="homepage.html" class="nav-link ">關於我們</a></li>
+        <li class="nav-item"><a href="homepage.html" class="nav-link">最新消息</a></li>
+        <li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li>
+        <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+        <li class="nav-item"><a href="customer_service.html" class="nav-link">聯絡我們</a></li>
+        <li class="nav-item"><a href="sign_in.html" class="nav-link">登入</a></li>
+        <li class="nav-item"><a href="register1.html" class="nav-link">註冊</a></li>
+
+        <!-- 漢堡選單 -->
+        <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon small"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+              aria-labelledby="offcanvasNavbarLightLabel">
+              <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">會員中心</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="memberCen.html">資料修改</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">帳戶資訊</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">更改密碼</a></li>
+                      <li><a class="dropdown-item" href="memberCen.html">產業類別編輯</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">介紹頁面</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="editmember_ad_view.html">預覽頁面</a></li>
+                      <li><a class="dropdown-item" href="editmember_ad.html">編輯頁面</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">首頁廣告預約列表</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">首頁廣告購買</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="transaction_stat.html">交易狀態</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">月對帳單</a>
+                  </li>
+                </ul>
+                <form class="d-flex mt-3" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </ul>
+    </header>
+  </div>
+
+  <div class="wrapper-container">
+    <h1>類別通知選擇</h1>
+    <div class="container mt-5">
+      <form action="">
+        <div class="button-container wrapper1">
+          <div class="button-container-inner">
+            <!-- Group 1 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(1)">
+                類別 1
+              </button>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_1" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 2 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(2)">
+                類別 2
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_2" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 3 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(3)">
+                類別 3
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_3" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 4 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(4)">
+                類別 4
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_4" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 5 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(5)">
+                類別 5
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_5" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 6 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(6)">
+                類別 6
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_6" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 7 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(7)">
+                類別 7
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_7" name="industry-catrgory" />
+              </div>
+            </div>
+
+            <!-- Group 8 -->
+            <div class="button-wrapper">
+              <button type="button" class="btn btn-primary" onclick="updateInfo(8)">
+                類別 8
+              </button>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="XXXXXX_8" name="industry-catrgory" />
+              </div>
+            </div>
+          </div>
+
+          <!-- 這邊塞button -->
+          <!-- <button style="margin-left: auto">提交</button> -->
+          <a href="sign_in.html" class="btn btn-secondary" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</a>
+
+        </div>
+      </form>
+      <!-- 右邊文字顯示區塊 -->
+      <div class="info-container" style="background-color: blanchedalmond">
+        <h3>Information Display</h3>
+        <p id="infoText">Select a button to display information.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Information update script -->
+  <script>
+    // JavaScript function to update information on the right side
+    function updateInfo(groupNumber) {
+      // Define your eight sets of text content
+      const textContents = [
+        "Information for Group 1",
+        "Information for Group 2",
+        "Information for Group 3",
+        "Information for Group 4",
+        "Information for Group 5",
+        "Information for Group 6",
+        "Information for Group 7",
+        "Information for Group 8",
+      ];
+
+      // Update information based on the selected group
+      console.log(document.getElementById("infoText"));
+      document.getElementById("infoText").innerText =
+        textContents[groupNumber - 1];
+    }
+  </script>
+
+  <!-- <footer> -->
+  <div class="container">
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">關於我們</a></li>
+        <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">最新消息</a></li>
+        <li class="nav-item"><a href="com.html" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+        <li class="nav-item"><a href="customer_service.html" class="nav-link px-2 text-body-secondary">聯絡我們</a></li>
+      </ul>
+      <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
+    </footer>
+  </div>
+
+  <!-- Bootstrap and other scripts -->
+  <script src="js/home.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

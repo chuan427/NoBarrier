@@ -30,7 +30,7 @@ import com.user.model.UserVO;
 
 
 @Controller
-@RequestMapping("/reqOrder")
+@RequestMapping("/reqorder")
 public class ReqOrderController {
 
 	@Autowired
@@ -46,7 +46,7 @@ public class ReqOrderController {
 	public String addReqOrder(ModelMap model) {
 		ReqOrderVO reqOrderVO = new ReqOrderVO();
 		model.addAttribute("reqOrderVO", reqOrderVO);
-		return "back-end/reqOrder/addReqOrder";
+		return "back-end/reqorder/addReqOrder";
 	}
 	
 	@PostMapping("insert")
@@ -66,7 +66,7 @@ public class ReqOrderController {
 			}
 		}
 		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/reqOrder/addReqOrder";
+			return "back-end/reqorder/addReqOrder";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -75,7 +75,7 @@ public class ReqOrderController {
 		List<ReqOrderVO> list = reqOrderSvc.getAll();
 		model.addAttribute("reqOrderListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/reqOrder/listAllReqOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+		return "redirect:/reqorder/listAllReqOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 	
 	
@@ -88,7 +88,7 @@ public class ReqOrderController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("reqOrderVO", reqOrderVO);
-		return "back-end/reqOrder/update_reqOrder_input"; // 查詢完成後轉交update_user_input.html
+		return "back-end/reqorder/update_reqOrder_input"; // 查詢完成後轉交update_user_input.html
 	}
 	
 	@PostMapping("update")
@@ -110,7 +110,7 @@ public class ReqOrderController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "back-end/reqOrder/update_reqOrder_input";
+			return "back-end/reqorder/update_reqOrder_input";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -120,7 +120,7 @@ public class ReqOrderController {
 		model.addAttribute("success", "- (修改成功)");
 		reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
 		model.addAttribute("reqOrderVO", reqOrderVO);
-		return "back-end/reqOrder/listOneReqOrder"; // 修改成功後轉交listOneEmp.html
+		return "back-end/reqorder/listOneReqOrder"; // 修改成功後轉交listOneEmp.html
 	}
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData(){
