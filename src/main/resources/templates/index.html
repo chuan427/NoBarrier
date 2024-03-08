@@ -139,8 +139,9 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
-					class="d-block w-30" alt= 'Slide 1' style="margin: 0 auto;">
+				<a th:href="@{sale}"><img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt= 'Slide 1' style="margin: 0 auto;"></a>
+				
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->

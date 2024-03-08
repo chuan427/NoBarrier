@@ -108,6 +108,7 @@ public class IndexController_inSpringBoot {
 	return "front-end/customer_service"; // view
 	}
 
+
 	// =========== 以下第57~62行是提供給
 	// /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html
 	// 要使用的資料 ===================
@@ -247,6 +248,7 @@ public class IndexController_inSpringBoot {
 		List<AdVO> list = adSvc.getAll();
 		return list;
 	}
+
 
 	// ---------------------------------------------------------------------
 //	
