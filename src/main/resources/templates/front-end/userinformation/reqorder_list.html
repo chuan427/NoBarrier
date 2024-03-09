@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>reqorderlist</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
     <style>
         /* 小型設備（手機） */
         @media (max-width: 767.98px) {
@@ -71,21 +71,22 @@
     <!-- <header> -->
     <div id="header">
         <div class="container">
-            <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-                <a href="homepage.html"
-                    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                    <svg width="50" height="50">
-                        <image href="image/new-logo.svg" width=100% height=100% />
-                    </svg>
-                    <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
-                </a>
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="homepage.html" class="nav-link">關於我們</a></li>
-                    <li class="nav-item"><a href="homepage.html" class="nav-link">最新消息</a></li>
-                    <li class="nav-item"><a href="com.html" class="nav-link">廠商資訊</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                    <li class="nav-item"><a href="customer_service.html" class="nav-link">聯絡我們</a></li>
-                    <li class="nav-item"><a href="sign_in.html" class="nav-link">登出</a></li>
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a th:href="@{/}"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                
+                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
+             
+                <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
+            </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link">最新消息</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
+               <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登出</a></li>
+
                     <div class="notification-container">
                         <div id="notificationIcon" class="notification-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
@@ -110,7 +111,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="user-profile" style="margin-left: 10px;"><a href="req_userpage.html">
+
+                    <div class="user-profile" style="margin-left: 10px;"><a th:href="@{/user/req_userpage}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                             class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -120,68 +122,68 @@
                     </a>
                     </div>
 
-                    <!-- 漢堡選單 -->
-                    <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="#"></a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
-                                aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon small"></span>
-                            </button>
-                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
-                                aria-labelledby="offcanvasNavbarLightLabel">
-                                <div class="offcanvas-header">
-                                    <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="offcanvas-body">
-                                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">資料修改</a></li>
-                                                <li><a class="dropdown-item" href="#">帳戶資訊</a></li>
-                                                <li><a class="dropdown-item" href="#">更改密碼</a></li>
-                                                <li><a class="dropdown-item" href="#">產業類別編輯</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="editmember_ad_view.html">預覽頁面</a></li>
-                                                <li><a class="dropdown-item" href="editmember_ad.html">編輯頁面</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" role="button"
-                                                data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">首頁廣告購買</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">交易狀態</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">月對帳單</a>
-                                        </li>
-                                    </ul>
-                                    <form class="d-flex mt-3" role="search">
-                                        <input class="form-control me-2" type="search" placeholder="Search"
-                                            aria-label="Search">
-                                        <button class="btn btn-outline-success" type="submit">Search</button>
-                                    </form>
-                                </div>
+<!--                 漢堡選單 -->
+                <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#"></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon small"></span>
+                        </button>
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+                            aria-labelledby="offcanvasNavbarLightLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">資料修改</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">帳戶資訊</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">更改密碼</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">產業類別編輯</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{/com/editmember_ad_view}">預覽頁面</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/com/editmember}">編輯頁面</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{order/transaction_stat}">交易狀態</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">月對帳單</a>
+                                    </li>
+                                </ul>
+                                <form class="d-flex mt-3" role="search">
+                                    <input class="form-control me-2" type="search" placeholder="Search"
+                                        aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
                             </div>
                         </div>
-                    </nav>
-                </ul>
-            </header>
-        </div>
+                    </div>
+                </nav>
+            </ul>
+        </header>
+    </div>Ï
     </div>
 
     <div class="row">
@@ -202,14 +204,16 @@
 
                 <div class="col-6" style="padding-left: 10px;">
                     <div class="d-grid gap-1">
-                        <a href="reqorder.html">
+                        <a th:href="@{/userinformation/addReqOrder}">
                             <button class="btn btn-secondary" id="myBtn" type="button"
                                 style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105); ">提出需求</button>
                         </a>
                     </div>
                     <div style="margin-top: 30px;"></div>
+                    <a th:href="@{/order/transaction_stat}">
                     <button class="btn btn-secondary" type="button"
                         style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+                        </a>
                 </div>
             </div>
         </div>
@@ -220,70 +224,71 @@
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">華偉公司| NT$200,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">大大華公司| NT$180,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">小偉公司| NT$195,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">華偉公司| NT$200,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">華偉公司| NT$200,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">小小偉公司| NT$200,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">小偉公司| NT$200,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
+
                     </div>
                 </li>
                 </li>
                 <li class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">大大華公司| NT$180,000
                     <div>
-                        <button class="btn btn-primary" type="button">直接購買</button>
-                        <button class="btn btn-primary" type="button">洽談</button>
+                        <a class="btn btn-primary" th:href="@{/order/transaction_check}">直接購買</a>
+                        <a class="btn btn-primary" th:href="@{/order/chatroom}">洽談</a>
                     </div>
                 </li>
                 </li>
             </ul>
             <div style="margin-top: 30px;"></div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href="req_userpage.html">
+                <a th:href="@{/userinformation/req_userpage}">
                     <button class="btn btn-outline-dark" type="button">返回</button>
                 </a>
             </div>
@@ -292,22 +297,25 @@
 
     <!-- <footer> -->
     <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">關於我們</a></li>
-                <li class="nav-item"><a href="homepage.html" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a href="com.html" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
-                <li class="nav-item"><a href="customer_service.html" class="nav-link px-2 text-body-secondary">聯絡我們</a>
-                </li>
-            </ul>
-            <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
-        </footer>
-    </div>
+		<footer class="py-3 my-4">
+			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+				<li class="nav-item"><a th:href="@{/}"
+					class="nav-link px-2 text-body-secondary">關於我們</a></li>
+				<li class="nav-item"><a href="@{/}"
+					class="nav-link px-2 text-body-secondary">最新消息</a></li>
+				<li class="nav-item"><a th:href="@{/com/com}"
+					class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+				<li class="nav-item"><a th:href="@{/userinformation/customer_service}"
+					class="nav-link px-2 text-body-secondary">聯絡我們</a></li>
+			</ul>
+			<p class="text-center text-body-secondary">&copy; 2023 NO BARRIER
+				TECH Company, Inc</p>
+		</footer>
+	</div>
 
-    <script src="js/notification.js"></script>
-    <script src="js/home.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script th:src="@{/js/notification.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 </body>
 
 </html>

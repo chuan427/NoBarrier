@@ -164,23 +164,22 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// ------------------------------------------
-	@GetMapping("/reqorder/select_page")
-	public String select_page_reqorder(Model model) {
-		return "back-end/reqorder/select_page";
+	// -------------------需求單-----------------------
+	@GetMapping("/userinformation/req_userpage")
+	public String req_userpage(Model model) {
+		return "front-end/userinformation/req_userpage";
 	}
 
-	@GetMapping("/reqorder/listAllReqOrder")
-	public String listAllReqOrder(Model model) {
-		return "back-end/reqorder/listAllReqOrder";
+	@GetMapping("/userinformation/reqorder_list")
+	public String reqorder_list(Model model) {
+		return "front-end/userinformation/reqorder_list";
+	}
+	
+	@GetMapping("/userinformation/addReqOrder")
+	public String reqorder(Model model) {
+		return "front-end/userinformation/addReqOrder";
 	}
 
-	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
-
-		List<ReqOrderVO> list = reqOrderSvc.getAll();
-		return list;
-	}
 
 	// -------------------------------------------------
 
