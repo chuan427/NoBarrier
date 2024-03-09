@@ -12,13 +12,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>所有需求單資料 - listAllReqOrder.html</title>
+<title>所有論壇貼文資料 - listAllforumReply.html</title>
 <script th:src="@{/js/jquery-1.11.3.min.js}"></script> <!-- 左側jquery為table分頁用 -->
-<head th:insert="~{/back-end/reqorder/included-fragment}"></head>
+<head th:insert="~{/back-end/forumReply/included-fragment}"></head>
 <style type="text/css">
 
     table {
-      width: 1550px;
+      width: 4000px;
 	  background-color: white;
 	  margin-top: 5px;
 	  margin-bottom: 5px;
@@ -83,7 +83,7 @@
             $table.trigger("paging");
 
             //默認第一頁的a標簽效果  
-            var $pagess = $('#pageStyle');
+            var $pages = $('#pageStyle');
             $pagess[0].style.backgroundColor = "#006B00";
             $pagess[0].style.color = "#ffffff";
         });
@@ -107,54 +107,51 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>所有商品資料 - listAllReqOrder.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/reqorder/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <div align="center"> <h2>所有回覆貼文資訊 - listAllForumReply.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/forumReply/select_page2}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
 <div align="center">
   <b><font color=red>第<label id="currentPage">1</label>/<label id="pageNumber"></label>頁</font></b>
 
-<b>● 符 合 查 詢 條 件 如 下 所 示 : 共 <font color=red th:text="${reqOrderListData.size}"></font> 筆</b></div>
-	<div style="padding: 5px; width:1550px; height:35px; background-color:#CCCCFF; margin-top:5px; margin-bottom:5px; margin-left:auto; margin-right:auto; border: 1px solid #000000;">
-			<span style="padding: 30px;">序號</span>
-			<span style="padding: 30px;">商品編號</span>
-			<span style="padding: 20px;">發佈日期</span>
-			<span style="padding: 20px;">商品名稱</span>
-			<span style="padding: 25px;">商品單位</span>
-			<span style="padding: 25px;">商品數量</span>
-			<span style="padding: 40px;">商品圖片</span>
-			<span style="padding: 45px;">商品敘述</span>
-			<span style="padding: 20px;">產品類別</span>
-			<span style="padding: 50px;">買家會員</span>
-			<span style="padding: 20px;">狀態</span>
-			
+<b>● 符 合 查 詢 條 件 如 下 所 示 : 共 <font color=red th:text="${forumReplyListData.size}"></font> 筆</b></div>
+	<div style="padding: 5px; width:4000px; height:35px; background-color:#CCCCFF; margin-top:5px; margin-bottom:5px; margin-left:auto; margin-right:auto; border: 1px solid #000000;">
+			<span style="padding: 5px;">留言編號</span>
+			<span style="padding: 50px;">貼文編號</span>
+			<span style="padding: 10px;">會員編號</span>
+			<span style="padding: 50px;">回覆內容</span>
+			<span style="padding: 80px;">留言圖片</span>
+			<span style="padding: 15px;">回覆發佈時間</span>
+			<span style="padding: 15px;">貼文最後編輯時間時間</span>
+			<span style="padding: 5px;">留言按讚數</span>
+			<span style="padding: 5px;">回覆貼文狀態</span>
 			<span style="padding: 40px;">修改</span>
 			<span style="padding: 0px 0px 0px 50px;">刪除</span>
 		</div>
 	
 	<table class="center">
-		<th:block th:each="reqOrderVO : ${reqOrderListData}">
+		<th:block th:each="forumReplyVO : ${forumReplyListData}">
 			<tr>
-				<td th:text="${reqOrderVOStat.count}"></td>
-				<td th:text="${reqOrderVO.reqNum}"></td>
-				<td th:text="${reqOrderVO.reqOrderdate}"></td>
-				<td th:text="${reqOrderVO.reqProdname}"></td>
-				<td th:text="${reqOrderVO.reqUnitname}"></td>
-				<td th:text="${reqOrderVO.reqProdqty}"></td>
-				<td><img th:src="@{/reqOrder/DBGifReader} + '?reqNum=' + ${reqOrderVO.reqNum}" width="100px"></td>
-				<td th:text="${reqOrderVO.reqDes}"></td>
-				<td th:text="${reqOrderVO.industryVO.industryNum}+ '-[' + ${reqOrderVO.industryVO.industryName} + ']'"></td>
-				<td th:text="${reqOrderVO.userVO.userId} + '-[' + ${reqOrderVO.userVO.comName} + ']'"></td>
-				<td th:text="${reqOrderVO.reqIsValid}"></td>
+				<td th:text="${forumReplyVOStat.count}" width="-50px"></td>
+				<td th:text="${forumReplyVO.frNum}"></td>
+				<td th:text="${forumReplyVO.userVO.userId} + '-[' + ${forumReplyVO.userVO.comName} + ']'"></td>
+				<td th:text="${forumReplyVO.frContent}"></td>
+				<td><img th:src="@{/forumReply/DBGifReader4} + '?frNum=' + ${forumReplyVO.frNum}" width="100px"></td>
+				<td th:text="${forumReplyVO.frTime}"></td>
+				<td th:text="${forumReplyVO.frUpdate}"></td>
+				<td th:text="${forumReplyVO.frLike}"></td>
+				<td th:text="${forumReplyVO.frStat}"></td>
+
+
 			<td>
-			  <form method="post" th:action="@{/reqorder/getOne_For_Update}" style="margin-bottom: 0px;">
+			  <form method="post" th:action="@{/forumReply/getOne_For_Update}" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
-			     <input type="hidden" name="reqNum" th:value="${reqOrderVO.reqNum}"></form>
+			     <input type="hidden" name="frNum" th:value="${forumReplyVO.frNum}"></form>
 			</td>
 			<td>
-			  <form method="post" th:action="@{/reqorder/delete}" style="margin-bottom: 0px;">
+			  <form method="post" th:action="@{/forumReply/delete}" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
-			     <input type="hidden" name="reqNum" th:value="${reqOrderVO.reqNum}"></form>
+			     <input type="hidden" name="frNum" th:value="${forumReplyVO.frNum}"></form>
 			</td>
 			</tr>
 		</th:block>
