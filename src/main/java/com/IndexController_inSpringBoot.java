@@ -66,12 +66,6 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired
 	AdService adSvc;
-	
-	@Autowired
-	NewsService newsSvc;
-  
-	@Autowired
-	AdService adSvc;
   
 	@Autowired
 	QueListService queSvc;
