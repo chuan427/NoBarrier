@@ -1,6 +1,5 @@
 package com;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
 import com.addday.AdDate;
+import com.forumpost.model.ForumPostService;
+import com.forumpost.model.ForumPostVO;
+import com.forumreply.model.ForumReplyService;
+import com.forumreply.model.ForumReplyVO;
+import com.forumreport.model.ForumReportService;
+import com.forumreport.model.ForumReportVO;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.newsmodel.NewsService;
@@ -55,12 +60,24 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	UserService userSvc;
+	
 	@Autowired
-	NewsService newsSvc;	@Autowired
-	AdService adSvc;	@Autowired
+	NewsService newsSvc;
+	
+	@Autowired
+	AdService adSvc;
+	
+	@Autowired
 	QueListService queSvc;
+	
+	@Autowired
+	ForumPostService forumPostSvc;
 
-
+	@Autowired
+	ForumReplyService forumReplySvc;
+	
+	@Autowired
+	ForumReportService forumReportSvc;
 	
 //	@Autowired
 //	NotificationService notificationSvc;
@@ -219,7 +236,6 @@ public class IndexController_inSpringBoot {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
-
 //	-----------------------------------------------------------------------
 
 	@GetMapping("/ad/select_page")
@@ -248,8 +264,68 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ---------------------------------------------------------------------
-//	
-//	@GetMapping("/notification/select_page")
+	//------------------------ForumPost--------------------------------------
+	
+	@GetMapping("/forumPost/select_page1")
+	public String select_page1(Model model) {
+		return "back-end/forumPost/select_page1";
+	}
+
+	@GetMapping("/forumPost/listAllForumPost")
+	public String listAllForumPost(Model model) {
+		return "back-end/forumPost/listAllForumPost";
+	}
+
+	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<ForumPostVO> referenceListData1(Model model) {
+
+		List<ForumPostVO> list = forumPostSvc.getAll();
+		return list;
+	}
+
+	// -----------------------ForumReply-----------------------------------------
+
+	@GetMapping("/forumReply/select_page2")
+	public String select_page2(Model model) {
+		return "back-end/forumReply/select_page2";
+	}
+
+	@GetMapping("/forumReply/listAllForumReply")
+	public String listAllForumReply(Model model) {
+		return "back-end/forumReply/listAllForumReply";
+	}
+
+	@ModelAttribute("forumReplyListData") // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<ForumReplyVO> referenceListData2(Model model) {
+
+		List<ForumReplyVO> list = forumReplySvc.getAll();
+		return list;
+
+	}
+	
+	// -----------------------ForumReport-----------------------------------------
+	
+	@GetMapping("/forumReport/select_page")
+	public String select_page4(Model model) {
+		return "back-end/forumReport/select_page";
+	}
+
+	@GetMapping("/forumReport/listAllForumReport")
+	public String listAllForumReport(Model model) {
+		return "back-end/forumReport/listAllForumReport";
+	}
+
+	@ModelAttribute("forumReportListData") // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<ForumReportVO> referenceListData4(Model model) {
+
+		List<ForumReportVO> list = forumReportSvc.getAll();
+		return list;
+
+	}
+	
+	
+	//---------------------------------------------------------------------
+	//	@GetMapping("/notification/select_page")
 //	public String select_page_notification(Model model) {
 //		return "back-end/notification/select_page";
 //	}
@@ -300,4 +376,4 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 	
-}
+}	
