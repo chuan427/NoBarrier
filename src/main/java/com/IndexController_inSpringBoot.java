@@ -31,7 +31,6 @@ import com.questionList.model.QueListVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
-import com.reqorder.model.ReqOrderVO;
 import com.rptdlist.model.RptdlistService;
 import com.rptdlist.model.RptdlistVO;
 import com.user.model.UserService;
@@ -64,12 +63,6 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	NewsService newsSvc;
 	
-	@Autowired
-	AdService adSvc;
-	
-	@Autowired
-	NewsService newsSvc;
-  
 	@Autowired
 	AdService adSvc;
   
