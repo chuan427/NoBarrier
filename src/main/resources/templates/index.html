@@ -44,11 +44,11 @@
             <ul class="nav nav-pills">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
-                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登入</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/register1}" class="nav-link">註冊</a></li>
                 
 				<!-- 漢堡選單 -->
 <!-- 				<nav class="navbar bg-custom-color" -->
@@ -140,8 +140,8 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
-					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
+				<a th:href="@{/com/member_Prod}"><img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;"></a>
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
@@ -154,9 +154,9 @@
 							<div
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
+								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
 									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
+									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
 							</div>
 						</th:block>
 					</th:block>
