@@ -137,7 +137,7 @@ import com.productinformation.model.ProductInformationVO;
 
 		@Column(name = "comPassword")
 		@NotEmpty(message="公司密碼: 請勿空白")
-		@Size(min=2,max=50,message="公司密碼: 長度必需在{min}到{max}之間")
+		@Size(min=2,max=100,message="公司密碼: 長度必需在{min}到{max}之間")
 		public String getComPassword() {
 			return this.comPassword;
 		}
