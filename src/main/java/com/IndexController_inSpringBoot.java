@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
@@ -33,6 +36,8 @@ import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.rptdlist.model.RptdlistService;
 import com.rptdlist.model.RptdlistVO;
+import com.security.model.MailService;
+import com.security.model.RandomPasswordGenerator;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -92,26 +97,73 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
-	@GetMapping("/")
-	public String index(Model model) {
-		model.addAttribute("message", message);
-		model.addAttribute("myList", myList);
-		return "index"; // view
+//	@GetMapping("/")
+//	public String index(Model model) {
+//		model.addAttribute("message", message);
+//		model.addAttribute("myList", myList);
+//		return "index"; // view
+//	}
+	//----------------------------------------------------
+	@RequestMapping("/")
+	public String toIndex() {
+		return "index";
 	}
 
-	// http://......../hello?name=peter1
-	@GetMapping("/hello")
-	public String indexWithParam(@RequestParam(name = "name", required = false, defaultValue = "") String name,
-			Model model) {
-		model.addAttribute("message", name);
-		return "index"; // view
-	}
-
-	// 登入頁面
-	@GetMapping("/login/loginPage")
+	@RequestMapping("/loginpage")
 	public String toLoginPage() {
-		return "back-end/login/loginPage"; // view
+		return "front-end/testLogin";
 	}
+	
+	@RequestMapping("/loginfail")
+	@ResponseBody
+	public String toFailLogin() {
+		return "Login Failed!"; // view
+	}
+	
+	@RequestMapping("/loginsuccess")
+	public String toSuccessLogin() {
+		return "front-end/successLogin"; // view
+	}
+	
+	@RequestMapping("/forgetPasswordPage")
+	public String toForgetPasswordPage() {
+		return "front-end/forgetPasswordPage"; // view
+	}
+	
+	@RequestMapping(value="/checkAccountExists",method = RequestMethod.POST)
+	@ResponseBody
+    public String checkAccountExists(@RequestParam String account) {
+        
+        boolean accountExists = userSvc.userIsExist(account);
+
+        if(accountExists) {
+        	
+        	String newPassword = RandomPasswordGenerator.generateRandomPassword();
+        	userSvc.resetPassword(account, newPassword);
+        	
+        	String to = userSvc.getUserEmail(account);
+        	String subject = "NoBarrier平台:密碼重新設置";
+        	String messageText = "這是您的新密碼:" + newPassword + "\n" + "請盡快登入並重設您的密碼。";
+        	
+        	MailService.sendMail(to,subject,messageText);
+        	
+        }
+        
+        
+        return "{\"exists\": " + accountExists + "}";
+    }
+	
+	
+	
+	
+	// http://......../hello?name=peter1
+//	@GetMapping("/hello")
+//	public String indexWithParam(@RequestParam(name = "name", required = false, defaultValue = "") String name,
+//			Model model) {
+//		model.addAttribute("message", name);
+//		return "index"; // view
+//	}
+	
 
 	// 廠商資訊 完成
 	@GetMapping("/com/com_homepage")

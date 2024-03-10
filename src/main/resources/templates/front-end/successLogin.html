@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+<meta charset="UTF-8">
+<title>Login form</title>
+</head>
+<body style="padding: 20px" onload="connect()">
+
+	<button id="tryBtn" value="send" onclick="sendMsg();">測試websoclet</button>
+	
+	
+	<div>Session Id（details.sessionId）: <span sec:authentication="details.sessionId"></span></div>
+	<div>權限與角色（authorities）: <span sec:authentication="authorities"></span></div>
+	<div>客戶端地址（details.remoteAddress）: <span sec:authentication="details.remoteAddress"></span></div>
+	<p id = "testWS">等待websocket
+	
+	
+	<a th:href="@{/quo/listAllQuo}">測試不同連結session會不會改變</a>
+	
+	<script>
+	
+
+	// -----------------------------------------------
+	
+	var MyPoint ="/xxx";
+	var host = window.location.host;//localhost:8080
+	var endPointURL = "ws://" + host + MyPoint;
+	// ws://localhost:8080/tryHandler
+	var webSocket;
+	
+	console.log(endPointURL);
+	
+	
+	//------------------------------------------------
+	function connect() {
+		webSocket = new WebSocket(endPointURL);
+		webSocket.onopen = function(event){
+			console.log("建立ws連線",event);
+		}
+		webSocket.onmessage = function(event){
+			 if (event.data instanceof Blob) {
+			        // 如果是 Blob（位元型式），可以使用 FileReader 将其读取为文本
+			        var reader = new FileReader();
+			        reader.onload = function() {
+			            var receivedText = reader.result;
+			            console.log("接收到 WebSocket 消息：" + receivedText);
+
+			            var testWSParagraph = document.getElementById("testWS");
+			            testWSParagraph.innerText = "接收到 WebSocket 消息：" + receivedText;
+			        };
+			        reader.readAsText(event.data);
+			    } else {
+			        // 如果不是 Blob，可能是字串
+			        var receivedMsg = JSON.parse(event.data);
+			        console.log("接收到 WebSocket 消息", receivedMsg);
+
+			        var testWSParagraph = document.getElementById("testWS");
+			        testWSParagraph.innerText = "接收到 WebSocket 消息：" + receivedMsg.tryBtnValue;
+			    }
+		}
+		webSocket.onclose = function(event){
+			console.log("ws關閉",event);
+		}
+		webSocket.onerror = function(event){
+			console.error("ws發生問題",event);
+		}
+	}
+	//------------------------------------------------
+	function sendMsg(){
+		var testMsg = document.getElementById("tryBtn").value;
+		
+		var jsonObj = {
+				"tryBtnValue":testMsg
+		}
+		
+		var jsonString = JSON.stringify(jsonObj);
+		webSocket.send(jsonString);
+	}
+	
+	
+	
+	</script>
+</body>
+</html>
