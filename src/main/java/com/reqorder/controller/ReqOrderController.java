@@ -48,11 +48,11 @@ public class ReqOrderController {
 	    return "front-end/userinformation/addReqOrder";
 	}
 
-	@GetMapping("/reqorder_list")
+	@GetMapping("/reqorder_page")
 	public String reqOrderList(Model model) {
 		List<ReqOrderVO> list = reqOrderSvc.getAll();// 從數據庫中獲取您的物件列表
 		model.addAttribute("reqOrderListData", list);
-		return "redirect:/userinformation/reqorder_list"; // 返回模板名稱
+		return "redirect:/userinformation/reqorder_page"; // 返回模板名稱
 	}
 
 	@PostMapping("insert")
@@ -149,12 +149,7 @@ public class ReqOrderController {
 //		model.addAttribute("reqOrderVO", reqOrderVO);
 //		return "back-end/reqorder/listOneReqOrder"; // 修改成功後轉交listOneEmp.html
 //	}
-	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
-
-		List<ReqOrderVO> list = reqOrderSvc.getAll();
-		return list;
-	}
+	
 	
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {

@@ -111,14 +111,16 @@ public class IndexController_inSpringBoot {
 	// =========== 以下第57~62行是提供給
 	// /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html
 	// 要使用的資料 ===================
-	@GetMapping("/quo/select_page")
-	public String select_page(Model model) {
-		return "back-end/quo/select_page";
-	}
 
-	@GetMapping("/quo/listAllQuo")
-	public String listAllQuo(Model model) {
-		return "back-end/quo/listAllQuo";
+	// ----------------報價單--------------------
+	@GetMapping("/userinformation/addQuotation")
+	public String addQuotation(Model model) {
+		return "front-end/userinformation/addQuotation";
+	}
+	
+	@GetMapping("/userinformation/quotation_list")
+	public String quotation_list(Model model) {
+		return "front-end/userinformation/quotation_list";
 	}
 
 	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
@@ -153,16 +155,19 @@ public class IndexController_inSpringBoot {
 		return "front-end/userinformation/req_userpage";
 	}
 
-	@GetMapping("/userinformation/reqorder_list")
-	public String reqorder_list(Model model) {
-		return "front-end/userinformation/reqorder_list";
-	}
-	
 	@GetMapping("/userinformation/addReqOrder")
-	public String reqorder(Model model) {
+	public String addReqOrder(Model model) {
 		return "front-end/userinformation/addReqOrder";
 	}
+	
+	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
 
+		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		return list;
+	}
+
+	
 
 	// -------------------------------------------------
 

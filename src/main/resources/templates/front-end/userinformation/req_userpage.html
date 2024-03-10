@@ -266,28 +266,42 @@
 							<span
 							th:text="${obj.reqOrderdate} + '｜' + ${obj.reqProdname} + '｜' + ${obj.reqProdqty} + ${obj.reqUnitname} + '|' + ${obj.reqDes} + '|' "></span>
 							<div class="btn-group mb-2" role="group">
-							<img th:src="${obj.reqProdimage}" alt="Product Image" />
-								<a th:href="@{/userinformation/quotation}">
+								<img th:src="${obj.reqProdimage}" alt="Product Image" /> 
+								<a th:href="@{/userinformation/addQuotation}">
 									<button class="btn btn-primary" type="button">報價</button>
-								</a>
-								<span>&nbsp;</span>
-								<span>&nbsp;</span>
+								</a> <span>&nbsp;</span> <span>&nbsp;</span>
 								<button class="btn btn-primary" type="button">忽略</button>
 							</div>
-							
+
 						</li>
 					</ul>
 				</div>
 			</div>
 
-
 			<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+     aria-labelledby="nav-profile-tab" tabindex="0">
+    <ul class="list-group">
+        <li th:each="quo : ${quoListData}"
+            class="list-group-item d-flex justify-content-between align-items-center">
+            <span th:text="${quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname + ' | 總價NT$' + quo.quoTotalprice + ' | 單價NT$' + quo.quoUnitprice + ' | ' + quo.quoInfo}"></span>
+            <div>
+                <a th:href="@{/userinformation/quotation_list}">
+                    <button class="btn btn-primary" type="button">報價列表</button>
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+			<!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel"
 				aria-labelledby="nav-profile-tab" tabindex="0">
 				<ul class="list-group">
 					<li
 						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
 						<div>
-							<a th:href="@{/userinformation/quotation}">
+							<a th:href="@{/userinformation/quotation_list}">
 								<button class="btn btn-primary" type="button">報價列表</button>
 							</a>
 						</div>
@@ -296,17 +310,7 @@
 					<li
 						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
 						<div>
-							<a th:href="@{/userinformation/quotation}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					</li>
-					<li class="list-group-item">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation}">
+							<a th:href="@{/userinformation/quotation_list}">
 								<button class="btn btn-primary" type="button">報價列表</button>
 							</a>
 						</div>
@@ -316,7 +320,7 @@
 					<li
 						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
 						<div>
-							<a th:href="@{/userinformation/quotation}">
+							<a th:href="@{/userinformation/quotation_list}">
 								<button class="btn btn-primary" type="button">報價列表</button>
 							</a>
 						</div>
@@ -326,14 +330,24 @@
 					<li
 						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
 						<div>
-							<a th:href="@{/userinformation/quotation}">
+							<a th:href="@{/userinformation/quotation_list}">
+								<button class="btn btn-primary" type="button">報價列表</button>
+							</a>
+						</div>
+					</li>
+					</li>
+					<li class="list-group-item">
+					<li
+						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
+						<div>
+							<a th:href="@{/userinformation/quotation_list}">
 								<button class="btn btn-primary" type="button">報價列表</button>
 							</a>
 						</div>
 					</li>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
