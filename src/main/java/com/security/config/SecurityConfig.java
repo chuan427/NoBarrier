@@ -114,6 +114,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/loginfail").permitAll()
 					.antMatchers("/checkAccountExists").permitAll()
 					.antMatchers("/forgetPasswordPage").permitAll()
+					.antMatchers("/ad/**").permitAll()
+					.antMatchers("/images/**").permitAll()
+					
 //					// 權限判斷
 //					// 必須要有 admin 權限才可以訪問
 //					.antMatchers("/adminpage").hasAuthority("admin")
