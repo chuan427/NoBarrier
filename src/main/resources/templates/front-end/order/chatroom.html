@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>chatroom</title>
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: #7e8287 !important;
+}
+
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
+
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
+
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000;
+	/* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+}
+
+.chat-container {
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-box {
+	height: 300px;
+	overflow-y: scroll;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+input[type="text"] {
+	width: calc(100% - 80px);
+	padding: 5px;
+	margin-right: 10px;
+}
+
+button {
+	padding: 5px 10px;
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #0056b3;
+}
+
+.submit-price-btn {
+	font-size: 20px;
+	/* 设置按钮字体大小为20像素 */
+	background-color: red;
+}
+
+/* Modal styles */
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+	background-color: white;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	max-width: 400px;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.button-container {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+	<!-- <header> -->
+<head th:insert="~{/front-end/header_login}"></head>
+
+<!-- 聊天室 -->
+<div class="chat-container">
+	<button type="button" class="btn-close" aria-label="Close"
+		onclick="window.location.href = 'reqorder_list.html';"></button>
+	<div class="chat-box" id="chat-box"></div>
+	<div style="margin-top: 30px;"></div>
+	<input type="file" id="image-input" accept="image/*">
+	<button onclick="sendImage()">送出</button>
+	<div style="margin-top: 30px;"></div>
+	<input type="text" id="message-input"
+		placeholder="Type your message...">
+	<button onclick="sendMessage()">送出</button>
+	<div style="margin-top: 30px;"></div>
+	<button class="submit-price-btn"
+		onclick="window.location.href = 'transaction_check.html';">送出價格</button>
+
+</div>
+
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<!-- <script th:src="@{/js/notification.js}"></script> -->
+
+<!--     <script th:src="js/chatroom.js"></script> -->
+<!--     <script th:src="js/notification.js"></script> -->
+<!--     <script th:src="js/home.js"></script> -->
+<!--     <script th:src="js/popper.min.js"></script> -->
+<!--     <script th:src="js/bootstrap.min.js"></script> -->
+</body>
+
+</html>

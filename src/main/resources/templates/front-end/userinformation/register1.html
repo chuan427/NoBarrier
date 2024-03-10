@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>register1</title>
+
+<!--     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
+  </head>
+  <body>
+    <!-- <header> -->
+      <head th:insert="~{/front-end/header}"></head>
+    <!-- 註冊區塊 -->
+    <main>
+      <div class="container mt-5">
+        <h2 class="mb-4">用戶註冊</h2>
+        <form>
+          <div class="row">
+            <!-- 左邊註冊區塊 -->
+            <div class="col-md-6">
+              <!-- 公司登記名稱 -->
+              <div class="mb-3">
+                <label for="companyName" class="form-label">公司登記名稱</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="companyName"
+                  name="companyName"
+                  required
+                />
+              </div>
+
+              <!-- 公司統一編號 -->
+              <div class="mb-3">
+                <label for="businessNumber" class="form-label"
+                  >公司統一編號</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="businessNumber"
+                  name="businessNumber"
+                  required
+                />
+              </div>
+
+              <!-- 公司註冊地址 -->
+              <div class="mb-3">
+                <label for="registrationAddress" class="form-label"
+                  >公司註冊地址</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registrationAddress"
+                  name="registrationAddress"
+                  required
+                />
+              </div>
+
+              <!-- 公司用郵件 -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+
+              <!-- 公司用電話 -->
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- 右邊註冊區塊 -->
+            <div class="col-md-6">
+              <!-- 註冊聯絡人 -->
+              <div class="mb-3">
+                <label for="contactPersonName" class="form-label"
+                  >註冊聯絡人</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contactPersonName"
+                  name="contactPersonName"
+                  required
+                />
+              </div>
+
+              <!-- 會員登入帳號 -->
+              <div class="mb-3">
+                <label for="loginAccount" class="form-label"
+                  >會員登入帳號</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="loginAccount"
+                  name="loginAccount"
+                  required
+                />
+              </div>
+
+              <!-- 會員登入密碼 -->
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label"
+                  >會員登入密碼</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  name="loginPassword"
+                  required
+                />
+              </div>
+
+              <!-- 會員登入密碼確認 -->
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label"
+                  >會員登入密碼確認</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- form表單提交按鈕 -->
+          <a href="register2.html" class="btn btn-secondary" onclick="return confirm('確定要送出嗎？')">送出</a>
+        </form>
+      </div>
+    </main>
+
+     <!-- <footer> -->
+      <head th:insert="~{/front-end/footer}"></head>	
+	  <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
+<!--     <script src="js/popper.min.js"></script> -->
+<!--     <script src="js/bootstrap.min.js"></script> -->
+  </body>
+</html>

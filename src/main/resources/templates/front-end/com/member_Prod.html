@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>memberProd</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        /* 小型設備（手機） */
+        @media (max-width: 767.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 中型設備（平板） */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 大型設備（桌面） */
+        @media (min-width: 992px) {
+            /* 樣式設定 */
+        }
+
+        .navbar-toggler-icon.small {
+            font-size: 0.6rem;
+        }
+        .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+            background-color: lightgray !important;
+        }
+        #back-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            /* 確保按鈕在其他內容上方顯示 */
+        }
+
+        /* 客服聊天室 */
+        #open-chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #7e8287;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #chat-box {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        #close-chat-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px;
+            background-color: #ccc;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+    </style>
+
+</head>
+
+<body>
+    <!-- <header> -->
+    <head th:insert="~{/front-end/header}"></head>
+    
+
+    <!-- siderbar -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+                    style="height: 500px; text-align: center;">
+                    <a href="/"
+                        class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="member_AboutUs.html" class="nav-link text-white fs-4">
+                                關於我們
+                            </a>
+                        </li>
+                        <li>
+                            <a href="member_Prod.html" class="nav-link text-white fs-4">
+                                產品資訊
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 公司的產品資訊 -->
+            <div class="col-md-9">
+                <div class="row">
+                    <h3>產品資訊</h3>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="200px" height="225px"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>公司名稱</title>
+                                <rect width="100%" height="100%" fill="#55595c" />
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    **產品名稱：**工業機械零件
+
+                                    **產品特色：**高強度、耐用、精密加工
+                                    
+                                    產品規格：
+                                    材質：優質鋼材
+                                    尺寸：依客戶要求定制
+                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
+                                    
+                                    產品優勢：
+                                    耐用性高，使用壽命長
+                                    精密加工，尺寸精準
+                                    能夠定制，滿足客戶特殊需求</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="200px" height="225px"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c" />
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    **產品名稱：**工業機械零件
+
+                                    **產品特色：**高強度、耐用、精密加工
+                                    
+                                    產品規格：
+                                    材質：優質鋼材
+                                    尺寸：依客戶要求定制
+                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
+                                    
+                                    產品優勢：
+                                    耐用性高，使用壽命長
+                                    精密加工，尺寸精準
+                                    能夠定制，滿足客戶特殊需求</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="200px" height="225px"
+                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c" />
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
+                            </svg>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    **產品名稱：**工業機械零件
+
+                                    **產品特色：**高強度、耐用、精密加工
+                                    
+                                    產品規格：
+                                    材質：優質鋼材
+                                    尺寸：依客戶要求定制
+                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
+                                    
+                                    產品優勢：
+                                    耐用性高，使用壽命長
+                                    精密加工，尺寸精準
+                                    能夠定制，滿足客戶特殊需求</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- 聯絡我們(客服) -->
+    <button id="open-chat-button">聯絡我們</button>
+
+    <div id="chat-box" style="display: none;">
+        <button id="close-chat-button" onclick="closeChatBox()">X</button>
+        <h2>客服</h2>
+        <div class="chat-box">
+            <!-- 在這裡放置客服畫面的內容 -->
+            <p>你好！有什麼可以幫助您的嗎？</p>
+        </div>
+        <input type="text" id="message-input" placeholder="輸入訊息...">
+        <button id="send-message-button">送出</button>
+    </div>
+
+    <!-- <footer> -->
+        <head th:insert="~{/front-end/footer}"></head>
+		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+		
+
+<!--         <script src="js/home.js"></script> -->
+<!--         <script src="js/popper.min.js"></script> -->
+<!--         <script src="js/bootstrap.min.js"></script> -->
+
+</body>
+
+</html>

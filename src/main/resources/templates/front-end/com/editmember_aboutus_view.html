@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editmember_aboutus_view</title>
+<!--     <link rel="stylesheet" -->
+<!-- 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" /> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        /* 小型設備（手機） */
+        @media (max-width: 767.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 中型設備（平板） */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            /* 樣式設定 */
+        }
+
+        /* 大型設備（桌面） */
+        @media (min-width: 992px) {
+            /* 樣式設定 */
+        }
+
+        .navbar-toggler-icon.small {
+            font-size: 0.6rem;
+        }
+
+        .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+            background-color: lightgray !important;
+        }
+        .list-group1 {
+            display: none;
+            /* 隱藏通知列表 */
+        }
+
+        .list-group1.show {
+            display: block;
+            /* 顯示通知列表 */
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            top: 60px;
+            /* 距離 header 的頂部距離 */
+            right: 10px;
+            /* 距離 header 的右側距離 */
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+        }
+
+        .notification-dropdown.show {
+            display: block;
+        }
+        .notification-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+   <head th:insert="~{/front-end/header_login}"></head>
+   
+
+    <!-- siderbar -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+                    style="height: 500px; text-align: center;">
+                    <a href="/"
+                        class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="editmember_ad_view.html" class="nav-link text-white fs-4">
+                                廠商廣告
+                            </a>
+                        </li>
+                        <li>
+                            <a href="editmember_user_view.html" class="nav-link text-white fs-4">
+                                聯絡資料
+                            </a>
+                        </li>
+                        <li>
+                            <a href="editmember_aboutus_view.html" class="nav-link text-white fs-4">
+                                關於我們
+                            </a>
+                        </li>
+                        <li>
+                            <a href="editmember_product_view.html" class="nav-link text-white fs-4">
+                                產品資訊
+                            </a>
+                        </li>
+                        <li>
+                            <a href="editmember_sale_view.html" class="nav-link text-white fs-4">
+                                限時商品
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <h3>關於我們</h3>
+                <div style="margin-top: 50px;"></div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="col-md-6">
+                            <img src="image/200x200.png" class="img-fluid" alt="圖片1">
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 30px;"></div>
+                <div class="input-group">
+                    <div class="col-7">
+                        <span class="input-group-text">關於我們</span>
+                        <textarea class="form-control" aria-label="With textarea">歡迎來到我們的工業零件公司！我們是一家致力於提供高品質工業零件的公司，擁有豐富的製造經驗和技術知識。我們的產品範圍包括各種機械零件、模具零件和特殊零件，可以滿足客戶不同的需求。 我們以客戶滿意為首要目標，不斷努力提高產品品質和服務水準。我們的團隊由專業技術人員組成，能夠提供快速、準確的解決方案，並根據客戶的需求提供定制化服務。 我們致力於技術創新，不斷研究開發新產品和工藝，以滿足市場的需求。我們的產品符合國際標準，具有優良的性能和耐用性，深受客戶信賴和好評。 如果您對我們的產品感興趣或有任何疑問，請隨時與我們聯繫。我們將竭誠為您提供優質的產品和服務，與您攜手共創美好未來！</textarea>
+                    </div>
+                </div>
+            </div>
+            
+  <head th:insert="~{/front-end/footer}"></head>
+	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/notification.js}"></script>
+
+</body>
+
+</html>

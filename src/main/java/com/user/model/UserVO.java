@@ -1,7 +1,8 @@
 package com.user.model;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,21 +16,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Email;
 //import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotEmpty;
-
-//import com.dept.model.DeptVO;
-
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import com.reqorder.model.ReqOrderVO;
+
+import com.forumpost.model.ForumPostVO;
 import com.industry.model.IndustryVO;
-import com.quo.model.QuoVO;
 import com.productinformation.model.ProductInformationVO;
+import com.questionList.model.QueListVO;
+import com.quo.model.QuoVO;
+import com.reqorder.model.ReqOrderVO;
 
 	@Entity // 要加上@Entity才能成為JPA的一個Entity類別
 	@Table(name = "userInformation") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
@@ -64,7 +61,9 @@ import com.productinformation.model.ProductInformationVO;
 		private Set<ReqOrderVO> reqOrder = new HashSet<ReqOrderVO>();
 		private Set<QuoVO> quotations = new HashSet<QuoVO>();
 		private Set<ProductInformationVO> productInformation = new HashSet<ProductInformationVO>();
-		
+		private Set<QueListVO> quelists = new HashSet<QueListVO>();
+		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>();
+
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 		}
 		
@@ -429,6 +428,20 @@ import com.productinformation.model.ProductInformationVO;
 			this.quotations = quotations;
 		}
 		
+		//--------------------------------------------
+		
+		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userVO")
+		@OrderBy("fpUserid asc")
+		public Set<ForumPostVO> getForumPost() {
+			return forumPost;
+		}
+
+		public void setForumPost(Set<ForumPostVO> forumPost) {
+			this.forumPost = forumPost;
+		}
+		
+		
+		
 		
 //		@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="userVO")
 //		@OrderBy("industryNum asc")
@@ -439,4 +452,17 @@ import com.productinformation.model.ProductInformationVO;
 //		public void setIndustry(Set<IndustryVO> industry) {
 //			this.industry = industry;
 //		}
+		@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="userVO")
+		//註1:【現在是設定成 cascade="all" lazy="false" inverse="true"之意】
+		//註2:【mappedBy="多方的關聯屬性名"：用在雙向關聯中，把關係的控制權反轉】【deptVO是EmpVO的屬性】
+		//註3:【原預設為@OneToMany(fetch=FetchType.LAZY, mappedBy="deptVO")之意】--> 【是指原為  lazy="true"  inverse="true"之意】
+		//FetchType.EAGER : Defines that data must be eagerly fetched
+		//FetchType.LAZY  : Defines that data can be lazily fetched
+		public Set<QueListVO> getQueLists() {
+			return this.quelists;
+		}
+
+		public void setQueLists(Set<QueListVO> quelists) {
+			this.quelists = quelists;
+		}
 	}

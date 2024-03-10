@@ -1,0 +1,126 @@
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+
+<header>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a th:href="@{/}"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                
+                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
+             
+                <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
+            </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
+                <li class="nav-item"><a th:href="@{/}" class="nav-link">最新消息</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
+               <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登出</a></li>
+
+                    <div class="notification-container">
+                        <div id="notificationIcon" class="notification-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                class="bi bi-bell" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+                            </svg>
+                            <span id="notificationBadge" class="notification-badge">0</span>
+                        </div>
+                        <div id="notificationDropdown" class="notification-dropdown">
+                            <a href="#">
+                                <h3>Notification Title 1</h3>
+                                <p>Notification Content 1</p>
+                            </a>
+                            <a href="#">
+                                <h3>Notification Title 2</h3>
+                                <p>Notification Content 2</p>
+                            </a>
+                            <a href="#">
+                                <h3>Notification Title 3</h3>
+                                <p>Notification Content 3</p>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="user-profile" style="margin-left: 10px;"><a th:href="@{/user/req_userpage}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                        </svg>
+                    </a>
+                    </div>
+
+<!--                 漢堡選單 -->
+                <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#"></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon small"></span>
+                        </button>
+                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight"
+                            aria-labelledby="offcanvasNavbarLightLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO BARRIER TECH</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body">
+                                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">資料修改</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">帳戶資訊</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">更改密碼</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/userinformation/memberCen}">產業類別編輯</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">預覽頁面</a></li>
+                                            <li><a class="dropdown-item" href="#">編輯頁面</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" th:href="@{/order/transaction_stat}">交易狀態</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">月對帳單</a>
+                                    </li>
+                                </ul>
+                                <form class="d-flex mt-3" role="search">
+                                    <input class="form-control me-2" type="search" placeholder="Search"
+                                        aria-label="Search">
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </ul>
+        </header>
+    </div>
+    
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/notification.js}"></script>
+    <script th:src="@{/js/home.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap demo</title>
+
+<!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
+  <style>
+    /* 小型設備（手機） */
+    @media (max-width: 767.98px) {
+      /* 樣式設定 */
+    }
+
+    /* 中型設備（平板） */
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      /* 樣式設定 */
+    }
+
+    /* 大型設備（桌面） */
+    @media (min-width: 992px) {
+      /* 樣式設定 */
+    }
+
+    .navbar-toggler-icon.small {
+      font-size: 0.6rem;
+    }
+
+    .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+      background-color: #7e8287 !important;
+    }
+
+    .list-group1 {
+      display: none;
+      /* 隱藏通知列表 */
+    }
+
+    .list-group1.show {
+      display: block;
+      /* 顯示通知列表 */
+    }
+
+    .notification-dropdown {
+      position: absolute;
+      top: 60px;
+      /* 距離 header 的頂部距離 */
+      right: 10px;
+      /* 距離 header 的右側距離 */
+      background-color: white;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      z-index: 1000;
+      /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+    }
+
+    .notification-dropdown.show {
+      display: block;
+    }
+
+    .notification-icon {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      padding: 5px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <header> -->
+  <head th:insert="~{/front-end/header_login}"></head>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <p>平台銀行帳戶:</p>
+
+        <div class="mb-3">
+          <label for="receive-bankCode" class="form-label">轉入銀行代碼</label>
+          <div class="form-control" id="BankCode">806</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="receive-account" class="form-label">轉入帳號</label>
+          <div class="form-control" id="receive-account">2000199991234</div>
+        </div>
+      </div>
+
+      <!-- 匯款方的帳號資訊 -->
+      <div class="col-md-6">
+        <p>您的銀行帳戶:</p>
+
+        <div class="mb-3">
+          <label for="buyer-name" class="form-label">公司名稱</label>
+          <div class="form-control" id="buyer-name">XXX公司</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="buyer-bankCode" class="form-label">銀行代碼</label>
+          <div class="form-control" id="buyer-bankCode">888</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="buyer-account" class="form-label">轉出帳號</label>
+          <div class="form-control" id="buyer-account">3333199991234</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="totalPrice" class="form-label">匯款金額</label>
+          <div class="form-control" id="totalPrice">1,000,000</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 30px;"></div>
+    <div class="d-flex justify-content-end">
+      <a href="transaction_stat.html" class="btn btn-primary" onclick="return confirm('確定要送出嗎？')">確認</a>
+    </div>
+
+  </div>
+
+  <!-- <footer> -->
+  <head th:insert="~{/front-end/footer}"></head>
+  <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+  
+<!--   <script src="js/notification.js"></script> -->
+<!--   <script src="js/home.js"></script> -->
+<!--   <script src="js/popper.min.js"></script> -->
+<!--   <script src="js/bootstrap.min.js"></script> -->
+</body>
+
+</html>
