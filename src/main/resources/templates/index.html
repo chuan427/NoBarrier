@@ -44,71 +44,71 @@
             <ul class="nav nav-pills">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
-                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登入</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/register1}" class="nav-link">註冊</a></li>
                 
 				<!-- 漢堡選單 -->
-				<nav class="navbar bg-custom-color"
-					aria-label="Light offcanvas navbar">
-					<div class="container-fluid">
-						<a class="navbar-brand" href="#"></a>
-						<button class="navbar-toggler" type="button"
-							data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
-							aria-controls="offcanvasNavbarLight"
-							aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon small"></span>
-						</button>
-						<div class="offcanvas offcanvas-end" tabindex="-1"
-							id="offcanvasNavbarLight"
-							aria-labelledby="offcanvasNavbarLightLabel">
-							<div class="offcanvas-header">
-								<h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO
-									BARRIER TECH</h5>
-								<button type="button" class="btn-close"
-									data-bs-dismiss="offcanvas" aria-label="Close"></button>
-							</div>
-							<div class="offcanvas-body">
-								<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">資料修改</a></li>
-											<li><a class="dropdown-item" href="#">帳戶資訊</a></li>
-											<li><a class="dropdown-item" href="#">更改密碼</a></li>
-											<li><a class="dropdown-item" href="#">產業類別編輯</a></li>
-										</ul></li>
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item"
-												href="editmember_ad_view.html">預覽頁面</a></li>
-											<li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li>
-										</ul></li>
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li>
-										</ul></li>
-									<li class="nav-item"><a class="nav-link" href="#">交易狀態</a>
-									</li>
-									<li class="nav-item"><a class="nav-link" href="#">月對帳單</a>
-									</li>
-								</ul>
-								<form class="d-flex mt-3" role="search">
-									<input class="form-control me-2" type="search"
-										placeholder="Search" aria-label="Search">
-									<button class="btn btn-outline-success" type="submit">Search</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</nav>
+<!-- 				<nav class="navbar bg-custom-color" -->
+<!-- 					aria-label="Light offcanvas navbar"> -->
+<!-- 					<div class="container-fluid"> -->
+<!-- 						<a class="navbar-brand" href="#"></a> -->
+<!-- 						<button class="navbar-toggler" type="button" -->
+<!-- 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight" -->
+<!-- 							aria-controls="offcanvasNavbarLight" -->
+<!-- 							aria-label="Toggle navigation"> -->
+<!-- 							<span class="navbar-toggler-icon small"></span> -->
+<!-- 						</button> -->
+<!-- 						<div class="offcanvas offcanvas-end" tabindex="-1" -->
+<!-- 							id="offcanvasNavbarLight" -->
+<!-- 							aria-labelledby="offcanvasNavbarLightLabel"> -->
+<!-- 							<div class="offcanvas-header"> -->
+<!-- 								<h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO -->
+<!-- 									BARRIER TECH</h5> -->
+<!-- 								<button type="button" class="btn-close" -->
+<!-- 									data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+<!-- 							</div> -->
+<!-- 							<div class="offcanvas-body"> -->
+<!-- 								<ul class="navbar-nav justify-content-end flex-grow-1 pe-3"> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">會員中心</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" href="#">資料修改</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">帳戶資訊</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">更改密碼</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">產業類別編輯</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" -->
+<!-- 												href="editmember_ad_view.html">預覽頁面</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item"><a class="nav-link" href="#">交易狀態</a> -->
+<!-- 									</li> -->
+<!-- 									<li class="nav-item"><a class="nav-link" href="#">月對帳單</a> -->
+<!-- 									</li> -->
+<!-- 								</ul> -->
+<!-- 								<form class="d-flex mt-3" role="search"> -->
+<!-- 									<input class="form-control me-2" type="search" -->
+<!-- 										placeholder="Search" aria-label="Search"> -->
+<!-- 									<button class="btn btn-outline-success" type="submit">Search</button> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</nav> -->
 			</ul>
 		</header>
 	</div>
@@ -140,8 +140,8 @@
 		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=0" height="300px"
-					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
+				<a th:href="@{/com/member_Prod}"><img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;"></a>
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
@@ -154,9 +154,8 @@
 							<div
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
-									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
+								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
+									height="300px" class="d-block w-30" th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
 							</div>
 						</th:block>
 					</th:block>
