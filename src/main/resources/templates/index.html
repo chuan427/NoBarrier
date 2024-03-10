@@ -154,7 +154,7 @@
 							<div
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index})}"
+								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
 									height="300px" class="d-block w-30"
 									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
 							</div>
