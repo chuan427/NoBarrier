@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- <html xmlns:th="http://www.thymeleaf.org"> -->
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -92,17 +92,17 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                        <span class="fs-2" style="color: black;" th:text="${userVO.comName}"></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="member_AboutUs.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/member_AboutUs/{userId}(userId=${userVO.userId})}" class="nav-link text-white fs-4">
                                 關於我們
                             </a>
                         </li>
                         <li>
-                            <a href="member_Prod.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/member_Prod/{userId}(userId=${userVO.userId})}" class="nav-link text-white fs-4">
                                 產品資訊
                             </a>
                         </li>
@@ -116,41 +116,18 @@
                     <h3>關於我們</h3>
                     <div class="col-md-8">
                         <div class="card shadow-sm custom-card">
-                            <svg class="bd-placeholder-img card-img-top" width="200px" height="225px"
-                                xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                                preserveAspectRatio="xMidYMid slice" focusable="false">
+                         <img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" height="300" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
                                 <title>公司名稱</title>
-                                <rect width="100%" height="100%" fill="#55595c" />
-                                <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
+                                <text x="50%" y="50%" fill="#eceeef" dy=".3em"> </text>
                             </svg>
                             <div class="card-body">
-                                <p class="card-text">歡迎來到我們的工業零件公司！我們是一家致力於提供高品質工業零件的公司，擁有豐富的製造經驗和技術知識。我們的產品範圍包括各種機械零件、模具零件和特殊零件，可以滿足客戶不同的需求。
-
-                                    我們以客戶滿意為首要目標，不斷努力提高產品品質和服務水準。我們的團隊由專業技術人員組成，能夠提供快速、準確的解決方案，並根據客戶的需求提供定制化服務。
-                                    
-                                    我們致力於技術創新，不斷研究開發新產品和工藝，以滿足市場的需求。我們的產品符合國際標準，具有優良的性能和耐用性，深受客戶信賴和好評。
-                                    
-                                    如果您對我們的產品感興趣或有任何疑問，請隨時與我們聯繫。我們將竭誠為您提供優質的產品和服務，與您攜手共創美好未來！</p>
+                                <p class="card-text" th:text="${userVO.comAboutContent}"></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- 聯絡我們(客服) -->
-    <button id="open-chat-button">聯絡我們</button>
-
-    <div id="chat-box" style="display: none;">
-        <button id="close-chat-button" onclick="closeChatBox()">X</button>
-        <h2>客服</h2>
-        <div class="chat-box">
-            <!-- 在這裡放置客服畫面的內容 -->
-            <p>你好！有什麼可以幫助您的嗎？</p>
-        </div>
-        <input type="text" id="message-input" placeholder="輸入訊息...">
-        <button id="send-message-button">送出</button>
     </div>
 
 	<!-- <footer> -->

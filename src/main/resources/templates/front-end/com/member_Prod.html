@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -91,23 +91,24 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                        <span class="fs-2" style="color: black;" th:text="${userVO.comName}"></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="member_AboutUs.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/member_AboutUs/{userId}(userId=${userVO.userId})}" class="nav-link text-white fs-4">
                                 關於我們
                             </a>
                         </li>
                         <li>
-                            <a href="member_Prod.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/member_Prod/{userId}(userId=${userVO.userId})}" class="nav-link text-white fs-4">
                                 產品資訊
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+
 
             <!-- 公司的產品資訊 -->
             <div class="col-md-9">
@@ -123,20 +124,7 @@
                                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
                             </svg>
                             <div class="card-body">
-                                <p class="card-text">
-                                    **產品名稱：**工業機械零件
-
-                                    **產品特色：**高強度、耐用、精密加工
-                                    
-                                    產品規格：
-                                    材質：優質鋼材
-                                    尺寸：依客戶要求定制
-                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
-                                    
-                                    產品優勢：
-                                    耐用性高，使用壽命長
-                                    精密加工，尺寸精準
-                                    能夠定制，滿足客戶特殊需求</p>
+                                <p class="card-text" th:text="${userVO.comAboutContent}"></p>
                             </div>
                         </div>
                     </div>
@@ -150,20 +138,7 @@
                                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
                             </svg>
                             <div class="card-body">
-                                <p class="card-text">
-                                    **產品名稱：**工業機械零件
-
-                                    **產品特色：**高強度、耐用、精密加工
-                                    
-                                    產品規格：
-                                    材質：優質鋼材
-                                    尺寸：依客戶要求定制
-                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
-                                    
-                                    產品優勢：
-                                    耐用性高，使用壽命長
-                                    精密加工，尺寸精準
-                                    能夠定制，滿足客戶特殊需求</p>
+                                <p class="card-text" th:text="${userVO.comAboutContent}"></p>
                                 
                             </div>
                         </div>
@@ -178,20 +153,7 @@
                                 <text x="50%" y="50%" fill="#eceeef" dy=".3em">image</text>
                             </svg>
                             <div class="card-body">
-                                <p class="card-text">
-                                    **產品名稱：**工業機械零件
-
-                                    **產品特色：**高強度、耐用、精密加工
-                                    
-                                    產品規格：
-                                    材質：優質鋼材
-                                    尺寸：依客戶要求定制
-                                    **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業
-                                    
-                                    產品優勢：
-                                    耐用性高，使用壽命長
-                                    精密加工，尺寸精準
-                                    能夠定制，滿足客戶特殊需求</p>
+                                <p class="card-text" th:text="${userVO.comAboutContent}"></p>
                                 
                             </div>
                         </div>
@@ -199,21 +161,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-
-    <!-- 聯絡我們(客服) -->
-    <button id="open-chat-button">聯絡我們</button>
-
-    <div id="chat-box" style="display: none;">
-        <button id="close-chat-button" onclick="closeChatBox()">X</button>
-        <h2>客服</h2>
-        <div class="chat-box">
-            <!-- 在這裡放置客服畫面的內容 -->
-            <p>你好！有什麼可以幫助您的嗎？</p>
-        </div>
-        <input type="text" id="message-input" placeholder="輸入訊息...">
-        <button id="send-message-button">送出</button>
     </div>
 
     <!-- <footer> -->

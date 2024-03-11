@@ -33,24 +33,26 @@ public class ForumPostController {
 
 	@Autowired
 	UserService userSvc;
-	
+
 	@Autowired
 	ForumPostService forumPostSvc;
-	
+
 	@Autowired
 	ForumReplyService forumReplySvc;
-	
+
 	@Autowired
 	ForumReportService forumReportSvc;
 
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	@GetMapping("addForumPost")
+	
+	
+	@GetMapping("/forum/addForumPost")
 	public String addForumPost(ModelMap model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
 		model.addAttribute("forumPostVO", forumPostVO);
-		return "back-end/forumPost/addForumPost";
+		return "front-end/forum/addForumPost";
 	}
 
 	/*
@@ -65,16 +67,15 @@ public class ForumPostController {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(forumPostVO, result, "fpImage");
 
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "貼文圖片: 請上傳照片，謝謝");
-		} else {
+		if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
 			for (MultipartFile multipartFile : parts) {
 				byte[] buf = multipartFile.getBytes();
 				forumPostVO.setFpImage(buf);
 			}
 		}
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/forumPost/addForumPost";
+		// 即使沒有上傳圖片，也可以繼續進行其他處理流程
+		if (result.hasErrors()) {
+			return "front-end/forum/addForumPost";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -147,10 +148,9 @@ public class ForumPostController {
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "back-end/forumPost/listOneForumPost"; // 修改成功後轉交listOneUser.html
 	}
-	
-	
+
 	@ModelAttribute("userListData")
-	protected List<UserVO> referenceListData(){
+	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
@@ -159,7 +159,7 @@ public class ForumPostController {
 	 * This method will be called on listAllUser.html form submission, handling POST
 	 * request
 	 */
-	
+
 	@PostMapping("delete")
 	public String delete(@RequestParam("fpNum") String fpNum, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -172,7 +172,7 @@ public class ForumPostController {
 		model.addAttribute("success", "- (刪除成功)");
 		return "back-end/forumPost/listAllForumPost"; // 刪除完成後轉交listAllUser.html
 	}
-	
+
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(ForumPostVO forumPostVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
@@ -183,10 +183,6 @@ public class ForumPostController {
 		}
 		return result;
 	}
-	
-	
-
-	
 
 	/*
 	 * 第一種作法 Method used to populate the List Data in view. 如 : <form:select
@@ -213,7 +209,5 @@ public class ForumPostController {
 //		map.put(40, "生管部");
 //		return map;
 //	}
-
-
 
 }
