@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -37,7 +38,7 @@
             <a th:href="@{/}"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 
-                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
+                    <img th:src="@{/images/new-logo.svg}" width="50" height="50"/>
              
                 <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
             </a>
@@ -137,7 +138,7 @@
 		<!-- 					</th:block> -->
 		<!-- 				</div> -->
 
-		<div class="carousel-inner">
+		<div class="carousel-inner" sec:authorize="true">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
 				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
@@ -152,7 +153,7 @@
 						<th:block th:if="${advertisement.adsDays == #dates.createToday()}">
 							<!-- 根据索引设置轮播项的样式 -->
 							<div
-								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
+								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'">
 								<!-- 显示广告图片 -->
 								<a th:href="@{/com/com_homepage/{userId}(userId=${adVO.userVO.userId})}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
 									height="300px" class="d-block w-30"
@@ -176,7 +177,7 @@
 		</button>
 	</div>
      <!-- 最新消息 -->
-    <section id="latest-news" class="py-5 text-center container" style="background-color: RGB(223, 203, 189); max-width: 100%;">
+    <section id="latest-news" class="py-5 text-center container" style="background-color: RGB(223, 203, 189); max-width: 100%;" sec:authorize="true">
         <div class="row py-lg-5" >
             <div class="col-lg-8 col-md-8 mx-auto">
                 <h1>最新消息</h1>
@@ -191,7 +192,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                    <th:block th:each="newsVO : ${newsListData}">
+                    <th:block th:each="newsVO : ${newsListData}" >
 							<tr>
 <!-- 			  					 <td th:text="${newsVO.newsNum}"></td> -->
 								 <td th:text="${newsVO.newsDate}"></td>
@@ -211,7 +212,7 @@
     
     
      <!-- 服務項目 -->
-    <section class="py-5 text-center container" style="background-color: rgb(200, 199, 199); max-width: 100%;">
+    <section class="py-5 text-center container" style="background-color: rgb(200, 199, 199); max-width: 100%;"sec:authorize="true">
         <div class="row featurette">
             <div class="col-md-7 mx-auto">
                 <h1 class="featurette-heading fw-normal lh-1">服務項目 <span class="text-body-secondary"></span>
@@ -236,7 +237,7 @@
 
 	<!-- 聯絡我們 -->
 	<section class="py-5 text-center container"
-		style="background-color: white; height: 10px;">
+		style="background-color: white; height: 10px;" sec:authorize="true">
 		<div class="row py-0 align-items-start">
 			<div class="col-lg-6 col-md-8 mx-auto">
 				<h3 class="fw-light">如有任何問題，請隨時與我們聯繫。</h3>

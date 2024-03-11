@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
+import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
 
 
@@ -47,7 +49,14 @@ public class QuoController {
 	public String addQuo(ModelMap model) {
 		QuoVO quoVO = new QuoVO();
 		model.addAttribute("quoVO", quoVO);
-		return "back-end/quo/addQuo";
+		return "front-end/userinformation/addQuotation";
+	}
+	
+	@GetMapping("/userinformation/quotation_list")
+	public String reqOrderList(Model model) {
+		List<QuoVO> list = quoSvc.getAll();// 從數據庫中獲取您的物件列表
+		model.addAttribute("quoListData", list);
+		return "redirect:/userinformation/quotation_list"; // 返回模板名稱
 	}
 
 	/*
@@ -62,7 +71,7 @@ public class QuoController {
 		result = removeFieldError(quoVO, result, "quoNum");
 
 		if (result.hasErrors()) {
-			return "back-end/quo/addQuo";
+			return "front-end/userinformation/addQuotation";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -71,82 +80,76 @@ public class QuoController {
 		List<QuoVO> list = quoSvc.getAll();
 		model.addAttribute("quoListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/quo/listAllQuo"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/emp/listAllEmp")
+		return "redirect:/userinformation/req_userpage"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/emp/listAllEmp")
 	}
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
 	 */
-	@PostMapping("getOne_For_Update")
-	public String getOne_For_Update(@RequestParam("quoNum") String quoNum, ModelMap model) {
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		/*************************** 2.開始查詢資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		QuoVO quoVO = quoSvc.getOneQuo(Integer.valueOf(quoNum));
-//		quoVO.setQuoDate(new java.sql.Date(System.currentTimeMillis()));
-		
-		System.out.println("addr"+quoVO);
-
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("quoVO", quoVO);
-		System.out.println("fghfgh" + quoVO.getQuoDate());
-		return "back-end/quo/update_quo_input"; // 查詢完成後轉交update_emp_input.html
-	}
+//	@PostMapping("getOne_For_Update")
+//	public String getOne_For_Update(@RequestParam("quoNum") String quoNum, ModelMap model) {
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		/*************************** 2.開始查詢資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		QuoVO quoVO = quoSvc.getOneQuo(Integer.valueOf(quoNum));
+////		quoVO.setQuoDate(new java.sql.Date(System.currentTimeMillis()));
+//		
+//		System.out.println("addr"+quoVO);
+//
+//		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("quoVO", quoVO);
+//		System.out.println("fghfgh" + quoVO.getQuoDate());
+//		return "back-end/quo/update_quo_input"; // 查詢完成後轉交update_emp_input.html
+//	}
 
 	/*
 	 * This method will be called on update_emp_input.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("update")
-	public String update(@Valid QuoVO quoVO, BindingResult result, ModelMap model ) throws IOException {
-
-		
-		System.out.println(quoVO.getQuoDate());
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(quoVO, result, "quoNum");
-
-		if (result.hasErrors()) {
-			return "back-end/quo/update_quo_input";
-		}
-		
-		System.out.println("addr"+quoVO);
-		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		quoSvc.updateQuo(quoVO);
-
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		quoVO = quoSvc.getOneQuo(Integer.valueOf(quoVO.getQuoNum()));
-		model.addAttribute("quoVO", quoVO);
-		return "back-end/quo/listOneQuo"; // 修改成功後轉交listOneEmp.html
-	}
+//	@PostMapping("update")
+//	public String update(@Valid QuoVO quoVO, BindingResult result, ModelMap model ) throws IOException {
+//
+//		
+//		System.out.println(quoVO.getQuoDate());
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		result = removeFieldError(quoVO, result, "quoNum");
+//
+//		if (result.hasErrors()) {
+//			return "back-end/quo/update_quo_input";
+//		}
+//		
+//		System.out.println("addr"+quoVO);
+//		/*************************** 2.開始修改資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		quoSvc.updateQuo(quoVO);
+//
+//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("success", "- (修改成功)");
+//		quoVO = quoSvc.getOneQuo(Integer.valueOf(quoVO.getQuoNum()));
+//		model.addAttribute("quoVO", quoVO);
+//		return "back-end/quo/listOneQuo"; // 修改成功後轉交listOneEmp.html
+//	}
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
 	 */
-	@PostMapping("delete")
-	public String delete(@RequestParam("quoNum") String quoNum, ModelMap model) {
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		/*************************** 2.開始刪除資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		quoSvc.deleteQuo(Integer.valueOf(quoNum));
-		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-		List<QuoVO> list = quoSvc.getAll();
-		model.addAttribute("quoListData", list);
-		model.addAttribute("success", "- (刪除成功)");
-		return "back-end/quo/listAllQuo"; // 刪除完成後轉交listAllEmp.html
-	}
+//	@PostMapping("delete")
+//	public String delete(@RequestParam("quoNum") String quoNum, ModelMap model) {
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		/*************************** 2.開始刪除資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		quoSvc.deleteQuo(Integer.valueOf(quoNum));
+//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
+//		List<QuoVO> list = quoSvc.getAll();
+//		model.addAttribute("quoListData", list);
+//		model.addAttribute("success", "- (刪除成功)");
+//		return "back-end/quo/listAllQuo"; // 刪除完成後轉交listAllEmp.html
+//	}
 
 	/*
 	 * 第一種作法 Method used to populate the List Data in view. 如 : 
 	 * <form:select path="deptno" id="deptno" items="${deptListData}" itemValue="deptno" itemLabel="dname" />
 	 */
-	@ModelAttribute("quoListData")
-	protected List<QuoVO> referenceListData() {
-		// DeptService deptSvc = new DeptService();
-		List<QuoVO> list = quoSvc.getAll();
-		return list;
-	}
 
 	/*
 	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : 
