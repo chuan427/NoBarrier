@@ -404,7 +404,8 @@ public class IndexController_inSpringBoot {
 	}
 
 	@GetMapping("/userinformation/addReqOrder")
-	public String addReqOrder(Model model) {
+	public String addReqOrder(Model model) { 
+		model.addAttribute("reqOrderVO", new ReqOrderVO());
 		return "front-end/userinformation/addReqOrder";
 	}
 	

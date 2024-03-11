@@ -145,21 +145,9 @@
 			</div>
 			
 			<div>
-			<label>產業類別1:</label>
-			<input type="text" th:field="*{comIndustry1}" onclick="hideContent('comIndustry1.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('comIndustry1')}" th:errors="*{comIndustry1}" class="error" id="comIndustry1.errors"></span>
-			</div>
-			
-			<div>
-			<label>產業類別2:</label>
-			<input type="text" th:field="*{comIndustry2}" onclick="hideContent('comIndustry2.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('comIndustry2')}" th:errors="*{comIndustry2}" class="error" id="comIndustry2.errors"></span>
-			</div>
-			
-			<div>
-			<label>產業類別3:</label>
-			<input type="text" th:field="*{comIndustry3}" onclick="hideContent('comIndustry3.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('comIndustry3')}" th:errors="*{comIndustry3}" class="error" id="comIndustry3.errors"></span>
+			<label>產業類別:</label>
+			<input type="text" th:field="*{comIndustry}" onclick="hideContent('comIndustry1.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comIndustry')}" th:errors="*{comIndustry}" class="error" id="comIndustry.errors"></span>
 			</div>
 			
 			<div>

@@ -92,7 +92,7 @@ public class IndustryVO implements java.io.Serializable{
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="industryVO")
-	@OrderBy("comIndustry1 asc")
+	@OrderBy("comIndustry asc")
 	public Set<UserVO> getUser() {
 		return this.user;
 	}

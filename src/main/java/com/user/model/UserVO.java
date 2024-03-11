@@ -54,9 +54,7 @@ import com.reqorder.model.ReqOrderVO;
 		private String comAboutContent;
 		private Double comRatStars;
 		private Integer comRatCount;
-		private Integer comIndustry1;
-		private Integer comIndustry2;
-		private Integer comIndustry3;
+		private Integer comIndustry;
 //		private Integer comIsValid;
 		private Set<ReqOrderVO> reqOrder = new HashSet<ReqOrderVO>();
 		private Set<QuoVO> quotations = new HashSet<QuoVO>();
@@ -84,7 +82,7 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@ManyToOne
-	    @JoinColumn(name = "comIndustry1", referencedColumnName = "industryNum", insertable=false, updatable=false)
+	    @JoinColumn(name = "comIndustry", referencedColumnName = "industryNum", insertable=false, updatable=false)
 		public IndustryVO getIndustryVO() {
 			return this.industryVO;
 		}
@@ -93,20 +91,6 @@ import com.reqorder.model.ReqOrderVO;
 			this.industryVO = industryVO;
 		}
 			
-		
-		//--------------------------------------------
-
-		@ManyToOne
-		@JoinColumn(name = "comIndustry2", referencedColumnName = "industryNum")
-		private IndustryVO industryVO2;
-
-		
-		//--------------------------------------------
-
-		@ManyToOne
-		@JoinColumn(name = "comIndustry3", referencedColumnName = "industryNum")
-		private IndustryVO industryVO3;
-		
 		
 		//--------------------------------------------
 
@@ -351,36 +335,17 @@ import com.reqorder.model.ReqOrderVO;
 		
 		//--------------------------------------------
 
-		@Column(name = "comIndustry1")
-//		@NotEmpty(message="產業類別1: 請勿空白")
-		public Integer getComIndustry1() {
-			return this.comIndustry1;
+		@Column(name = "comIndustry")
+//		@NotEmpty(message="產業類別: 請勿空白")
+		public Integer getComIndustry() {
+			return this.comIndustry;
 		}
-		public void setComIndustry1(Integer comIndustry1) {
-			this.comIndustry1 = comIndustry1;
-		}
-		
-		//--------------------------------------------
-
-		@Column(name = "comIndustry2")
-//		@NotEmpty(message="產業類別2: 請勿空白")
-		public Integer getComIndustry2() {
-			return this.comIndustry2;
-		}
-		public void setComIndustry2(Integer comIndustry2) {
-			this.comIndustry2 = comIndustry2;
+		public void setComIndustry(Integer comIndustry) {
+			this.comIndustry = comIndustry;
 		}
 		
 		//--------------------------------------------
 
-		@Column(name = "comIndustry3")
-//		@NotEmpty(message="產業類別3: 請勿空白")
-		public Integer getComIndustry3() {
-			return this.comIndustry3;
-		}
-		public void setComIndustry3(Integer comIndustry3) {
-			this.comIndustry3 = comIndustry3;
-		}
 //		@Column(name = "comIsValid")
 //		@NotEmpty(message="公司帳號狀態: 請勿空白")
 //		@Size(min=1,max=3,message="公司帳號狀態: 長度必需在{min}到{max}之間")
