@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 //import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotEmpty;
@@ -37,14 +39,14 @@ public class ForumPostVO implements java.io.Serializable {
 	private Timestamp fpTime;
 	private Timestamp fpUpdate;
 	private Integer fpLike;
-	private Integer fpStat;
+	private Integer fpStat = 1;
 	private Set<ForumReplyVO> forumReply = new HashSet<ForumReplyVO>();
 	private Set<ForumReportVO> forumReport = new HashSet<ForumReportVO>();
 
 //	private Integer fpIsValid;
 //	private Integer fpUserid;
 
-	public ForumPostVO() { 
+	public ForumPostVO() {
 	}
 
 	@Id // @Id代表這個屬性是這個Entity的唯一識別屬性，並且對映到Table的主鍵
@@ -81,7 +83,7 @@ public class ForumPostVO implements java.io.Serializable {
 
 	@Column(name = "fpTitle")
 	@NotEmpty(message = "文章標題: 請勿空白")
-	@Pattern(regexp = "^[\u4E00-\u9FA5a-zA-Z0-9\\p{P}]{0,50}$", message = "文章標題: 最多只能輸入 50 個字，包含中文、英文、數字和標點符號，不可以包含空格")
+	@Pattern(regexp = "^[\u4E00-\u9FA5a-zA-Z0-9\\p{P}\\s]{0,50}$", message = "文章標題: 最多只能輸入 50 個字")
 	public String getFpTitle() {
 		return this.fpTitle;
 	}
@@ -109,6 +111,15 @@ public class ForumPostVO implements java.io.Serializable {
 	public void setFpStat(Integer fpStat) {
 		this.fpStat = fpStat;
 	}
+	
+	@PrePersist
+	@PreUpdate
+	private void validateUpdate() {
+		if (this.fpStat == null || this.fpStat == 1) {
+			this.fpStat = 1;
+		}
+	}
+
 
 	@Column(name = "fpImage")
 	public byte[] getFpImage() {
@@ -119,7 +130,7 @@ public class ForumPostVO implements java.io.Serializable {
 		this.fpImage = fpImage;
 	}
 
-	@Column(name = "fpTime" , updatable = false)
+	@Column(name = "fpTime", updatable = false)
 	public Timestamp getFpTime() {
 		return fpTime;
 	}
@@ -130,6 +141,7 @@ public class ForumPostVO implements java.io.Serializable {
 
 	}
 
+	
 	@Column(name = "fpUpdate")
 	public Timestamp getFpUpdate() {
 		return fpUpdate;
@@ -158,7 +170,7 @@ public class ForumPostVO implements java.io.Serializable {
 	public void setForumReply(Set<ForumReplyVO> forumReply) {
 		this.forumReply = forumReply;
 	}
-	
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "forumPostVO")
 	@OrderBy("frpFpnum asc")
 	public Set<ForumReportVO> getForumReport() {
@@ -168,8 +180,6 @@ public class ForumPostVO implements java.io.Serializable {
 	public void setForumReport(Set<ForumReportVO> forumReport) {
 		this.forumReport = forumReport;
 	}
-	
-	
 
 //	@PrePersist
 //	protected void onCreate() {
@@ -193,5 +203,5 @@ public class ForumPostVO implements java.io.Serializable {
 //
 //	public void setFpUserid(Integer fpUserid) {
 //		this.fpUserid = fpUserid;
-	
+
 }

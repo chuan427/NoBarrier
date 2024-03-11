@@ -1,0 +1,151 @@
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+
+body {
+	margin-top: 20px;
+	background: #eee;
+	color: #708090;
+}
+
+.icon-1x {
+	font-size: 24px !important;
+}
+
+a {
+	text-decoration: none;
+}
+
+.text-primary, a.text-primary:focus, a.text-primary:hover {
+	color: #00adbb !important;
+}
+
+.text-black, .text-hover-black:hover {
+	color: #000 !important;
+}
+
+.font-weight-bold {
+	font-weight: 700 !important;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin-top: 20px;
+    background: #eee;
+    color: #708090;
+    min-height: 100vh; /* 確保至少與視窗一樣高 */
+    background-image: url('/images/abstract-painted.JPG');
+    background-size: cover;
+    background-position: center;
+}
+
+
+body, .container {
+    position: relative;
+    z-index: 1;
+}
+.icon-1x {
+    font-size: 24px !important;
+}
+a{
+    text-decoration:none;
+}
+.text-primary, a.text-primary:focus, a.text-primary:hover {
+    color: #00ADBB!important;
+}
+.text-black, .text-hover-black:hover {
+    color: #000 !important;
+}
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+
+/* 	ADD上傳圖片CSS  */
+
+#uploadImageContainer {
+    max-width: 50%; 	/* 調整容器的最大寬度 */
+    margin: left;  		/*如果需要，可以讓容器居中 */
+  }
+#fpImage{
+	width: 50%;
+}
+
+
+  /* 將標題、標籤和按鈕文字設為黑色 */
+h3, label, .btn-outline-secondary {
+    color: black;
+}
+
+/* 將按鈕框線設為黑色 */
+.btn-outline-secondary{
+    border-color: rgb(0, 0, 0);
+}
+
+/* 調整輸入框和選擇框的顏色 */
+.form-control, .form-select {
+    color: rgb(13, 13, 13);
+    border: 1px solid black; 
+}
+
+/* 調整輸入框和選擇框的placeholder顏色 */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1; /*Firefox*/
+}
+
+::-ms-input-placeholder { /*Microsoft Edge*/
+    color: black;
+}
+
+.container footer.nav a, 
+.container footer p {
+    color: #ffffff !important;
+}
+
+/* 針對所有在 .container 內的 .nav-link 應用白色文字 */
+.container .nav-link {
+    color: #ffffff !important;
+}
+
+/* 如果導航連結位於特定區域，如 footer，則可以更具體 */
+.container footer .nav-link {
+    color: #ffffff !important;
+}
+
+/* 針對所有狀態的導航連結：正常、懸停、聚焦 */
+.container .nav-link,
+.container .nav-link:hover,
+.container .nav-link:focus {
+    color: #ffffff !important;
+}
+.container header a {
+    color: #ffffff !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
