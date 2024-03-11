@@ -68,18 +68,16 @@
 </head>
 
 <body>
-	<!-- <header> -->
+	
 	<head th:insert="~{/front-end/header_login}"></head>
 
-	<!-- siderbar -->
 	<div class="row">
 		<div class="col-md-3">
 			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-white"
 				style="height: 500px; text-align: center;">
 				<div
 					class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
-					<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-						二哥公司!</span>
+					<span class="fs-1" style="color: black; padding-left: 60px;">Hi,二哥公司!</span>
 				</div>
 				<div class="user-profile">
 					<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170"
@@ -97,121 +95,125 @@
 							<button class="btn btn-secondary" id="myBtn" type="button"
 								style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">提出需求</button>
 						</a>
+						<div style="margin-top: 30px;"></div>
+						<a th:href="@{/order/transaction_stat}">
+							<button class="btn btn-secondary" type="button"
+								style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+						</a>
 					</div>
-					<div style="margin-top: 30px;"></div>
-					<a th:href="@{/order/transaction_stat}">
-						<button class="btn btn-secondary" type="button"
-							style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">
-							交易狀態</button>
-					</a>
-
 				</div>
+			</div>
+
+			<div class="col-md-7 "
+				style="background-color: rgb(211, 206, 206); height: 650px;">
+				<h2>提出需求</h2>
+				<form th:action="@{insert}" method="post" th:object="${reqOrderVO}"
+					enctype="multipart/form-data">
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">發佈日期:</label> <input type="date" /> <br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+					
+					<div th:text="${reqProdname}"></div>
+					
+					<div class="d-flex align-items-center">
+						<label for="email" class="me-3">需求分類:</label> <select
+							th:field="*{industryVO.industryNum}">
+							<option th:each="industryVO : ${industryListData}"
+								th:value="${industryVO.industryNum}"
+								th:text="${industryVO.industryName}" />
+						</select>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">商品名稱:</label> <input type="text"
+							th:field="*{reqProdname}"><br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">商品數量:</label> <input type="text"
+							th:field="*{reqProdqty}"><br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">商品單位:</label> <input type="text"
+							th:field="*{reqUnitname}"><br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">文字敘述:</label>
+						<textarea class="form-control"
+							style="resize: vertical; height: 100px;" th:field="*{reqDes}"></textarea>
+						<br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex align-items-center">
+						<label class="me-3">商品圖片:</label>
+						<div class="input-group mb-3" style="width: 50%;">
+							<input type="file" class="form-control" id="inputGroupFile02"
+								th:field="*{reqProdimage}">
+						</div>
+						<br>
+					</div>
+
+					<div style="margin-top: 30px;"></div>
+
+					<div class="d-flex justify-content-center">
+						按鈕觸發彈出式視窗
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#myModal">送出</button>
+
+						彈出式視窗
+						<div class="modal fade" id="myModal" tabindex="-1"
+							aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">提出需求通知</h5>
+										<button type="button" class="btn-close"
+											data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form>已成功提出需求</form>
+									</div>
+									<div class="modal-footer">
+										<a th:href="@{/userinformation/req_userpage}">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">了解</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+				</form>
 			</div>
 		</div>
 
 
-		<div class="col-md-8 "
-			style="background-color: rgb(211, 206, 206); height: 650px;">
-			<h2>提出需求</h2>
-			<form th:action="@{insert}" method="post" th:object="${reqOrderVO}" enctype="multipart/form-data">
 
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">發佈日期:</label> 
-					<input type="date"  th:field="*{reqOrderdate}" />  <br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label for="email" class="me-3">需求分類:</label> <select
-						th:field="*{industryVO.industryNum}">
-						<option th:each="industryVO : ${industryListData}"
-							th:value="${industryVO.industryNum}"
-							th:text="${industryVO.industryName}" />
-					</select>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">商品名稱:</label> <input type="text" th:field="*{reqProdname}"><br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">商品數量:</label> <input type="text" th:field="*{reqProdqty}"><br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">商品單位:</label> <input type="text" th:field="*{reqUnitname}"><br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">文字敘述:</label>
-					<textarea class="form-control"
-						style="resize: vertical; height: 100px;" th:field="*{reqDes}"></textarea>
-					<br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex align-items-center">
-					<label class="me-3">商品圖片:</label>
-					<div class="input-group mb-3" style="width: 50%;">
-						<input type="file" class="form-control" id="inputGroupFile02" th:field="*{reqProdimage}">
-					</div>
-					<br>
-				</div>
-
-				<div style="margin-top: 30px;"></div>
-
-				<div class="d-flex justify-content-center">
-					<!-- 按鈕觸發彈出式視窗 -->
-					<button type="button" class="btn btn-primary"
-						data-bs-toggle="modal" data-bs-target="#myModal">送出</button>
-
-					<!-- 彈出式視窗 -->
-					<div class="modal fade" id="myModal" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">提出需求通知</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<form>已成功提出需求</form>
-								</div>
-								<div class="modal-footer">
-									<a th:href="@{/userinformation/req_userpage}">
-										<button type="button" class="btn btn-secondary"
-											data-bs-dismiss="modal">了解</button>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-			</form>
-		</div>
-	</div>
-
+		<div style="margin-top: 30px;"></div>
+		<script th:src="@{/js/notification.js}"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
 	<div style="margin-top: 30px;"></div>
 	<!-- <footer> -->
 	<head th:insert="~{/front-end/footer}"></head>
   	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-	
-<!-- 	<script th:src="@{/js/notification.js}"></script> -->
-<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
-<!-- 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script> -->
 
 </body>
 

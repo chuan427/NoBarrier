@@ -57,7 +57,7 @@ public class QuoNumController {
 		
 		if (quoVO == null) {
 			model.addAttribute("errorMessage", "查無資料");
-			return "back-end/quo/select_page";
+			return "front-end/userinformation/req_userpage";
 		}
 		
 		/***************************3.查詢完成,準備轉交(Send the Success view)*****************/
@@ -65,7 +65,7 @@ public class QuoNumController {
 		model.addAttribute("getOne_For_Display", "true"); // 旗標getOne_For_Display見select_page.html的第126行 -->
 		
 //		return "back-end/quo/listOneQuo";  // 查詢完成後轉交listOneEmp.html
-		return "back-end/quo/select_page"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneEmp-div
+		return "front-end/userinformation/req_userpage"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneEmp-div
 	}
 
 	
@@ -84,7 +84,7 @@ public class QuoNumController {
 		model.addAttribute("quoListData", list); // for select_page.html 第97 109行用
 		
 		String message = strBuilder.toString();
-	    return new ModelAndView("back-end/quo/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
+	    return new ModelAndView("front-end/userinformation/req_userpage", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}
 	
 }

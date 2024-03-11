@@ -10,8 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
@@ -33,8 +38,11 @@ import com.questionList.model.QueListVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
+import com.reqorder.model.ReqOrderVO;
 import com.rptdlist.model.RptdlistService;
 import com.rptdlist.model.RptdlistVO;
+import com.security.model.MailService;
+import com.security.model.RandomPasswordGenerator;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -94,26 +102,73 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
-	@GetMapping("/")
-	public String index(Model model) {
-		model.addAttribute("message", message);
-		model.addAttribute("myList", myList);
-		return "index"; // view
+//	@GetMapping("/")
+//	public String index(Model model) {
+//		model.addAttribute("message", message);
+//		model.addAttribute("myList", myList);
+//		return "index"; // view
+//	}
+	//----------------------------------------------------
+	@RequestMapping("/")
+	public String toIndex() {
+		return "index";
 	}
 
-	// http://......../hello?name=peter1
-	@GetMapping("/hello")
-	public String indexWithParam(@RequestParam(name = "name", required = false, defaultValue = "") String name,
-			Model model) {
-		model.addAttribute("message", name);
-		return "index"; // view
-	}
-
-	// 登入頁面
-	@GetMapping("/login/loginPage")
+	@RequestMapping("/loginpage")
 	public String toLoginPage() {
-		return "back-end/login/loginPage"; // view
+		return "front-end/testLogin";
 	}
+	
+	@RequestMapping("/loginfail")
+	@ResponseBody
+	public String toFailLogin() {
+		return "Login Failed!"; // view
+	}
+	
+	@RequestMapping("/loginsuccess")
+	public String toSuccessLogin() {
+		return "front-end/successLogin"; // view
+	}
+	
+	@RequestMapping("/forgetPasswordPage")
+	public String toForgetPasswordPage() {
+		return "front-end/forgetPasswordPage"; // view
+	}
+	
+	@RequestMapping(value="/checkAccountExists",method = RequestMethod.POST)
+	@ResponseBody
+    public String checkAccountExists(@RequestParam String account) {
+        
+        boolean accountExists = userSvc.userIsExist(account);
+
+        if(accountExists) {
+        	
+        	String newPassword = RandomPasswordGenerator.generateRandomPassword();
+        	userSvc.resetPassword(account, newPassword);
+        	
+        	String to = userSvc.getUserEmail(account);
+        	String subject = "NoBarrier平台:密碼重新設置";
+        	String messageText = "這是您的新密碼:" + newPassword + "\n" + "請盡快登入並重設您的密碼。";
+        	
+        	MailService.sendMail(to,subject,messageText);
+        	
+        }
+        
+        
+        return "{\"exists\": " + accountExists + "}";
+    }
+	
+	
+	
+	
+	// http://......../hello?name=peter1
+//	@GetMapping("/hello")
+//	public String indexWithParam(@RequestParam(name = "name", required = false, defaultValue = "") String name,
+//			Model model) {
+//		model.addAttribute("message", name);
+//		return "index"; // view
+//	}
+	
 
 	// 廠商資訊 完成
 	@GetMapping("/com/com_homepage/{userId}")
@@ -298,14 +353,16 @@ public class IndexController_inSpringBoot {
 	// =========== 以下第57~62行是提供給
 	// /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html
 	// 要使用的資料 ===================
-	@GetMapping("/quo/select_page")
-	public String select_page(Model model) {
-		return "back-end/quo/select_page";
-	}
 
-	@GetMapping("/quo/listAllQuo")
-	public String listAllQuo(Model model) {
-		return "back-end/quo/listAllQuo";
+	// ----------------報價單--------------------
+	@GetMapping("/userinformation/addQuotation")
+	public String addQuotation(Model model) {
+		return "front-end/userinformation/addQuotation";
+	}
+	
+	@GetMapping("/userinformation/quotation_list")
+	public String quotation_list(Model model) {
+		return "front-end/userinformation/quotation_list";
 	}
 
 	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
@@ -340,16 +397,26 @@ public class IndexController_inSpringBoot {
 		return "front-end/userinformation/req_userpage";
 	}
 
+
 	@GetMapping("/userinformation/reqorder_list")
 	public String reqorder_list(Model model) {
 		return "front-end/userinformation/reqorder_list";
 	}
 
-	// 失敗
 	@GetMapping("/userinformation/addReqOrder")
 	public String addReqOrder(Model model) {
 		return "front-end/userinformation/addReqOrder";
 	}
+	
+	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
+
+
+		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		return list;
+	}
+
+	
 
 	// -------------------------------------------------
 
