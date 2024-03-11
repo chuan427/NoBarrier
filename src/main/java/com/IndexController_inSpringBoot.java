@@ -66,12 +66,6 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired
 	AdService adSvc;
-	
-	@Autowired
-	NewsService newsSvc;
-  
-	@Autowired
-	AdService adSvc;
   
 	@Autowired
 	QueListService queSvc;
@@ -426,7 +420,6 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// ---------------------------------------------------------------------
 	//------------------------ForumPost--------------------------------------
 	
 	@GetMapping("/forumPost/select_page1")
@@ -446,7 +439,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// -----------------------ForumReply-----------------------------------------
+	// -----------------------ForumReply--------------------------------------
 
 	@GetMapping("/forumReply/select_page2")
 	public String select_page2(Model model) {
