@@ -65,7 +65,7 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb p-3 bg-body-tertiary rounded-3">
 				<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-				<li class="breadcrumb-item"><a th:href="@{/com}">廠商資訊</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/com/com}">廠商資訊</a></li>
 			</ol>
 		</nav>
 	</div>
@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                    	<th:block th:each="userVO : ${UserListData}">
+                    	<th:block th:each="userVO : ${userListData}">
 							<tr>
 			  					 <td th:text="${userVOStat.count}"></td>
 								 <td th:text="${userVO.userId}"></td>
@@ -127,7 +127,7 @@
        						 					}
    									 </script>
 									</td>
-								<td><a th:href="@{/user/listAllUser}">詳情</a></td>
+								<td><a th:href="@{/com/com_homepage/{userId}(userId=${userVO.userId})}">詳情</a></td>
 							</tr>
 		  				</th:block>
                     </tbody>
@@ -144,16 +144,6 @@
 			"searching": true,  //搜尋功能, 預設是開啟
 		    "paging": true,     //分頁功能, 預設是開啟
 		    "ordering": true,   //排序功能, 預設是開啟
-		    "rowCallback": function(row, data, index) {
-		        // 在這裡進行行回調，設定每一行的樣式
-		        if (index % 2 === 0) {
-		            // 偶數行
-		            $(row).addClass('even-row');
-		        } else {
-		            // 奇數行
-		            $(row).addClass('odd-row');
-		        }
-		    },
 		    "language": {
 		        "processing": "處理中...",
 		        "loadingRecords": "載入中...",
