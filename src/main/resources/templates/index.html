@@ -156,8 +156,7 @@
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'">
 								<!-- 显示广告图片 -->
 								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
-									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
+									height="300px" class="d-block w-30" th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
 							</div>
 						</th:block>
 					</th:block>
@@ -300,7 +299,7 @@
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
                 <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
                 </li>
             </ul>
