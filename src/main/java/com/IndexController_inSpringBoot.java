@@ -9,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
 import com.addday.AdDate;
+import com.advertisements.model.AdvertisementsService;
+import com.advertisements.model.AdvertisementsVO;
 import com.forumpost.model.ForumPostService;
 import com.forumpost.model.ForumPostVO;
 import com.forumreply.model.ForumReplyService;
@@ -65,6 +68,9 @@ public class IndexController_inSpringBoot {
 	
 	@Autowired
 	AdService adSvc;
+	
+	@Autowired
+	AdvertisementsService adverSvc;
   
 	@Autowired
 	QueListService queSvc;
@@ -114,11 +120,13 @@ public class IndexController_inSpringBoot {
 	}
 
 	// 廠商資訊 完成
-	@GetMapping("/com/com_homepage")
-	public String homepage() {
-		return "front-end/com/com_homepage"; // view
-	}
-
+    @GetMapping("/com/com_homepage/{userId}")
+    public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
+        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+        // 將相關數據添加到 Model 中，以便在視圖中使用
+        model.addAttribute("userVO", userVO);
+        return "front-end/com/com_homepage"; // view
+    }
 	// 廠商資訊 完成
 	@GetMapping("/com/com")
 	public String toCom() {
@@ -416,6 +424,13 @@ public class IndexController_inSpringBoot {
 	protected List<AdVO> referenceListData_ad(Model model) {
 
 		List<AdVO> list = adSvc.getAll();
+		return list;
+	}
+	
+	@ModelAttribute("adervListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<AdvertisementsVO> referenceListData_aderv(Model model) {
+
+		List<AdvertisementsVO> list = adverSvc.getAll();
 		return list;
 	}
 
