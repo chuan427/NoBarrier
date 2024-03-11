@@ -1,0 +1,60 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>貼文資訊 - listOneForumPost.html</title>
+
+<head th:insert="~{/back-end/forumPost/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>貼文詳細資訊 - listOneForumPost.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/forumPost/select_page1}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+<div align="center" th:fragment="listOneForumPost-div">
+    <div th:if="${forumPostVO.fpStat == 1}">
+        <!-- 當 fpStat 為 1 時顯示的內容 -->
+        <h3><span>查詢結果 :</span></h3>
+        <span>貼文編號:</span><span th:text="${forumPostVO.fpNum}"></span><br/>
+        <span>會員編號:</span><span th:text="${forumPostVO.userVO.userId} + '-[' + ${forumPostVO.userVO.comName} + ']'"></span><br/>
+        <span>產業類別:</span><span th:text="${forumPostVO.fpCategory}"></span><br/>
+        <span>文章標題:</span><span th:text="${forumPostVO.fpTitle}"></span><br/>
+        <span>文章內容:</span><span th:text="${forumPostVO.fpContent}"></span><br/>
+        <span>貼文圖片:</span><img th:src="@{/forumPost/DBGifReader3(fpNum=${forumPostVO.fpNum})}" width="100px"><br/>
+        <span>貼文發佈時間:</span><span th:text="${forumPostVO.fpTime}"></span><br/>
+        <span>貼文最後編輯時間:</span><span th:text="${forumPostVO.fpUpdate}"></span><br/>
+        <span>貼文愛心數:</span><span th:text="${forumPostVO.fpLike}"></span><br/>
+<!--         <span>貼文狀態:</span><span th:text="${forumPostVO.fpStat}"></span><br/> -->
+    </div>
+    <div th:unless="${forumPostVO.fpStat == 1}">
+<!--         當 fpStat 不為 1 時顯示的內容 -->
+        <h3>此篇文章已刪除</h3>
+        在這裡插入圖片
+        <img width="90px"  height="80px" th:src="@{/images/delete.jpg}">
+    </div>
+</div>
+
+
+</body>
+</html>

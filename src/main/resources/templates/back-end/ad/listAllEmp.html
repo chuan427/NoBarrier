@@ -16,7 +16,7 @@
 <title>所有員工資料 - listAllEmp.html</title>
 <script th:src="@{/js/jquery-1.11.3.min.js}"></script>
 <!-- 左側jquery為table分頁用 -->
-<head th:insert="~{/back-end/ad/header}"></head>
+<head th:insert="~{/front-end/header}"></head>
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
 <style type="text/css">
@@ -165,11 +165,8 @@ th, td {
 			</tr>
 		</th:block>
 	</table>
-<footer th:insert="~{/back-end/ad/footer}"></footer>
+<head th:insert="~{/front-end/footer}"></head>
 
-<script th:src="@{/js/home.js}"></script>
-	<script th:src="@{/js/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 	<script type="text/javascript">
         //分頁顯示
         $(function () {

@@ -1,6 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
-<header>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a th:href="@{/}"
@@ -15,11 +14,11 @@
                 <li class="nav-item"><a th:href="@{/}" class="nav-link">最新消息</a></li>
                 <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登入</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/register1}" class="nav-link">註冊</a></li>
 
-<!-- <!--                 漢堡選單 --> -->
+<!-- <!--                 漢堡選單 -->
 <!--                 <nav class="navbar bg-custom-color" aria-label="Light offcanvas navbar"> -->
 <!--                     <div class="container-fluid"> -->
 <!--                         <a class="navbar-brand" href="#"></a> -->
@@ -81,8 +80,3 @@
             </ul>
         </header>
     </div>
-
-    
-    <script th:src="@{/js/home.js}"></script>
-	<script th:src="@{/js/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>

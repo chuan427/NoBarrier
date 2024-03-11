@@ -1,5 +1,8 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+
+
 <header>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -85,8 +88,8 @@
                                         <a class="nav-link dropdown-toggle" href="#" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" th:href="@{/com/editmember_ad_view}">預覽頁面</a></li>
-                                            <li><a class="dropdown-item" th:href="@{/com/editmember}">編輯頁面</a></li>
+                                            <li><a class="dropdown-item" href="#">預覽頁面</a></li>
+                                            <li><a class="dropdown-item" href="#">編輯頁面</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
@@ -97,7 +100,7 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" th:href="@{order/transaction_stat}">交易狀態</a>
+                                        <a class="nav-link" th:href="@{/order/transaction_stat}">交易狀態</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#">月對帳單</a>
@@ -115,9 +118,9 @@
             </ul>
         </header>
     </div>
-
-	
+    
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/notification.js}"></script>
     <script th:src="@{/js/home.js}"></script>
 	<script th:src="@{/js/popper.min.js}"></script>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
