@@ -6,9 +6,12 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import com.forumpost.model.ForumPostVO;
+
 import com.reqorder.model.ReqOrderVO;
 
 
@@ -18,6 +21,14 @@ public class UserService {
 
 		@Autowired
 		UserRepository repository;
+		
+		private final PasswordEncoder passwordEncoder;
+		
+	    @Autowired
+	    public UserService(PasswordEncoder passwordEncoder) {
+	        this.passwordEncoder = passwordEncoder;
+	    }
+//		PasswordEncoder pe = new BCryptPasswordEncoder();
 
 		public void addUser(UserVO userVO) {
 			repository.save(userVO);
@@ -32,6 +43,32 @@ public class UserService {
 			    repository.deleteById(userId);
 		}
 
+		public boolean userIsExist(String comAccount) {
+			if (repository.findByComAccount(comAccount)!=null) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+		
+		public String getUserEmail(String comAccount) {
+			UserVO userVO = repository.findByComAccount(comAccount);
+			String email = userVO.getComMail();
+			return email;
+		}
+		
+		public void resetPassword(String comAccount,String newPassword) {
+			UserVO userVO = repository.findByComAccount(comAccount);
+			if (userVO!= null) {
+	            
+				String encodeNewPassword = passwordEncoder.encode(newPassword);
+				
+				userVO.setComPassword(encodeNewPassword);
+
+	            repository.save(userVO);
+	        }
+		}
+		
 		public UserVO getOneUser(Integer userId) {
 			Optional<UserVO> optional = repository.findById(userId);
 //			return optional.get();
@@ -49,5 +86,6 @@ public class UserService {
 		public Set<ForumPostVO> getForumPostByfpUserid(Integer fpUserid){
 		return getOneUser(fpUserid).getForumPost();
 	}
+
 		
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
@@ -37,78 +38,78 @@
             <a th:href="@{/}"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 
-                    <img th:src="@{/images/new-logo.svg}" width="50" height="50" />
+                    <img th:src="@{/images/new-logo.svg}" width="50" height="50"/>
              
                 <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
             </a>
             <ul class="nav nav-pills">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
-                <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link">聯絡我們</a></li>
-                <li class="nav-item"><a th:href="@{/login/loginPage}" class="nav-link">登入</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">註冊</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登入</a></li>
+                <li class="nav-item"><a th:href="@{/userinformation/register1}" class="nav-link">註冊</a></li>
                 
 				<!-- 漢堡選單 -->
-				<nav class="navbar bg-custom-color"
-					aria-label="Light offcanvas navbar">
-					<div class="container-fluid">
-						<a class="navbar-brand" href="#"></a>
-						<button class="navbar-toggler" type="button"
-							data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight"
-							aria-controls="offcanvasNavbarLight"
-							aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon small"></span>
-						</button>
-						<div class="offcanvas offcanvas-end" tabindex="-1"
-							id="offcanvasNavbarLight"
-							aria-labelledby="offcanvasNavbarLightLabel">
-							<div class="offcanvas-header">
-								<h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO
-									BARRIER TECH</h5>
-								<button type="button" class="btn-close"
-									data-bs-dismiss="offcanvas" aria-label="Close"></button>
-							</div>
-							<div class="offcanvas-body">
-								<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">會員中心</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" href="#">資料修改</a></li>
-											<li><a class="dropdown-item" href="#">帳戶資訊</a></li>
-											<li><a class="dropdown-item" href="#">更改密碼</a></li>
-											<li><a class="dropdown-item" href="#">產業類別編輯</a></li>
-										</ul></li>
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item"
-												href="editmember_ad_view.html">預覽頁面</a></li>
-											<li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li>
-										</ul></li>
-									<li class="nav-item dropdown"><a
-										class="nav-link dropdown-toggle" href="#" role="button"
-										data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a>
-										<ul class="dropdown-menu">
-											<li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li>
-										</ul></li>
-									<li class="nav-item"><a class="nav-link" href="#">交易狀態</a>
-									</li>
-									<li class="nav-item"><a class="nav-link" href="#">月對帳單</a>
-									</li>
-								</ul>
-								<form class="d-flex mt-3" role="search">
-									<input class="form-control me-2" type="search"
-										placeholder="Search" aria-label="Search">
-									<button class="btn btn-outline-success" type="submit">Search</button>
-								</form>
-							</div>
-						</div>
-					</div>
-				</nav>
+<!-- 				<nav class="navbar bg-custom-color" -->
+<!-- 					aria-label="Light offcanvas navbar"> -->
+<!-- 					<div class="container-fluid"> -->
+<!-- 						<a class="navbar-brand" href="#"></a> -->
+<!-- 						<button class="navbar-toggler" type="button" -->
+<!-- 							data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight" -->
+<!-- 							aria-controls="offcanvasNavbarLight" -->
+<!-- 							aria-label="Toggle navigation"> -->
+<!-- 							<span class="navbar-toggler-icon small"></span> -->
+<!-- 						</button> -->
+<!-- 						<div class="offcanvas offcanvas-end" tabindex="-1" -->
+<!-- 							id="offcanvasNavbarLight" -->
+<!-- 							aria-labelledby="offcanvasNavbarLightLabel"> -->
+<!-- 							<div class="offcanvas-header"> -->
+<!-- 								<h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">NO -->
+<!-- 									BARRIER TECH</h5> -->
+<!-- 								<button type="button" class="btn-close" -->
+<!-- 									data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
+<!-- 							</div> -->
+<!-- 							<div class="offcanvas-body"> -->
+<!-- 								<ul class="navbar-nav justify-content-end flex-grow-1 pe-3"> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">會員中心</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" href="#">資料修改</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">帳戶資訊</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">更改密碼</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="#">產業類別編輯</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">介紹頁面</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" -->
+<!-- 												href="editmember_ad_view.html">預覽頁面</a></li> -->
+<!-- 											<li><a class="dropdown-item" href="editmember.html">編輯頁面</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item dropdown"><a -->
+<!-- 										class="nav-link dropdown-toggle" href="#" role="button" -->
+<!-- 										data-bs-toggle="dropdown" aria-expanded="false">首頁廣告預約列表</a> -->
+<!-- 										<ul class="dropdown-menu"> -->
+<!-- 											<li><a class="dropdown-item" th:href="@{/ad/addEmp}">首頁廣告購買</a></li> -->
+<!-- 										</ul></li> -->
+<!-- 									<li class="nav-item"><a class="nav-link" href="#">交易狀態</a> -->
+<!-- 									</li> -->
+<!-- 									<li class="nav-item"><a class="nav-link" href="#">月對帳單</a> -->
+<!-- 									</li> -->
+<!-- 								</ul> -->
+<!-- 								<form class="d-flex mt-3" role="search"> -->
+<!-- 									<input class="form-control me-2" type="search" -->
+<!-- 										placeholder="Search" aria-label="Search"> -->
+<!-- 									<button class="btn btn-outline-success" type="submit">Search</button> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</nav> -->
 			</ul>
 		</header>
 	</div>
@@ -137,11 +138,11 @@
 		<!-- 					</th:block> -->
 		<!-- 				</div> -->
 
-		<div class="carousel-inner">
+		<div class="carousel-inner" sec:authorize="true">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<img src="/ad/DBGifReader?adOrdernum=0" height="300px"
-					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
+				<a th:href="@{/com/member_Prod}"><img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;"></a>
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
@@ -152,11 +153,10 @@
 						<th:block th:if="${advertisement.adsDays == #dates.createToday()}">
 							<!-- 根据索引设置轮播项的样式 -->
 							<div
-								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'" >
+								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'">
 								<!-- 显示广告图片 -->
-								<img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index})}"
-									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;">
+								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
+									height="300px" class="d-block w-30" th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
 							</div>
 						</th:block>
 					</th:block>
@@ -176,7 +176,7 @@
 		</button>
 	</div>
      <!-- 最新消息 -->
-    <section id="latest-news" class="py-5 text-center container" style="background-color: RGB(223, 203, 189); max-width: 100%;">
+    <section id="latest-news" class="py-5 text-center container" style="background-color: RGB(223, 203, 189); max-width: 100%;" sec:authorize="true">
         <div class="row py-lg-5" >
             <div class="col-lg-8 col-md-8 mx-auto">
                 <h1>最新消息</h1>
@@ -191,7 +191,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                    <th:block th:each="newsVO : ${newsListData}">
+                    <th:block th:each="newsVO : ${newsListData}" >
 							<tr>
 <!-- 			  					 <td th:text="${newsVO.newsNum}"></td> -->
 								 <td th:text="${newsVO.newsDate}"></td>
@@ -211,7 +211,7 @@
     
     
      <!-- 服務項目 -->
-    <section class="py-5 text-center container" style="background-color: rgb(200, 199, 199); max-width: 100%;">
+    <section class="py-5 text-center container" style="background-color: rgb(200, 199, 199); max-width: 100%;"sec:authorize="true">
         <div class="row featurette">
             <div class="col-md-7 mx-auto">
                 <h1 class="featurette-heading fw-normal lh-1">服務項目 <span class="text-body-secondary"></span>
@@ -236,7 +236,7 @@
 
 	<!-- 聯絡我們 -->
 	<section class="py-5 text-center container"
-		style="background-color: white; height: 10px;">
+		style="background-color: white; height: 10px;" sec:authorize="true">
 		<div class="row py-0 align-items-start">
 			<div class="col-lg-6 col-md-8 mx-auto">
 				<h3 class="fw-light">如有任何問題，請隨時與我們聯繫。</h3>
@@ -299,7 +299,7 @@
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
                 <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
                 </li>
             </ul>
