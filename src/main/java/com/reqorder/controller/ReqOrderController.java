@@ -44,7 +44,6 @@ public class ReqOrderController {
     public String addReqOrder(ModelMap model) {
         ReqOrderVO reqOrderVO = new ReqOrderVO();
         model.addAttribute("reqOrderVO", reqOrderVO);
-        model.addAttribute("reqProdimage", new MultipartFile[1]); // 添加一個空的MultipartFile陣列
         return "front-end/userinformation/addReqOrder";
     }
 
@@ -56,10 +55,9 @@ public class ReqOrderController {
         return "redirect:/userinformation/reqorder_page";
     }
 
-    @PostMapping("insert")
+    @PostMapping("/insert")
     public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
             @ModelAttribute("reqProdimage") MultipartFile[] parts) throws IOException {
-        
         model.addAttribute("reqOrderVO", reqOrderVO);
 
         if (result.hasErrors() || parts[0].isEmpty()) {
