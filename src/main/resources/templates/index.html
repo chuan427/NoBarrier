@@ -38,7 +38,7 @@
             <a th:href="@{/}"
                 class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
                 
-                    <img th:src="@{/images/new-logo.svg}" width="50" height="50"/>
+                    <img th:src="@{/images/logo.png}" width="50" height="50"/>
              
                 <span class="fs-4" style="font-weight: bold;">NO BARRIER TECH</span>
             </a>
@@ -46,7 +46,7 @@
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a href="#latest-news" class="nav-link">最新消息</a></li>
                 <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                <li class="nav-item"><a th:href="@{/forum/forumIndex}" class="nav-link">論壇</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/sign_in}" class="nav-link">登入</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/register1}" class="nav-link">註冊</a></li>
@@ -156,8 +156,7 @@
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'">
 								<!-- 显示广告图片 -->
 								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
-									height="300px" class="d-block w-30"
-									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
+									height="300px" class="d-block w-30" th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
 							</div>
 						</th:block>
 					</th:block>
@@ -300,7 +299,7 @@
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">關於我們</a></li>
                 <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-body-secondary">最新消息</a></li>
-                <li class="nav-item"><a th:href="@{/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
+                <li class="nav-item"><a th:href="@{/com/com}" class="nav-link px-2 text-body-secondary">廠商資訊</a></li>
                 <li class="nav-item"><a th:href="@{/customer_service}" class="nav-link px-2 text-body-secondary">聯絡我們</a>
                 </li>
             </ul>
