@@ -2,6 +2,8 @@
 
 package com.questionList.model;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +20,7 @@ public interface QueListRepository extends JpaRepository<QueListVO, Integer> {
 //		@Query(value = "from EmpVO where empno=?1 and ename=?2 and hiredate=?3 order by empno")
 //		EmpVO findByOthers(int empno , String ename , java.sql.Date hiredate);
 
+//	List<QueListVO> findByQueUserid(Integer queUserid);
 
 
 }

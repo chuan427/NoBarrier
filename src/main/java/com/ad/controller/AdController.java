@@ -1,5 +1,6 @@
 package com.ad.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -57,10 +58,11 @@ public class AdController {
 	 */
 	@PostMapping("insert")
 	public String insert(@ModelAttribute AdDate addate, BindingResult result, ModelMap model,
-			@RequestParam("adImageadd") MultipartFile[] parts) throws IOException {
+			@RequestParam("adImageadd") MultipartFile[] parts,HttpServletRequest request) throws IOException {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄
 //	    result = removeFieldError(addate, result, "adImageadd");
 //	    result = removeFieldError(addate, result, "adPriceadd");
+		
 //
 		if (parts[0].isEmpty()) {
 			model.addAttribute("errorMessage", "廣告圖片: 請上傳照片");

@@ -56,7 +56,7 @@ public class ReqOrderController {
         return "redirect:/userinformation/reqorder_page";
     }
 
-    @PostMapping("insert")
+    @PostMapping("insertreq")
     public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
     		@RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
     	

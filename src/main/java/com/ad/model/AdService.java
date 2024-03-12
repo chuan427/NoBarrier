@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.addday.AdDate;
 import com.advertisements.model.AdvertisementsRepository;
 import com.advertisements.model.AdvertisementsVO;
+import com.user.model.UserRepository;
+import com.user.model.UserVO;
 
 
 @Service("adService")
@@ -22,6 +25,14 @@ public class AdService {
 
 	@Autowired
 	AdvertisementsRepository advertisementsrepository;
+	
+	@Autowired
+	UserRepository userrepository;
+	
+	@Autowired
+    HttpServletRequest request;
+	
+	
 
 	public void addEmp(AdVO adVO) {
 		repository.save(adVO);
@@ -30,6 +41,7 @@ public class AdService {
 	public void updateEmp(AdVO adVO) {
 		repository.save(adVO);
 	}
+	
 
 	public void deleteEmp(Integer adOrdernum) {
 		if (repository.existsById(adOrdernum))
@@ -55,6 +67,14 @@ public class AdService {
         advo.setAdImage(addate.getAdImageadd());
         advo.setAdDuration(addate.getAdvertisements().size());
         
+        Integer userId = 2;
+
+        
+//        Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+            UserVO userVO = userrepository.findById(userId).orElse(null);
+            advo.setUserVO(userVO); // 设置用户信息到广告对象中
+
         
         List<AdvertisementsVO> preparedToSaveEmployees = addate.getAdvertisements();
         preparedToSaveEmployees.forEach(advertisements -> advertisements.setAdVO(advo));
