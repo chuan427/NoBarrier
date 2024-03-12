@@ -64,26 +64,21 @@
 			<option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" />
 			</select>
 			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
-			</div>
-			
-			<br>
-			<br>			
+			</div>			
 			
 			<div>
-   			 <label for="fpCategory">檢舉類型:</label>
+   			 <label for="fpCategory">產業類型:</label>
     			<select id="fpCategory" th:field="*{fpCategory}">
-        		<option value="1">1.金屬加工類</option>
-        		<option value="2">2.稀有零件討論</option>
-        		<option value="3">3.xxxxxxx</option>
-        		<option value="4">4.xxxxxxx</option>
-       			<option value="5">5.xxxxxxx</option>
-       		 	<option value="6">6.xxxxxxx</option>
-       		 	<option value="7">7.xxxxxxx</option>
+    			<option value="1">請選擇產業類別</option>
+        		<option value="2">工業加工</option>
+        		<option value="3">照明配件</option>
+        		<option value="4">金屬物件</option>
+        		<option value="5">機械材料</option>
+       			<option value="6">電子元件</option>
+       		 	<option value="7">螺絲與緊固件</option>
+       		 	<option value="8">其他</option>
     			</select><br/>
-			
-			<br>
-			<br>
-			<br>	
+    		</div>
 			
 			<div>
 			<label>文章標題:</label>
@@ -101,25 +96,11 @@
 			<div>
 			<label>上傳圖片:</label>
 			<input type="file" th:field="*{fpImage}" onclick="previewImage()" multiple="multiple" onchange="hideContent('fpImage.errors');" />
-<!-- 			<span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
+<!-- 			<span  th:if="${#fields.hasErrors('fpImage')}" th:errors="*{fpImage}" class="error" id="fpImage.errors"></span> -->
 			<span class="error" th:utext="${errorMessage}" id="fpImage.errors">${errorMessage}</span>
 <!-- 			<h2 id="errorMessage">${errorMessage}</h2>  -->
 			<div id="blob_holder"></div>
 			</div>
-			
-			
-<!-- 			<div> -->
-<!--    		 	<label>發表文章愛心:</label> -->
-<!--     		<input type="text" th:field="*{fpLike}" onclick="hideContent('fpLike.errors');" /><br/> -->
-<!--     		<span th:if="${#fields.hasErrors('fpLike')}" th:errors="*{fpLike}" class="error" id="fpLike.errors"></span> -->
-<!-- 			</div> -->
-				
-			
-<!-- 			<div> -->
-<!-- 			<label>文章狀態:</label> -->
-<!-- 			<input type="text" th:field="*{fpStat}" onclick="hideContent('fpStat.errors');" /><br/> -->
-<!-- 			<span  th:if="${#fields.hasErrors('fpStat')}" th:errors="*{fpStat}" class="error" id="fpStat.errors"></span> -->
-<!-- 			</div> -->
 					
 	
 			

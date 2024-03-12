@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -400,7 +401,8 @@ public class IndexController_inSpringBoot {
 	}
 
 	@GetMapping("/userinformation/addReqOrder")
-	public String addReqOrder(Model model) {
+	public String addReqOrder(Model model) { 
+		model.addAttribute("reqOrderVO", new ReqOrderVO());
 		return "front-end/userinformation/addReqOrder";
 	}
 	
@@ -496,7 +498,6 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// ---------------------------------------------------------------------
 	//------------------------ForumPost--------------------------------------
 	
 	@GetMapping("/forumPost/select_page1")
@@ -516,7 +517,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// -----------------------ForumReply-----------------------------------------
+	// -----------------------ForumReply--------------------------------------
 
 	@GetMapping("/forumReply/select_page2")
 	public String select_page2(Model model) {

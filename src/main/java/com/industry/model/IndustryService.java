@@ -42,14 +42,8 @@ public class IndustryService {
 		return repository.findAll();
 	}
 	
-	public Set<UserVO> getUserByComIndustry1(Integer ComIndustry1){
-		return getOneIndustry(ComIndustry1).getUser();
-	}
-	public Set<UserVO> getUserByComIndustry2(Integer ComIndustry2){
-		return getOneIndustry(ComIndustry2).getUser();
-	}
-	public Set<UserVO> getUserByComIndustry3(Integer ComIndustry3){
-		return getOneIndustry(ComIndustry3).getUser();
+	public Set<UserVO> getUserByComIndustry(Integer ComIndustry){
+		return getOneIndustry(ComIndustry).getUser();
 	}
 	
 	public Set<ReqOrderVO> getReqOrdersByIndustryNum(Integer IndustryNum){

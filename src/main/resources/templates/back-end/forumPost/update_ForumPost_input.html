@@ -67,10 +67,19 @@
 			</div>
 			
 			<div>
-			<label>產業類別:</label>
-			<input type="text" th:field="*{fpCategory}" onclick="hideContent('fpCategory.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('fpCategory')}" th:errors="*{fpCategory}" class="error" id="fpCategory.errors"></span>
-			</div>
+   			 <label for="fpCategory">檢舉類型:</label>
+    			<select id="fpCategory" th:field="*{fpCategory}">
+    			<option value="1">請選擇產業類別</option>
+        		<option value="2">工業加工</option>
+        		<option value="3">照明配件</option>
+        		<option value="4">金屬物件</option>
+        		<option value="5">機械材料</option>
+       			<option value="6">電子元件</option>
+       		 	<option value="7">螺絲與緊固件</option>
+       		 	<option value="8">其他</option>
+    			</select><br/>
+    		</div>
+    		
 		
 			<div>
 			<label>文章標題:</label>
@@ -86,16 +95,16 @@
 			
 			
 			<div>
-			<label>修改圖片:</label>
+			<label>修改文章圖片:</label>
 			<input type="file" th:field="*{fpImage}" onclick="previewImage()" multiple="multiple" />
-        	<span  th:if="${#fields.hasErrors('fpImage')}" th:errors="*{fpImage}" class="error" id="fpImage.errors"></span>
-			<div id="blob_holder"><img th:src="@{/forumPost/DBGifReader3} + '?fpNum=' + ${forumPostVO.fpNum}" width="100px"></div>
+			<span class="error" th:utext="${errorMessage}" id="fpImage.errors">${errorMessage}</span>
+			<div id="blob_holder"><img th:src="@{/forumPost/DBGifReader} + '?fpNum=' + ${forumPostVO.fpNum}" width="100px"></div>
 			</div>
 				
+					
 			
-<!-- 		不要被修改的欄位 -->
+			<!-- 不要被修改的欄位 -->
 			<input type="text" th:field="*{fpLike}" hidden onclick="hideContent('fpLike.errors');" /><br/>
-			<input type="text" th:field="*{fpStat}" hidden onclick="hideContent('fpStat.errors');" /><br/>
 			
 
 			

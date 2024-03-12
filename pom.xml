@@ -180,6 +180,12 @@
 			<!-- <version>6.2.3.Final</version> -->
 		</dependency>
 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!--
 		========================================================================================== -->
 		<!-- ●以下為 資料庫驅動程式 預備使用● -->
