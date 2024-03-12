@@ -41,6 +41,7 @@ public class AdService {
 	public void updateEmp(AdVO adVO) {
 		repository.save(adVO);
 	}
+	
 
 	public void deleteEmp(Integer adOrdernum) {
 		if (repository.existsById(adOrdernum))

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -177,6 +178,9 @@ public class IndexController_inSpringBoot {
         // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
         // 將相關數據添加到 Model 中，以便在視圖中使用
         model.addAttribute("userVO", userVO);
+        List<AdVO> adVO = adSvc.getAll();
+        model.addAttribute("adVO", adVO);
+        
         return "front-end/com/com_homepage"; // view
     }
 	// 廠商資訊 完成
@@ -295,7 +299,10 @@ public class IndexController_inSpringBoot {
 
 	// 聯絡我們 客服 成功
 	@GetMapping("/userinformation/customer_service")
-	public String customer_service() {
+	public String customer_service(Model model) {
+		QueListVO queListVO = new QueListVO(); // 創建QueListVO對象，如果需要的話
+		model.addAttribute("queListVO", queListVO);
+//		model.addAttribute("successMessage", "問題已成功新增");
 		return "front-end/userinformation/customer_service"; // view
 	}
 
@@ -333,6 +340,12 @@ public class IndexController_inSpringBoot {
 	@GetMapping("/userinformation/sign_in")
 	public String sign_in() {
 		return "front-end/userinformation/sign_in"; // view
+	}
+	
+	// 登入畫面 成功
+	@GetMapping("/sign_in")
+	public String sign_in1() {
+		return "back-end/sign_in"; // view
 	}
 
 	// 聯絡我們
@@ -480,7 +493,6 @@ public class IndexController_inSpringBoot {
 	public String addEmp1(Model model) {
 		AdDate adDate = new AdDate();
 		model.addAttribute("adDate", adDate);
-		model.addAttribute("defaultAdPrice", 50);
 		return "back-end/ad/addEmp";
 	}
 
@@ -591,6 +603,19 @@ public class IndexController_inSpringBoot {
 	protected List<QueListVO> referenceListData3(Model model) {
 
 		List<QueListVO> list = queSvc.getAll();
+		return list;
+	}
+	
+	
+	@ModelAttribute("queListData1") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData5(Model model) {
+		List<QueListVO> list = queSvc.getONE1StatQuestions();
+		return list;
+	}
+	
+	@ModelAttribute("queListData0") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData6(Model model) {
+		List<QueListVO> list = queSvc.getONEStat0Questions();
 		return list;
 	}
 
