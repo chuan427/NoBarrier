@@ -53,9 +53,8 @@ public class QueController {
 			@RequestParam("queImage") MultipartFile part) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 //		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-//		result = removeFieldError(queListVO, result, "queImage");
+		result = removeFieldError(queListVO, result, "queImage");
 //
-		System.out.println("213");
 		if (!part.isEmpty()) {
         byte[] buf = part.getBytes();
         queListVO.setQueImage(buf);
@@ -66,9 +65,9 @@ public class QueController {
 			queListVO.setQueNotitime(new java.sql.Timestamp(System.currentTimeMillis()));
 		}
 
-//		if (result.hasErrors()) {
-//			return "back-end/que/addQue";
-//		}
+		if (result.hasErrors()) {
+			return "back-end/que/addQue";
+		}
 
 		/*************************** 2.開始新增資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
