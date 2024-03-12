@@ -142,7 +142,7 @@
 							<span
 							th:text="${obj.reqOrderdate} + '｜' + ${obj.reqProdname} + '｜' + ${obj.reqProdqty} + ${obj.reqUnitname} + '|' + ${obj.reqDes} + '|' "></span>
 							<div class="btn-group mb-2" role="group">
-								<img th:src="${obj.reqProdimage}" alt="Product Image" /> 
+								<!-- <img th:src="${obj.reqProdimage}" alt="Product Image" />  -->
 								<a th:href="@{/userinformation/addQuotation}">
 									<button class="btn btn-primary" type="button">報價</button>
 								</a> <span>&nbsp;</span> <span>&nbsp;</span>
@@ -159,7 +159,7 @@
     <ul class="list-group">
         <li th:each="quo : ${quoListData}"
             class="list-group-item d-flex justify-content-between align-items-center">
-            <span th:text="${quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname + ' | 總價NT$' + quo.quoTotalprice + ' | 單價NT$' + quo.quoUnitprice + ' | ' + quo.quoInfo}"></span>
+            <span th:text="${quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname}"></span>
             <div>
                 <a th:href="@{/userinformation/quotation_list}">
                     <button class="btn btn-primary" type="button">報價列表</button>

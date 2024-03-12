@@ -125,13 +125,11 @@
 			<span style="padding: 20px;">文章發表時間</span>
 			<span style="padding: 20px;">文章最後編輯時間</span>
 			<span style="padding: 20px;">文章愛心數</span>
-<!-- 			<span style="padding: 65px;">文章狀態</span> -->
 		
 			<span style="padding: 40px;">修改</span>
 			<span style="padding: 0px 0px 0px 50px;">刪除</span>
 		</div>
-
-<table class="center">
+			<table class="center">
     <th:block th:each="forumPostVO : ${forumPostListData}">
         <tr th:if="${forumPostVO.fpStat == 1}">
             <td th:text="${forumPostVOStat.count}" width="-50px"></td>
@@ -140,22 +138,23 @@
             <td th:text="${forumPostVO.fpCategory}"></td>
             <td th:text="${forumPostVO.fpTitle}"></td>
             <td th:text="${forumPostVO.fpContent}"></td>
-            <td><img th:src="@{/forumPost/DBGifReader3(fpNum=${forumPostVO.fpNum})}" width="100px"></td>
-            <td th:text="${forumPostVO.fpTime}"></td>
-            <td th:text="${forumPostVO.fpUpdate}"></td>
+            <td><img th:src="@{/forumPost/DBGifReader(fpNum=${forumPostVO.fpNum})}" width="100px"></td>
+            <td th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${#dates.format(forumPostVO.fpUpdate, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${forumPostVO.fpLike}"></td>
-<!--             <td th:text="${forumPostVO.fpStat}"></td> -->
+            
             <td>
                 <form method="post" th:action="@{/forumPost/getOne_For_Update}" style="margin-bottom: 0px;">
-                    <input type="submit" value="修改">
+                    <input type="submit" value="修改文章">
                     <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
                 </form>
             </td>
+
             
             
             <td>
                 <form method="post" th:action="@{/forumPost/delete}" style="margin-bottom: 0px;">
-                    <input type="submit" value="刪除">
+                    <input type="submit" value="刪除文章">
                     <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
                 </form>
             </td>

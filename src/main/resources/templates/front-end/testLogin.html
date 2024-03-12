@@ -1,28 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/purecss@2.0.6/build/pure-min.css">
 <meta charset="UTF-8">
 <title>Login form</title>
+<style>
+        body {
+            padding: 20px;
+            display: flex;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70%;
+            font-size: 1.2em;
+            margin: 0 auto; /* 將表單置中 */
+        }
+
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .image {
+            margin: 0 auto;
+        }
+    </style>
 </head>
-<body style="padding: 20px">
+<body>
 	<form class="pure-form" method="post" action="/login">
-	
-    <fieldset style="margin: auto; width: 50%;">
-        <legend>Login</legend>
-        <input type="text" placeholder="input username" name="username" />
-        <p />
-        <input type="password" placeholder=" input password" name="password" />
-        <p />
-        <input type="hidden" th:value="${_csrf.token}" name="_csrf" th:if="${_csrf}" />
-        <p />
-        <input type="checkbox" name="remember-me" value="true" /> remember me
-        <p />
-        <button type="submit" class="pure-button pure-button-primary">Sign in</button>
-        
-    </fieldset>
-</form>
-	<a th:href="@{/forgetPasswordPage}">忘記密碼</a>
+	<img th:src="@{/images/logo.png}" class="image" alt="Image" width="300" height="300"/>
+		<fieldset>
+			<legend>Login</legend>
+			<input type="text" placeholder="input username" name="username" />
+			<p />
+			<input type="password" placeholder="input password" name="password" />
+			<p />
+			<input type="hidden" th:value="${_csrf.token}" name="_csrf"
+				th:if="${_csrf}" />
+			<p />
+			<input type="checkbox" name="remember-me" value="true" /> remember
+			me
+			<div class="actions">
+				<button type="submit" class="pure-button pure-button-primary">Sign
+					in</button>
+				<a th:href="@{/forgetPasswordPage}">忘記密碼</a>
+			</div>
+		</fieldset>
+		
+	</form>
+
 </body>
 </html>

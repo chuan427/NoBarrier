@@ -2,6 +2,7 @@ package com;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -173,16 +176,14 @@ public class IndexController_inSpringBoot {
 	
 
 	// 廠商資訊 完成
-    @GetMapping("/com/com_homepage/{userId}")
-    public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
-        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
-        // 將相關數據添加到 Model 中，以便在視圖中使用
-        model.addAttribute("userVO", userVO);
-        List<AdVO> adVO = adSvc.getAll();
-        model.addAttribute("adVO", adVO);
-        
-        return "front-end/com/com_homepage"; // view
-    }
+	@GetMapping("/com/com_homepage/{userId}")
+	public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
+	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+	    // 將相關數據添加到 Model 中，以便在視圖中使用
+	    model.addAttribute("userVO", userVO);
+	    return "front-end/com/com_homepage"; // view
+	}
+
 	// 廠商資訊 完成
 	@GetMapping("/com/com")
 	public String toCom() {
@@ -249,16 +250,25 @@ public class IndexController_inSpringBoot {
 		return "front-end/com/editmemeber_product"; // view
 	}
 
-	// 廠商產品資訊編輯頁面 失敗
-	@GetMapping("/com/member_AboutUs")
-	public String member_AboutUs() {
-		return "front-end/com/member_AboutUs"; // view
-	}
-
-	// 廠商產品資訊 失敗
-	@GetMapping("/com/member_Prod")
-	public String member_Prod() {
-		return "front-end/com/member_Prod"; // view
+	// 廠商產品資訊編輯頁面 完成
+	@GetMapping("/com/member_AboutUs/{userId}")
+	public String member_AboutUs(@PathVariable("userId") UserVO userVO, Model model) {
+		    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+		    // 將相關數據添加到 Model 中，以便在視圖中使用
+		    model.addAttribute("userVO", userVO);
+		    return "front-end/com/member_AboutUs"; // view
+		}
+	// 廠商產品資訊 完成
+	@GetMapping("/com/member_Prod/{userId}")
+	public String member_Prod(@PathVariable("userId") UserVO userVO, Model model) {
+	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+	    // 將相關數據添加到 Model 中，以便在視圖中使用
+		Set<ProductInformationVO> productInformationVO = userVO.getProductInformation();
+	    model.addAttribute("userVO", userVO);
+	    model.addAttribute("productInformationVO", productInformationVO);
+//	    System.out.println(model.addAttribute("userVO", userVO));
+	    System.out.println(productInformationVO);
+	    return "front-end/com/member_Prod"; // view
 	}
 
 	// 訂單聊天室 成功
@@ -408,7 +418,8 @@ public class IndexController_inSpringBoot {
 	}
 
 	@GetMapping("/userinformation/addReqOrder")
-	public String addReqOrder(Model model) {
+	public String addReqOrder(Model model) { 
+		model.addAttribute("reqOrderVO", new ReqOrderVO());
 		return "front-end/userinformation/addReqOrder";
 	}
 	
@@ -471,7 +482,7 @@ public class IndexController_inSpringBoot {
 		return "back-end/user/listAllUser";
 	}
 
-	@ModelAttribute("UserListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	@ModelAttribute("userListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<UserVO> referenceListData_user(Model model) {
 
 		List<UserVO> list = userSvc.getAll();
@@ -510,7 +521,6 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// ---------------------------------------------------------------------
 	//------------------------ForumPost--------------------------------------
 	
 	@GetMapping("/forumPost/select_page1")
@@ -518,9 +528,9 @@ public class IndexController_inSpringBoot {
 		return "back-end/forumPost/select_page1";
 	}
 
-	@GetMapping("/forumPost/listAllForumPost")
+	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
-		return "back-end/forumPost/listAllForumPost";
+		return "front-end/forum/forumIndex";
 	}
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
@@ -530,7 +540,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// -----------------------ForumReply-----------------------------------------
+	// -----------------------ForumReply--------------------------------------
 
 	@GetMapping("/forumReply/select_page2")
 	public String select_page2(Model model) {

@@ -1,6 +1,7 @@
 package com.reqorder.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class ReqOrderVO implements java.io.Serializable {
 	private Integer reqNum;
 	private UserVO userVO;
 	private IndustryVO industryVO;
-	private Date reqOrderdate;
+	private Date reqOrderdate = Date.valueOf(LocalDate.now());
 	private String reqProdname;
 	private String reqUnitname;
 	private Integer reqProdqty;
