@@ -141,8 +141,8 @@
 		<div class="carousel-inner" sec:authorize="true">
 			<div class="carousel-item active">
 				<!-- 显示广告图片 -->
-				<a th:href="@{/com/member_Prod}"><img src="/ad/DBGifReader?adOrdernum=1" height="300px"
-					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;"></a>
+				<img src="/ad/DBGifReader?adOrdernum=1" height="300px"
+					class="d-block w-30" alt="Slide 1" style="margin: 0 auto;">
 			</div>
 			<th:block th:each="adVO, adIndex : ${adListData}">
 				<!-- 判断广告是否有效 -->
@@ -155,8 +155,11 @@
 							<div
 								th:class="${adIndex.index == 0} ? 'carousel-item active' : 'carousel-item'">
 								<!-- 显示广告图片 -->
-								<a th:href="@{/com/member_Prod}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
-									height="300px" class="d-block w-30" th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
+
+								<a th:href="@{/com/com_homepage/{userId}(userId=${adVO.userVO.userId})}"><img th:src="@{/ad/DBGifReader(adOrdernum=${adIndex.index}+1)}"
+									height="300px" class="d-block w-30"
+									th:alt="'Slide ' + (${adIndex.index} + 1)" style="margin: 0 auto;"></a>
+
 							</div>
 						</th:block>
 					</th:block>
