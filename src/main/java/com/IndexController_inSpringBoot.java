@@ -508,9 +508,9 @@ public class IndexController_inSpringBoot {
 		return "back-end/forumPost/select_page1";
 	}
 
-	@GetMapping("/forumPost/listAllForumPost")
+	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
-		return "back-end/forumPost/listAllForumPost";
+		return "front-end/forum/forumIndex";
 	}
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
