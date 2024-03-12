@@ -56,6 +56,37 @@ public class UserController {
 		model.addAttribute("userVO", userVO);
 		return "back-end/user/addUser";
 	}
+	
+	//研究中
+//	@PostMapping("storeRegister1Data")
+//	public String insert(@ModelAttribute("userVO") @Valid UserVO userVO,ModelMap model) throws IOException {
+//		
+//		String
+//
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//
+//		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
+//			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
+//		} else {
+//			for (MultipartFile multipartFile : parts) {
+//				byte[] buf = multipartFile.getBytes();
+//				userVO.setComAboutImage(buf);
+//			}
+//		}
+//		if (result.hasErrors() || parts[0].isEmpty()) {
+//			return "back-end/user/addUser";
+//		}
+//		/*************************** 2.開始新增資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		userSvc.addUser(userVO);
+//		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
+//		List<UserVO> list = userSvc.getAll();
+//		model.addAttribute("userListData", list);
+//		model.addAttribute("success", "- (新增成功)");
+//		return "redirect:/user/listAllUser"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+//	}
+	
+	
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
