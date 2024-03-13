@@ -71,7 +71,7 @@ public class ReqOrderController {
         List<ReqOrderVO> list = reqOrderSvc.getAll();
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "front-end/userinformation/req_userpage";
+        return "redirect:/userinformation/userpage";
     }
 
 //    @PostMapping("getOne_For_Update")
@@ -108,22 +108,44 @@ public class ReqOrderController {
 //        return "front-end/userinformation/req_userpage";
 //    }
 
-    @PostMapping("complete")
-    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
+//    @PostMapping("complete")
+//    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
+//        if (reqNum == null) {
+//            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
+//            return "errorPage"; // 返回一個錯誤頁面
+//        }
+//
+//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
+//        int valid = 1;
+//        reqOrderVO.setReqIsValid(valid);
+//        reqOrderSvc.updateReqOrder(reqOrderVO);
+//
+//        model.addAttribute("success", "- (完成需求)");
+//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
+//        model.addAttribute("reqOrderVO", reqOrderVO);
+//        return "front-end/userinformation/req_userpage";
+//    }
+    @PostMapping("/userpage/complete")
+    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
         if (reqNum == null) {
-            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
-            return "errorPage"; // 返回一個錯誤頁面
+            return "errorPage"; // 如果 reqNum 為空，返回一個錯誤頁面
         }
 
+        // 根據 reqNum 從數據庫中獲取相應的 ReqOrderVO 對象
         ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-        int valid = 1;
+
+        // 將 reqIsValid 設置為 1，表示已完成需求
+        int valid = 0;
         reqOrderVO.setReqIsValid(valid);
+
+        // 更新數據庫中的 ReqOrderVO 對象
         reqOrderSvc.updateReqOrder(reqOrderVO);
 
+        // 添加成功消息到模型中
         model.addAttribute("success", "- (完成需求)");
-        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-        model.addAttribute("reqOrderVO", reqOrderVO);
-        return "front-end/userinformation/req_userpage";
+
+        // 返回到 userpage 頁面
+        return "redirect:/userinformation/userpage";
     }
 
 

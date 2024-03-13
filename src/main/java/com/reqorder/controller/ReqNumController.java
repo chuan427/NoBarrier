@@ -60,14 +60,14 @@ public class ReqNumController {
 			
 			if (reqOrderVO == null) {
 				model.addAttribute("errorMessage", "查無資料");
-				return "front-end/userinformation/req_userpage";
+				return "front-end/userinformation/userpage";
 			}
 			
 			/***************************3.查詢完成,準備轉交(Send the Success view)*****************/
 			model.addAttribute("reqOrderVO", reqOrderVO);
 			model.addAttribute("getOne_For_Display", "true"); // 旗標getOne_For_Display見select_page.html的第126行 -->
 			
-			return "front-end/userinformation/req_userpage"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneUser-div
+			return "front-end/userinformation/userpage"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneUser-div
 		}
 			
 	
@@ -83,7 +83,7 @@ public class ReqNumController {
 		model.addAttribute("reqOrderListData", list); // for select_page.html 第行用
 		
 		String message = strBuilder.toString();
-	    return new ModelAndView("front-end/userinformation/req_userpage", "errorMessage", "請修正以下錯誤:<br>"+message);
+	    return new ModelAndView("front-end/userinformation/userpage", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}
 
 }
