@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.order.model.OrderVO;
+import com.reqorder.model.ReqOrderVO;
+
 @Service("quoService")
 public class QuoService {
 
@@ -41,5 +44,14 @@ public class QuoService {
 	
 	public List<QuoVO> getAll(){
 		return repository.findAll();
+	}
+	
+	//報價單與訂單一對一
+	public OrderVO getOrderByquoNum(Integer ordQuonum){
+		return getOneQuo(ordQuonum).getOrderVO();
+	}
+	//報價單與需求單一對一
+	public ReqOrderVO getOrderByreqNum(Integer ordReqnum){
+		return getOneQuo(ordReqnum).getReqOrderVO();
 	}
 }

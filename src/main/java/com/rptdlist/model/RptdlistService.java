@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.quo.model.QuoVO;
+import com.order.model.OrderVO;
 
 @Service("rptdlistService")
 public class RptdlistService {
@@ -40,8 +40,11 @@ public class RptdlistService {
 		}
 		return null;
 	}
-	
+
 	public List<RptdlistVO> getAll(){
 		return repository.findAll();
+	}
+	public OrderVO getOrderByreqNum(Integer rptdOrdernum){
+		return getOneRptdlist(rptdOrdernum).getOrderVO();
 	}
 }

@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,6 +30,8 @@ import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.newsmodel.NewsService;
 import com.newsmodel.NewsVO;
+import com.order.model.OrderService;
+import com.order.model.OrderVO;
 import com.productinformation.model.ProductInformationService;
 import com.productinformation.model.ProductInformationVO;
 import com.questionList.model.QueListService;
@@ -93,13 +92,15 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	ForumReportService forumReportSvc;
 	
+	@Autowired
+	OrderService orderSvc;
 
 //	@Autowired
 //	NotificationService notificationSvc;
 
 	// inject(注入資料) via application.properties
-	@Value("${welcome.message}")
-	private String message;
+//	@Value("${welcome.message}")
+//	private String message;
 
 	private List<String> myList = Arrays.asList("Spring Boot Quickstart 官網 : https://start.spring.io", "IDE 開發工具",
 			"直接使用(匯入)官方的 Maven Spring-Boot-demo Project + pom.xml",
@@ -646,6 +647,17 @@ public class IndexController_inSpringBoot {
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
-
+	
+//	------------------------------order--------------------------------------
+	
+	@GetMapping("/order/transactionStat")
+	public String transactionStat(Model model) {
+		return "front-end/order/transaction_stat";
+	}
+	@ModelAttribute("orderListData")
+	protected List<OrderVO> referenceListOrderData(){
+	List<OrderVO> list = orderSvc.getAll();
+	return list;
+	}
 }
 

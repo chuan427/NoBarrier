@@ -1,28 +1,29 @@
 package com.reqorder.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.order.model.OrderService;
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
@@ -40,6 +41,9 @@ public class ReqOrderController {
 
     @Autowired
     IndustryService industrySvc;
+    
+    @Autowired
+	OrderService orderSvc;
 
     @GetMapping("/userinformation/addReqOrder")
     public String addReqOrder(ModelMap model) {
@@ -56,7 +60,7 @@ public class ReqOrderController {
         return "redirect:/userinformation/reqorder_page";
     }
 
-    @PostMapping("insert")
+    @PostMapping("insertreq")
     public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
     		@RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
     	
@@ -86,6 +90,13 @@ public class ReqOrderController {
 //        return "success";
 //    }
 
+    
+    @ModelAttribute("reqOrderListData") 
+	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
+
+		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		return list;
+	}
 
     @ModelAttribute("userListData")
     protected List<UserVO> referenceListData() {
@@ -98,6 +109,12 @@ public class ReqOrderController {
         List<IndustryVO> list = industrySvc.getAll();
         return list;
     }
+    
+    @ModelAttribute("orderListData")
+	protected List<OrderVO> referenceListOrderData(){
+	List<OrderVO> list = orderSvc.getAll();
+	return list;
+	}
 
     public BindingResult removeFieldError(ReqOrderVO reqOrderVO, BindingResult result, String removedFieldname) {
         List<FieldError> errorsListToKeep = result.getFieldErrors().stream()

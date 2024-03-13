@@ -2,7 +2,6 @@ package com.reqorder.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,13 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import com.industry.model.IndustryVO;
+import com.order.model.OrderVO;
 import com.quo.model.QuoVO;
 import com.user.model.UserVO;
 
@@ -32,6 +34,7 @@ public class ReqOrderVO implements java.io.Serializable {
 	private Integer reqNum;
 	private UserVO userVO;
 	private IndustryVO industryVO;
+	private OrderVO orderVO; 
 	private Date reqOrderdate = Date.valueOf(LocalDate.now());
 	private String reqProdname;
 	private String reqUnitname;
@@ -41,23 +44,30 @@ public class ReqOrderVO implements java.io.Serializable {
 //	private Integer reqCategory;
 //	private Integer reqUserid;
 	private Integer reqIsValid;
-	private Set<QuoVO> quotations = new HashSet<QuoVO>();
-
-	
-
+	private QuoVO quoVO;
 	public ReqOrderVO() {
-
+	}
+	
+	@OneToOne
+	@MapsId 
+	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
+	public OrderVO getOrderVO() {
+		return orderVO;
 	}
 
-	@Id
-	@Column(name = "reqNum")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer getReqNum() {
-		return this.reqNum;
+	public void setOrderVO(OrderVO orderVO) {
+		this.orderVO = orderVO;
+	}
+	
+	@OneToOne
+	@MapsId 
+	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
+	public QuoVO getQuoVO() {
+		return quoVO;
 	}
 
-	public void setReqNum(Integer reqNum) {
-		this.reqNum = reqNum;
+	public void setQuoVO(QuoVO quoVO) {
+		this.quoVO = quoVO;
 	}
 	
 	
@@ -79,6 +89,17 @@ public class ReqOrderVO implements java.io.Serializable {
 
 	public void setIndustryVO(IndustryVO industryVO) {
 		this.industryVO = industryVO;
+	}
+	
+	@Id
+	@Column(name = "reqNum")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer getReqNum() {
+		return this.reqNum;
+	}
+	
+	public void setReqNum(Integer reqNum) {
+		this.reqNum = reqNum;
 	}
 	
 	@Column(name = "reqOrderdate")
@@ -167,15 +188,6 @@ public class ReqOrderVO implements java.io.Serializable {
 		this.reqIsValid = reqIsValid;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="reqOrderVO")
-	@OrderBy("quoNum asc")
-	public Set<QuoVO> getQuotations() {
-		return quotations;
-	}
-
-	public void setQuotations(Set<QuoVO> quotations) {
-		this.quotations = quotations;
-	}
 	
 	
 }

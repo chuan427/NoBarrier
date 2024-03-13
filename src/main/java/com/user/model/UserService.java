@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import com.forumpost.model.ForumPostVO;
-
-import com.reqorder.model.ReqOrderVO;
+import com.order.model.OrderVO;
 
 
 @Service("userService")
@@ -79,9 +77,13 @@ public class UserService {
 			return repository.findAll();
 		}
 	
-		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
-			return getOneUser(userId).getReqOrder();
+		
+		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
+			return getOneUser(ordSellerid).getOrders();
 		}
+//		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
+//			return getOneUser(userId).getReqOrder();
+//		}
 		
 		public Set<ForumPostVO> getForumPostByfpUserid(Integer fpUserid){
 		return getOneUser(fpUserid).getForumPost();
