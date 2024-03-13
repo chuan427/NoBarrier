@@ -14,6 +14,7 @@
 	<div>Session Id（details.sessionId）: <span sec:authentication="details.sessionId"></span></div>
 	<div>權限與角色（authorities）: <span sec:authentication="authorities"></span></div>
 	<div>客戶端地址（details.remoteAddress）: <span sec:authentication="details.remoteAddress"></span></div>
+	<div>客戶Email: <span th:text="${session.loggingInUser.comMail}"></span></div>
 	<p id = "testWS">等待websocket
 	
 	
