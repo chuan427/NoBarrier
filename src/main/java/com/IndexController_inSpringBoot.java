@@ -131,10 +131,10 @@ public class IndexController_inSpringBoot {
 		return "Login Failed!"; // view
 	}
 	
-	@RequestMapping("/loginsuccess")
-	public String toSuccessLogin() {
-		return "front-end/successLogin"; // view
-	}
+//	@RequestMapping("/loginsuccess")
+//	public String toSuccessLogin() {
+//		return "front-end/successLogin"; // view
+//	}
 	
 	@RequestMapping("/forgetPasswordPage")
 	public String toForgetPasswordPage() {
@@ -347,18 +347,6 @@ public class IndexController_inSpringBoot {
 	@GetMapping("/userinformation/register3")
 	public String register3() {
 		return "front-end/userinformation/register3"; // view
-	}
-	
-	// 登入畫面 成功
-	@GetMapping("/userinformation/sign_in")
-	public String sign_in() {
-		return "front-end/userinformation/sign_in"; // view
-	}
-	
-	// 登入畫面 成功
-	@GetMapping("/sign_in")
-	public String sign_in1() {
-		return "back-end/sign_in"; // view
 	}
 
 	// 聯絡我們
