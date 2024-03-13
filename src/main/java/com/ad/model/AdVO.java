@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -22,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.advertisements.model.AdvertisementsVO;
+import com.user.model.UserVO;
 
 /*
  * 註1: classpath必須有javax.persistence-api-x.x.jar 
@@ -38,11 +41,13 @@ public class AdVO implements java.io.Serializable {
 	private Integer adPrice;
 	private Integer adStat = 1;
 	private Date adDate = Date.valueOf(LocalDate.now());
-	private Integer adUserid=1;
+//	private Integer adUserid=1;
 	private Integer adDuration;
 	private Integer adIsValid = 1;
 
 	private List<AdvertisementsVO> advertisements = new ArrayList<AdvertisementsVO>();
+	
+	private UserVO userVO;
 
 	public AdVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 	}
@@ -105,15 +110,15 @@ public class AdVO implements java.io.Serializable {
 		this.adDate = adDate;
 	}
 
-	@Column(name = "ADUSERID")
-	@NotNull(message = "廣告使用者: 請勿空白")
-	public Integer getAdUserid() {
-		return adUserid;
-	}
-
-	public void setAdUserid(Integer adUserid) {
-		this.adUserid = adUserid;
-	}
+//	@Column(name = "ADUSERID")
+//	@NotNull(message = "廣告使用者: 請勿空白")
+//	public Integer getAdUserid() {
+//		return adUserid;
+//	}
+//
+//	public void setAdUserid(Integer adUserid) {
+//		this.adUserid = adUserid;
+//	}
 
 	@Column(name = "ADDURATION")
 //	@NotNull(message = "廣告使用者: 請勿空白")
@@ -142,6 +147,15 @@ public class AdVO implements java.io.Serializable {
 
 	public void setAdvertisements(List<AdvertisementsVO> advertisements) {
 		this.advertisements = advertisements;
+	}
+	@ManyToOne
+	@JoinColumn(name = "adUserid", referencedColumnName = "userId")
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
 	}
 
 }

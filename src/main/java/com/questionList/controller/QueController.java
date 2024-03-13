@@ -25,7 +25,7 @@ import com.user.model.UserService;
 import com.user.model.UserVO;
 
 @Controller
-@RequestMapping("/que")
+@RequestMapping("/userinformation")
 public class QueController {
 
 	@Autowired
@@ -38,17 +38,17 @@ public class QueController {
 	/*
 	 * This method will serve as addNews.html handler.
 	 */
-	@GetMapping("addQue")
-	public String addQue(ModelMap model) {
-		QueListVO queListVO = new QueListVO();
-		model.addAttribute("queListVO", queListVO);
-		return "back-end/que/addQue";
-	}
+//	@GetMapping("addQue")
+//	public String addQue(ModelMap model) {
+//		QueListVO queListVO = new QueListVO();
+//		model.addAttribute("queListVO", queListVO);
+//		return "back-end/que/addQue";
+//	}
 
 	/*
 	 * This method will be called on addNews.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("insert")
+	@PostMapping("insertque")
 	public String insert(@Valid QueListVO queListVO, BindingResult result, ModelMap model,
 			@RequestParam("queImage") MultipartFile part) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -65,18 +65,25 @@ public class QueController {
 			queListVO.setQueNotitime(new java.sql.Timestamp(System.currentTimeMillis()));
 		}
 
-		if (result.hasErrors()) {
-			return "back-end/que/addQue";
+) {
+			return "front-end/userinformation/customer_service";
 		}
-
 		/*************************** 2.開始新增資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
 		queSvc.addQue(queListVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<QueListVO> list = queSvc.getAll();
-		model.addAttribute("queListData", list);
-		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/que/listAllQue"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/News/listAllNews")
+//		List<QueListVO> list = queSvc.getAll();
+//		model.addAttribute("queListData", list);
+		 List<QueListVO> list = queSvc.getONE1StatQuestions();
+		 model.addAttribute("queListData1", list);
+		
+		 List<QueListVO> list0 = queSvc.getONEStat0Questions();
+		 model.addAttribute("queListData0", list0);
+		 
+		model.addAttribute("successMessage", "問題已成功新增");
+		
+		return "front-end/userinformation/customer_service"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/News/listAllNews")
+//		return "redirect:/userinformation/customer_service"; 
 	}
 
 	/*

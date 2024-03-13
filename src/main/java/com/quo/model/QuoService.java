@@ -6,13 +6,37 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reqorder.model.ReqOrderRepository;
+import com.reqorder.model.ReqOrderVO;
+import com.user.model.UserRepository;
+import com.user.model.UserVO;
+
 @Service("quoService")
 public class QuoService {
 
 	@Autowired
 	QuoRepository repository;
 	
+	@Autowired
+	UserRepository userrepository;
+	
+	@Autowired
+	ReqOrderRepository reqrepository;
+	
 	public void addQuo(QuoVO quoVO) {
+		
+		Integer userId = 2;
+
+		// Integer userId = (Integer) request.getSession().getAttribute("userId");
+
+		UserVO userVO = userrepository.findById(userId).orElse(null);
+		quoVO.setUserVO(userVO);
+		
+		Integer reqNum = 2;
+		
+		ReqOrderVO reqOrderVO = reqrepository.findById(reqNum).orElse(null);
+		quoVO.setReqOrderVO(reqOrderVO);
+				
 		repository.save(quoVO);
 	}
 	
