@@ -116,7 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/").permitAll()
 					.antMatchers("/loginpage").hasRole("ANONYMOUS")
 					.antMatchers("/webjars/**").permitAll()
-					.antMatchers("/loginsuccess").permitAll()
+//					.antMatchers("/loginsuccess").permitAll()
 					.antMatchers("/loginfail").permitAll()
 					.antMatchers("/checkAccountExists").permitAll()
 					.antMatchers("/forgetPasswordPage").permitAll()
@@ -138,12 +138,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出
 				http.logout()
 					.deleteCookies("JSESSIONID")
-					.logoutSuccessUrl("/login")
+					.logoutSuccessUrl("/loginpage")
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // 可以使用任何的 HTTP 方法登出
 			
 				// 異常處理
 				http.exceptionHandling()
-					.accessDeniedPage("/loginsuccess"); //用來防止登入過的人再到登入頁面
+					.accessDeniedPage("/userinformation/userpage"); //用來防止登入過的人再到登入頁面
 														//但這應該不是常規作法，因為我的設計目前會accessDeniedPage的情況只有登入的人想造訪登入頁面
 														//這個缺點是如果有其他權限角色設定如果發生accessDeniedPage都會被導到/loginsuccess
 //					.accessDeniedHandler(myAccessDeniedHandler);
