@@ -9,4 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserRepository extends JpaRepository<UserVO, Integer>{
 	
 	public UserVO findByComAccount(String comAccount);
+	public UserVO findByComUniNumber(String ComUniNumber);
 }
