@@ -27,7 +27,7 @@ import com.user.model.UserService;
 
 
 @Controller
-@RequestMapping("/quo")
+@RequestMapping("/userinformation")
 public class QuoController {
 
 	@Autowired
@@ -45,29 +45,21 @@ public class QuoController {
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	@GetMapping("addQuo")
+	@GetMapping("/addQuotation")
 	public String addQuo(ModelMap model) {
 		QuoVO quoVO = new QuoVO();
 		model.addAttribute("quoVO", quoVO);
 		return "front-end/userinformation/addQuotation";
 	}
-	
-	@GetMapping("/userinformation/quotation_list")
-	public String reqOrderList(Model model) {
-		List<QuoVO> list = quoSvc.getAll();// 從數據庫中獲取您的物件列表
-		model.addAttribute("quoListData", list);
-		return "redirect:/userinformation/quotation_list"; // 返回模板名稱
-	}
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("insert")
-	public String insert(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
+	@PostMapping("insertQuo")
+	public String insertQuo(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		quoVO.setQuoDate(new java.sql.Date(System.currentTimeMillis()));
 		result = removeFieldError(quoVO, result, "quoNum");
 
 		if (result.hasErrors()) {
@@ -80,7 +72,7 @@ public class QuoController {
 		List<QuoVO> list = quoSvc.getAll();
 		model.addAttribute("quoListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/userinformation/req_userpage"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/emp/listAllEmp")
+		return "front-end/userinformation/req_userpage"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/emp/listAllEmp")
 	}
 
 	/*

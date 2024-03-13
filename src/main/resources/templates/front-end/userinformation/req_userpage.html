@@ -72,166 +72,144 @@
 
 <body>
 	<!-- <header> -->
-	<head th:insert="~{/front-end/header_login}"></head>
+<head th:insert="~{/front-end/header_login}"></head>
+<script>
+    function sortByDate() {
+        var list = document.getElementById('orderList');
+        var items = list.childNodes;
+        var itemsArr = [];
+        for (var i in items) {
+            if (items[i].nodeType == 1) { // 篩選元素節點
+                itemsArr.push(items[i]);
+            }
+        }
+        itemsArr.sort(function(a, b) {
+            return new Date(b.innerText.match(/\d{4}-\d{2}-\d{2}/)[0]) - new Date(a.innerText.match(/\d{4}-\d{2}-\d{2}/)[0]);
+        });
+        for (i = 0; i < itemsArr.length; ++i) {
+            list.appendChild(itemsArr[i]);
+        }
+    }
+</script>
 
-
-	<!-- siderbar -->
-	<div class="row">
-		<div class="col-md-3">
-			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-white"
-				style="height: 500px; text-align: center;">
-				<div
-					class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
-					<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-						二哥公司!</span>
-				</div>
-				<div class="user-profile">
-					<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170"
-						fill="currentColor" style="padding-left: 60px;"
-						class="bi bi-person-circle" viewBox="0 0 16 16">
+<div class="row">
+	<div class="col-md-3">
+		<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-white"
+			style="height: 500px; text-align: center;">
+			<div
+				class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
+				<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
+					二哥公司!</span>
+			</div>
+			<div class="user-profile">
+				<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170"
+					fill="currentColor" style="padding-left: 60px;"
+					class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                         <path fill-rule="evenodd"
-							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+						d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                     </svg>
-				</div>
+			</div>
 
-				<div class="col-6" style="padding-left: 10px;">
-					<div class="d-grid gap-1">
-						<a th:href="@{/userinformation/addReqOrder}">
-							<button class="btn btn-secondary" id="myBtn" type="button"
-								style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">提出需求</button>
-						</a>
-					</div>
-					<div style="margin-top: 30px;"></div>
-					<a th:href="@{/order/transaction_stat}">
-						<button class="btn btn-secondary" type="button"
-							style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+			<div class="col-6" style="padding-left: 10px;">
+				<div class="d-grid gap-1">
+					<a th:href="@{/userinformation/addReqOrder}">
+						<button class="btn btn-secondary" id="myBtn" type="button"
+							style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">提出需求</button>
 					</a>
 				</div>
+				<div style="margin-top: 30px;"></div>
+				<a th:href="@{/order/transaction_stat}">
+					<button class="btn btn-secondary" type="button"
+						style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+				</a>
 			</div>
-		</div>
-
-		<div class="col-md-8" style="background-color: rgb(211, 206, 206);">
-			<!-- 搜尋公司 -->
-			<div class="d-flex justify-content-center">
-				<form class="d-flex mt-3" role="search" action="#" method="GET">
-					<input class="form-control me-2 col-8" type="search"
-						placeholder="輸入欲查詢廠商" aria-label="Search" name="company">
-					<button class="btn btn-outline-success" type="submit">Search</button>
-				</form>
-			</div>
-
-			<nav>
-				<div class="nav nav-tabs" id="nav-tab" role="tablist">
-					<button class="nav-link active" id="nav-home-tab"
-						data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
-						role="tab" aria-controls="nav-home" aria-selected="true">買家需求
-					</button>
-					<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
-						data-bs-target="#nav-profile" type="button" role="tab"
-						aria-controls="nav-profile" aria-selected="false">賣家報價</button>
-				</div>
-			</nav>
-
-			<div class="tab-content" id="nav-tabContent">
-				<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-					aria-labelledby="nav-home-tab" tabindex="0">
-					<ul class="list-group">
-						<li th:each="obj : ${reqOrderListData}"
-							class="list-group-item d-flex justify-content-between align-items-center">
-							<span
-							th:text="${obj.reqOrderdate} + '｜' + ${obj.reqProdname} + '｜' + ${obj.reqProdqty} + ${obj.reqUnitname} + '|' + ${obj.reqDes} + '|' "></span>
-							<div class="btn-group mb-2" role="group">
-								<!-- <img th:src="${obj.reqProdimage}" alt="Product Image" />  -->
-								<a th:href="@{/userinformation/addQuotation}">
-									<button class="btn btn-primary" type="button">報價</button>
-								</a> <span>&nbsp;</span> <span>&nbsp;</span>
-								<button class="btn btn-primary" type="button">忽略</button>
-							</div>
-
-						</li>
-					</ul>
-				</div>
-			</div>
-
-			<div class="tab-pane fade" id="nav-profile" role="tabpanel"
-     aria-labelledby="nav-profile-tab" tabindex="0">
-    <ul class="list-group">
-        <li th:each="quo : ${quoListData}"
-            class="list-group-item d-flex justify-content-between align-items-center">
-            <span th:text="${quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname}"></span>
-            <div>
-                <a th:href="@{/userinformation/quotation_list}">
-                    <button class="btn btn-primary" type="button">報價列表</button>
-                </a>
-            </div>
-        </li>
-    </ul>
-</div>
-
-
-
-			<!-- <div class="tab-pane fade" id="nav-profile" role="tabpanel"
-				aria-labelledby="nav-profile-tab" tabindex="0">
-				<ul class="list-group">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation_list}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					<li class="list-group-item">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation_list}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					</li>
-					<li class="list-group-item">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation_list}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					</li>
-					<li class="list-group-item">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation_list}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					</li>
-					<li class="list-group-item">
-					<li
-						class="list-group-item d-flex justify-content-between align-items-center">華偉公司｜逆紋螺絲｜500顆
-						<div>
-							<a th:href="@{/userinformation/quotation_list}">
-								<button class="btn btn-primary" type="button">報價列表</button>
-							</a>
-						</div>
-					</li>
-					</li>
-				</ul>
-			</div> -->
 		</div>
 	</div>
 
+	<div class="col-md-8" style="background-color: rgb(211, 206, 206);">
+		<!-- 搜尋公司 -->
+		<div class="d-flex justify-content-center">
+			<form class="d-flex mt-3" role="search" action="#" method="GET">
+				<input class="form-control me-2 col-8" type="search"
+					placeholder="輸入欲查詢廠商" aria-label="Search" name="company">
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			</form>
+		</div>
+		<div style="margin-top: 30px;"></div>
 
+		<button onclick="sortByDate()" class="btn btn-primary float-right text-right" style="float: right !important;">排序：從最新到最舊</button>
 
-	<!-- <footer> -->
-	<head th:insert="~{/front-end/footer}"></head>	
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+		
+		<div style="margin-top: 30px;"></div>
+
+		<nav>
+			<div class="nav nav-tabs" id="nav-tab" role="tablist">
+				<button class="nav-link active" id="nav-home-tab"
+					data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+					role="tab" aria-controls="nav-home" aria-selected="true">買家需求
+				</button>
+				<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+					data-bs-target="#nav-profile" type="button" role="tab"
+					aria-controls="nav-profile" aria-selected="false">賣家報價</button>
+			</div>
+		</nav>
+
+		<div class="tab-content" id="nav-tabContent">
+			<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+				aria-labelledby="nav-home-tab" tabindex="0"
+				style="overflow-y: scroll; max-height: 300px;">
+				<ul id="orderList" class="list-group">
+					<li th:each="obj : ${reqOrderListData}"
+						class="list-group-item d-flex justify-content-between align-items-center">
+						<span
+						th:text="${obj.reqNum} + '｜' + ${obj.reqOrderdate} + '｜' + ${obj.industryVO.industryNum == 1 ? '螺絲和緊固件' :
+                    (obj.industryVO.industryNum == 2 ? '工業加工' :
+                    (obj.industryVO.industryNum == 3 ? '照明配件' :
+                    (obj.industryVO.industryNum == 4 ? '金屬物件' :
+                    (obj.industryVO.industryNum == 5 ? '機械材料' :
+                    (obj.industryVO.industryNum == 6 ? '電子元件' :
+                    (obj.industryVO.industryNum == 7 ? '塑膠零件' :
+                    (obj.industryVO.industryNum == 8 ? '其他' : '')))))))} + '｜' + ${obj.reqProdname} + '｜' + ${obj.reqProdqty} + ${obj.reqUnitname} + '|' + ${obj.reqDes} + '|' "></span>
+						<div class="btn-group mb-2" role="group">
+
+							<a th:href="@{/userinformation/addQuotation}">
+								<button class="btn btn-primary" type="button">報價</button>
+							</a> <span>&nbsp;</span> <span>&nbsp;</span>
+
+							<!-- <form method="post" th:action="@{/userinformation/complete}" style="margin-bottom:0px;">
+								<input type="submit" value="忽略">
+								<input type="hidden" name="reqNum" th:value="${reqOrderVO.reqNum}">
+							</form> -->
+
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+			aria-labelledby="nav-profile-tab" tabindex="0"
+			style="overflow-y: scroll; max-height: 300px;">
+			<ul class="list-group">
+				<li th:each="quo : ${quoListData}"
+					class="list-group-item d-flex justify-content-between align-items-center">
+					<span
+					th:text="${quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname}"></span>
+					<div>
+						<a th:href="@{/userinformation/quotation_list}">
+							<button class="btn btn-primary" type="button">報價列表</button>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
 <!-- 	<script th:src="@{/js/notification.js}"></script> -->
 <!-- 	<script th:src="@{/js/popper.min.js}"></script> -->

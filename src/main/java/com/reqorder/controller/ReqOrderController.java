@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +40,7 @@ public class ReqOrderController {
     @Autowired
     IndustryService industrySvc;
 
-    @GetMapping("/userinformation/addReqOrder")
+    @GetMapping("/addReqOrder")
     public String addReqOrder(ModelMap model) {
         ReqOrderVO reqOrderVO = new ReqOrderVO();
         model.addAttribute("reqOrderVO", reqOrderVO);
@@ -49,54 +48,93 @@ public class ReqOrderController {
     }
 
 
-    @GetMapping("/userinformation/reqorder_page")
-    public String reqOrderList(Model model) {
-        List<ReqOrderVO> list = reqOrderSvc.getAll();
-        model.addAttribute("reqOrderListData", list);
-        return "redirect:/userinformation/reqorder_page";
-    }
-
     @PostMapping("insertreq")
     public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
-    		@RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
-    	
-    	result = removeFieldError(reqOrderVO, result, "reqProdimage");
+            @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
 
-//        if (result.hasErrors() || parts[0].isEmpty()) {
-//            return "front-end/userinformation/reqorder_list";
-//        }
+        result = removeFieldError(reqOrderVO, result, "reqProdimage");
+        
+        if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
+			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
+		} else {
+			for (MultipartFile multipartFile : parts) {
+				byte[] buf = multipartFile.getBytes();
+				reqOrderVO.setReqProdimage(buf);
+			}
+		}
+
+        if (result.hasErrors() || parts.length == 0) {
+            return "front-end/userinformation/addReqOrder";
+        }
 
         reqOrderSvc.addReqOrder(reqOrderVO);
-
         List<ReqOrderVO> list = reqOrderSvc.getAll();
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "front-end/userinformation/reqorder_page";
+        return "front-end/userinformation/req_userpage";
     }
-    
-//    @PostMapping("/insert")
-//    public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result,
-//            @RequestParam("reqProdimage") MultipartFile[] parts) {
-//        if (result.hasErrors() || parts[0].isEmpty()) {
-//            return "error";
+
+//    @PostMapping("getOne_For_Update")
+//    public String getOne_For_Update(@RequestParam("reqNum") String reqNum, ModelMap model) {
+//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
+//        model.addAttribute("reqOrderVO", reqOrderVO);
+//        return "front-end/userinformation/updateReqOrder";
+//    }
+//
+//    @PostMapping("update")
+//    public String update(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
+//            @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
+//
+//        result = removeFieldError(reqOrderVO, result, "reqProdimage");
+//
+//        if (parts.length == 0) {
+//            byte[] reqProdimage = reqOrderSvc.getOneReqOrder(reqOrderVO.getReqNum()).getReqProdimage();
+//            reqOrderVO.setReqProdimage(reqProdimage);
+//        } else {
+//            for (MultipartFile multipartFile : parts) {
+//                byte[] reqProdimage = multipartFile.getBytes();
+//                reqOrderVO.setReqProdimage(reqProdimage);
+//            }
 //        }
 //
-//        reqOrderSvc.addReqOrder(reqOrderVO);
+//        if (result.hasErrors()) {
+//            return "front-end/userinformation/updateReqOrder";
+//        }
 //
-//        return "success";
+//        reqOrderSvc.updateReqOrder(reqOrderVO);
+//        model.addAttribute("success", "- (修改成功)");
+//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
+//        model.addAttribute("reqOrderVO", reqOrderVO);
+//        return "front-end/userinformation/req_userpage";
 //    }
+
+    @PostMapping("complete")
+    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
+        if (reqNum == null) {
+            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
+            return "errorPage"; // 返回一個錯誤頁面
+        }
+
+        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
+        int valid = 1;
+        reqOrderVO.setReqIsValid(valid);
+        reqOrderSvc.updateReqOrder(reqOrderVO);
+
+        model.addAttribute("success", "- (完成需求)");
+        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
+        model.addAttribute("reqOrderVO", reqOrderVO);
+        return "front-end/userinformation/req_userpage";
+    }
 
 
     @ModelAttribute("userListData")
     protected List<UserVO> referenceListData() {
-        List<UserVO> list = userSvc.getAll();
-        return list;
+        return userSvc.getAll();
     }
 
     @ModelAttribute("industryListData")
     protected List<IndustryVO> referenceListData1() {
-        List<IndustryVO> list = industrySvc.getAll();
-        return list;
+        return industrySvc.getAll();
     }
 
     public BindingResult removeFieldError(ReqOrderVO reqOrderVO, BindingResult result, String removedFieldname) {
