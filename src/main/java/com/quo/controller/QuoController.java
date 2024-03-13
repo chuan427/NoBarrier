@@ -39,9 +39,6 @@ public class QuoController {
 	@Autowired
 	ReqOrderService reqOrderSvc;
 
-//	@Autowired
-//	DeptService deptSvc;
-
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
@@ -51,7 +48,7 @@ public class QuoController {
 		model.addAttribute("quoVO", quoVO);
 		return "front-end/userinformation/addQuotation";
 	}
-
+	
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
