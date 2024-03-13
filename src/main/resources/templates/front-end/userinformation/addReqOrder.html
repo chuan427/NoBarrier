@@ -92,14 +92,16 @@
 
 			<div class="col-6" style="padding-left: 10px;">
 				<div class="d-grid gap-1">
-					<button class="btn btn-secondary" id="myBtn" type="button"
-						style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">提出需求</button>
+					<a th:href="@{/userinformation/addReqOrder}">
+						<button class="btn btn-secondary" id="myBtn" type="button"
+							style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">提出需求</button>
+					</a>
 				</div>
-
 				<div style="margin-top: 30px;"></div>
-
-				<button class="btn btn-secondary" type="button"
-					style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+				<a th:href="@{/order/transaction_stat}">
+					<button class="btn btn-secondary" type="button"
+						style="height: 100px; width: 300px; font-size: 30px; background-color: rgb(173, 139, 105);">交易狀態</button>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -111,39 +113,22 @@
 
 
 
-		<form th:action="@{insert}" method="post" th:object="${reqOrderVO}"
-			enctype="multipart/form-data">
+		<form th:action="@{insertReqOrder}" method="post" th:object="${reqOrderVO}" enctype="multipart/form-data" onsubmit="return showModal()">
 
-			<!-- <div class="d-flex align-items-center">
-				<label for="reqNum" class="me-3">商品序號:</label> <input type="text"
-					name="reqNum" id="reqNum" th:field="*{reqNum}"><br>
-			</div>
-
-			<div style="margin-top: 30px;"></div> -->
-
-			<!-- <div class="d-flex align-items-center">
-				<label for="reqOrderdate" class="me-3">日期:</label> <input
-					type="date" name="reqOrderdate" id="reqOrderdate"
-					th:field="*{reqOrderdate}"><br>
-			</div> -->
-
-			<div style="margin-top: 30px;"></div>
 
 			<div class="d-flex align-items-center">
 				<label for="reqCategory" class="me-3">需求分類:</label> <select
 					name="reqCategory" class="form-select" id="reqCategory"
 					th:field="*{industryVO.industryNum}"
 					aria-label="Default select example" style="width: 30%;">
-					<option
-						th:selected="${reqCategory == null || reqCategory == '螺絲和緊固件'}"
-						value="螺絲和緊固件">螺絲和緊固件</option>
-					<option th:selected="${reqCategory == 1}" value="1">工業加工</option>
-					<option th:selected="${reqCategory == 2}" value="2">照明配件</option>
-					<option th:selected="${reqCategory == 3}" value="3">金屬物件</option>
-					<option th:selected="${reqCategory == 4}" value="4">機械材料</option>
-					<option th:selected="${reqCategory == 5}" value="5">電子元件</option>
-					<option th:selected="${reqCategory == 6}" value="6">塑膠零件</option>
-					<option th:selected="${reqCategory == 7}" value="7">其他</option>
+					<option th:value="1" th:text="螺絲和緊固件">螺絲和緊固件</option>
+					<option th:value="2" th:text="工業加工">工業加工</option>
+					<option th:value="3" th:text="照明配件">照明配件</option>
+					<option th:value="4" th:text="金屬物件">金屬物件</option>
+					<option th:value="5" th:text="機械材料">機械材料</option>
+					<option th:value="6" th:text="電子元件">電子元件</option>
+					<option th:value="7" th:text="塑膠零件">塑膠零件</option>
+					<option th:value="8" th:text="其他">其他</option>
 				</select>
 			</div>
 
@@ -206,32 +191,41 @@
 			<div style="margin-top: 30px;"></div>
 
 			<div class="d-flex justify-content-center">
-				<button type="submit" id="submit" class="btn btn-primary">送出</button>
+				<button type="submit" id="submitBtn" class="btn btn-primary"
+					onclick="showModal()">送出</button>
 			</div>
 
-		</form>
-
-
-		<!-- <div class="modal fade" id="myModal" tabindex="-1"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">提出需求通知</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">已成功提出需求</div>
-					<div class="modal-footer">
-						<a th:href="@{/userinformation/req_userpage}">
-							<button type="button" class="btn btn-secondary"
-								data-bs-dismiss="modal">了解</button>
-						</a>
+			<div class="modal fade" id="myModal" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">提出需求通知</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">已成功提出需求</div>
+						<div class="modal-footer">
+							<a th:href="@{/userinformation/req_userpage}">
+								<button type="button" class="btn btn-secondary"
+									data-bs-dismiss="modal">了解</button>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div> -->
+
+		</form>
 	</div>
+
+	<script>
+		function showModal() {
+			var myModal = new bootstrap.Modal(document
+					.getElementById('myModal'));
+			myModal.show();
+		}
+	</script>
+
 
 	<!-- <footer> -->
 	<head th:insert="~{/front-end/footer}"></head>
