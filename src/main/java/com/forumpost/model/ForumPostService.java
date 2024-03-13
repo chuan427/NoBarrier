@@ -21,9 +21,8 @@ public class ForumPostService {
 	}
 
 	public void updateForumPost(ForumPostVO forumPostVO) {
-			repository.save(forumPostVO);
-		}
-	
+		repository.save(forumPostVO);
+	}
 
 	public void deleteForumPost(Integer fpNum) {
 		if (repository.existsById(fpNum))
@@ -47,4 +46,13 @@ public class ForumPostService {
 	public Set<ForumReportVO> getForumReportByfrpFpNum(Integer frpFpNum) {
 		return getOneForumPost(frpFpNum).getForumReport();
 	}
+
+	
+    public ForumPostVO getLatestPost() {
+        Optional<ForumPostVO> latestPost = repository.findLatestPost();
+        System.out.println(latestPost);
+        return latestPost.orElse(null);  // 如果沒有找到，返回null
+    }
+	
+	
 }

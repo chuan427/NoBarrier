@@ -50,8 +50,12 @@ document.getElementById('fpImage').addEventListener('change', function(event) {
 
 //三小點彈出視窗
 
-  function toggleMenu() {
-    var menu = document.getElementById("menu");
+function toggleMenu(clickedElement) {
+    // 從被點擊的元素開始，向上尋找最近的包含`post-header`類的祖先元素
+    var postHeader = clickedElement.closest('.post-header');
+    // 在找到的`post-header`內尋找`menu`類的元素
+    var menu = postHeader.querySelector('.menu');
+    // 切換菜單的顯示狀態
     if (menu.style.display === "none") {
         menu.style.display = "block";
     } else {

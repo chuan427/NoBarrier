@@ -3,12 +3,14 @@ package com.forumpost.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -28,7 +30,7 @@ import com.user.model.UserService;
 import com.user.model.UserVO;
 
 @Controller
-@RequestMapping("/forumPost")
+//@RequestMapping("/forumPost")
 public class ForumPostController {
 
 	@Autowired
@@ -46,8 +48,7 @@ public class ForumPostController {
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	
-	
+
 	@GetMapping("/forum/addForumPost")
 	public String addForumPost(ModelMap model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
@@ -148,6 +149,22 @@ public class ForumPostController {
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "back-end/forumPost/listOneForumPost"; // 修改成功後轉交listOneUser.html
 	}
+
+//	  @GetMapping("/search")
+//	    public String search(@RequestParam("search") String search, Model model) {
+//	        // 假設有一個service方法可以根據標題或使用者名進行模糊查詢
+//	        List<ForumPostVO> searchResult = forumPostSvc.searchByTitleOrUser(search);
+//	        model.addAttribute("posts", searchResult);
+//	        return "front-end/forum/forumIndex"; // 返回到顯示搜尋結果的頁面
+//	    }
+
+//	@GetMapping("/index")
+//	public String showLatestPost(Model model) {
+//		ForumPostVO forumPostVO = new ForumPostVO();
+//		forumPostVO = forumPostSvc.getLatestPost();
+//		model.addAttribute("forumPostVO", forumPostVO);
+//		return "front-end/forum/forumIndex"; 
+//	}
 
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
