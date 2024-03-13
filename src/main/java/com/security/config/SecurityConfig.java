@@ -26,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService_impl userDetailsService_impl;
 	
+	@Autowired
+	private AuthenticationSuccessHandler_impl authenticationSuccessHandler_impl;
+	
 //	@Bean
 //	DaoAuthenticationProvider daoAuthenticationProvider() {
 //		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -100,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					// loginpage.html 表單 action 內容
 					.loginProcessingUrl("/login")//頁面url
 					// 登入成功之後要造訪的頁面
-					.successForwardUrl("/loginsuccess")  // 就是個人主頁那裡
+					.successHandler(authenticationSuccessHandler_impl)
 					// 登入失敗後要造訪的頁面
 					.failureForwardUrl("/loginfail");
 				

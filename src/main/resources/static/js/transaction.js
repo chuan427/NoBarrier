@@ -6,6 +6,6 @@ toggles.forEach(function(toggle) {
     toggle.addEventListener('click', function() {
         // 找到下一個 tr 元素（詳細資訊）並切換其顯示狀態
         var details = this.parentElement.nextElementSibling;
-        details.style.display = details.style.display === 'none' ? 'table-row' : 'none';
+        details.classList.toggle('show');
     });
 });

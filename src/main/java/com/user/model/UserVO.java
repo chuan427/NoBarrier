@@ -21,6 +21,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.ad.model.AdVO;
 import com.forumpost.model.ForumPostVO;
 import com.industry.model.IndustryVO;
 import com.productinformation.model.ProductInformationVO;
@@ -32,6 +33,7 @@ import com.reqorder.model.ReqOrderVO;
 	@Table(name = "userInformation") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
 	public class UserVO implements java.io.Serializable {
 		private static final long serialVersionUID = 1L; 
+		
 		private Integer userId;
 		private IndustryVO industryVO;
 		private String comName;
@@ -54,13 +56,15 @@ import com.reqorder.model.ReqOrderVO;
 		private String comAboutContent;
 		private Double comRatStars;
 		private Integer comRatCount;
-		private Integer comIndustry;
-//		private Integer comIsValid;
+		private Integer comIsValid;
+		
 		private Set<ReqOrderVO> reqOrder = new HashSet<ReqOrderVO>();
 		private Set<QuoVO> quotations = new HashSet<QuoVO>();
 		private Set<ProductInformationVO> productInformation = new HashSet<ProductInformationVO>();
 		private Set<QueListVO> quelists = new HashSet<QueListVO>();
 		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>();
+		private Set<AdVO> ad = new HashSet<AdVO>();
+
 
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 		}
@@ -96,7 +100,7 @@ import com.reqorder.model.ReqOrderVO;
 
 		@Column(name = "comName")
 		@NotEmpty(message="公司名稱: 請勿空白")
-		@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$", message = "公司名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間")
+		@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,30}$", message = "公司名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到30之間")
 		public String getComName() {
 			return this.comName;
 		}
@@ -133,7 +137,7 @@ import com.reqorder.model.ReqOrderVO;
 
 		@Column(name = "comUniNumber")
 		@NotEmpty(message="公司統編: 請勿空白")
-		@Size(min=2,max=8,message="公司統編: 長度必需在{min}到{max}之間")
+		@Size(min=8,max=8,message="公司統編: 格式錯誤，長度為{max}")
 		public String getComUniNumber() {
 			return this.comUniNumber;
 		}
@@ -181,7 +185,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comBank")
-		@NotEmpty(message="銀行帳號: 請勿空白")
 		@Size(min=2,max=50,message="銀行帳號: 長度必需在{min}到{max}之間")
 		public String getComBank() {
 			return this.comBank;
@@ -209,7 +212,6 @@ import com.reqorder.model.ReqOrderVO;
 
 		@Column(name = "comContactperson")
 		@NotEmpty(message="公司聯絡人: 請勿空白")
-		@Size(min=2,max=10,message="員工職位: 長度必需在{min}到{max}之間")
 		public String getComContactPerson() {
 			return this.comContactPerson;
 		}
@@ -221,7 +223,7 @@ import com.reqorder.model.ReqOrderVO;
 
 		@Column(name = "comContactphone")
 		@NotEmpty(message="公司聯絡人電話: 請勿空白")
-		@Size(min=10,max=50,message="員工職位: 長度必需在{min}到{max}之間")
+		@Size(min=7,max=50,message="請符合電話公司聯絡人電話格式")
 		public String getComContactPhone() {
 			return this.comContactPhone;
 		}
@@ -232,8 +234,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comStat")
-//		@NotEmpty(message="公司狀態: 請勿空白")
-//		@Size(min=1,max=3,message="公司狀態: 長度必需在{min}到{max}之間")
 		public Integer getComStat() {
 			return this.comStat;
 		}
@@ -244,7 +244,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comImage1")
-//		@NotEmpty(message="特賣商品圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 		public byte[] getComImage1() {
 			return comImage1;
 		}
@@ -255,7 +254,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comImage2")
-//		@NotEmpty(message="特賣商品圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 		public byte[] getComImage2() {
 			return comImage2;
 		}
@@ -266,7 +264,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comImage3")
-//		@NotEmpty(message="特賣商品圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 		public byte[] getComImage3() {
 			return comImage3;
 		}
@@ -277,7 +274,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comImage4")
-//		@NotEmpty(message="特賣商品圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 		public byte[] getComImage4() {
 			return comImage4;
 		}
@@ -288,7 +284,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comAboutimage")
-//		@NotEmpty(message="關於我們圖片: 請上傳圖片") --> 由UserController.java 第60行處理錯誤信息
 		public byte[] getComAboutImage() {
 			return comAboutImage;
 		}
@@ -299,8 +294,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comAboutcontent")
-//		@NotEmpty(message="關於我們敘述: 請勿空白")
-//		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
 		public String getComAboutContent() {
 			return this.comAboutContent;
 		}
@@ -311,9 +304,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comRatstars")
-//		@NotNull(message="評價總星數: 請勿空白")
-//		@DecimalMin(value = "1.00", message = "評價總星數: 不能小於{value}")
-//		@DecimalMax(value = "5.00", message = "評價總星數: 不能超過{value}")
 		public Double getComRatStars() {
 			return this.comRatStars;
 		}
@@ -324,8 +314,6 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comRatcount")
-//		@NotEmpty(message="評價總筆數: 請勿空白")
-//		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
 		public Integer getComRatCount() {
 			return this.comRatCount;
 		}
@@ -335,27 +323,14 @@ import com.reqorder.model.ReqOrderVO;
 		
 		//--------------------------------------------
 
-		@Column(name = "comIndustry")
-//		@NotEmpty(message="產業類別: 請勿空白")
-		public Integer getComIndustry() {
-			return this.comIndustry;
-		}
-		public void setComIndustry(Integer comIndustry) {
-			this.comIndustry = comIndustry;
+		@Column(name = "comIsValid")
+		public Integer getComIsValid() {
+			return comIsValid;
 		}
 		
-		//--------------------------------------------
-
-//		@Column(name = "comIsValid")
-//		@NotEmpty(message="公司帳號狀態: 請勿空白")
-//		@Size(min=1,max=3,message="公司帳號狀態: 長度必需在{min}到{max}之間")
-//		public Integer getComIsValid() {
-//			return comIsValid;
-//		}
-//		
-//		public void setComIsValid(Integer comIsValid) {
-//			this.comIsValid = comIsValid;
-//		}
+		public void setComIsValid(Integer comIsValid) {
+			this.comIsValid = comIsValid;
+		}
 		
 		//--------------------------------------------
 		
@@ -429,5 +404,15 @@ import com.reqorder.model.ReqOrderVO;
 
 		public void setQueLists(Set<QueListVO> quelists) {
 			this.quelists = quelists;
+		}
+		
+		@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="userVO")
+		public Set<AdVO> getAd() {
+			return ad;
+		}
+
+
+		public void setAd(Set<AdVO> ad) {
+			this.ad = ad;
 		}
 	}

@@ -6,6 +6,13 @@ document.getElementById('fontTypeSelect').addEventListener('change', function() 
     document.getElementById('description').style.fontFamily = this.value;
 });
 
+$('#iconSelect').change(function() {
+  var icon = $(this).val();
+  var description = $('#description');
+  description.val(description.val() + ' ' + icon); // 將圖標添加到 textarea 內容中
+  $(this).val(''); // 重置下拉選單
+});
+
 document.getElementById('iconSelect').addEventListener('change', function() {
     var icon = this.value;
     if (icon) {
@@ -14,11 +21,13 @@ document.getElementById('iconSelect').addEventListener('change', function() {
     }
   });
 
-  
   function hideContent(d) {
      document.getElementById(d).style.display = "none";
 }
 
+
+
+//預覽圖片
 document.getElementById('fpImage').addEventListener('change', function(event) {
     var file = event.target.files[0];
     var imagePreview = document.getElementById('imagePreview');
@@ -38,3 +47,18 @@ document.getElementById('fpImage').addEventListener('change', function(event) {
     }
 });
 
+
+//三小點彈出視窗
+
+function toggleMenu(clickedElement) {
+    // 從被點擊的元素開始，向上尋找最近的包含`post-header`類的祖先元素
+    var postHeader = clickedElement.closest('.post-header');
+    // 在找到的`post-header`內尋找`menu`類的元素
+    var menu = postHeader.querySelector('.menu');
+    // 切換菜單的顯示狀態
+    if (menu.style.display === "none") {
+        menu.style.display = "block";
+    } else {
+        menu.style.display = "none";
+    }
+}

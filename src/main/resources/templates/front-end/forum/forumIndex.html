@@ -4,38 +4,94 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>NoBerrierTech 論壇交流區</title>
+<title>NoBerrierTech 討論區</title>
 
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css}" />
-<script th:src="@{/js/home.js}"></script>
-<script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                  
 <script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>            
 
-<!-- 引入forum/css -->
-<link rel="stylesheet" th:href="@{/css/forum_style.css}" />
+<!-- 引入css -->
+<link rel="stylesheet" th:href="@{/css/forumIndex.css}" />
 </head>
 
 <body>
 	<!-- header -->
-<head th:insert="~{/front-end/header_login}"></head>
-	
+<head th:insert="~{/front-end/header}"></head>
+     <!-- 新增搜尋欄位 -->
+      <div class="search-container mb-3">
+        <form action="/search" method="GET" class="search-form">
+          <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
+          <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
+          
+          <a href="#" th:href="@{/forum/addForumPost}" class="new-article-button">新增文章</a>
+        </form>
+    </div>
+    
+      <!-- 新增的側邊欄內容 -->
+      <div class="sidebar" th:if="${forumPostVO != null}">
+    <div class="bg-white mb-1">
+      <h4 class="px-3 py-4 op-5 m-0">最新貼文</h4>
+      <hr class="m-0" />
+      <div th:each="post : ${forumPostVO}" class="pos-relative px-3 py-3">
+        <h6 class="text-primary text-sm">
+          <a href="#" th:text="${forumPostVO.fpTitle}" class="text-primary"></a>
+        </h6>
+        <p class="mb-0 text-sm">
+          <span class="op-6">由</span>
+          <a href="#" th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
+          <span class="op-6">發布於</span>
+          <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy/MM/dd')}"></span>
+        </p>
+      </div>
+    </div>
+</div>
 
+  
 
-
-
-
-
-
-
-
-
+  <div class="transparent-box">
+    <div class="content">
+       <div th:each="forumPostVO : ${forumPostListData}" th:if="${forumPostVO.fpStat == 1}" class="post">
+            <div class="post-header">
+              <br>
+              <div class="icon-wrapper" >
+				<i class="fa-solid fa-user">
+    			<span th:text="${forumPostVO.userVO.comName}" class="user-name"></span>
+				</i>
+                <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
+                <div id="menu" class="menu" style="display: none;">
+                    <a href="#edit"><i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i> 編輯文章</a>
+                    <a href="#delete"><i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章</a>
+                </div>
+              </div>
+              <br>
+              <div class="title-time-container">
+                <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
+                <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd')}">發布時間</span></span>
+              </div>
+              <br>
+              <p th:text="${forumPostVO.fpContent}">文章內容</p>
+              <br>  
+              <div class="fabotton">
+                  <i class="fa-solid fa-comment fa-xl"></i>
+                  <i class="fa-regular fa-heart fa-xl"></i>
+                  <i class="fa-regular fa-bookmark fa-xl"></i>
+              </div>
+              <br>      
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- footer -->
 <head th:insert="~{/front-end/footer}"></head>
+<!-- JS -->
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/forum.js}"></script>
+
 </body>
 </html>

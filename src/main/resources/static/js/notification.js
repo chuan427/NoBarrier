@@ -1,29 +1,29 @@
-// 监听滚动事件
+// 監聽滾動事件
 window.addEventListener("scroll", function() {
-    // 检查滚动距离，如果超过 20px，显示返回顶部按钮，否则隐藏
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    // 檢查滾動距離，如果超過 20px，顯示返回頂部按鈕，否則隱藏
+    if (window.pageYOffset > 20) {
         document.getElementById("back-to-top-btn").style.display = "block";
     } else {
         document.getElementById("back-to-top-btn").style.display = "none";
     }
 });
 
-// 获取通知图标和下拉菜单
+// 獲取通知圖標和下拉菜單
 const notificationIcon = document.getElementById('notificationIcon');
 const notificationDropdown = document.getElementById('notificationDropdown');
 
-// 点击通知图标时，切换通知下拉菜单的显示和隐藏
+// 點擊通知圖標時，切換通知下拉菜單的顯示和隱藏
 notificationIcon.addEventListener('click', function() {
     notificationDropdown.classList.toggle('show');
 });
 
-// 异步函数，获取通知数据并动态添加到页面中
+// 異步函數，獲取通知數據並動態添加到網頁中
 async function getNotifications() {
     try {
         const response = await fetch('http://localhost:3000/notifications');
         const notifications = await response.json();
 
-        // 检查 notifications 是否为数组
+        // 檢查 notifications 是否為數組
         if (Array.isArray(notifications)) {
             const notificationsDiv = document.getElementById('notifications');
             notificationsDiv.innerHTML = notifications.map(notification => `
@@ -40,6 +40,5 @@ async function getNotifications() {
     }
 }
 
-
-// 调用获取通知数据的函数
+// 調用獲取通知數據的函數
 getNotifications();

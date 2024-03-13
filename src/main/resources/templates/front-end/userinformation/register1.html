@@ -1,173 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>register1</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>register1</title>
 
 <!--     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
-  </head>
-  <body>
-    <!-- <header> -->
-      <head th:insert="~{/front-end/header}"></head>
-    <!-- 註冊區塊 -->
-    <main>
-      <div class="container mt-5">
-        <h2 class="mb-4">用戶註冊</h2>
-        <form>
-          <div class="row">
-            <!-- 左邊註冊區塊 -->
-            <div class="col-md-6">
-              <!-- 公司登記名稱 -->
-              <div class="mb-3">
-                <label for="companyName" class="form-label">公司登記名稱</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="companyName"
-                  name="companyName"
-                  required
-                />
-              </div>
+</head>
+<body>
+	<!-- <header> -->
+<div th:insert="~{/front-end/header}"></div>
+<!-- 註冊區塊 -->
+<main>
+	<div class="container mt-5">
+		<h2 class="mb-4">用戶註冊</h2>
+		<form th:action="@{/user/storeRegister1Data}" method="post"
+			th:object="${userVO}">
+			<div class="row">
+				<!-- 左邊註冊區塊 -->
+				<div class="col-md-6">
+					<!-- 公司登記名稱 -->
+					<div class="mb-3">
+						<label for="comName" class="form-label">公司登記名稱</label> 
+						<input th:field="*{comName}" type="text" class="form-control" id="comName" name="comName" required />
+						<span th:if="${#fields.hasErrors('comName')}" th:errors="*{comName}" class="error" id="comName.errors"></span>
+					</div>
 
-              <!-- 公司統一編號 -->
-              <div class="mb-3">
-                <label for="businessNumber" class="form-label"
-                  >公司統一編號</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="businessNumber"
-                  name="businessNumber"
-                  required
-                />
-              </div>
+					<!-- 公司統一編號 -->
+					<div class="mb-3">
+						<label for="comUniNumber" class="form-label">公司統一編號</label>
+						<input th:field="*{comUniNumber}" type="text" class="form-control" id="comUniNumber" name="comUniNumber" required />
+						<span  th:if="${#fields.hasErrors('comUniNumber')}" th:errors="*{comUniNumber}" class="error" id="comUniNumber.errors"></span>
+					</div>
 
-              <!-- 公司註冊地址 -->
-              <div class="mb-3">
-                <label for="registrationAddress" class="form-label"
-                  >公司註冊地址</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="registrationAddress"
-                  name="registrationAddress"
-                  required
-                />
-              </div>
+					<!-- 公司註冊地址 -->
+					<div class="mb-3">
+						<label for="comAddress" class="form-label">公司註冊地址</label>
+						<input th:field="*{comAddress}" type="text" class="form-control" id="comAddress" name="comAddress" required />
+						<span  th:if="${#fields.hasErrors('comAddress')}" th:errors="*{comAddress}" class="error" id="comAddress.errors"></span>
+					</div>
 
-              <!-- 公司用郵件 -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  required
-                />
-              </div>
+					<!-- 公司用郵件 -->
+					<div class="mb-3">
+						<label for="comMail" class="form-label">Email</label>
+						<input th:field="*{comMail}" type="email" class="form-control" id="comMail" name="comMail" required />
+						<span  th:if="${#fields.hasErrors('comMail')}" th:errors="*{comMail}" class="error" id="comMail.errors"></span>
+					</div>
 
-              <!-- 公司用電話 -->
-              <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
-                <input
-                  type="tel"
-                  class="form-control"
-                  id="phone"
-                  name="phone"
-                  required
-                />
-              </div>
-            </div>
+					<!-- 公司用電話 -->
+					<div class="mb-3">
+						<label for="comPhone" class="form-label">公司用電話</label>
+						<input th:field="*{comPhone}" type="tel" class="form-control" id="comPhone" name="comPhone" required />
+						<span  th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error" id="comPhone.errors"></span>
+					</div>
+				</div>
 
-            <!-- 右邊註冊區塊 -->
-            <div class="col-md-6">
-              <!-- 註冊聯絡人 -->
-              <div class="mb-3">
-                <label for="contactPersonName" class="form-label"
-                  >註冊聯絡人</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="contactPersonName"
-                  name="contactPersonName"
-                  required
-                />
-              </div>
-              
-<!--             註冊聯絡人電話 -->
-<!--               <div class="mb-3"> -->
-<!--                 <label for="contactPersonPhone" class="form-label" -->
-<!--                   >註冊聯絡人電話</label -->
-<!--                 > -->
-<!--                 <input -->
-<!--                   type="text" -->
-<!--                   class="form-control" -->
-<!--                   id="contactPersonPhone" -->
-<!--                   name="contactPersonPhone" -->
-<!--                   required -->
-<!--                 /> -->
-<!--               </div> -->
+				<!-- 右邊註冊區塊 -->
+				<div class="col-md-6">
+					<!-- 註冊聯絡人 -->
+					<div class="mb-3">
+						<label for="comContactPerson" class="form-label">註冊聯絡人</label>
+						<input th:field="*{comContactPerson}" type="text" class="form-control" id="comContactPerson" name="comContactPerson" required />
+						<span  th:if="${#fields.hasErrors('comContactPerson')}" th:errors="*{comContactPerson}" class="error" id="comContactPerson.errors"></span>
+					</div>
 
-              <!-- 會員登入帳號 -->
-              <div class="mb-3">
-                <label for="loginAccount" class="form-label"
-                  >會員登入帳號</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="loginAccount"
-                  name="loginAccount"
-                  required
-                />
-              </div>
+					<!--             註冊聯絡人電話 -->
+					<div class="mb-3">
+						<label for="comContactPhone" class="form-label">註冊聯絡人電話</label>
+						<input th:field="*{comContactPhone}" type="text" class="form-control" id="comContactPhone" name="comContactPhone" required />
+						<span  th:if="${#fields.hasErrors('comContactPhone')}" th:errors="*{comContactPhone}" class="error" id="comContactPhone.errors"></span>
+					</div>
 
-              <!-- 會員登入密碼 -->
-              <div class="mb-3">
-                <label for="loginPassword" class="form-label"
-                  >會員登入密碼</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="loginPassword"
-                  name="loginPassword"
-                  required
-                />
-              </div>
+					<!-- 會員登入帳號 -->
+					<div class="mb-3">
+						<label for="comAccount" class="form-label">會員登入帳號</label>
+						<input th:field="*{comAccount}" type="text" class="form-control" id="comAccount" name="comAccount" required />
+						<span  th:if="${#fields.hasErrors('comAccount')}" th:errors="*{comAccount}" class="error" id="comAccount.errors"></span>
+					</div>
 
-              <!-- 會員登入密碼確認 -->
-              <div class="mb-3">
-                <label for="confirmPassword" class="form-label"
-                  >會員登入密碼確認</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  required
-                />
-              </div>
-            </div>
-          </div>
+					<!-- 會員登入密碼 -->
+					<div class="mb-3">
+						<label for="comPassword" class="form-label">會員登入密碼</label>
+						<input th:field="*{comPassword}" type="password" class="form-control" id="comPassword" name="comPassword" required />
+						<span  th:if="${#fields.hasErrors('comPassword')}" th:errors="*{comPassword}" class="error" id="comPassword.errors"></span>
+					</div>
 
-          <!-- form表單提交按鈕 -->
-          <a href="register2.html" class="btn btn-secondary" onclick="return confirm('確定要送出嗎？')">送出</a>
-        </form>
-      </div>
-    </main>
+					<!-- 會員登入密碼確認 -->
+					<div class="mb-3">
+						<label for="confirmPassword" class="form-label">會員登入密碼確認</label>
+						<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required />
+					</div>
 
-     <!-- <footer> -->
-      <head th:insert="~{/front-end/footer}"></head>	
-	  <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+					<!--               以下是隱藏的帶值欄位 -->
+
+					<!--               把comStat預設是0提交到後端 -->
+					<input type="hidden" id="comStat" name="comStat" th:field="*{comStat}" value="0" />
+
+					<!--               把comRatstars預設是0提交到後端 -->
+					<input type="hidden" id="comRatStars" name="comRatStars" th:field="*{comRatStars}" value="0" />
+
+					<!--               把comRatcount預設是0提交到後端 -->
+					<input type="hidden" id="comRatCount" name="comRatCount" th:field="*{comRatCount}" value="0" />
+
+					<!--               把comIsValid預設是1提交到後端 -->
+					<input type="hidden" id="comIsValid" name="comIsValid" th:field="*{comIsValid}" value="1" />
+
+					<!--               把comRegdate預設是js放進去的localdate提交到後端 -->
+					<input type="hidden" id="comRegDate" name="comRegDate" th:field="*{comRegDate}" />
+
+
+				</div>
+			</div>
+
+			<!-- form表單提交按鈕 -->
+			<button type="submit" class="btn btn-secondary" th:onclick="'return confirm(\'確定要送出嗎？\')'">下一頁</button>
+
+		</form>
+	</div>
+</main>
+
+<!-- <footer> -->
+<div th:insert="~{/front-end/footer}"></div>
+<script>
+	// 使用JavaScript獲取當前日期，並將其設置為隱藏欄位的值
+	var currentDate = new Date();
+	var formattedDate = currentDate.toLocaleDateString('en-CA', {
+		year : 'numeric',
+		month : '2-digit',
+		day : '2-digit'
+	});
+
+	document.getElementById('comRegDate').value = formattedDate;
+
+
+
+	document.addEventListener("DOMContentLoaded", function() {
+		// 獲取密碼欄位和確認密碼欄位
+		var passwordField = document.getElementById("comPassword");
+		var confirmPasswordField = document.getElementById("confirmPassword");
+
+		// 監聽確認密碼欄位的輸入事件
+		confirmPasswordField.addEventListener("input", function() {
+			// 獲取兩個欄位的值
+			var passwordValue = passwordField.value;
+			var confirmPasswordValue = confirmPasswordField.value;
+
+			// 比較兩個值是否相同
+			if (passwordValue === confirmPasswordValue) {
+				// 如果相同，移除錯誤樣式，設置為有效
+				confirmPasswordField.setCustomValidity("");
+			} else {
+				// 如果不同，設置錯誤樣式，設置為無效
+				confirmPasswordField.setCustomValidity("密碼不一致");
+			}
+		});
+	});
+</script>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
 <!--     <script src="js/popper.min.js"></script> -->
 <!--     <script src="js/bootstrap.min.js"></script> -->
-  </body>
+</body>
 </html>
