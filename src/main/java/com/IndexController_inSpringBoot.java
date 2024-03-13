@@ -390,15 +390,15 @@ public class IndexController_inSpringBoot {
 	}
 
 	// -------------------需求單-----------------------
-	@GetMapping("/userinformation/req_userpage")
-	public String req_userpage(Model model) {
-		return "front-end/userinformation/req_userpage";
+	@GetMapping("/userinformation/userpage")
+	public String userpage(Model model) {
+		return "front-end/userinformation/userpage";
 	}
 	
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
 
-		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
 		return list;
 	}
 
