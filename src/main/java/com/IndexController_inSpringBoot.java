@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -109,7 +111,10 @@ public class IndexController_inSpringBoot {
 //	}
 	//----------------------------------------------------
 	@RequestMapping("/")
-	public String toIndex() {
+	public String toIndex(Model model) {
+//		Integer	userId = 2;
+//		 model.addAttribute("userId", userId);
+//		 System.out.println(userId);
 		return "index";
 	}
 
@@ -201,6 +206,15 @@ public class IndexController_inSpringBoot {
 	public String editmember_ad_view() {
 		return "front-end/com/editmember_ad_view"; // view
 	}
+	
+	@GetMapping("/com/editmember_ad_view/{userId}")
+	public String editmember_ad_view(@PathVariable("userId") UserVO userVO, Model model) {
+	    // 根据 id 执行相应的逻辑，例如获取特定的厂商信息
+	    // 将相关数据添加到 Model 中，以便在视图中使用
+	    model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_ad_view"; // view
+	}
+	
 
 	// 廠商廣告編輯頁面 完成
 	@GetMapping("/com/editmember_ad")
@@ -213,6 +227,12 @@ public class IndexController_inSpringBoot {
 	public String editmember_product_view() {
 		return "front-end/com/editmember_product_view"; // view
 	}
+	
+	// 廠商產品預覽頁面 完成
+	@GetMapping("/com/editmember_product")
+	public String editmember_product() {
+		return "front-end/com/editmember_product"; // view
+		}
 
 	// 廠商產品限時預覽頁面 完成
 	@GetMapping("/com/editmember_sale_view")
@@ -252,6 +272,7 @@ public class IndexController_inSpringBoot {
 		    model.addAttribute("userVO", userVO);
 		    return "front-end/com/member_AboutUs"; // view
 		}
+	
 	// 廠商產品資訊 完成
 	@GetMapping("/com/member_Prod/{userId}")
 	public String member_Prod(@PathVariable("userId") UserVO userVO, Model model) {

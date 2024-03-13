@@ -96,10 +96,10 @@
 								 <td th:text="${userVO.comName}"></td>
 								 <td th:text="${userVO.comAddress}"></td>
 								  <td>
-<!--     								<span th:text="${userVO.comIndustry1}"></span> -->
+<!--     								<span th:text="${userVO.comIndustry}"></span> -->
     							<script th:inline="javascript">
-       										 /* 取得 userVO.comIndustry1 的值 */
-       								 var industry = '[[${userVO.comIndustry1}]]';
+       										 /* 取得 userVO.comIndustry 的值 */
+       								 var industry = '[[${userVO.comIndustry}]]';
         
       										 /* 使用 switch case 判斷並加入相應的文字描述 */
         								switch (industry) {

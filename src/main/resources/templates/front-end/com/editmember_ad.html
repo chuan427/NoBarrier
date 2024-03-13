@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>editmember_ad</title>
-    <link rel="stylesheet" th:href=@{"css/bootstrap.min.css"}>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
     <style>
         /* 小型設備（手機） */
         @media (max-width: 767.98px) {
@@ -88,27 +88,27 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
-                            <a href="editmember_ad.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/editmember_ad}" class="nav-link text-white fs-4">
                                 廠商廣告
                             </a>
                         </li>
                         <li>
-                            <a href="editmember_user.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/editmember_user}" class="nav-link text-white fs-4">
                                 聯絡資料
                             </a>
                         </li>
                         <li>
-                            <a href="editmember_aboutus.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/editmember_aboutus}" class="nav-link text-white fs-4">
                                 關於我們
                             </a>
                         </li>
                         <li>
-                            <a href="editmemeber_product.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/editmember_product}" class="nav-link text-white fs-4">
                                 產品資訊
                             </a>
                         </li>
                         <li>
-                            <a href="editmember_sale.html" class="nav-link text-white fs-4">
+                            <a th:href="@{/com/editmember_sale}" class="nav-link text-white fs-4">
                                 限時商品
                             </a>
                         </li>
@@ -148,7 +148,7 @@
                 <button class="btn btn-primary me-md-2" type="button">修改完成</button>
               </div>
 
-            <head th:insert="~{/front-end/footer}"></head>
+            <head th:insert="@{/front-end/footer}"></head>
 			<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 				<script th:src="@{/js/notification.js}"></script>
 			
