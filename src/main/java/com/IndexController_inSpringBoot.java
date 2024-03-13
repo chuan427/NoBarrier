@@ -530,6 +530,9 @@ public class IndexController_inSpringBoot {
 
 	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
+		ForumPostVO forumPostVO = new ForumPostVO();
+		forumPostVO = forumPostSvc.getLatestPost();
+		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
 
