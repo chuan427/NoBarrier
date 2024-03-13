@@ -1,6 +1,7 @@
 package com.quo.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,7 +32,7 @@ public class QuoVO implements java.io.Serializable {
 	private Integer quoNum;
 
 	@Column(name = "quoDate",columnDefinition = "DATE DEFAULT CURRENT_DATE" )
-	private Date quoDate;
+	private Date quoDate = Date.valueOf(LocalDate.now());
 
 	@Column(name = "quoProdname")
 	private String quoProdname;

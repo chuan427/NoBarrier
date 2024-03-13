@@ -26,7 +26,7 @@ public class ReqOrderService {
 
 	@Autowired
 	IndustryRepository industryrepository;
-	
+
 	@Autowired
 	HttpServletRequest request;
 
@@ -36,14 +36,13 @@ public class ReqOrderService {
 		// Integer userId = (Integer) request.getSession().getAttribute("userId");
 
 		UserVO userVO = userrepository.findById(userId).orElse(null);
-		reqOrderVO.setUserVO(userVO); // 设置用户信息到广告对象中
-		
-		
+		reqOrderVO.setUserVO(userVO);
+
 		Integer industryNum = 1;
-		
+
 		IndustryVO industryVO = industryrepository.findById(industryNum).orElse(null);
-		reqOrderVO.setIndustryVO(industryVO); // 设置用户信息到广告对象中
-		
+		reqOrderVO.setIndustryVO(industryVO); 
+
 		repository.save(reqOrderVO);
 	}
 
@@ -63,6 +62,10 @@ public class ReqOrderService {
 		Optional<ReqOrderVO> optional = repository.findById(reqNum);
 //		return optional.get();
 		return optional.orElse(null); // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
+	}
+	
+	public List<ReqOrderVO> findByReqIsValid() {
+		return repository.findByReqIsValid();
 	}
 
 	public List<ReqOrderVO> getAll() {

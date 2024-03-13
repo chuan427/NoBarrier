@@ -20,88 +20,71 @@
 <body>
 	<!-- header -->
 <head th:insert="~{/front-end/header}"></head>
-	
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
         <form action="/search" method="GET" class="search-form">
           <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
           <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
-          <a href="#" th:href="@{/forumPost/forum/addForumPost}" class="new-article-button">新增文章</a>
+          
+          <a href="#" th:href="@{/forum/addForumPost}" class="new-article-button">新增文章</a>
         </form>
     </div>
+    
       <!-- 新增的側邊欄內容 -->
-      <div class="sidebar">
-        <div class="bg-white mb-1">
-          <h4 class="px-3 py-4 op-5 m-0">最新貼文</h4>
-          <hr class="m-0" />
-          <div class="pos-relative px-3 py-3">
-            <h6 class="text-primary text-sm">
-              <a href="#" class="text-primary">不鏽鋼螺絲vs黑鐵螺絲?</a>
-            </h6>
-            <p class="mb-0 text-sm">
-              <span class="op-6">由</span>
-              <a class="text-black" href="#">大吳公司</a>
-              <span class="op-6">發布於</span>
-              <span class="op-6">2024/03/03</span>
-            </p>
-          </div>
-        </div>
+      <div class="sidebar" th:if="${forumPostVO != null}">
+    <div class="bg-white mb-1">
+      <h4 class="px-3 py-4 op-5 m-0">最新貼文</h4>
+      <hr class="m-0" />
+      <div th:each="post : ${forumPostVO}" class="pos-relative px-3 py-3">
+        <h6 class="text-primary text-sm">
+          <a href="#" th:text="${forumPostVO.fpTitle}" class="text-primary"></a>
+        </h6>
+        <p class="mb-0 text-sm">
+          <span class="op-6">由</span>
+          <a href="#" th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
+          <span class="op-6">發布於</span>
+          <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy/MM/dd')}"></span>
+        </p>
       </div>
+    </div>
+</div>
+
   
-
-
 
   <div class="transparent-box">
     <div class="content">
-        <div class="post">
+       <div th:each="forumPostVO : ${forumPostListData}" th:if="${forumPostVO.fpStat == 1}" class="post">
             <div class="post-header">
               <br>
-              
-              <div class="icon-wrapper">
-                <i class="fa-solid fa-circle-user fa-xl"></i>
-                <i class="fa-solid fa-ellipsis-vertical fa-xl" onclick="toggleMenu()"></i>
+              <div class="icon-wrapper" >
+				<i class="fa-solid fa-user">
+    			<span th:text="${forumPostVO.userVO.comName}" class="user-name"></span>
+				</i>
+                <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
                 <div id="menu" class="menu" style="display: none;">
                     <a href="#edit"><i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i> 編輯文章</a>
                     <a href="#delete"><i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章</a>
                 </div>
+              </div>
+              <br>
+              <div class="title-time-container">
+                <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
+                <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd')}">發布時間</span></span>
+              </div>
+              <br>
+              <p th:text="${forumPostVO.fpContent}">文章內容</p>
+              <br>  
+              <div class="fabotton">
+                  <i class="fa-solid fa-comment fa-xl"></i>
+                  <i class="fa-regular fa-heart fa-xl"></i>
+                  <i class="fa-regular fa-bookmark fa-xl"></i>
+              </div>
+              <br>      
             </div>
-              
-                <br>
-                <div class="title-time-container">
-                    <h4>Toy - Takayan</h4>
-                    <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> 2024-03-12 10:00</span>
-                </div>
-            <br>
-            <p>
-              今は出したい自分も隠そう表情も
-              気持ちがバレないように
-              棘だらけの掌を無理矢理掴んでる
-              震える　抱かれてるのに 偏る愛　It's on me
-              Kill　自我　見ない　君以外
-              振り返る 今まで彼は笑った？ 一途に恋した中で
-              一度もないでしょ？そのまま振り向かないよ それが運命
-              朝が来れば互い他人で
-              今夜も「好き」と「無気力」と共に
-              Good night 使い捨ての玩具
-              行為の時だけ楽しそうにする
-              「愛されたい」 「遊ばれたい」 二人の自分
-              変にあなたに絡む異性に
-              一瞬で嫉妬してしまう自分にも
-              嫌悪感抱き 馬鹿馬鹿しい
-              自分だけ勝手に折れて
-            </p>
+        </div>
+    </div>
+</div>
 
-        <br>  
-      <div class="fabotton">
-          <i class="fa-solid fa-comment fa-xl"></i>
-          <i class="fa-regular fa-heart fa-xl"></i>
-          <i class="fa-regular fa-bookmark fa-xl"></i>
-      </div>
-      <br>      
-    </div>
-    </div>
-    </div>
-   </div>
 
 <!-- footer -->
 <head th:insert="~{/front-end/footer}"></head>

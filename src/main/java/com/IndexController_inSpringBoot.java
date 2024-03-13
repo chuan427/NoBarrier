@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -131,10 +132,10 @@ public class IndexController_inSpringBoot {
 		return "Login Failed!"; // view
 	}
 	
-	@RequestMapping("/loginsuccess")
-	public String toSuccessLogin() {
-		return "front-end/successLogin"; // view
-	}
+//	@RequestMapping("/loginsuccess")
+//	public String toSuccessLogin() {
+//		return "front-end/successLogin"; // view
+//	}
 	
 	@RequestMapping("/forgetPasswordPage")
 	public String toForgetPasswordPage() {
@@ -331,7 +332,9 @@ public class IndexController_inSpringBoot {
 
 	// 註冊畫面 成功
 	@GetMapping("/userinformation/register1")
-	public String register1() {
+	public String register1(ModelMap model) {
+		UserVO userVO = new UserVO();
+		model.addAttribute("userVO", userVO);
 		return "front-end/userinformation/register1"; // view
 	}
 
@@ -346,18 +349,6 @@ public class IndexController_inSpringBoot {
 	public String register3() {
 		return "front-end/userinformation/register3"; // view
 	}
-	
-	// 登入畫面 成功
-	@GetMapping("/userinformation/sign_in")
-	public String sign_in() {
-		return "front-end/userinformation/sign_in"; // view
-	}
-	
-	// 登入畫面 成功
-	@GetMapping("/sign_in")
-	public String sign_in1() {
-		return "back-end/sign_in"; // view
-	}
 
 	// 聯絡我們
 //	@GetMapping("/")      			
@@ -368,27 +359,8 @@ public class IndexController_inSpringBoot {
 	// =========== 以下第57~62行是提供給
 	// /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html
 	// 要使用的資料 ===================
-
-	// ----------------報價單--------------------
-	@GetMapping("/userinformation/addQuotation")
-	public String addQuotation(Model model) {
-		return "front-end/userinformation/addQuotation";
-	}
 	
-	@GetMapping("/userinformation/quotation_list")
-	public String quotation_list(Model model) {
-		return "front-end/userinformation/quotation_list";
-	}
-
-	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QuoVO> referenceListData(Model model) {
-
-		List<QuoVO> list = quoSvc.getAll();
-		return list;
-	}
-
 	// ------------------------------------------
-
 	@GetMapping("/rptdlist/select_page")
 	public String select_page_rptdlist(Model model) {
 		return "back-end/rptdlist/select_page";
@@ -407,31 +379,30 @@ public class IndexController_inSpringBoot {
 	}
 
 	// -------------------需求單-----------------------
-	@GetMapping("/userinformation/req_userpage")
-	public String req_userpage(Model model) {
-		return "front-end/userinformation/req_userpage";
-	}
-
-
-	@GetMapping("/userinformation/reqorder_list")
-	public String reqorder_list(Model model) {
-		return "front-end/userinformation/reqorder_list";
-	}
-
-	@GetMapping("/userinformation/addReqOrder")
-	public String addReqOrder(Model model) { 
-		model.addAttribute("reqOrderVO", new ReqOrderVO());
-		return "front-end/userinformation/addReqOrder";
+	@GetMapping("/userinformation/userpage")
+	public String userpage(Model model) {
+		return "front-end/userinformation/userpage";
 	}
 	
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
 
-
-		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
 		return list;
 	}
 
+	// ----------------報價單--------------------
+		@GetMapping("/userinformation/quotation_list")
+		public String quotation_list(Model model) {
+			return "front-end/userinformation/quotation_list";
+		}
+
+		@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+		protected List<QuoVO> referenceListData(Model model) {
+
+			List<QuoVO> list = quoSvc.getAll();
+			return list;
+		}
 	
 
 	// -------------------------------------------------
@@ -531,6 +502,9 @@ public class IndexController_inSpringBoot {
 
 	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
+		ForumPostVO forumPostVO = new ForumPostVO();
+		forumPostVO = forumPostSvc.getLatestPost();
+		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
 
