@@ -47,7 +47,8 @@ public class ReqOrderController {
         return "front-end/userinformation/addReqOrder";
     }
 
-    @PostMapping("insertReqOrder")
+
+    @PostMapping("insertreq")
     public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
             @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
 
@@ -73,39 +74,39 @@ public class ReqOrderController {
         return "front-end/userinformation/req_userpage";
     }
 
-    @PostMapping("getOne_For_Update")
-    public String getOne_For_Update(@RequestParam("reqNum") String reqNum, ModelMap model) {
-        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-        model.addAttribute("reqOrderVO", reqOrderVO);
-        return "front-end/userinformation/updateReqOrder";
-    }
-
-    @PostMapping("update")
-    public String update(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
-            @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
-
-        result = removeFieldError(reqOrderVO, result, "reqProdimage");
-
-        if (parts.length == 0) {
-            byte[] reqProdimage = reqOrderSvc.getOneReqOrder(reqOrderVO.getReqNum()).getReqProdimage();
-            reqOrderVO.setReqProdimage(reqProdimage);
-        } else {
-            for (MultipartFile multipartFile : parts) {
-                byte[] reqProdimage = multipartFile.getBytes();
-                reqOrderVO.setReqProdimage(reqProdimage);
-            }
-        }
-
-        if (result.hasErrors()) {
-            return "front-end/userinformation/updateReqOrder";
-        }
-
-        reqOrderSvc.updateReqOrder(reqOrderVO);
-        model.addAttribute("success", "- (修改成功)");
-        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-        model.addAttribute("reqOrderVO", reqOrderVO);
-        return "front-end/userinformation/req_userpage";
-    }
+//    @PostMapping("getOne_For_Update")
+//    public String getOne_For_Update(@RequestParam("reqNum") String reqNum, ModelMap model) {
+//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
+//        model.addAttribute("reqOrderVO", reqOrderVO);
+//        return "front-end/userinformation/updateReqOrder";
+//    }
+//
+//    @PostMapping("update")
+//    public String update(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
+//            @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
+//
+//        result = removeFieldError(reqOrderVO, result, "reqProdimage");
+//
+//        if (parts.length == 0) {
+//            byte[] reqProdimage = reqOrderSvc.getOneReqOrder(reqOrderVO.getReqNum()).getReqProdimage();
+//            reqOrderVO.setReqProdimage(reqProdimage);
+//        } else {
+//            for (MultipartFile multipartFile : parts) {
+//                byte[] reqProdimage = multipartFile.getBytes();
+//                reqOrderVO.setReqProdimage(reqProdimage);
+//            }
+//        }
+//
+//        if (result.hasErrors()) {
+//            return "front-end/userinformation/updateReqOrder";
+//        }
+//
+//        reqOrderSvc.updateReqOrder(reqOrderVO);
+//        model.addAttribute("success", "- (修改成功)");
+//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
+//        model.addAttribute("reqOrderVO", reqOrderVO);
+//        return "front-end/userinformation/req_userpage";
+//    }
 
     @PostMapping("complete")
     public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
