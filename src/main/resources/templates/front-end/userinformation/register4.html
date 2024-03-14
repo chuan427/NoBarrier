@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>register2</title>
-<!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
+  <title>register3</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
   <style>
     /* Add your custom styles here */
     /* 仅在包含有.wrapper-container类的元素下生效 */
@@ -14,7 +14,6 @@
       display: flex;
       justify-content: space-between;
     }
-
 
     .button-container {
       flex: 1;
@@ -93,7 +92,7 @@
   <head th:insert="~{/front-end/header}"></head>
 
   <div class="wrapper-container">
-    <h1>產業類別選擇</h1>
+    <h1>類別通知選擇</h1>
     <div class="container mt-5">
       <form action="">
         <div class="button-container wrapper1">
@@ -181,12 +180,11 @@
           </div>
 
           <!-- 這邊塞button -->
-          <!-- <button style="margin-left: auto">提交</button>  -->
-          <a href="register3.html" class="btn btn-secondary" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</a>
-          
+          <!-- <button style="margin-left: auto">提交</button> -->
+          <a href="sign_in.html" class="btn btn-secondary" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</a>
+
         </div>
       </form>
-
       <!-- 右邊文字顯示區塊 -->
       <div class="info-container" style="background-color: blanchedalmond">
         <h3>Information Display</h3>
@@ -194,28 +192,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Checkbox selection script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const checkboxes = document.querySelectorAll(
-        '[name="industry-catrgory"]'
-      );
-
-      checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            // 如果目前 checkbox 被勾選，則取消其他 checkbox 的勾選狀態
-            checkboxes.forEach(function (otherCheckbox) {
-              if (otherCheckbox !== checkbox) {
-                otherCheckbox.checked = false;
-              }
-            });
-          }
-        });
-      });
-    });
-  </script>
 
   <!-- Information update script -->
   <script>
@@ -241,9 +217,9 @@
   </script>
 
   <!-- <footer> -->
-  <head th:insert="~{/front-end/footer}"></head>
+  <head th:insert="~{/front-end/footer}"></head>	
   <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-  
+
   <!-- Bootstrap and other scripts -->
 <!--   <script src="js/home.js"></script> -->
 <!--   <script src="js/popper.min.js"></script> -->

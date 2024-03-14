@@ -95,38 +95,7 @@
 								 <td th:text="${userVO.userId}"></td>
 								 <td th:text="${userVO.comName}"></td>
 								 <td th:text="${userVO.comAddress}"></td>
-								  <td>
-<!--     								<span th:text="${userVO.comIndustry1}"></span> -->
-    							<script th:inline="javascript">
-       										 /* 取得 userVO.comIndustry1 的值 */
-       								 var industry = '[[${userVO.comIndustry1}]]';
-        
-      										 /* 使用 switch case 判斷並加入相應的文字描述 */
-        								switch (industry) {
-            								case '1':
-             								  	document.write('工業加工');
-              									break;
-           								 	case '2':
-                								document.write('金屬物件');
-                								break;
-           								 	case '3':
-             									document.write('機械材料');
-             									break;
-           									 case '4':
-             									document.write('電子元件');
-             									break;	
-           									case '5':
-                								document.write('照明配件');
-                								break;
-           									case '6':
-                								document.write('塑膠零件');
-                								break;
-           									case '7':
-                								document.write('螺絲和緊固件');
-                								break;
-       						 					}
-   									 </script>
-									</td>
+								 <td th:text="${userVO.industryVO.industryName}"></td>
 								<td><a th:href="@{/com/com_homepage/{userId}(userId=${userVO.userId})}">詳情</a></td>
 							</tr>
 		  				</th:block>

@@ -1,253 +1,123 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>register2</title>
 
-  <title>register2</title>
-<!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
-  <style>
-    /* Add your custom styles here */
-    /* 仅在包含有.wrapper-container类的元素下生效 */
-    .wrapper-container .container {
-      display: flex;
-      justify-content: space-between;
-    }
-
-
-    .button-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      margin-right: 20px;
-    }
-
-    .button-wrapper {
-      margin-bottom: 10px;
-      text-align: center;
-    }
-
-    .button-wrapper button {
-      margin-bottom: 5px;
-    }
-
-    .clickable-element {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-color: lightblue;
-      cursor: pointer;
-    }
-
-    .info-container {
-      flex: 1;
-    }
-
-    .input-container {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-    }
-
-    .clearBtn {
-      margin-right: 10px;
-      border-radius: 6px;
-    }
-
-    .button-container-inner {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-    }
-
-    .button-wrapper {
-      width: 25%;
-    }
-
-    .info-container {
-      min-height: 450px;
-    }
-
-    .button-wrapper .form-check {
-      width: fit-content;
-      margin: 0 auto;
-      padding: 0;
-    }
-
-    .form-check input.form-check-input {
-      margin: 0 auto;
-    }
-
-    div.wrapper-container {
-      padding-top: 20px;
-      padding-left: 30px;
-    }
-  </style>
-
+<!--     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
 </head>
-
 <body>
-  <!-- <header> -->
-  <head th:insert="~{/front-end/header}"></head>
+	<!-- <header> -->
+<head th:insert="~{/front-end/header}"></head>
+<!-- 註冊區塊 -->
+<main>
+	<input type="text" th:value="${userVO.comMail}" id="emailInput" readonly="readonly" />
+	
+	<button type="button" id="sendVerificationCode">寄送驗證碼</button>
 
-  <div class="wrapper-container">
-    <h1>產業類別選擇</h1>
-    <div class="container mt-5">
-      <form action="">
-        <div class="button-container wrapper1">
-          <div class="button-container-inner">
-            <!-- Group 1 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(1)">
-                類別 1
-              </button>
+	<!-- 驗證碼輸入框 -->
+	<input type="text" id="verificationCodeInput" placeholder="請輸入驗證碼">
 
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_1" name="industry-catrgory" />
-              </div>
-            </div>
+	<!-- 提交驗證碼的按鈕 -->
+	<button type="button" id="submitVerificationCode">提交驗證碼</button>
 
-            <!-- Group 2 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(2)">
-                類別 2
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_2" name="industry-catrgory" />
-              </div>
-            </div>
+	<form th:action="@{insert}" method="post" th:object="${userVO}">
+	
+						
+			<input type="hidden" th:field="*{comName}" id="comName"/>
+					
+			<input type="hidden" th:field="*{comUniNumber}" id="comUniNumber"/>
+					
+			<input type="hidden" th:field="*{comAddress}" id="comAddress"/>
+						
+			<input type="hidden" th:field="*{comMail}" id="comMail"/>
+					
+			<input type="hidden" th:field="*{comPhone}" id="comPhone"/>
+								
+			<input type="hidden" th:field="*{comContactPerson}" id="comContactPerson"/>
+						
+			<input type="hidden" th:field="*{comContactPhone}" id="comContactPhone"/>
+						
+			<input type="hidden" th:field="*{comAccount}" id="comAccount"/>
+							
+			<input type="hidden" th:field="*{comPassword}" id="comPassword"/>
+						
+					<!--               以下是原本隱藏的帶值欄位 -->
 
-            <!-- Group 3 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(3)">
-                類別 3
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_3" name="industry-catrgory" />
-              </div>
-            </div>
+			<input type="hidden" th:field="*{comStat}" id="comStat"/>
 
-            <!-- Group 4 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(4)">
-                類別 4
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_4" name="industry-catrgory" />
-              </div>
-            </div>
+			<input type="hidden" th:field="*{comRatStars}" id="comRatStars"/>
 
-            <!-- Group 5 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(5)">
-                類別 5
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_5" name="industry-catrgory" />
-              </div>
-            </div>
+			<input type="hidden" th:field="*{comRatCount}" id="comRatCount"/>
 
-            <!-- Group 6 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(6)">
-                類別 6
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_6" name="industry-catrgory" />
-              </div>
-            </div>
+			<input type="hidden" th:field="*{comIsValid}" id="comIsValid"/>
 
-            <!-- Group 7 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(7)">
-                類別 7
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_7" name="industry-catrgory" />
-              </div>
-            </div>
+			<input type="hidden" th:field="*{comRegDate}" id="comRegDate"/>
+	
+	
+		<button type="submit" id="nextPageButton" disabled>下一頁</button>
+	</form>
 
-            <!-- Group 8 -->
-            <div class="button-wrapper">
-              <button type="button" class="btn btn-primary" onclick="updateInfo(8)">
-                類別 8
-              </button>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_8" name="industry-catrgory" />
-              </div>
-            </div>
-          </div>
 
-          <!-- 這邊塞button -->
-          <!-- <button style="margin-left: auto">提交</button>  -->
-          <a href="register3.html" class="btn btn-secondary" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</a>
-          
-        </div>
-      </form>
 
-      <!-- 右邊文字顯示區塊 -->
-      <div class="info-container" style="background-color: blanchedalmond">
-        <h3>Information Display</h3>
-        <p id="infoText">Select a button to display information.</p>
-      </div>
-    </div>
-  </div>
+</main>
 
-  <!-- Checkbox selection script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const checkboxes = document.querySelectorAll(
-        '[name="industry-catrgory"]'
-      );
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
-      checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            // 如果目前 checkbox 被勾選，則取消其他 checkbox 的勾選狀態
-            checkboxes.forEach(function (otherCheckbox) {
-              if (otherCheckbox !== checkbox) {
-                otherCheckbox.checked = false;
-              }
-            });
-          }
-        });
-      });
-    });
-  </script>
+<!--     <script src="js/popper.min.js"></script> -->
+<!--     <script src="js/bootstrap.min.js"></script> -->
 
-  <!-- Information update script -->
-  <script>
-    // JavaScript function to update information on the right side
-    function updateInfo(groupNumber) {
-      // Define your eight sets of text content
-      const textContents = [
-        "Information for Group 1",
-        "Information for Group 2",
-        "Information for Group 3",
-        "Information for Group 4",
-        "Information for Group 5",
-        "Information for Group 6",
-        "Information for Group 7",
-        "Information for Group 8",
-      ];
+<script>
+document.getElementById("sendVerificationCode").addEventListener("click", function() {
+    var email = document.getElementById("emailInput").value;
 
-      // Update information based on the selected group
-      console.log(document.getElementById("infoText"));
-      document.getElementById("infoText").innerText =
-        textContents[groupNumber - 1];
+    // 建立包含 email 的資料對象
+    var data = {
+        email: email
+    };
+
+    // 使用 Ajax 發送 POST 請求
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/user/sendVerificationCode", true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // 在這裡處理伺服器的回應，例如顯示成功訊息
+                alert("驗證碼已寄送");
+
+                // 將驗證碼存入 Session
+                var response = JSON.parse(xhr.responseText);
+                sessionStorage.setItem("verificationCode", response.verificationCode);
+            } else {
+                // 在這裡處理錯誤，例如顯示錯誤訊息
+                alert("發送驗證碼失敗");
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(data));
+});
+
+document.getElementById("submitVerificationCode").addEventListener("click", function() {
+    var verificationCode = document.getElementById("verificationCodeInput").value;
+
+    // 取得 Session 中的驗證碼
+    var storedVerificationCode = sessionStorage.getItem("verificationCode");
+
+    // 比對輸入的驗證碼和 Session 中的驗證碼是否一致
+    if (verificationCode === storedVerificationCode) {
+        // 驗證碼正確，啟用下一頁的按鈕
+        document.getElementById("nextPageButton").disabled = false;
+    } else {
+        // 驗證碼錯誤，顯示錯誤訊息
+        alert("驗證碼錯誤，請重新輸入");
     }
-  </script>
-
-  <!-- <footer> -->
-  <head th:insert="~{/front-end/footer}"></head>
-  <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-  
-  <!-- Bootstrap and other scripts -->
-<!--   <script src="js/home.js"></script> -->
-<!--   <script src="js/popper.min.js"></script> -->
-<!--   <script src="js/bootstrap.min.js"></script> -->
+});
+</script>
 </body>
-
 </html>

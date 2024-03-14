@@ -26,6 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	UserDetailsService_impl userDetailsService_impl;
 	
+	@Autowired
+	private AuthenticationSuccessHandler_impl authenticationSuccessHandler_impl;
+	
+	
 //	@Bean
 //	DaoAuthenticationProvider daoAuthenticationProvider() {
 //		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -93,14 +97,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+				
 				// 表單提交
 				http.formLogin()
 					// 自定義登入頁面
-					.loginPage("/loginpage")//頁面檔案位置
+					.loginPage("/loginpage")
 					// loginpage.html 表單 action 內容
 					.loginProcessingUrl("/login")//頁面url
 					// 登入成功之後要造訪的頁面
-					.successForwardUrl("/loginsuccess")  // 就是個人主頁那裡
+					.successHandler(authenticationSuccessHandler_impl)
 					// 登入失敗後要造訪的頁面
 					.failureForwardUrl("/loginfail");
 				
@@ -108,15 +114,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				http.authorizeHttpRequests()
 					// 不需要被認證的頁面：/loginpage
 					.antMatchers("/").permitAll()
-					.antMatchers("/loginpage").permitAll()
+					.antMatchers("/loginpage").hasRole("ANONYMOUS")
 					.antMatchers("/webjars/**").permitAll()
-					.antMatchers("/loginsuccess").permitAll()
+//					.antMatchers("/loginsuccess").permitAll()
 					.antMatchers("/loginfail").permitAll()
 					.antMatchers("/checkAccountExists").permitAll()
 					.antMatchers("/forgetPasswordPage").permitAll()
 					.antMatchers("/ad/**").permitAll()
 					.antMatchers("/images/**").permitAll()
 					
+					//以下是註冊需要的
+					.antMatchers("/userinformation/register1").permitAll()
+					.antMatchers("/userinformation/register2").permitAll()
+					.antMatchers("/userinformation/register3").permitAll()
+					.antMatchers("/user/storeRegister1Data").permitAll()
+					.antMatchers("/user/sendVerificationCode").permitAll()
+					.antMatchers("/user/insert").permitAll()
 //					// 權限判斷
 //					// 必須要有 admin 權限才可以訪問
 //					.antMatchers("/adminpage").hasAuthority("admin")
@@ -132,12 +145,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 登出
 				http.logout()
 					.deleteCookies("JSESSIONID")
-					.logoutSuccessUrl("/login")
+					.logoutSuccessUrl("/loginpage")
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout")); // 可以使用任何的 HTTP 方法登出
 			
-//				// 異常處理
-//				http.exceptionHandling()
-//					//.accessDeniedPage("/異常處理頁面");  // 請自行撰寫
+				// 異常處理
+				http.exceptionHandling()
+					.accessDeniedPage("/userinformation/userpage"); //用來防止登入過的人再到登入頁面
+														//但這應該不是常規作法，因為我的設計目前會accessDeniedPage的情況只有登入的人想造訪登入頁面
+														//這個缺點是如果有其他權限角色設定如果發生accessDeniedPage都會被導到/loginsuccess
 //					.accessDeniedHandler(myAccessDeniedHandler);
 				
 				// 勿忘我（remember-me）

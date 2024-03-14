@@ -1,28 +1,34 @@
 package com.user.controller;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.industry.model.IndustryService;
 import com.quo.model.QuoService;
 import com.reqorder.model.ReqOrderService;
+import com.security.model.MailService;
+import com.security.model.RandomPasswordGenerator;
 //import com.dept.model.DeptVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
@@ -32,18 +38,27 @@ import com.user.model.UserVO;
 @RequestMapping("/user")
 public class UserController {
 
+	private final PasswordEncoder passwordEncoder;
+	
+	@Autowired
+    public UserController(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+	
 	@Autowired
 	UserService userSvc;
-	
+
 	@Autowired
 	IndustryService industrySvc;
-	
+
 	@Autowired
 	ReqOrderService reqOrderSvc;
 
 	@Autowired
 	QuoService quoSvc;
 	
+	
+
 //	@Autowired
 //	DeptService deptSvc;
 
@@ -56,41 +71,79 @@ public class UserController {
 		model.addAttribute("userVO", userVO);
 		return "back-end/user/addUser";
 	}
+	
+	// 先把register1的值保存到model中
+	@PostMapping("storeRegister1Data")
+	public String storeRegister1Data(@ModelAttribute("userVO")@Valid UserVO userVO, ModelMap model, BindingResult result)
+			throws IOException {
 
-	/*
-	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
-	 */
-	@PostMapping("insert")
-	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+		model.addAttribute("userVO", userVO);// 儲存錯誤的值以免使用者還要再輸入一次
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
+		if (userSvc.userIsExist(userVO.getComAccount())) {
 
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				userVO.setComAboutImage(buf);
-			}
+			result.rejectValue("comCccount", "error.userVO", "此帳號已存在");
+
+			return "front-end/userinformation/register1";
 		}
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/user/addUser";
+
+		if (userSvc.userIsExistByUni(userVO.getComUniNumber())) {
+
+			result.rejectValue("comUniNumber", "error.userVO", "此公司已註冊");
+
+			return "front-end/userinformation/register1";
 		}
+
+		if (result.hasErrors()) {
+			return "front-end/userinformation/register1";
+		}
+
+		System.out.println("comStat: " + userVO.getComStat());
+		/**************************** 2.把輸入的資料儲存進model跳轉到register2*******************/
+
+		return "front-end/userinformation/register2"; // 改用forward不然好麻煩
+	}
+
+	@PostMapping("sendVerificationCode")
+	@ResponseBody
+	public ResponseEntity<String> sendVerificationCode(@RequestBody Map<String, String> data) {
+		// 把mail拿出來
+		String verificationCode = RandomPasswordGenerator.generateRandomPassword();
+		
+		String to = data.get("email");
+		String subject = "NoBarrier平台-註冊驗證碼";
+		String messageText = "這是您的驗證碼:" + verificationCode + "\n" + "在註冊頁面輸入驗證碼。";
+		MailService.sendMail(to,subject,messageText);
+
+		// 返回響應给前端
+		return ResponseEntity.ok("{\"verificationCode\": \"" + verificationCode + "\"}");
+	}
+
+	/*
+	 * This method will be called on addEmp.html form submission, handling POST
+	 * request It also validates the user input
+	 */
+	@PostMapping("insert")
+	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
+
+		String password = userVO.getComPassword();
+		String encodeNewPassword = passwordEncoder.encode(password);
+		
+		userVO.setComPassword(encodeNewPassword);
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		userSvc.addUser(userVO);
+		
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 		List<UserVO> list = userSvc.getAll();
 		model.addAttribute("userListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/user/listAllUser"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-	}
+		return "redirect:/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+	}	//我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
 
 	/*
-	 * This method will be called on listAllEmp.html form submission, handling POST request
+	 * This method will be called on listAllEmp.html form submission, handling POST
+	 * request
 	 */
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
@@ -105,7 +158,8 @@ public class UserController {
 	}
 
 	/*
-	 * This method will be called on update_user_input.html form submission, handling POST request It also validates the user input
+	 * This method will be called on update_user_input.html form submission,
+	 * handling POST request It also validates the user input
 	 */
 	@PostMapping("update")
 	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
@@ -119,7 +173,7 @@ public class UserController {
 			// EmpService empSvc = new EmpService();
 			byte[] comAboutImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
 			userVO.setComAboutImage(comAboutImage);
-	
+
 		} else {
 			for (MultipartFile multipartFile : parts) {
 				byte[] comAboutImage = multipartFile.getBytes();
@@ -141,7 +195,8 @@ public class UserController {
 	}
 
 	/*
-	 * This method will be called on listAllUser.html form submission, handling POST request
+	 * This method will be called on listAllUser.html form submission, handling POST
+	 * request
 	 */
 //	@PostMapping("delete")
 //	public String delete(@RequestParam("userId") String userId, ModelMap model) {
@@ -157,8 +212,9 @@ public class UserController {
 //	}
 
 	/*
-	 * 第一種作法 Method used to populate the List Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${deptListData}" itemValue="deptno" itemLabel="dname" />
+	 * 第一種作法 Method used to populate the List Data in view. 如 : <form:select
+	 * path="deptno" id="deptno" items="${deptListData}" itemValue="deptno"
+	 * itemLabel="dname" />
 	 */
 //	@ModelAttribute("deptListData")
 //	protected List<DeptVO> referenceListData() {
@@ -168,8 +224,8 @@ public class UserController {
 //	}
 
 	/*
-	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${depMapData}" />
+	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : <form:select
+	 * path="deptno" id="deptno" items="${depMapData}" />
 	 */
 //	@ModelAttribute("deptMapData") //
 //	protected Map<Integer, String> referenceMapData() {
@@ -184,8 +240,7 @@ public class UserController {
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(UserVO userVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
-				.collect(Collectors.toList());
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
 		result = new BeanPropertyBindingResult(userVO, "userVO");
 		for (FieldError fieldError : errorsListToKeep) {
 			result.addError(fieldError);

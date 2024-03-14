@@ -51,6 +51,14 @@ public class UserService {
 			}
 		}
 		
+		public boolean userIsExistByUni(String comUniNumber) {
+			if (repository.findByComUniNumber(comUniNumber)!=null) {
+				return true;
+			}else {
+				return false;
+			}
+		}
+		
 		public String getUserEmail(String comAccount) {
 			UserVO userVO = repository.findByComAccount(comAccount);
 			String email = userVO.getComMail();

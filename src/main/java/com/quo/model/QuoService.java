@@ -1,10 +1,16 @@
 package com.quo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.reqorder.model.ReqOrderRepository;
+import com.reqorder.model.ReqOrderVO;
+import com.user.model.UserRepository;
+import com.user.model.UserVO;
 
 @Service("quoService")
 public class QuoService {
@@ -12,7 +18,20 @@ public class QuoService {
 	@Autowired
 	QuoRepository repository;
 	
-	public void addQuo(QuoVO quoVO) {
+	@Autowired
+	UserRepository userrepository;
+	
+	@Autowired
+	ReqOrderRepository reqrepository;
+	
+	public void addQuo(QuoVO quoVO, UserVO loggingInUser) {
+		quoVO.setUserVO(loggingInUser);
+		
+		Integer reqNum = 2;
+		
+		ReqOrderVO reqOrderVO = reqrepository.findById(reqNum).orElse(null);
+		quoVO.setReqOrderVO(reqOrderVO);
+				
 		repository.save(quoVO);
 	}
 	
@@ -42,4 +61,16 @@ public class QuoService {
 	public List<QuoVO> getAll(){
 		return repository.findAll();
 	}
+	
+	public List<QuoVO> getOneStatQuotation(UserVO userVO) {
+        List<QuoVO> allQuotation = repository.findAll();
+        List<QuoVO> validQuotation = new ArrayList<>();
+
+        for (QuoVO quotation : allQuotation) {
+            if (quotation.getUserVO().getUserId() == userVO.getUserId() && quotation.getQuoIsValid() == 1) {
+                validQuotation.add(quotation);
+            }
+        }
+        return validQuotation;
+    }
 }
