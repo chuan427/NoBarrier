@@ -1,0 +1,67 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>限時特賣資料 - listOneLimitSale.html</title>
+
+<head th:insert="~{/back-end/limitSale/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>會員資料 - listOneLimitSale.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/limitSale/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneLimitSale-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		<span>限時特賣編號:</span><span th:text="${limitSaleVO.limNum}"></span><br/>
+		<span>廣告訂單編號:</span><span th:text="${limitSaleVO.limOrdernum}"></span><br/>
+		<span>會員編號:</span><span th:text="${limitSaleVO.limSellerid}"></span><br/>
+		<span>特賣商品名稱:</span><span th:text="${limitSaleVO.limProdname}"></span><br/>
+		<span>特賣商品數量:</span><span th:text="${limitSaleVO.limQty}"></span><br/>
+		<span>特賣商品價格:</span><span th:text="${limitSaleVO.limPrice}"></span><br/>
+		<span>特賣商品圖片:</span><span><img th:src="@{/limitSale/DBGifReader} + '?limNum=' + ${limitSaleVO.limNum}" width="100px"></span><br/>
+		<span>特賣商品詳情:</span><span th:text="${limitSaleVO.limDes}"></span><br/>
+		<span>特賣商品單位:</span><span th:text="${limitSaleVO.limUnitname}"></span><br/>
+		
+<!-- 		<span>公司註冊日期:</span><span th:text="${limitSaleVO.comRegDate}"></span><br/> -->
+<!-- 		<span>公司聯絡人姓名:</span><span th:text="${limitSaleVO.comContactPerson}"></span><br/> -->
+<!-- 		<span>公司聯絡人電話:</span><span th:text="${limitSaleVO.comContactPhone}"></span><br/> -->
+<!-- 		<span>會員狀態:</span><span th:text="${limitSaleVO.comStat}"></span><br/> -->
+<!-- 		<span>評價總星數:</span><span th:text="${limitSaleVO.comRatStars}"></span><br/> -->
+<!-- 		<span>評價總筆數:</span><span th:text="${limitSaleVO.comRatCount}"></span><br/> -->
+<!-- 		<span>產業類別1:</span><span th:text="${limitSaleVO.comIndustry1}"></span><br/> -->
+<!-- 		<span>產業類別2:</span><span th:text="${limitSaleVO.comIndustry2}"></span><br/> -->
+<!-- 		<span>產業類別3:</span><span th:text="${limitSaleVO.comIndustry3}"></span><br/> -->
+<!-- 		<span>部門:</span><span th:text="${empVO.deptVO.deptno} + '-[' + ${empVO.deptVO.dname} + ']'"></span><br/> -->
+<!-- 		<span>關於我們圖片:</span><span><img th:src="@{/user/DBGifReader} + '?userId=' + ${limitSaleVO.userId}" width="100px"></span><br/> -->
+<!-- 		<span>特賣圖片1:</span><span><img th:src="@{/user/DBGifReader1} + '?userId=' + ${limitSaleVO.userId}" width="100px"></span><br/> -->
+<!-- 		<span>特賣圖片2:</span><span><img th:src="@{/user/DBGifReader2} + '?userId=' + ${limitSaleVO.userId}" width="100px"></span><br/> -->
+<!-- 		<span>特賣圖片3:</span><span><img th:src="@{/user/DBGifReader3} + '?userId=' + ${limitSaleVO.userId}" width="100px"></span><br/> -->
+<!-- 		<span>特賣圖片4:</span><span><img th:src="@{/user/DBGifReader4} + '?userId=' + ${limitSaleVO.userId}" width="100px"></span><br/> -->
+<!-- 		<span>關於我們文字敘述:</span><span th:text="${limitSaleVO.comAboutContent}"></span><br/> -->
+	</div>
+
+
+</body>
+</html>
