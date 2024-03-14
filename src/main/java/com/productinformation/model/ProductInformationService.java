@@ -28,12 +28,31 @@ public class ProductInformationService {
         }
     }
 
-    public ProductInformationVO getOneProductInformation(Integer pinfoUserid) {
-        Optional<ProductInformationVO> optional = repository.findById(pinfoUserid);
-        return optional.orElse(null);
-    }
+//    public ProductInformationVO getOneProductInformation(Integer pinfoUserid) {
+//        Optional<ProductInformationVO> optional = repository.findById(pinfoUserid);
+//        return optional.orElse(null);
+//    }
 
     public List<ProductInformationVO> getAll() {
         return repository.findAll();
     }
+    
+    public List<ProductInformationVO> getProductInformationByUserId(Integer userId) {
+        return repository.findByUserVOUserId(userId);
+    }
+    
+    public ProductInformationVO getOneProductInformation(Integer pinfoUserid) {
+        Optional<ProductInformationVO> optional = repository.findById(pinfoUserid);
+        ProductInformationVO productInformation = optional.orElse(null);
+        if (productInformation != null) {
+            // 如果您的ProductInformationVO包含getUserVO()方法，则可以通过getUserVO()方法获取UserVO对象
+            // 从UserVO对象中获取userid
+        	Integer userId = productInformation.getUserVO().getUserId();
+            // 通过userid查询相关的ProductInformationVO对象列表
+//            List<ProductInformationVO> relatedProductInformationList = repository.findByUserVOUserId(userId);
+            // 这里您可以根据需要处理相关的ProductInformationVO对象列表
+        }
+        return productInformation;
+    }
+    
 }

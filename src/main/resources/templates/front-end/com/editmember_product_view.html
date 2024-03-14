@@ -76,7 +76,7 @@
 </head>
 
 <body>
-    <head th:insert="~{/front-end/header_login}"></head>
+    <head th:insert="@{/front-end/header_login}"></head>
     
 
     <!-- siderbar -->
@@ -87,7 +87,7 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                        <span class="fs-2" style="color: black;" th:text=${session.loggingInUser.comName}></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -120,6 +120,10 @@
                 </div>
             </div>
 
+
+<div th:each="productInfo : ${productInformationVO}">
+    <div class="product">
+
             <div class="col-md-6">
                 <h3>產品資訊</h3>
                 <div style="margin-top: 50px;"></div>
@@ -132,45 +136,17 @@
                     <div class="col-7">
                         <div class="input-group">
                             <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">**產品名稱：**工業機械零件 **產品特色：**高強度、耐用、精密加工 產品規格： 材質：優質鋼材 尺寸：依客戶要求定制 **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業 產品優勢： 耐用性高，使用壽命長 精密加工，尺寸精準 能夠定制，滿足客戶特殊需求</textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 30px;"></div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="col-md-7">
-                            <img src="image/200x200.png" class="img-fluid" alt="圖片1">
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">**產品名稱：**工業機械零件 **產品特色：**高強度、耐用、精密加工 產品規格： 材質：優質鋼材 尺寸：依客戶要求定制 **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業 產品優勢： 耐用性高，使用壽命長 精密加工，尺寸精準 能夠定制，滿足客戶特殊需求</textarea>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 30px;"></div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="col-md-7">
-                            <img src="image/200x200.png" class="img-fluid" alt="圖片1">
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">**產品名稱：**工業機械零件 **產品特色：**高強度、耐用、精密加工 產品規格： 材質：優質鋼材 尺寸：依客戶要求定制 **產品應用：**廣泛應用於機械製造、汽車製造、航空航天等行業 產品優勢： 耐用性高，使用壽命長 精密加工，尺寸精準 能夠定制，滿足客戶特殊需求</textarea>
+                            <textarea class="form-control" aria-label="With textarea"  th:text=${productInfo.pinfoDes}></textarea>
                         </div>
                     </div>
                 </div>
                 
             </div>
         </div>    
+       </div>
 
-		<head th:insert="~{/front-end/footer}"></head>
+
+		<head th:insert="@{/front-end/footer}"></head>
 		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 <!-- 		<script th:src="@{/js/notification.js}"></script> -->
 <!--             <script src="js/notification.js"></script> -->

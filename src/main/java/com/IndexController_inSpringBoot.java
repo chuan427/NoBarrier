@@ -226,8 +226,11 @@ public class IndexController_inSpringBoot {
 
 	// 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_product_view")
-	public String editmember_product_view() {
-		return "front-end/com/editmember_product_view"; // view
+	public String editmember_product_view(Model model) {
+	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+	        // 添加到模型中
+	        model.addAttribute("productInformationList", productInformationList);
+	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
 	}
 	
 	// 廠商產品預覽頁面 完成
@@ -290,6 +293,7 @@ public class IndexController_inSpringBoot {
 	    model.addAttribute("productInformationVO", productInformationVO);
 	    return "front-end/com/member_Prod"; // view
 	}
+	
 ////	 廠商產品資訊編輯頁面 完成
 //		@GetMapping("/com/member_Prod")
 //		public String member_Prod () {
