@@ -12,8 +12,8 @@
 <head th:insert="~{/front-end/header}"></head>
 <!-- 註冊區塊 -->
 <main>
-	<input type="text" th:field="*{comMail}" id="emailInput"
-		readonly="readonly" />
+	<input type="text" th:value="${userVO.comMail}" id="emailInput" readonly="readonly" />
+	
 	<button type="button" id="sendVerificationCode">寄送驗證碼</button>
 
 	<!-- 驗證碼輸入框 -->
@@ -22,7 +22,40 @@
 	<!-- 提交驗證碼的按鈕 -->
 	<button type="button" id="submitVerificationCode">提交驗證碼</button>
 
-	<form th:action="@{insert}" method="post">
+	<form th:action="@{insert}" method="post" th:object="${userVO}">
+	
+						
+			<input type="hidden" th:field="*{comName}" id="comName"/>
+					
+			<input type="hidden" th:field="*{comUniNumber}" id="comUniNumber"/>
+					
+			<input type="hidden" th:field="*{comAddress}" id="comAddress"/>
+						
+			<input type="hidden" th:field="*{comMail}" id="comMail"/>
+					
+			<input type="hidden" th:field="*{comPhone}" id="comPhone"/>
+								
+			<input type="hidden" th:field="*{comContactPerson}" id="comContactPerson"/>
+						
+			<input type="hidden" th:field="*{comContactPhone}" id="comContactPhone"/>
+						
+			<input type="hidden" th:field="*{comAccount}" id="comAccount"/>
+							
+			<input type="hidden" th:field="*{comPassword}" id="comPassword"/>
+						
+					<!--               以下是原本隱藏的帶值欄位 -->
+
+			<input type="hidden" th:field="*{comStat}" id="comStat"/>
+
+			<input type="hidden" th:field="*{comRatStars}" id="comRatStars"/>
+
+			<input type="hidden" th:field="*{comRatCount}" id="comRatCount"/>
+
+			<input type="hidden" th:field="*{comIsValid}" id="comIsValid"/>
+
+			<input type="hidden" th:field="*{comRegDate}" id="comRegDate"/>
+	
+	
 		<button type="submit" id="nextPageButton" disabled>下一頁</button>
 	</form>
 

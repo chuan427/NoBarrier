@@ -131,10 +131,10 @@ public class IndexController_inSpringBoot {
 		return "Login Failed!"; // view
 	}
 	
-	@RequestMapping("/loginsuccess")
-	public String toSuccessLogin() {
-		return "front-end/successLogin"; // view
-	}
+//	@RequestMapping("/loginsuccess")
+//	public String toSuccessLogin() {
+//		return "front-end/successLogin"; // view
+//	}
 	
 	@RequestMapping("/forgetPasswordPage")
 	public String toForgetPasswordPage() {
@@ -348,18 +348,6 @@ public class IndexController_inSpringBoot {
 	public String register3() {
 		return "front-end/userinformation/register3"; // view
 	}
-	
-	// 登入畫面 成功
-	@GetMapping("/userinformation/sign_in")
-	public String sign_in() {
-		return "front-end/userinformation/sign_in"; // view
-	}
-	
-	// 登入畫面 成功
-	@GetMapping("/sign_in")
-	public String sign_in1() {
-		return "back-end/sign_in"; // view
-	}
 
 	// 聯絡我們
 //	@GetMapping("/")      			
@@ -390,15 +378,15 @@ public class IndexController_inSpringBoot {
 	}
 
 	// -------------------需求單-----------------------
-	@GetMapping("/userinformation/req_userpage")
-	public String req_userpage(Model model) {
-		return "front-end/userinformation/req_userpage";
+	@GetMapping("/userinformation/userpage")
+	public String userpage(Model model) {
+		return "front-end/userinformation/userpage";
 	}
 	
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
 
-		List<ReqOrderVO> list = reqOrderSvc.getAll();
+		List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
 		return list;
 	}
 
