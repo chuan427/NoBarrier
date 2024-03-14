@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', function() {
+  
+
 const itemsPerPage = 7; // 每頁顯示的數量
 let currentPage = 1; // 當前頁數
 const data = [
@@ -151,4 +154,5 @@ function filterTable() {
         }
     }
 }
-
+  // 在這裡執行程式碼
+});

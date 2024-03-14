@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', function() {
+  
  // 設定目標日期和時間（假設是未來的某個時間）
  const targetDate = new Date('2024-02-20T23:59:59').getTime();
 
@@ -63,4 +65,6 @@ function openChatBox() {
 function closeChatBox() {
     document.getElementById("chat-box").style.display = "none";
 }
+  // 在這裡執行程式碼
+});
   

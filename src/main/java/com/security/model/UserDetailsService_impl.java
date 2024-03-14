@@ -26,14 +26,24 @@ public class UserDetailsService_impl implements UserDetailsService {
         if (userVO == null) {
             throw new UsernameNotFoundException("不存在此公司帳號!");
         }
-        
+        else {
 //        System.out.println(userVO.getComName());
         
         
         String authority = "ROLE_USER";
         String realPassword = userVO.getComPassword();
+        Boolean accountIsDisable =userVO.getComStat() == 0 ? true :false;
         
-        return new User(comAccount, realPassword, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+        return User.builder()
+        	    .username(comAccount)
+        	    .password(realPassword)
+        	    .authorities(AuthorityUtils.commaSeparatedStringToAuthorityList(authority))
+        	    .disabled(accountIsDisable)
+        	    .build();
+        
+        }
+        
+     
         
     }
 	
