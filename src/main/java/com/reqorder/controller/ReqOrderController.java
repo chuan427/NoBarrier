@@ -1,5 +1,7 @@
 package com.reqorder.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
@@ -39,20 +42,38 @@ public class ReqOrderController {
 
     @Autowired
     IndustryService industrySvc;
-
+    
+    
     @GetMapping("/addReqOrder")
-    public String addReqOrder(ModelMap model) {
+    public String addReqOrder(ModelMap model, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
+
+	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+	    
         ReqOrderVO reqOrderVO = new ReqOrderVO();
         model.addAttribute("reqOrderVO", reqOrderVO);
+        model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
         return "front-end/userinformation/addReqOrder";
+    }
+    
+    @GetMapping("/userpage/{userId}")
+    public List<ReqOrderVO> getOrdersByUserId(@PathVariable Integer userId) {
+        return reqOrderSvc.getReqOrderByUserId(userId);
     }
 
 
     @PostMapping("insertreq")
-    public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
+    public String insert(HttpServletRequest request,@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
             @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
 
         result = removeFieldError(reqOrderVO, result, "reqProdimage");
+        
+        UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
         
         if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
@@ -67,11 +88,15 @@ public class ReqOrderController {
             return "front-end/userinformation/addReqOrder";
         }
 
-        reqOrderSvc.addReqOrder(reqOrderVO);
-        List<ReqOrderVO> list = reqOrderSvc.getAll();
+        reqOrderSvc.addReqOrder(reqOrderVO, userVO);
+        
+//        List<ReqOrderVO> list = reqOrderSvc.getAll();
+//        model.addAttribute("reqOrderListData", list);
+        
+        List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "front-end/userinformation/req_userpage";
+        return "redirect:/userinformation/userpage";
     }
 
 //    @PostMapping("getOne_For_Update")
@@ -108,22 +133,27 @@ public class ReqOrderController {
 //        return "front-end/userinformation/req_userpage";
 //    }
 
-    @PostMapping("complete")
-    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
+    @PostMapping("/userpage/complete")
+    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
         if (reqNum == null) {
-            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
-            return "errorPage"; // 返回一個錯誤頁面
+            return "errorPage"; // 如果 reqNum 為空，返回一個錯誤頁面
         }
 
+        // 根據 reqNum 從數據庫中獲取相應的 ReqOrderVO 對象
         ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-        int valid = 1;
+
+        // 將 reqIsValid 設置為 1，表示已完成需求
+        int valid = 0;
         reqOrderVO.setReqIsValid(valid);
+
+        // 更新數據庫中的 ReqOrderVO 對象
         reqOrderSvc.updateReqOrder(reqOrderVO);
 
+        // 添加成功消息到模型中
         model.addAttribute("success", "- (完成需求)");
-        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-        model.addAttribute("reqOrderVO", reqOrderVO);
-        return "front-end/userinformation/req_userpage";
+
+        // 返回到 userpage 頁面
+        return "redirect:/userinformation/userpage";
     }
 
 

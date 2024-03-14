@@ -78,7 +78,8 @@
 			<div
 				class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
 				<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-					二哥公司!</span>
+					<span th:text="${comName}">User</span>!
+				</span>
 			</div>
 			<div class="user-profile">
 				<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170"
@@ -111,7 +112,7 @@
 	<div class="col-md-9">
 		<div class="d-flex justify-content-center">
 			<div class="col-7"
-				style="background-color: rgb(211, 206, 206); height: 800px; width: 1000px;">
+				style="background-color: rgb(211, 206, 206); height: 650px; width: 1000px;">
 				<h2>報價單</h2>
 				<div style="margin-top: 30px;"></div>
 
@@ -119,7 +120,7 @@
 					enctype="multipart/form-data">
 
 					<div class="row">
-						<div class="col-md-4">
+						 <div class="col-md-1">
 							<!-- <div class="d-flex align-items-center" style="font-size: 25px;">
 								<label class="me-3" th:text="'需求品項: ' + ${quoVO.quoProdname}"></label>
 							</div>
@@ -142,77 +143,53 @@
 							</div> -->
 						</div>
 
-						<div class="col-md-7">
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+						<div class="col-md-8">
+							<div class="d-flex align-items-center">
 								<label for="quoProdname" class="me-3">商品名稱:</label> <input
 									type="text" name="quoProdname" id="quoProdname"
 									th:field="*{quoProdname}"><br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+							<div class="d-flex align-items-center">
 								<label for="quoUnitname" class="me-3">單位:</label> <input
 									type="text" name="quoUnitname" id="quoUnitname"
 									th:field="*{quoUnitname}"><br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+							<div class="d-flex align-items-center">
 								<label for="quoProdqty" class="me-3">數量:</label> <input
 									type="text" name="quoProdqty" id="quoProdqty"
 									th:field="*{quoProdqty}"><br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+							<div class="d-flex align-items-center">
 								<label for="quoUnitprice" class="me-3">每單位價格:</label> <input
 									type="text" name="quoUnitprice" id="quoUnitprice"
 									th:field="*{quoUnitprice}">新台幣TWD<br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+							<div class="d-flex align-items-center">
 								<label for="quoTotalprice" class="me-3">總價格:</label><input
 									type="text" name="quoTotalprice" id="quoTotalprice"
 									th:field="*{quoTotalprice}">新台幣TWD<br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
+							<div class="d-flex align-items-center">
 								<label for="quoInfo" class="me-3">方案詳情:</label>
 								<textarea class="form-control" name="quoInfo" id="quoInfo"
 									th:field="*{quoInfo}" style="resize: vertical; height: 100px;"></textarea>
 								<br>
 							</div>
 							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center" style="font-size: 25px;">
-								<label for="quoIsValid" class="me-3">狀態:</label><input
-									type="text" name="quoIsValid" id="quoIsValid"
-									th:field="*{quoIsValid}"><br>
+							<div class="d-flex align-items-center">
+								<label for="quoIsValid" class="me-3"></label> <input
+									type="hidden" name="quoIsValid" id="quoIsValid" th:value="1">
+								<span></span>
 							</div>
-							<div style="margin-top: 100px;"></div>
+							<div style="margin-top: 30px;"></div>
 
 							<div class="d-flex justify-content-center">
-								<button type="submit" id="submitBtn" class="btn btn-primary"
-									onclick="showModal()">報價</button>
-
-								<div class="modal fade" id="myModal" tabindex="-1"
-									aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLabel">報價結果通知</h5>
-												<button type="button" class="btn-close"
-													data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-
-												<form>已報價成功</form>
-											</div>
-											<div class="modal-footer">
-												<a th:href="@{/userinformation/req_userpage}">
-													<button type="button" class="btn btn-secondary"
-														data-bs-dismiss="modal">了解</button>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
+								<button type="submit" id="submitBtn" class="btn btn-primary">報價</button>
 							</div>
 						</div>
 				</form>
@@ -221,12 +198,6 @@
 	</div>
 </div>
 
-<script>
-	function showModal() {
-		var myModal = new bootstrap.Modal(document.getElementById('myModal'));
-		myModal.show();
-	}
-</script>
 
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>

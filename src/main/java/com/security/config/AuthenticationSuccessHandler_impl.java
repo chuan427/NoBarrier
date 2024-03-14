@@ -36,9 +36,9 @@ public class AuthenticationSuccessHandler_impl implements AuthenticationSuccessH
 		
 		session.setAttribute("loggingInUser", userVO);
 		
-		System.out.println(userVO.getComMail());//測試是否有成功取得VO
+		System.out.println(userVO.getComMail());//測試是否有成功取得VO"/userinformation/userpage"
 		
-		response.sendRedirect(request.getContextPath() + "/loginsuccess");
+		response.sendRedirect(request.getContextPath() + "/userinformation/userpage");
 
 		
 	}
