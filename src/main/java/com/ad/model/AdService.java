@@ -60,19 +60,19 @@ public class AdService {
 	}
 	
 
-	public void addAdAndAdvertisements(AdDate addate) {
+	public void addAdAndAdvertisements(AdDate addate,UserVO userVO) {
         AdVO advo;
         advo = new AdVO();
         advo.setAdPrice(addate.getAdPriceadd());
         advo.setAdImage(addate.getAdImageadd());
         advo.setAdDuration(addate.getAdvertisements().size());
         
-        Integer userId = 2;
+//        Integer userId = 2;
 
         
 //        Integer userId = (Integer) request.getSession().getAttribute("userId");
 
-            UserVO userVO = userrepository.findById(userId).orElse(null);
+//            UserVO userVO = userrepository.findById(userId).orElse(null);
             advo.setUserVO(userVO); // 设置用户信息到广告对象中
 
         
