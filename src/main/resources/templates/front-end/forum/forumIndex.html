@@ -19,14 +19,14 @@
 
 <body>
 	<!-- header -->
-<head th:insert="~{/front-end/header}"></head>
+<head th:insert="~{/front-end/header_Dora}"></head>
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
         <form action="/search" method="GET" class="search-form">
           <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
           <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
           
-          <a href="#" th:href="@{/forum/addForumPost}" class="new-article-button">新增文章</a>
+          <a href="#" th:href="@{/forum/forum/addForumPost}" class="new-article-button">新增文章</a>
         </form>
     </div>
     
@@ -61,21 +61,43 @@
     			<span th:text="${forumPostVO.userVO.comName}" class="user-name"></span>
 				</i>
                 <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
-                <div id="menu" class="menu" style="display: none;">
-                    <a href="#edit"><i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i> 編輯文章</a>
-                    <a href="#delete"><i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章</a>
-                </div>
+                
+            <div id="menu" class="menu" style="display: none;">
+   			 <a th:href="@{/forum/forum/getOne_For_Update}">
+        	<i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i>編輯文章</a>
+    		<a href="javascript:void(0);" th:onclick="'deletePostAndRedirect(' + ${forumPostVO.fpNum} + ');'">
+    		<i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章
+			</a>
+   			</div>
               </div>
+              
               <br>
+              
               <div class="title-time-container">
                 <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
                 <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd')}">發布時間</span></span>
               </div>
+              
               <br>
-              <p th:text="${forumPostVO.fpContent}">文章內容</p>
-              <br>  
+         
+             <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 35)}">
+    		<span th:text="${shortContent}">文章開頭內容</span><a>...</a>
+    		 <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${forumPostVO.fpNum})}" >閱讀全文</a>
+			</p>	
+			
+			<p>
+   			 #<span th:text="${forumPostVO.fpCategory == 1 ? '工業加工' : 
+                      forumPostVO.fpCategory == 2 ? '照明配件' : 
+                      forumPostVO.fpCategory == 3 ? '金屬物件' : 
+                      forumPostVO.fpCategory == 4 ? '機械材料' : 
+                      forumPostVO.fpCategory == 5 ? '電子元件' : 
+                      forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
+                      '其他'}"></span>
+			</p>
+			
+		      <br>
+		        
               <div class="fabotton">
-                  <i class="fa-solid fa-comment fa-xl"></i>
                   <i class="fa-regular fa-heart fa-xl"></i>
                   <i class="fa-regular fa-bookmark fa-xl"></i>
               </div>
@@ -92,6 +114,7 @@
 <script th:src="@{/js/home.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/forum.js}"></script>
+
 
 </body>
 </html>
