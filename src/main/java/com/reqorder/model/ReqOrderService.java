@@ -61,14 +61,12 @@ public class ReqOrderService {
 //		return optional.get();
 		return optional.orElse(null); // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 	}
+	
+	public List<ReqOrderVO> findByReqIsValid() {
+		return repository.findByReqIsValid();
+	}
 
 	public List<ReqOrderVO> getAll() {
 		return repository.findAll();
 	}
-
-	// 改變需求單狀態
-	public void changeStatByReqNum(ReqOrderVO ReqOrderVO) {
-		repository.save(ReqOrderVO);
-	}
-
 }
