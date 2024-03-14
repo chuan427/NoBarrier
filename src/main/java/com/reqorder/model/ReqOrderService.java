@@ -2,6 +2,7 @@ package com.reqorder.model;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,13 +29,11 @@ public class ReqOrderService {
 	@Autowired
 	HttpServletRequest request;
 
-	public void addReqOrder(ReqOrderVO reqOrderVO) {
-		Integer userId = 2;
+	public void addReqOrder(ReqOrderVO reqOrderVO, UserVO loggingInUser) {
 
 		// Integer userId = (Integer) request.getSession().getAttribute("userId");
-
-		UserVO userVO = userrepository.findById(userId).orElse(null);
-		reqOrderVO.setUserVO(userVO);
+		//UserVO userVO = userrepository.findById(userId).orElse(null);
+		reqOrderVO.setUserVO(loggingInUser);
 
 		Integer industryNum = 1;
 
@@ -65,8 +64,25 @@ public class ReqOrderService {
 	public List<ReqOrderVO> findByReqIsValid() {
 		return repository.findByReqIsValid();
 	}
+	
+	public List<ReqOrderVO> getReqOrderByUserId(Integer userId) {
+	    return repository.findByUserId(userId);
+	}
 
 	public List<ReqOrderVO> getAll() {
 		return repository.findAll();
 	}
+
+	public List<ReqOrderVO> getOneStatQuestions(UserVO userVO) {
+	    List<ReqOrderVO> allReqOrder = repository.findAll();
+	    List<ReqOrderVO> validReqOrder = new ArrayList<>();
+
+	    for (ReqOrderVO reqorder : allReqOrder) {
+	        if (reqorder.getUserVO().getUserId() == userVO.getUserId() && reqorder.getReqIsValid() == 1) {
+	            validReqOrder.add(reqorder);
+	        }
+	    }
+	    return validReqOrder;
+	}
+
 }

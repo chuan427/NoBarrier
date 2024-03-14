@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -384,10 +388,18 @@ public class IndexController_inSpringBoot {
 	}
 	
 	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
-
-		List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-		return list;
+	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		
+		if (userVO == null) {
+			return null;
+		} else {
+			List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+			List<ReqOrderVO> list2 = reqOrderSvc.getOneStatQuestions(userVO);
+			return list;
+		}
+		
 	}
 
 	// ----------------報價單--------------------

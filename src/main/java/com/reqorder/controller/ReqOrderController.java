@@ -1,5 +1,6 @@
 package com.reqorder.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.io.IOException;
@@ -46,13 +48,20 @@ public class ReqOrderController {
         model.addAttribute("reqOrderVO", reqOrderVO);
         return "front-end/userinformation/addReqOrder";
     }
+    
+    @GetMapping("/userpage/{userId}")
+    public List<ReqOrderVO> getOrdersByUserId(@PathVariable Integer userId) {
+        return reqOrderSvc.getReqOrderByUserId(userId);
+    }
 
 
     @PostMapping("insertreq")
-    public String insert(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
+    public String insert(HttpServletRequest request,@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
             @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
 
         result = removeFieldError(reqOrderVO, result, "reqProdimage");
+        
+        UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
         
         if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
@@ -67,9 +76,14 @@ public class ReqOrderController {
             return "front-end/userinformation/addReqOrder";
         }
 
-        reqOrderSvc.addReqOrder(reqOrderVO);
-        List<ReqOrderVO> list = reqOrderSvc.getAll();
+        reqOrderSvc.addReqOrder(reqOrderVO, userVO);
+        
+//        List<ReqOrderVO> list = reqOrderSvc.getAll();
+//        model.addAttribute("reqOrderListData", list);
+        
+        List<ReqOrderVO> list = reqOrderSvc.getOneStatQuestions(userVO);
         model.addAttribute("reqOrderListData", list);
+        
         model.addAttribute("success", "- (新增成功)");
         return "redirect:/userinformation/userpage";
     }
