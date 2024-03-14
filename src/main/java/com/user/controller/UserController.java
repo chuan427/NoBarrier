@@ -34,7 +34,7 @@ import com.user.model.UserVO;
 //import com.dept.model.DeptService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/userinformation")
 public class UserController {
 
 	@Autowired
@@ -49,18 +49,23 @@ public class UserController {
 	@Autowired
 	QuoService quoSvc;
 
-//	@Autowired
-//	DeptService deptSvc;
-
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	@GetMapping("addUser")
-	public String addUser(ModelMap model) {
-		UserVO userVO = new UserVO();
-		model.addAttribute("userVO", userVO);
-		return "back-end/user/addUser";
-	}
+//	@GetMapping("/memberCen")
+//	public String addUser(ModelMap model) {
+//		UserVO userVO = new UserVO();
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/userinformation/memberCen";
+//	}
+	
+//	@GetMapping("/memberCen")
+//	public String yourHandler(ModelMap model) {
+//	    List<UserVO> userListData = userSvc.getAll(); // 假设这是您获取用户数据的方法
+//	    model.addAttribute("userListData", userListData);
+//	    return "front-end/userinformation/memberCen"; // 返回到您的模板页面
+//	}
+
 	
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
@@ -112,7 +117,7 @@ public class UserController {
 	 * This method will be called on addEmp.html form submission, handling POST
 	 * request It also validates the user input
 	 */
-	@PostMapping("insert")
+	@PostMapping("insertUser")
 	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
 			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
 
@@ -129,7 +134,7 @@ public class UserController {
 			}
 		}
 		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/user/addUser";
+			return "front-end/userinformation/memberCen";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -138,14 +143,14 @@ public class UserController {
 		List<UserVO> list = userSvc.getAll();
 		model.addAttribute("userListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/user/listAllUser"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+		return "redirect:/userinformation/memberCen"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
 	 */
-	@PostMapping("getOne_For_Update")
+	@PostMapping("getOne_For_Update_user")
 	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		/*************************** 2.開始查詢資料 *****************************************/
@@ -154,14 +159,14 @@ public class UserController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("userVO", userVO);
-		return "back-end/user/update_user_input"; // 查詢完成後轉交update_user_input.html
+		return "front-end/userinformation/memberCen"; // 查詢完成後轉交update_user_input.html
 	}
 
 	/*
 	 * This method will be called on update_user_input.html form submission,
 	 * handling POST request It also validates the user input
 	 */
-	@PostMapping("update")
+	@PostMapping("updateUser")
 	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
 			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
 
@@ -181,7 +186,7 @@ public class UserController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "back-end/user/update_user_input";
+			return "front-end/userinformation/memberCen";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -191,7 +196,7 @@ public class UserController {
 		model.addAttribute("success", "- (修改成功)");
 		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
 		model.addAttribute("userVO", userVO);
-		return "back-end/user/listOneUser"; // 修改成功後轉交listOneUser.html
+		return "front-end/userinformation/memberCen"; // 修改成功後轉交listOneUser.html
 	}
 
 	/*
