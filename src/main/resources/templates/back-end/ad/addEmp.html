@@ -155,8 +155,18 @@ form div div {
 	<!--     </div> -->
 	<h3 style="text-align: center;">
 		<a class="navbar-brand" th:href="@{/}"><img
-			th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a>
+			th:src="@{/images/back1.gif}">回查詢頁</a>
 	</h3>
+	
+	<div th:if="${success}"
+		class="alert alert-success alert-dismissible fade show" role="alert"
+		id="success">
+		
+		<button type="button" class="btn-close" data-bs-dismiss="alert"
+			aria-label="Close" onclick="clearInputField()"></button>
+		<span th:text="${success}"></span>
+	</div>
+	
 	<div align="center">
 		<h3>
 			<b>請填寫所有欄位皆為必填欄位，3Q</b>
@@ -206,7 +216,7 @@ form div div {
 			<label>廣告日期:</label> <input type="date"
 				th:field="*{advertisements[0].adsDays}"
 				oninput="checkDateValidity(this);"
-				onclick="hideContent('advertisements[0].adsDays.errors');" /> <span
+				onclick="hideContent('advertisements[0].adsDays.errors');" id="advertisements[0].adsDays"/> <span
 				class="error" th:utext="${errorMessage2}"
 				id="advertisements[0].adsDays.errors"></span>
 			<div>
@@ -251,7 +261,7 @@ form div div {
 	<!-- JavaScript part -->
 	<!-- 		<script th:src="@{/js/home.js}"></script> -->
 	<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
-	<!-- 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script> -->
+		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 	<script type="text/javascript">
 		//清除提示信息
 		function hideContent(d) {
@@ -350,6 +360,12 @@ form div div {
 
 			});
 		}
+		
+	
+		function clearInputField() {
+			document.getElementById('advertisements[0].adsDays').value = ''; // 將 input 欄位的值設置為空字符串
+		}
+
 	</script>
 
 

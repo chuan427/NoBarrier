@@ -70,6 +70,7 @@ body {
 	flex-direction: column;
 	align-items: flex-start;
 	position: relative;
+	justify-content: space-between;
 }
 
 .post-header i {
@@ -110,6 +111,7 @@ body {
 	top: 185px;
 }
 
+/* 使用者及3個點點圖示 & USER顯示名稱 */
 
 /* 使用者及3個點點圖示 & USER顯示名稱 */
 

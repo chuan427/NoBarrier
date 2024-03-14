@@ -30,7 +30,7 @@ import com.user.model.UserService;
 import com.user.model.UserVO;
 
 @Controller
-//@RequestMapping("/forumPost")
+@RequestMapping("/forum")
 public class ForumPostController {
 
 	@Autowired
@@ -76,7 +76,7 @@ public class ForumPostController {
 		}
 		// 即使沒有上傳圖片，也可以繼續進行其他處理流程
 		if (result.hasErrors()) {
-			return "front-end/forum/addForumPost";
+			return "front-end/forum/forum/addForumPost";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -89,7 +89,8 @@ public class ForumPostController {
 		List<ForumPostVO> list = forumPostSvc.getAll();
 		model.addAttribute("forumPostListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/forumPost/listAllForumPost"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+		
+		return "redirect:/forum/forumIndex"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
 	/*
@@ -105,7 +106,7 @@ public class ForumPostController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("forumPostVO", forumPostVO);
-		return "back-end/forumPost/update_ForumPost_input"; // 查詢完成後轉交update_user_input.html
+		return "front-end/forum/forum/listOneForumPost"; // 查詢完成後轉交update_user_input.html
 	}
 
 	/*
@@ -133,7 +134,7 @@ public class ForumPostController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "back-end/forumPost/update_ForumPost_input";
+			return "front-end/forum/updateForumPost";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 //		EmpService empSvc = new EmpService();
@@ -147,16 +148,8 @@ public class ForumPostController {
 		model.addAttribute("success", "- (修改成功)");
 		forumPostVO = forumPostSvc.getOneForumPost(Integer.valueOf(forumPostVO.getFpNum()));
 		model.addAttribute("forumPostVO", forumPostVO);
-		return "back-end/forumPost/listOneForumPost"; // 修改成功後轉交listOneUser.html
+		return "front-end/forum/forumIndex"; // 修改成功後轉交listOneUser.html
 	}
-
-//	  @GetMapping("/search")
-//	    public String search(@RequestParam("search") String search, Model model) {
-//	        // 假設有一個service方法可以根據標題或使用者名進行模糊查詢
-//	        List<ForumPostVO> searchResult = forumPostSvc.searchByTitleOrUser(search);
-//	        model.addAttribute("posts", searchResult);
-//	        return "front-end/forum/forumIndex"; // 返回到顯示搜尋結果的頁面
-//	    }
 
 //	@GetMapping("/index")
 //	public String showLatestPost(Model model) {
@@ -187,7 +180,7 @@ public class ForumPostController {
 		List<ForumPostVO> list = forumPostSvc.getAll();
 		model.addAttribute("forumPostListData", list);
 		model.addAttribute("success", "- (刪除成功)");
-		return "back-end/forumPost/listAllForumPost"; // 刪除完成後轉交listAllUser.html
+		return "front-end/forum/forumIndex"; // 刪除完成後轉交listAllUser.html
 	}
 
 	// 去除BindingResult中某個欄位的FieldError紀錄

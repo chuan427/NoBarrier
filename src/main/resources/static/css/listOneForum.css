@@ -1,0 +1,161 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin-top: 20px;
+	background: #eee;
+	color: #708090;
+	min-height: 100vh; /* 確保至少與視窗一樣高 */
+	background-image: url('/images/abstract-painted.JPG');
+	background-size: cover;
+	background-position: center;
+}
+
+/* footer 改成白色 */
+.container footer.nav a, .container footer p {
+	color: #ffffff !important;
+}
+
+/* 針對所有在 .container 內的 .nav-link 應用白色文字 */
+.container .nav-link {
+	color: #ffffff !important;
+}
+
+/* 如果導航連結位於特定區域，如 footer，則可以更具體 */
+.container footer .nav-link {
+	color: #ffffff !important;
+}
+
+/* 針對所有狀態的導航連結：正常、懸停、聚焦 */
+.container .nav-link, .container .nav-link:hover, .container .nav-link:focus
+	{
+	color: #ffffff !important;
+}
+
+.container header a {
+	color: #ffffff !important;
+}
+
+
+.transparent-box {
+	display: flex;
+	background-color: rgba(245, 233, 233, 0.5);
+    width: 90%; /* 或其他你希望的寬度 */
+	padding: 15px;
+	max-width: 1300px;
+	margin-bottom: 20px;
+	border-radius: 15px;
+	flex: 1; /* 讓主內容彈性填滿除側邊欄外的空間 */
+	margin-right: 30px; /* 添加右邊距，與側邊欄保持間距 */
+	margin-left: 65px; /* 添加右邊距，與側邊欄保持間距 */
+}
+
+.content {
+	margin-bottom: 10px;
+}
+
+.post {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch; /* 確保子元素可以擴展到整個容器的寬度 */
+	background-color: white;
+	padding: 15px;
+	margin: 15px 0;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+	justify-content: space-between;
+}
+
+.title-time-container {
+	width: 100%; /* 確保容器佔滿整行 */
+	display: flex;
+	justify-content: space-between; /* 標題靠左，時間靠右 */
+	align-items: baseline;
+}
+
+.post-time {
+	font-size: 0.9em;
+	color: black;
+}
+
+.post h4, .post p {
+	color: #333;
+}
+
+.fabotton {
+	display: flex;
+	gap: 25px; /* 在圖標之間添加一些間隙 */
+}
+
+/* 使用者及3個點點圖示 & USER顯示名稱 */
+
+.icon-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.user-name {
+    font-size: 0.7rem;
+    font-weight: normal;
+    font-family: 'Microsoft JhengHei', sans-serif; /* 加入微軟正黑體 */
+}
+
+.menu {
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  width: 110px; /* 設置一個固定的寬度 */
+  height: 90px; /* 設置一個固定的高度，與寬度相同以形成圓形 */
+  padding: 10px;
+  position: absolute;
+  left: 100%; /* 使其位於觸發元素的右側 */
+  top: 0px; /* 調整這個值以適應具體情況 */
+  z-index: 1000;
+  display: none; /* 預設不顯示，由 JavaScript 控制 */
+  overflow: hidden; /* 防止內容溢出 */
+}
+
+.menu a {
+	display: block;
+	margin: 5px 0;
+}
+
+.comments-section {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+
+/* 留言部份 */
+
+.comment {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.comment-header .fa-user-circle {
+    margin-right: 10px;
+}
+
+.comment-time {
+    margin-left: auto;
+    color: #666;
+}

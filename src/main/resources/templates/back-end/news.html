@@ -22,424 +22,97 @@
             /* 樣式設定 */
         }
 
-        .form-floating {
-            max-width: 300px;
-            /* 設定最大寬度 */
-            margin: 0 auto;
-            /* 左右置中 */
+        .news-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
         }
 
+        .news-title {
+            font-size: 30px;
+            text-align: left;
+            color: darkgoldenrod;
+            font-weight: bold;
+        }
+
+        .accordion-button {
+            font-size: 30px;
+        }
+
+        .news-content {
+            font-size: 20px;
+        }
+
+        .form-floating,
         .form-check {
             max-width: 300px;
-            /* 設定最大寬度 */
             margin: 0 auto;
-            /* 左右置中 */
+        }
+
+        .sidebar {
+            float: left;
+            width: 30%; /* 調整側邊欄寬度 */
+            margin-right: 30px; /* 給主內容區域留出空間 */
+        }
+
+        .main-content {
+            float: left;
+            width: 70%; /* 調整主內容區域寬度 */
         }
     </style>
 </head>
 
 <body>
     <!-- header -->
-    <header class="p-3 mb-3 border-bottom">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                    <svg width="70" height="70">
-                        <image href="image/logo.png" width=100% height=100% />
-                    </svg>
-                </a>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li class="nav-item">
-                        <div class="nav-link" style="text-align: center; font-size: 35px;">後台管理</div>
-                    </li>
-                </ul>
+    <header th:insert="~{/back-end/header}"></header>
 
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-                </form>
-
-                <div class="dropdown text-end">
-                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="image/new-logo.svg" alt="" width="32" height="32" class="rounded-circle">
-                    </a>
-                    <ul class="dropdown-menu text-small">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- siderbar -->
     <div class="container">
         <div class="row">
-            <div class="col-4">
-                <div class="flex-shrink-0 p-3" style="width: 280px; text-align: center; background-color: lightgray;">
-                    <ul class="list-unstyled ps-0">
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false"
-                                style="font-size: 30px;">
-                                權限管理
-                            </button>
-                            <div class="collapse" id="home-collapse">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="authorization_new_member.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">新增管理員</a></li>
-                                    <li><a href="authorization_update_member.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">修改權限</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-1" aria-expanded="false"
-                                style="font-size: 30px;">
-                                會員管理
-                            </button>
-                            <div class="collapse" id="home-collapse-1">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="member.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">異動審核</a></li>
-                                    <li><a href="member_admin.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">帳號管理</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-3" aria-expanded="false"
-                                style="font-size: 30px;">
-                                廣告管理
-                            </button>
-                            <div class="collapse" id="home-collapse-3">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="ad_order.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">廣告訂單</a></li>
-                                    <li><a href="advertising.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">廣告投放</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-4" aria-expanded="false"
-                                style="font-size: 30px;">
-                                商家管理
-                            </button>
-                            <div class="collapse" id="home-collapse-4">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="buy_list.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">檢舉列表</a></li>
-                                    <li><a href="buy_operation.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">懲處操作</a></li>
-                                    <li><a href="buy_operation_list.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">懲處列表</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-5" aria-expanded="false"
-                                style="font-size: 30px;">
-                                物流管理
-                            </button>
-                            <div class="collapse" id="home-collapse-5">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="in_logistics.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">配送中</a></li>
-                                    <li><a href="arrived.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">已送達</a></li>
-                                </ul>
-                            </div>
-                        </li>
+            <!-- siderbar -->
+                <head th:insert="~{/back-end/sidebar}"></head>
+         
 
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-7" aria-expanded="false"
-                                style="font-size: 30px;">
-                                客服管理
-                            </button>
-                            <div class="collapse" id="home-collapse-7">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="customer_pending.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">待處理問題</a></li>
-                                    <li><a href="customer_completed.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">已解決問題</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-9" aria-expanded="false"
-                                style="font-size: 30px;">
-                                訂單管理
-                            </button>
-                            <div class="collapse" id="home-collapse-9">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="order_completed.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">訂單完成</a></li>
-                                    <li><a href="order_error.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">訂單異常</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-10" aria-expanded="false"
-                                style="font-size: 30px;">
-                                產業管理
-                            </button>
-                            <div class="collapse " id="home-collapse-10">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="industry_judge.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">分類判斷</a></li>
-                                    <li><a href="industry_update.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">類別異動</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-11" aria-expanded="false"
-                                style="font-size: 30px;">
-                                訊息管理
-                            </button>
-                            <div class="collapse" id="home-collapse-11">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="msg_history.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">歷史訊息</a></li>
-                                    <li><a href="msg_contact.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">洽談中</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-12" aria-expanded="false"
-                                style="font-size: 30px;">
-                                公告管理
-                            </button>
-                            <div class="collapse" id="home-collapse-12">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="news.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">最新消息</a></li>
-
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="border-top my-3"></li>
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                                data-bs-toggle="collapse" data-bs-target="#home-collapse-13" aria-expanded="false"
-                                style="font-size: 30px;">
-                                論壇管理
-                            </button>
-                            <div class="collapse" id="home-collapse-13">
-                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                    <li><a href="forum.html"
-                                            class="link-body-emphasis d-inline-flex text-decoration-none rounded"
-                                            style="font-size: 20px;">最新消息</a></li>
-
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-8">
-                <div style="font-size: 40px; text-align: left; color:darkgoldenrod; font-weight: bold;">最新消息</div>
-                <div style="margin-top: 30px;"></div>
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                style="font-size: 30px;">
-                                消息編號:AZ00000009527
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">公告內容資訊:</div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-
-                                        <div style="font-size: 20px;">
-                                            今日購買廣告免費<br>
-
+            <!-- Main Content -->
+            <section class="main-content">
+                <div class="news-item">
+                    <h2 class="news-title">最新消息</h2>
+                    <div class="accordion" id="accordionExample">
+                        <th:block th:each="newsVO : ${newsListData}">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <span th:text="${newsVO.newsNum + ' ' + newsVO.newsTitle}"></span>
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div class="news-content">
+                                            <span th:text="${newsVO.newsContent}"></span>
+                                            <form method="post" th:action="@{/news/getOne_For_Update}">
+                                                <input type="submit" class="btn btn-primary" value="修改">
+                                                <input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
+                                            </form>
+                                            <form method="post" th:action="@{/news/delete}">
+                                                <input type="submit" class="btn btn-danger" value="刪除">
+                                                <input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                                style="font-size: 30px;">
-                                消息編號:AZ00000009527
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">公告內容資訊:</div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-
-                                        <div style="font-size: 20px;">
-                                            今日購買廣告免費<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
-                                style="font-size: 30px;">
-                                消息編號:AZ00000009527
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">公告內容資訊:</div>
-                                <div class="row">
-
-                                    <div class="col-sm-6">
-
-                                        <div style="font-size: 20px;">
-                                            今日購買廣告免費<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 30px;"></div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            新增
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">最新消息</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Your form or content goes here -->
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1"
-                                                    class="form-label">消息編號:AZ00000009527</label>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">公告內容:</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    rows="3"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">新增</button>
-                                            <button type="submit" class="btn btn-primary">刪除</button>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal1">
-                            刪除
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">最新消息</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Your form or content goes here -->
-                                        <form>
-                                            <div class="mb-3">
-                                                <label for="exampleInputEmail1" class="form-label">消息編號:AZ00000009527</label>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">刪除</button>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>
-            </div>
-
+            </section>
         </div>
     </div>
-    <!-- <footer> -->
-    <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
 
-            </ul>
-            <p class="text-center text-body-secondary">&copy; 2023 NO BARRIER TECH Company, Inc</p>
-        </footer>
-    </div>
+    <!-- <footer> -->
+
+    <footer th:insert="~{/back-end/footer}"></footer>
 
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

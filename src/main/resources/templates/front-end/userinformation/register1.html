@@ -94,16 +94,16 @@
 					<!--               以下是隱藏的帶值欄位 -->
 
 					<!--               把comStat預設是0提交到後端 -->
-					<input type="hidden" id="comStat" name="comStat" th:field="*{comStat}" value="0" />
-
-					<!--               把comRatstars預設是0提交到後端 -->
-					<input type="hidden" id="comRatStars" name="comRatStars" th:field="*{comRatStars}" value="0" />
-
-					<!--               把comRatcount預設是0提交到後端 -->
-					<input type="hidden" id="comRatCount" name="comRatCount" th:field="*{comRatCount}" value="0" />
-
-					<!--               把comIsValid預設是1提交到後端 -->
-					<input type="hidden" id="comIsValid" name="comIsValid" th:field="*{comIsValid}" value="1" />
+						<input type="hidden" id="comStat" name="comStat" th:field="*{comStat}"/>
+	
+						<!--               把comRatstars預設是0提交到後端 -->
+						<input type="hidden" id="comRatStars" name="comRatStars" th:field="*{comRatStars}"/>
+	
+						<!--               把comRatcount預設是0提交到後端 -->
+						<input type="hidden" id="comRatCount" name="comRatCount" th:field="*{comRatCount}"/>
+	
+						<!--               把comIsValid預設是1提交到後端 -->
+						<input type="hidden" id="comIsValid" name="comIsValid" th:field="*{comIsValid}"/>
 
 					<!--               把comRegdate預設是js放進去的localdate提交到後端 -->
 					<input type="hidden" id="comRegDate" name="comRegDate" th:field="*{comRegDate}" />
@@ -132,6 +132,10 @@
 
 	document.getElementById('comRegDate').value = formattedDate;
 
+	document.getElementById("comStat").value = 0;
+    document.getElementById("comRatStars").value = 0;
+    document.getElementById("comRatCount").value = 0;
+    document.getElementById("comIsValid").value = 1;
 
 
 	document.addEventListener("DOMContentLoaded", function() {

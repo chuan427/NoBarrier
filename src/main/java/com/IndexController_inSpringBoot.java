@@ -1,5 +1,6 @@
 package com;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -15,12 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -37,6 +36,8 @@ import com.forumreport.model.ForumReportService;
 import com.forumreport.model.ForumReportVO;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.limitsale.model.LimitSaleService;
+import com.limitsale.model.LimitSaleVO;
 import com.newsmodel.NewsService;
 import com.newsmodel.NewsVO;
 import com.productinformation.model.ProductInformationService;
@@ -99,11 +100,14 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	ForumReportService forumReportSvc;
 	
+	@Autowired
+	LimitSaleService limitSaleSvc;
+	
 
 //	@Autowired
 //	NotificationService notificationSvc;
 
-	// inject(注入資料) via application.properties
+//	 inject(注入資料) via application.properties
 	@Value("${welcome.message}")
 	private String message;
 
@@ -113,6 +117,8 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
+	private Object userVO;
+
 //	@GetMapping("/")
 //	public String index(Model model) {
 //		model.addAttribute("message", message);
@@ -121,12 +127,13 @@ public class IndexController_inSpringBoot {
 //	}
 	//----------------------------------------------------
 	@RequestMapping("/")
-	public String toIndex() {
+	public String toIndex(Model model) {
 		return "index";
 	}
 
 	@RequestMapping("/loginpage")
 	public String toLoginPage() {
+	
 		return "front-end/testLogin";
 	}
 	
@@ -182,13 +189,14 @@ public class IndexController_inSpringBoot {
 	
 
 	// 廠商資訊 完成
-	@GetMapping("/com/com_homepage/{userId}")
-	public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
-	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
-	    // 將相關數據添加到 Model 中，以便在視圖中使用
-	    model.addAttribute("userVO", userVO);
-	    return "front-end/com/com_homepage"; // view
-	}
+// 廠商資訊 完成
+    @GetMapping("/com/com_homepage/{userId}")
+    public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
+        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+        // 將相關數據添加到 Model 中，以便在視圖中使用
+        model.addAttribute("userVO", userVO);
+        return "front-end/com/com_homepage"; // view
+    }
 
 	// 廠商資訊 完成
 	@GetMapping("/com/com")
@@ -222,9 +230,18 @@ public class IndexController_inSpringBoot {
 
 	// 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_product_view")
-	public String editmember_product_view() {
-		return "front-end/com/editmember_product_view"; // view
+	public String editmember_product_view(Model model) {
+	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+	        // 添加到模型中
+	        model.addAttribute("productInformationList", productInformationList);
+	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
 	}
+	
+	// 廠商產品預覽頁面 完成
+	@GetMapping("/com/editmember_product")
+	public String editmember_product() {
+		return "front-end/com/editmember_product"; // view
+		}
 
 	// 廠商產品限時預覽頁面 完成
 	@GetMapping("/com/editmember_sale_view")
@@ -264,6 +281,12 @@ public class IndexController_inSpringBoot {
 		    model.addAttribute("userVO", userVO);
 		    return "front-end/com/member_AboutUs"; // view
 		}
+////	 廠商產品資訊編輯頁面 完成
+//	@GetMapping("/com/member_AboutUs")
+//	public String member_AboutUs () {
+//			    return "front-end/com/member_AboutUs"; // view
+//			}
+	
 	// 廠商產品資訊 完成
 	@GetMapping("/com/member_Prod/{userId}")
 	public String member_Prod(@PathVariable("userId") UserVO userVO, Model model) {
@@ -272,10 +295,14 @@ public class IndexController_inSpringBoot {
 		Set<ProductInformationVO> productInformationVO = userVO.getProductInformation();
 	    model.addAttribute("userVO", userVO);
 	    model.addAttribute("productInformationVO", productInformationVO);
-//	    System.out.println(model.addAttribute("userVO", userVO));
-	    System.out.println(productInformationVO);
 	    return "front-end/com/member_Prod"; // view
 	}
+	
+////	 廠商產品資訊編輯頁面 完成
+//		@GetMapping("/com/member_Prod")
+//		public String member_Prod () {
+//				    return "front-end/com/member_Prod"; // view
+//				}
 
 	// 訂單聊天室 成功
 	@GetMapping("/order/chatroom")
@@ -316,8 +343,8 @@ public class IndexController_inSpringBoot {
 	// 聯絡我們 客服 成功
 	@GetMapping("/userinformation/customer_service")
 	public String customer_service(Model model) {
-		QueListVO queListVO = new QueListVO(); // 創建QueListVO對象，如果需要的話
-		model.addAttribute("queListVO", queListVO);
+//		QueListVO queListVO = new QueListVO(); // 創建QueListVO對象，如果需要的話
+		model.addAttribute("queListVO", new QueListVO());
 //		model.addAttribute("successMessage", "問題已成功新增");
 		return "front-end/userinformation/customer_service"; // view
 	}
@@ -561,18 +588,25 @@ public class IndexController_inSpringBoot {
 	
 	@ModelAttribute("adervListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<AdvertisementsVO> referenceListData_aderv(Model model) {
-
 		List<AdvertisementsVO> list = adverSvc.getAll();
 		return list;
 	}
 
 	//------------------------ForumPost--------------------------------------
 	
-	@GetMapping("/forumPost/select_page1")
-	public String select_page1(Model model) {
-		return "back-end/forumPost/select_page1";
+	@GetMapping("/forum/listOneForumPost/{fpNum}")
+	public String listOneForumPost(@PathVariable("fpNum") Integer fpNum, Model model) {
+	    ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(fpNum);
+	    if (forumPostVO != null) {
+	        model.addAttribute("forumPostVO", forumPostVO);
+	        return "front-end/forum/listOneForumPost";
+	    } else {
+	        model.addAttribute("errorMessage", "查無此文章資料");
+	        return "redirect:/forum/forumIndex"; // 或是重定向到一個錯誤頁面或文章列表頁面
+	    }
 	}
 
+	
 	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
@@ -580,6 +614,8 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
+	
+	
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {
@@ -649,6 +685,7 @@ public class IndexController_inSpringBoot {
 //	-----------------------------QuetsionList-------------------------------
 	@GetMapping("/que/select_page")
 	public String select_page3(Model model) {
+		
 		return "back-end/que/select_page";
 	}
 
@@ -657,25 +694,48 @@ public class IndexController_inSpringBoot {
 		return "back-end/que/listAllQue";
 	}
 
-	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData3(Model model) {
+//	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<QueListVO> referenceListData3(Model model) {
+////		model.addAttribute("UserVO", new UserVO());
+//		List<QueListVO> list = queSvc.getAll();
+//		return list;
+//	}
+	
+	
+	@ModelAttribute("queListData1")
+	protected List<QueListVO> referenceListData5(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    // 检查用户是否已登录
+	    if (userVO == null) {
+	        // 用户未登录，重定向到登录页面
+	        return null; // 返回 null 告诉 Spring MVC 不需要处理这个请求了
+	    } else {
+	        // 用户已登录，获取数据并返回
+	        List<QueListVO> list = queSvc.getONE1StatQuestions(userVO);
+	        return list;
+	    }
+	}
 
-		List<QueListVO> list = queSvc.getAll();
-		return list;
-	}
-	
-	
-	@ModelAttribute("queListData1") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData5(Model model) {
-		List<QueListVO> list = queSvc.getONE1StatQuestions();
-		return list;
-	}
+
 	
 	@ModelAttribute("queListData0") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData6(Model model) {
-		List<QueListVO> list = queSvc.getONEStat0Questions();
-		return list;
+	protected List<QueListVO> referenceListData6(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    // 检查用户是否已登录
+	    if (userVO == null) {
+	        // 用户未登录，重定向到登录页面
+	        return null; // 返回 null 告诉 Spring MVC 不需要处理这个请求了
+	    } else {
+	        // 用户已登录，获取数据并返回
+	        List<QueListVO> list = queSvc.getONEStat0Questions(userVO);
+	        return list;
+	    }
 	}
+
 
 //	------------------------------news-----------------------------------------
 	@GetMapping("/news/select_page")
@@ -695,6 +755,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 	
+
 //	------------------------------chat-----------------------------------------
 	@GetMapping("/chat/privatechat")
    	public String chat(Model model) {
@@ -706,5 +767,149 @@ public class IndexController_inSpringBoot {
    		return "front-end/chat/chat";
    	}
 
+	//--------------------------後臺管理----------------------------------------------------
+	
+		@GetMapping("/ad_order")
+		public String ad_order() {
+			return "back-end/ad_order"; // view
+		}
+
+
+		@GetMapping("/advertising")
+		public String advertising() {
+			return "back-end/advertising"; // view
+		}
+		
+		@GetMapping("/arrived")
+		public String arrived() {
+			return "back-end/arrived"; // view
+		}
+		
+		@GetMapping("/authorization_new_member")
+		public String authorization_new_member() {
+			return "back-end/authorization_new_member"; // view
+		}
+		
+		@GetMapping("/authorization_update_member")
+		public String authorization_update_member() {
+			return "back-end/authorization_update_member"; // view
+		}
+			
+		@GetMapping("/buy_list")
+		public String buy_list() {
+			return "back-end/buy_list"; // view
+		}
+		
+		@GetMapping("/buy_operation_list")
+		public String buy_operation_list() {
+			return "back-end/buy_operation_list"; // view
+		}
+		
+		@GetMapping("/buy_operation")
+		public String buy_operation() {
+			return "back-end/buy_operation"; // view
+		}
+		
+		@GetMapping("/customer_completed")
+		public String customer_completed() {
+			return "back-end/customer_completed"; // view
+		}
+		
+		@GetMapping("/customer_pending")
+		public String customer_pending() {
+			return "back-end/customer_pending"; // view
+		}
+		
+		@GetMapping("/forum")
+		public String forum() {
+			return "back-end/forum"; // view
+		}
+		
+		@GetMapping("/in_logistics")
+		public String in_logistics() {
+			return "back-end/in_logistics"; // view
+		}
+		
+		@GetMapping("/industry_judge")
+		public String industry_judge() {
+			return "back-end/industry_judge"; // view
+		}
+		
+		@GetMapping("/industry_update")
+		public String industry_update() {
+			return "back-end/industry_update"; // view
+		}
+		
+		@GetMapping("/member_admin")
+		public String member_admin() {
+			return "back-end/member_admin"; // view
+		}
+		
+		@GetMapping("/member")
+		public String member() {
+			return "back-end/member"; // view
+		}
+		
+		@GetMapping("/msg_contact")
+		public String msg_contact() {
+			return "back-end/msg_contact"; // view
+		}
+		
+		@GetMapping("/msg_history")
+		public String msg_history() {
+			return "back-end/msg_history"; // view
+		}
+		
+		@GetMapping("/news")
+		public String news() {
+			return "back-end/news"; // view
+		}
+		
+		@GetMapping("/order_completed")
+		public String order_completed() {
+			return "back-end/order_completed"; // view
+		}
+		
+		@GetMapping("/order_error")
+		public String order_error() {
+			return "back-end/order_error"; // view
+		}
+		
+		@GetMapping("/sign_in")
+		public String login() {
+			return "back-end/sign_in"; // view
+		}
+
+// -------------------------------limitsale-----------------------------------
+	
+	@GetMapping("/limitSale/select_page")
+	public String select_page(Model model) {
+		return "back-end/limitSale/select_page";
+	}
+    
+    @GetMapping("limitSale/listAllLimitSale")
+	public String listAllLimitSale(Model model) {
+		return "back-end/limitSale/listAllLimitSale";
+	}
+    
+    @ModelAttribute("limitSaleListData")  // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<LimitSaleVO> referenceListData_limitsale(Model model) {
+		
+    	List<LimitSaleVO> list = limitSaleSvc.getAll();
+		return list;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
