@@ -1,8 +1,13 @@
 package com;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,11 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -108,6 +111,8 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
+	private Object userVO;
+
 //	@GetMapping("/")
 //	public String index(Model model) {
 //		model.addAttribute("message", message);
@@ -122,6 +127,7 @@ public class IndexController_inSpringBoot {
 
 	@RequestMapping("/loginpage")
 	public String toLoginPage() {
+	
 		return "front-end/testLogin";
 	}
 	
@@ -181,6 +187,7 @@ public class IndexController_inSpringBoot {
 	public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
 	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 	    // 將相關數據添加到 Model 中，以便在視圖中使用
+		
 	    model.addAttribute("userVO", userVO);
 	    return "front-end/com/com_homepage"; // view
 	}
@@ -311,8 +318,8 @@ public class IndexController_inSpringBoot {
 	// 聯絡我們 客服 成功
 	@GetMapping("/userinformation/customer_service")
 	public String customer_service(Model model) {
-		QueListVO queListVO = new QueListVO(); // 創建QueListVO對象，如果需要的話
-		model.addAttribute("queListVO", queListVO);
+//		QueListVO queListVO = new QueListVO(); // 創建QueListVO對象，如果需要的話
+		model.addAttribute("queListVO", new QueListVO());
 //		model.addAttribute("successMessage", "問題已成功新增");
 		return "front-end/userinformation/customer_service"; // view
 	}
@@ -379,28 +386,61 @@ public class IndexController_inSpringBoot {
 
 	// -------------------需求單-----------------------
 	@GetMapping("/userinformation/userpage")
-	public String userpage(Model model) {
-		return "front-end/userinformation/userpage";
-	}
-	
-	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<ReqOrderVO> referenceListData_reqorder(Model model) {
+	public String userpage(Model model, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-		List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-		return list;
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
+
+	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+	    model.addAttribute("reqOrderListData", list);
+	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+	    return "front-end/userinformation/userpage";
+	}
+
+	@ModelAttribute("reqOrderListData")
+	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request, HttpServletResponse response) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+	    if (userVO == null) {
+	        return null;
+	    } else {
+//	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+//			return list;
+	        return reqOrderSvc.getOneStatReqOrder(userVO);
+	    }
 	}
 
 	// ----------------報價單--------------------
 		@GetMapping("/userinformation/quotation_list")
-		public String quotation_list(Model model) {
+		public String quotation_list(Model model, HttpServletRequest request) {
+			HttpSession session = request.getSession();
+		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		    
+		    if (userVO == null) {
+		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		    }
+
+		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+		    model.addAttribute("quoListData", list);
+		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 			return "front-end/userinformation/quotation_list";
 		}
 
 		@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-		protected List<QuoVO> referenceListData(Model model) {
+		protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-			List<QuoVO> list = quoSvc.getAll();
-			return list;
+		    if (userVO == null) {
+		        return null;
+		    } else {
+		        return quoSvc.getOneStatQuotation(userVO);
+		    }
+
 		}
 	
 
@@ -487,18 +527,25 @@ public class IndexController_inSpringBoot {
 	
 	@ModelAttribute("adervListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<AdvertisementsVO> referenceListData_aderv(Model model) {
-
 		List<AdvertisementsVO> list = adverSvc.getAll();
 		return list;
 	}
 
 	//------------------------ForumPost--------------------------------------
 	
-	@GetMapping("/forumPost/select_page1")
-	public String select_page1(Model model) {
-		return "back-end/forumPost/select_page1";
+	@GetMapping("/forum/listOneForumPost/{fpNum}")
+	public String listOneForumPost(@PathVariable("fpNum") Integer fpNum, Model model) {
+	    ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(fpNum);
+	    if (forumPostVO != null) {
+	        model.addAttribute("forumPostVO", forumPostVO);
+	        return "front-end/forum/listOneForumPost";
+	    } else {
+	        model.addAttribute("errorMessage", "查無此文章資料");
+	        return "redirect:/forum/forumIndex"; // 或是重定向到一個錯誤頁面或文章列表頁面
+	    }
 	}
 
+	
 	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
@@ -506,6 +553,8 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
+	
+	
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {
@@ -575,6 +624,7 @@ public class IndexController_inSpringBoot {
 //	-----------------------------QuetsionList-------------------------------
 	@GetMapping("/que/select_page")
 	public String select_page3(Model model) {
+		
 		return "back-end/que/select_page";
 	}
 
@@ -583,25 +633,48 @@ public class IndexController_inSpringBoot {
 		return "back-end/que/listAllQue";
 	}
 
-	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData3(Model model) {
+//	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<QueListVO> referenceListData3(Model model) {
+////		model.addAttribute("UserVO", new UserVO());
+//		List<QueListVO> list = queSvc.getAll();
+//		return list;
+//	}
+	
+	
+	@ModelAttribute("queListData1")
+	protected List<QueListVO> referenceListData5(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    // 检查用户是否已登录
+	    if (userVO == null) {
+	        // 用户未登录，重定向到登录页面
+	        return null; // 返回 null 告诉 Spring MVC 不需要处理这个请求了
+	    } else {
+	        // 用户已登录，获取数据并返回
+	        List<QueListVO> list = queSvc.getONE1StatQuestions(userVO);
+	        return list;
+	    }
+	}
 
-		List<QueListVO> list = queSvc.getAll();
-		return list;
-	}
-	
-	
-	@ModelAttribute("queListData1") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData5(Model model) {
-		List<QueListVO> list = queSvc.getONE1StatQuestions();
-		return list;
-	}
+
 	
 	@ModelAttribute("queListData0") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QueListVO> referenceListData6(Model model) {
-		List<QueListVO> list = queSvc.getONEStat0Questions();
-		return list;
+	protected List<QueListVO> referenceListData6(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    // 检查用户是否已登录
+	    if (userVO == null) {
+	        // 用户未登录，重定向到登录页面
+	        return null; // 返回 null 告诉 Spring MVC 不需要处理这个请求了
+	    } else {
+	        // 用户已登录，获取数据并返回
+	        List<QueListVO> list = queSvc.getONEStat0Questions(userVO);
+	        return list;
+	    }
 	}
+
 
 //	------------------------------news-----------------------------------------
 	@GetMapping("/news/select_page")

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
+import com.user.model.UserVO;
 
 
 @Controller
@@ -39,37 +42,43 @@ public class QuoController {
 	@Autowired
 	ReqOrderService reqOrderSvc;
 
-//	@Autowired
-//	DeptService deptSvc;
-
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
 	@GetMapping("/addQuotation")
-	public String addQuo(ModelMap model) {
+	public String addQuo(ModelMap model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
 		QuoVO quoVO = new QuoVO();
 		model.addAttribute("quoVO", quoVO);
+		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 		return "front-end/userinformation/addQuotation";
 	}
-
+	
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
 	@PostMapping("insertQuo")
-	public String insertQuo(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
+	public String insertQuo(HttpServletRequest request,@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(quoVO, result, "quoNum");
+		
+		UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
 
 		if (result.hasErrors()) {
 			return "front-end/userinformation/addQuotation";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
-		quoSvc.addQuo(quoVO);
+		quoSvc.addQuo(quoVO, userVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<QuoVO> list = quoSvc.getAll();
+		List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
 		model.addAttribute("quoListData", list);
 		model.addAttribute("success", "- (新增成功)");
 		return "front-end/userinformation/userpage"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/emp/listAllEmp")
