@@ -175,19 +175,19 @@ main {
 
 			<!-- 加了 container-add-style -->
 			<div class="tab-content container-add-style" id="v-pills-tabContent">
-				<!-- <div class="tab-pane fade show active" id="v-pills-home"
+				<div class="tab-pane fade show active" id="v-pills-home"
 					role="tabpanel" aria-labelledby="v-pills-home-tab">
-					<form class="row g-3" th:action="@{insertUser}" method="post" th:object="${userVO}" enctype="multipart/form-data">
-						<div class="col-6" th:each="userVO : ${userListData}">
+					<form class="row g-3">
+						<div class="col-6">
 							<label for="comName" class="form-label">公司登記名稱</label>
 							<div class="form-control">
-								<span th:text="${userVO.comName}">User</span>
+								<span th:text="${session.loggingInUser.comName}">User</span>
 							</div>
 						</div>
 						<div class="col-6">
 							<label for="comUniNumber" class="form-label">公司登記統編</label>
 							<div class="form-control">
-								<span th:text="${userVO.comUniNumber}">Company
+								<span th:text="${session.loggingInUser.comUniNumber}">Company
 									Registration Number</span>
 							</div>
 						</div>
@@ -195,35 +195,19 @@ main {
 						<div class="col-12">
 							<label for="comAddress" class="form-label">公司登記地址</label> <input
 								type="text" class="form-control" id="comAddress"
-								name="comAddress" th:value="${userVO.comAddress}" />
+								name="comAddress" th:value="${session.loggingInUser.comAddress}" />
 						</div>
 						<div class="col-md-12">
 							<label for="comMail" class="form-label">公司登記郵件</label> <input
 								type="email" class="form-control" id="comMail" name="comMail"
-								th:value="${userVO.comMail}" />
+								th:value="${session.loggingInUser.comMail}" />
 						</div>
 					</form>
-				</div> -->
-
-				<div>
-					<p>
-						公司登記名稱: <span th:text="${userVO.comName}">User</span>
-					</p>
-					<p>
-						公司登記統編: <span th:text="${userVO.comUniNumber}">Company
-							Registration Number</span>
-					</p>
-					<p>
-						公司登記地址: <span th:text="${userVO.comAddress}">Address</span>
-					</p>
-					<p>
-						公司登記郵件: <span th:text="${userVO.comMail}">Email</span>
-					</p>
 				</div>
 			</div>
 		</div>
-</div>
-</main>
+
+	</main>
 </div>
 
 <!-- <footer> -->

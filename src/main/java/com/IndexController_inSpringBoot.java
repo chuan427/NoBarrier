@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -412,20 +413,20 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ----------------報價單--------------------
-		@GetMapping("/userinformation/quotation_list")
-		public String quotation_list(Model model, HttpServletRequest request) {
-			HttpSession session = request.getSession();
-		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-		    
-		    if (userVO == null) {
-		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-		    }
-
-		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
-		    model.addAttribute("quoListData", list);
-		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
-			return "front-end/userinformation/quotation_list";
-		}
+//		@GetMapping("/userinformation/quotation_list")
+//		public String quotation_list(Model model, HttpServletRequest request) {
+//			HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//		    
+//		    if (userVO == null) {
+//		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+//		    }
+//
+//		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+//		    model.addAttribute("quoListData", list);
+//		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+//			return "front-end/userinformation/quotation_list";
+//		}
 
 		@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 		protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -693,6 +694,17 @@ public class IndexController_inSpringBoot {
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
+	
+//	------------------------------chat-----------------------------------------
+	@GetMapping("/chat/privatechat")
+   	public String chat(Model model) {
+   		return "front-end/chat/privatechat";
+   	}
+    
+    @PostMapping("/chat/chat.do")
+   	public String gochat(Model model) {
+   		return "front-end/chat/chat";
+   	}
 
 }
 
