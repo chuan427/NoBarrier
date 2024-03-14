@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,15 @@ public class QueController {
 	 * This method will be called on addNews.html form submission, handling POST request It also validates the user input
 	 */
 	@PostMapping("insertque")
-	public String insert(@Valid QueListVO queListVO, BindingResult result, ModelMap model,
+	public String insert(HttpServletRequest request,@Valid QueListVO queListVO, BindingResult result, ModelMap model,
 			@RequestParam("queImage") MultipartFile part) throws IOException {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 //		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(queListVO, result, "queImage");
 //
+		 UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+
+//		 System.out.println(userId);
 		if (!part.isEmpty()) {
         byte[] buf = part.getBytes();
         queListVO.setQueImage(buf);
@@ -70,14 +74,14 @@ public class QueController {
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
-		queSvc.addQue(queListVO);
+		queSvc.addQue(queListVO,userVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 //		List<QueListVO> list = queSvc.getAll();
 //		model.addAttribute("queListData", list);
-		 List<QueListVO> list = queSvc.getONE1StatQuestions();
+		 List<QueListVO> list = queSvc.getONE1StatQuestions(userVO);
 		 model.addAttribute("queListData1", list);
 		
-		 List<QueListVO> list0 = queSvc.getONEStat0Questions();
+		 List<QueListVO> list0 = queSvc.getONEStat0Questions(userVO);
 		 model.addAttribute("queListData0", list0);
 		 
 		model.addAttribute("successMessage", "問題已成功新增");

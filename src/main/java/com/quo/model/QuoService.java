@@ -1,5 +1,6 @@
 package com.quo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +24,8 @@ public class QuoService {
 	@Autowired
 	ReqOrderRepository reqrepository;
 	
-	public void addQuo(QuoVO quoVO) {
-		
-		Integer userId = 2;
-
-		// Integer userId = (Integer) request.getSession().getAttribute("userId");
-
-		UserVO userVO = userrepository.findById(userId).orElse(null);
-		quoVO.setUserVO(userVO);
+	public void addQuo(QuoVO quoVO, UserVO loggingInUser) {
+		quoVO.setUserVO(loggingInUser);
 		
 		Integer reqNum = 2;
 		
@@ -66,4 +61,16 @@ public class QuoService {
 	public List<QuoVO> getAll(){
 		return repository.findAll();
 	}
+	
+	public List<QuoVO> getOneStatQuotation(UserVO userVO) {
+        List<QuoVO> allQuotation = repository.findAll();
+        List<QuoVO> validQuotation = new ArrayList<>();
+
+        for (QuoVO quotation : allQuotation) {
+            if (quotation.getUserVO().getUserId() == userVO.getUserId() && quotation.getQuoIsValid() == 1) {
+                validQuotation.add(quotation);
+            }
+        }
+        return validQuotation;
+    }
 }

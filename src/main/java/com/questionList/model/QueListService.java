@@ -27,11 +27,11 @@ public class QueListService {
     HttpServletRequest request;
     
     
-	public void addQue(QueListVO queListVO) {
-		Integer userId = 3;           
+	public void addQue(QueListVO queListVO,UserVO loggingInUser) {
+		          
 //		Integer userId = (Integer) request.getSession().getAttribute("userId");              
-		UserVO userVO = userrepository.findById(userId).orElse(null);             
-		queListVO.setUserVO(userVO); // 设置用户信息到广告对象中
+//		UserVO userVO = userrepository.findById(userId).orElse(null);             
+		queListVO.setUserVO(loggingInUser); // 设置用户信息到广告对象中
 		repository.save(queListVO);
 	}
 
@@ -56,27 +56,29 @@ public class QueListService {
 	}
 	
 	
-	public List<QueListVO> getONE1StatQuestions() {
-		Integer userId = 3;   
-        List<QueListVO> allQuestions = repository.findAll();
-        List<QueListVO> validQuestions = new ArrayList<>();
+	public List<QueListVO> getONE1StatQuestions(UserVO userVO) {
+	    List<QueListVO> allQuestions = repository.findAll();
+	    List<QueListVO> validQuestions = new ArrayList<>();
+	    System.out.println(userVO.getUserId());
+	    System.out.println("===========================");
+	    for (QueListVO question : allQuestions) {
+	        if (question.getUserVO().getUserId() == userVO.getUserId() && question.getQueStat() == 1) {
+//	            System.out.println(question.getUserVO().getUserId());
+	        	validQuestions.add(question);
+	        }
+	    }
+	    return validQuestions;
+	}
 
-        for (QueListVO question : allQuestions) {
-            if (question.getUserVO().getUserId()==userId && question.getQueStat() == 1) { // 判断 queIsValid 是否为 1
-                validQuestions.add(question);
-            }
-        }
-        return validQuestions;
-    }
 	
-	public List<QueListVO> getONEStat0Questions() {
-		Integer userId = 3;   
+	public List<QueListVO> getONEStat0Questions(UserVO userVO) {
+//		Integer userId = 3;   
 
         List<QueListVO> allQuestions = repository.findAll();
         List<QueListVO> validQuestions = new ArrayList<>();
 
         for (QueListVO question : allQuestions) {
-            if (question.getUserVO().getUserId()==userId &&question.getQueStat() == 0) { // 判断 queIsValid 是否为 1
+            if (question.getUserVO().getUserId()== userVO.getUserId()  &&question.getQueStat() == 0) { // 判断 queIsValid 是否为 1
                 validQuestions.add(question);
             }
         }

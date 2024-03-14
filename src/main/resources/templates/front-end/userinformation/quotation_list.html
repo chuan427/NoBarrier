@@ -152,6 +152,7 @@
 					<tr style="background-color: #CCCCFF">
 						<th>序號</th>
 						<th>日期</th>
+						<th>會員</th>
 						<th>商品名稱</th>
 						<th>數量</th>
 						<th>單位</th>
@@ -167,6 +168,8 @@
 						<tr>
 							<td th:text="${quoVOStat.count}"></td>
 							<td th:text="${quoVO.quoDate}"></td>
+							<td
+									th:text="${quoVO.userVO.userId + '-[' + quoVO.userVO.comName + ']'}"></td>
 							<td th:text="${quoVO.quoProdname}"></td>
 							<td th:text="${quoVO.quoProdqty}"></td>
 							<td th:text="${quoVO.quoUnitname}"></td>
