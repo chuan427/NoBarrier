@@ -20,16 +20,16 @@ public class ProductInformationService {
         repository.save(productInformationVO);
     }
 
-    public void deleteProductInformation(Integer pinfoNum) {
-        if (repository.existsById(pinfoNum)) {
-            repository.deleteById(pinfoNum);
+    public void deleteProductInformation(Integer pinfoUserid) {
+        if (repository.existsById(pinfoUserid)) {
+            repository.deleteById(pinfoUserid);
         } else {
             throw new IllegalArgumentException("產品資訊不存在");
         }
     }
 
-    public ProductInformationVO getOneProductInformation(Integer pinfoNum) {
-        Optional<ProductInformationVO> optional = repository.findById(pinfoNum);
+    public ProductInformationVO getOneProductInformation(Integer pinfoUserid) {
+        Optional<ProductInformationVO> optional = repository.findById(pinfoUserid);
         return optional.orElse(null);
     }
 

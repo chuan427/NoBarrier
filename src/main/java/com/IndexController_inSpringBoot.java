@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +30,8 @@ import com.forumreport.model.ForumReportService;
 import com.forumreport.model.ForumReportVO;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.limitsale.model.LimitSaleService;
+import com.limitsale.model.LimitSaleVO;
 import com.newsmodel.NewsService;
 import com.newsmodel.NewsVO;
 import com.productinformation.model.ProductInformationService;
@@ -95,6 +94,9 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	ForumReportService forumReportSvc;
 	
+	@Autowired
+	LimitSaleService limitSaleSvc;
+	
 
 //	@Autowired
 //	NotificationService notificationSvc;
@@ -118,9 +120,6 @@ public class IndexController_inSpringBoot {
 	//----------------------------------------------------
 	@RequestMapping("/")
 	public String toIndex(Model model) {
-//		Integer	userId = 2;
-//		 model.addAttribute("userId", userId);
-//		 System.out.println(userId);
 		return "index";
 	}
 
@@ -181,13 +180,19 @@ public class IndexController_inSpringBoot {
 	
 
 	// 廠商資訊 完成
-	@GetMapping("/com/com_homepage/{userId}")
-	public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
-	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
-	    // 將相關數據添加到 Model 中，以便在視圖中使用
-	    model.addAttribute("userVO", userVO);
-	    return "front-end/com/com_homepage"; // view
-	}
+//	@GetMapping("/com/com_homepage")
+//	public String homepage() {
+//	    return "front-end/com/com_homepage"; // view
+//	}
+	// 廠商資訊 完成
+    @GetMapping("/com/com_homepage/{userId}")
+    public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
+        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+        // 將相關數據添加到 Model 中，以便在視圖中使用
+
+        model.addAttribute("userVO", userVO);
+        return "front-end/com/com_homepage"; // view
+    }
 
 	// 廠商資訊 完成
 	@GetMapping("/com/com")
@@ -212,15 +217,6 @@ public class IndexController_inSpringBoot {
 	public String editmember_ad_view() {
 		return "front-end/com/editmember_ad_view"; // view
 	}
-	
-	@GetMapping("/com/editmember_ad_view/{userId}")
-	public String editmember_ad_view(@PathVariable("userId") UserVO userVO, Model model) {
-	    // 根据 id 执行相应的逻辑，例如获取特定的厂商信息
-	    // 将相关数据添加到 Model 中，以便在视图中使用
-	    model.addAttribute("userVO", userVO);
-	    return "front-end/com/editmember_ad_view"; // view
-	}
-	
 
 	// 廠商廣告編輯頁面 完成
 	@GetMapping("/com/editmember_ad")
@@ -278,6 +274,11 @@ public class IndexController_inSpringBoot {
 		    model.addAttribute("userVO", userVO);
 		    return "front-end/com/member_AboutUs"; // view
 		}
+////	 廠商產品資訊編輯頁面 完成
+//	@GetMapping("/com/member_AboutUs")
+//	public String member_AboutUs () {
+//			    return "front-end/com/member_AboutUs"; // view
+//			}
 	
 	// 廠商產品資訊 完成
 	@GetMapping("/com/member_Prod/{userId}")
@@ -289,6 +290,11 @@ public class IndexController_inSpringBoot {
 	    model.addAttribute("productInformationVO", productInformationVO);
 	    return "front-end/com/member_Prod"; // view
 	}
+////	 廠商產品資訊編輯頁面 完成
+//		@GetMapping("/com/member_Prod")
+//		public String member_Prod () {
+//				    return "front-end/com/member_Prod"; // view
+//				}
 
 	// 訂單聊天室 成功
 	@GetMapping("/order/chatroom")
@@ -650,6 +656,35 @@ public class IndexController_inSpringBoot {
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
+// -------------------------------limitsale-----------------------------------
+	
+	@GetMapping("/limitSale/select_page")
+	public String select_page(Model model) {
+		return "back-end/limitSale/select_page";
+	}
+    
+    @GetMapping("limitSale/listAllLimitSale")
+	public String listAllLimitSale(Model model) {
+		return "back-end/limitSale/listAllLimitSale";
+	}
+    
+    @ModelAttribute("limitSaleListData")  // for select_page.html 第行用 // for listAllUser.html 第行用
+	protected List<LimitSaleVO> referenceListData_limitsale(Model model) {
+		
+    	List<LimitSaleVO> list = limitSaleSvc.getAll();
+		return list;
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
