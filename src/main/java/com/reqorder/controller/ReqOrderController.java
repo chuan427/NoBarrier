@@ -61,10 +61,12 @@ public class ReqOrderController {
         return "front-end/userinformation/addReqOrder";
     }
     
-    @GetMapping("/userpage/{userId}")
-    public List<ReqOrderVO> getOrdersByUserId(@PathVariable Integer userId) {
-        return reqOrderSvc.getReqOrderByUserId(userId);
-    }
+//	@GetMapping("/userpage")
+//    public List<ReqOrderVO> getOrdersByUserId(HttpSession session) {
+//		
+//	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//        return reqOrderSvc.getReqOrderByUserId(userVO.getUserId());
+//    }
 
 
     @PostMapping("insertreq")

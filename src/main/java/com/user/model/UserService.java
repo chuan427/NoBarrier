@@ -1,6 +1,7 @@
 package com.user.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.forumpost.model.ForumPostVO;
-
+import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderVO;
 
 
@@ -86,6 +87,19 @@ public class UserService {
 		public List<UserVO> getAll() {
 			return repository.findAll();
 		}
+		
+		public List<UserVO> getOneStatUser(UserVO userVO) {
+	        List<UserVO> allUser = repository.findAll();
+	        List<UserVO> validUser = new ArrayList<>();
+
+	        for (UserVO User : allUser) {
+	            if (User.getUserId() == userVO.getUserId() && User.getComIsValid() == 1) {
+	                validUser.add(User);
+	            }
+	        }
+	        return validUser;
+	    }
+		
 	
 		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
 			return getOneUser(userId).getReqOrder();

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>member_center</title>
+
+<!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
+
+<style>
+main {
+	width: 100%;
+	/* 設定寬度為100% */
+	max-width: 1200px;
+	/* 設定最大寬度，可以根據需要調整 */
+	margin: 0 auto;
+	/* 水平居中 */
+	height: 500px;
+	/* 設定高度，可以根據需要調整 */
+	overflow: auto;
+	/* 添加捲軸，如果內容超出高度 */
+}
+
+.pass_show {
+	position: relative;
+}
+
+.pass_show .ptxt {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	z-index: 1;
+	color: #f36c01;
+	margin-top: -10px;
+	cursor: pointer;
+	transition: 0.3s ease all;
+}
+
+.pass_show .ptxt:hover {
+	color: #333333;
+}
+
+.button-add {
+	min-width: 100px;
+}
+
+.container-add-style {
+	width: calc(100% - 130px);
+}
+
+.header-add-style {
+	margin-bottom: 20px;
+}
+
+.footer-add-style {
+	margin-bottom: 0 !important;
+}
+
+.button-add-style-2 {
+	border-radius: 5px !important;
+	bottom: 6px;
+	line-height: 0;
+	font-size: 14px;
+	width: 63px;
+}
+
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: #7e8287 !important;
+}
+
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
+
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
+
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000;
+	/* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+
+.input-group {
+	display: flex;
+	justify-content: space-between;
+}
+
+.input-group input {
+	flex: 1;
+	margin-right: 20px; /* 調整按鈕和輸入框之間的間距 */
+}
+</style>
+</head>
+
+<body>
+	<!-- <header> -->
+<head th:insert="~{/front-end/header_login}"></head>
+
+<div class="container">
+	<h2>會員中心</h2>
+	<div style="margin-top: 30px"></div>
+	<main>
+		<div class="d-flex align-items-start">
+			<div class="nav flex-column nav-pills me-3" id="v-pills-tab"
+				role="tablist" aria-orientation="vertical">
+
+				<a class="nav-link active button-add" id="v-pills-home-tab"
+					href="/userinformation/memberCen" role="tab"
+					aria-controls="v-pills-home" aria-selected="true"> 资料修改 </a>
+
+				<div style="margin-top: 30px"></div>
+				<a class="nav-link active button-add" id="v-pills-home-tab"
+					href="/userinformation/memberCen1" role="tab"
+					aria-controls="v-pills-home" aria-selected="true"> 帳戶資訊 </a>
+
+				<div style="margin-top: 30px"></div>
+				<a class="nav-link active button-add" id="v-pills-home-tab"
+					href="/userinformation/memberCen2" role="tab"
+					aria-controls="v-pills-home" aria-selected="true"> 更改密碼 </a>
+			</div>
+
+			<!-- 加了 container-add-style -->
+			<div class="tab-content container-add-style" id="v-pills-tabContent">
+			
+				<div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+					aria-labelledby="v-pills-messages-tab">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-4">
+								<form action="#">
+									<label for="comPassword" class="form-label">Current
+										Password</label>
+									<div class="input-group mb-3 pass_show">
+										<input type="password" class="form-control" id="comPassword"
+											name="comPassword" th:value="${currentPassword}" readonly />
+										<button
+											class="btn btn-outline-secondary ptxt button-add-style-2"
+											type="button">Show</button>
+									</div>
+
+									<label for="newPassword" class="form-label">New
+										Password</label>
+									<div class="input-group mb-3 pass_show">
+										<input type="password" class="form-control" id="newPassword"
+											name="newPassword" placeholder="New Password" />
+										<button
+											class="btn btn-outline-secondary ptxt button-add-style-2"
+											type="button">Show</button>
+									</div>
+
+									<label for="confirmPassword" class="form-label">Confirm
+										Password</label>
+									<div class="input-group mb-3 pass_show">
+										<input type="password" class="form-control"
+											id="confirmPassword" name="confirmPassword"
+											placeholder="Confirm Password" />
+										<button
+											class="btn btn-outline-secondary ptxt button-add-style-2"
+											type="button">Show</button>
+									</div>
+									<button type="submit" class="btn btn-secondary">確認修改</button>
+								</form>
+
+							</div>
+						</div>
+					</div> 
+
+				<script>
+					document
+							.addEventListener(
+									"DOMContentLoaded",
+									function() {
+										var showPasswordButtons = document
+												.querySelectorAll(".pass_show .ptxt");
+										showPasswordButtons
+												.forEach(function(button) {
+													button
+															.addEventListener(
+																	"click",
+																	function() {
+																		var passwordInput = this.previousElementSibling;
+																		passwordInput.type = passwordInput.type === "password" ? "text"
+																				: "password";
+																		this.textContent = passwordInput.type === "password" ? "Show"
+																				: "Hide";
+																	});
+												});
+									});
+				</script>
+			</div>
+		</div>
+</div>
+</main>
+</div>
+
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>

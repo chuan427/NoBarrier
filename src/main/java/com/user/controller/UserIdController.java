@@ -30,7 +30,7 @@ import java.util.*;
 
 @Controller
 @Validated
-@RequestMapping("/user")
+@RequestMapping("/userinformation")
 public class UserIdController {
 	
 	@Autowired
@@ -59,14 +59,14 @@ public class UserIdController {
 		
 		if (userVO == null) {
 			model.addAttribute("errorMessage", "查無資料");
-			return "back-end/user/select_page";
+			return "front-end/userinformation/memberCen";
 		}
 		
 		/***************************3.查詢完成,準備轉交(Send the Success view)*****************/
 		model.addAttribute("userVO", userVO);
 		model.addAttribute("getOne_For_Display", "true"); // 旗標getOne_For_Display見select_page.html的第126行 -->
 		
-		return "back-end/user/select_page"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneUser-div
+		return "front-end/userinformation/memberCen"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneUser-div
 	}
 
 	
@@ -82,7 +82,7 @@ public class UserIdController {
 		model.addAttribute("userListData", list); // for select_page.html 第行用
 		
 		String message = strBuilder.toString();
-	    return new ModelAndView("back-end/user/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
+	    return new ModelAndView("front-end/userinformation/memberCen", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}
 	
 }

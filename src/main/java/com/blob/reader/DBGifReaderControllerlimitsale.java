@@ -16,7 +16,7 @@ import com.limitsale.model.LimitSaleService;
 
 @Controller
 @RequestMapping("/limitSale")
-public class DBGifReaderController {
+public class DBGifReaderControllerlimitsale {
 	
 	@Autowired
 	LimitSaleService limitSaleSvc;
