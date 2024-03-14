@@ -10,21 +10,18 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.order.model.OrderService;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
-import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -42,6 +39,8 @@ public class QuoController {
 	@Autowired
 	ReqOrderService reqOrderSvc;
 
+	@Autowired
+	OrderService orderSvc;
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */

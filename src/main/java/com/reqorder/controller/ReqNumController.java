@@ -1,7 +1,9 @@
 package com.reqorder.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.Digits;
@@ -20,12 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.order.model.OrderService;
 import com.quo.model.QuoService;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
-
-import java.util.*;
 
 @Controller
 @Validated
@@ -40,6 +41,9 @@ public class ReqNumController {
 	
 	@Autowired
 	UserService userSvc;
+	
+	@Autowired
+	OrderService orderSvc;
 	
 	@PostMapping("getOne_For_Display")
 	public String getOne_For_Display(

@@ -40,6 +40,8 @@ import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
 import com.newsmodel.NewsService;
 import com.newsmodel.NewsVO;
+import com.order.model.OrderService;
+import com.order.model.OrderVO;
 import com.productinformation.model.ProductInformationService;
 import com.productinformation.model.ProductInformationVO;
 import com.questionList.model.QueListService;
@@ -103,6 +105,8 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	LimitSaleService limitSaleSvc;
 	
+	@Autowired
+	OrderService orderSvc;
 
 //	@Autowired
 //	NotificationService notificationSvc;
@@ -899,10 +903,15 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-
+ // -------------------------------order-----------------------------------
 	
 	
-	
+  	@ModelAttribute("orderListData")
+  	protected List<OrderVO> referenceListOrderData(){
+  	List<OrderVO> list = orderSvc.getAll();
+  	return list;
+  	}
+  	
 	
 	
 	
