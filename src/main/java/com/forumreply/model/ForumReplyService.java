@@ -46,4 +46,5 @@ public class ForumReplyService {
 			return getOneForumReply(frpFrNum).getForumReport();
 		}
 	
+
 }

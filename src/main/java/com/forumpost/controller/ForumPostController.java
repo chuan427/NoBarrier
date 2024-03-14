@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.forumpost.model.ForumPostService;
 import com.forumpost.model.ForumPostVO;
@@ -47,7 +49,7 @@ public class ForumPostController {
 	 * This method will serve as addEmp.html handler.
 	 */
 
-	@GetMapping("/forum/addForumPost")
+	@GetMapping("/addForumPost")
 	public String addForumPost(ModelMap model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
 		model.addAttribute("forumPostVO", forumPostVO);
@@ -74,7 +76,7 @@ public class ForumPostController {
 		}
 		// 即使沒有上傳圖片，也可以繼續進行其他處理流程
 		if (result.hasErrors()) {
-			return "front-end/forum/forum/addForumPost";
+			return "front-end/forum/addForumPost";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -87,7 +89,7 @@ public class ForumPostController {
 		List<ForumPostVO> list = forumPostSvc.getAll();
 		model.addAttribute("forumPostListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		
+
 		return "redirect:/forum/forumIndex"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
@@ -95,7 +97,7 @@ public class ForumPostController {
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
 	 */
-	@PostMapping("getOne_For_Update")
+	@GetMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("fpNum") String fpNum, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		/*************************** 2.開始查詢資料 *****************************************/
@@ -104,59 +106,48 @@ public class ForumPostController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("forumPostVO", forumPostVO);
-		return "front-end/forum/forum/listOneForumPost"; // 查詢完成後轉交update_user_input.html
+		return "front-end/forum/updateForumPost"; // 查詢完成後轉交update_user_input.html
 	}
 
-	/*
-	 * This method will be called on update_user_input.html form submission,
-	 * handling POST request It also validates the user input
-	 */
 	@PostMapping("update")
 	public String update(@Valid ForumPostVO forumPostVO, BindingResult result, ModelMap model,
-			@RequestParam("fpImage") MultipartFile[] parts) throws IOException {
+			@RequestParam("fpImage") MultipartFile[] parts, RedirectAttributes redirectAttributes) throws IOException {
 
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(forumPostVO, result, "fpImage");
-
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
-			// EmpService empSvc = new EmpService();
-			byte[] fpImage = forumPostSvc.getOneForumPost(forumPostVO.getFpNum()).getFpImage();
-			forumPostVO.setFpImage(fpImage);
-
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] fpImage = multipartFile.getBytes();
-				forumPostVO.setFpImage(fpImage);
-
-			}
+		// 檢查文章內容長度
+		if (forumPostVO.getFpContent().trim().length() < 20) {
+			result.rejectValue("fpContent", "error.fpContent", "文章內容不能少於20字");
 		}
+
+		// 檢查是否有其他驗證錯誤
 		if (result.hasErrors()) {
+			// 將有錯誤的forumPostVO和其他必要的model屬性添加到model中，以便返回到表單頁面時能夠顯示錯誤訊息和保留用戶輸入
+			model.addAttribute("forumPostVO", forumPostVO);
+			// 其他必要的model屬性...
 			return "front-end/forum/updateForumPost";
 		}
-		/*************************** 2.開始修改資料 *****************************************/
-//		EmpService empSvc = new EmpService();
-//		ForumPostVO originalTime = forumPostSvc.getOneForumPost(forumPostVO.getFpNum());
-//		forumPostVO.setFpTime(originalTime.getFpTime());
+
+		// 處理圖片上傳
+		if (!parts[0].isEmpty()) {
+			byte[] buf = parts[0].getBytes();
+			forumPostVO.setFpImage(buf);
+		} else {
+			byte[] existingImage = forumPostSvc.getOneForumPost(forumPostVO.getFpNum()).getFpImage();
+			forumPostVO.setFpImage(existingImage);
+		}
+
+		// 更新文章
 		long currentTimeMillis = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
 		forumPostVO.setFpUpdate(currentTimestamp);
 		forumPostSvc.updateForumPost(forumPostVO);
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		forumPostVO = forumPostSvc.getOneForumPost(Integer.valueOf(forumPostVO.getFpNum()));
-		model.addAttribute("forumPostVO", forumPostVO);
-		return "front-end/forum/forumIndex"; // 修改成功後轉交listOneUser.html
+
+		// 使用RedirectAttributes傳遞成功訊息
+		redirectAttributes.addFlashAttribute("successMessage", "文章修改成功！");
+
+		// 重定向到該文章的詳細頁面，確保你的URL模式和@GetMapping相匹配
+		return "redirect:/forum/listOneForumPost/" + forumPostVO.getFpNum();
 	}
-
-
-//	@GetMapping("/index")
-//	public String showLatestPost(Model model) {
-//		ForumPostVO forumPostVO = new ForumPostVO();
-//		forumPostVO = forumPostSvc.getLatestPost();
-//		model.addAttribute("forumPostVO", forumPostVO);
-//		return "front-end/forum/forumIndex"; 
-//	}
 
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
@@ -192,31 +183,47 @@ public class ForumPostController {
 		}
 		return result;
 	}
-
-	/*
-	 * 第一種作法 Method used to populate the List Data in view. 如 : <form:select
-	 * path="deptno" id="deptno" items="${deptListData}" itemValue="deptno"
-	 * itemLabel="dname" />
-	 */
-//	@ModelAttribute("deptListData")
-//	protected List<DeptVO> referenceListData() {
-//		// DeptService deptSvc = new DeptService();
-//		List<DeptVO> list = deptSvc.getAll();
-//		return list;
-//	}
-
-	/*
-	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : <form:select
-	 * path="deptno" id="deptno" items="${depMapData}" />
-	 */
-//	@ModelAttribute("deptMapData") //
-//	protected Map<Integer, String> referenceMapData() {
-//		Map<Integer, String> map = new LinkedHashMap<Integer, String>();
-//		map.put(10, "財務部");
-//		map.put(20, "研發部");
-//		map.put(30, "業務部");
-//		map.put(40, "生管部");
-//		return map;
-//	}
-
 }
+
+
+
+/*
+ * This method will be called on update_user_input.html form submission,
+ * handling POST request It also validates the user input
+ */
+//@PostMapping("update")
+//public String update(@Valid ForumPostVO forumPostVO, BindingResult result, ModelMap model,
+//		@RequestParam("fpImage") MultipartFile[] parts) throws IOException {
+//
+//	/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//	// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//	result = removeFieldError(forumPostVO, result, "fpImage");
+//
+//	if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
+//		// EmpService empSvc = new EmpService();
+//		byte[] fpImage = forumPostSvc.getOneForumPost(forumPostVO.getFpNum()).getFpImage();
+//		forumPostVO.setFpImage(fpImage);
+//
+//	} else {
+//		for (MultipartFile multipartFile : parts) {
+//			byte[] fpImage = multipartFile.getBytes();
+//			forumPostVO.setFpImage(fpImage);
+//
+//		}
+//	}
+//	if (result.hasErrors()) {
+//		return "front-end/forum/updateForumPost";
+//	}
+//	/*************************** 2.開始修改資料 *****************************************/
+//	ForumPostVO originalTime = forumPostSvc.getOneForumPost(forumPostVO.getFpNum());
+//	forumPostVO.setFpTime(originalTime.getFpTime());
+//	long currentTimeMillis = System.currentTimeMillis();
+//	Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+//	forumPostVO.setFpUpdate(currentTimestamp);
+//	forumPostSvc.updateForumPost(forumPostVO);
+//	/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//	model.addAttribute("success", "- (修改成功)");
+//	forumPostVO = forumPostSvc.getOneForumPost(Integer.valueOf(forumPostVO.getFpNum()));
+//	model.addAttribute("forumPostVO", forumPostVO);
+//	return "front-end/forum/forumIndex"; // 修改成功後轉交listOneUser.html
+//}

@@ -63,7 +63,7 @@
                 <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
                 
             <div id="menu" class="menu" style="display: none;">
-   			 <a th:href="@{/forum/forum/getOne_For_Update}">
+   			 <a th:href="@{/forum/getOne_For_Update(fpNum=${forumPostVO.fpNum})}">
         	<i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i>編輯文章</a>
     		<a href="javascript:void(0);" th:onclick="'deletePostAndRedirect(' + ${forumPostVO.fpNum} + ');'">
     		<i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章
@@ -80,7 +80,7 @@
               
               <br>
          
-             <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 35)}">
+             <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 20)}">
     		<span th:text="${shortContent}">文章開頭內容</span><a>...</a>
     		 <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${forumPostVO.fpNum})}" >閱讀全文</a>
 			</p>	
