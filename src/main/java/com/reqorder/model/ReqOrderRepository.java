@@ -21,4 +21,5 @@ public interface ReqOrderRepository extends JpaRepository<ReqOrderVO, Integer>{
 	@Query(value = "SELECT r FROM ReqOrderVO r WHERE r.userVO.userId = :userId")
 	List<ReqOrderVO> findByUserId(@Param("userId") Integer userId);
 
+
 }

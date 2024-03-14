@@ -71,9 +71,10 @@
 	padding: 5px;
 	font-size: 12px;
 }
+
 th, td {
-    white-space: nowrap;
-    min-width: 100px; /* 設置最小寬度 */
+	white-space: nowrap;
+	min-width: 100px; /* 設置最小寬度 */
 }
 </style>
 </head>
@@ -155,8 +156,12 @@ th, td {
 			<div
 				class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
 				<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-					二哥公司!</span>
+					<span th:text="${comName}">User</span>!
+				</span>
 			</div>
+
+
+
 			<div class="user-profile">
 				<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170"
 					fill="currentColor" style="padding-left: 60px;"
@@ -202,73 +207,51 @@ th, td {
 			<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
 				aria-labelledby="nav-home-tab" tabindex="0"
 				style="overflow-y: scroll; max-height: 700px;">
-				<ul id="orderList" class="list-group">
-					<table id="example1" class="display" style="width: 100%">
-						<thead>
-							<tr style="background-color: #CCCCFF">
-								<th>序號</th>
-								<th>日期</th>
-								<th>產業類別</th>
-								<th>會員</th>
-								<th>商品名稱</th>
-								<th>數量</th>
-								<th>單位</th>
-								<th>文字敘述</th>
-								<th>照片</th>
-								<th>報價</th>
-								<th>忽略</th>
-							</tr>
-						</thead>
-						<tbody>
-							<th:block th:each="reqOrderVO : ${reqOrderListData}">
-								<tr>
-									<td th:text="${reqOrderVOStat.count}"></td>
-									<td th:text="${reqOrderVO.reqOrderdate}"></td>
-									<td
-										th:text="${reqOrderVO.industryVO.industryNum == 1 ? '螺絲和緊固件' :
-                    (reqOrderVO.industryVO.industryNum == 2 ? '工業加工' :
-                    (reqOrderVO.industryVO.industryNum == 3 ? '照明配件' :
-                    (reqOrderVO.industryVO.industryNum == 4 ? '金屬物件' :
-                    (reqOrderVO.industryVO.industryNum == 5 ? '機械材料' :
-                    (reqOrderVO.industryVO.industryNum == 6 ? '電子元件' :
-                    (reqOrderVO.industryVO.industryNum == 7 ? '塑膠零件' :
-                    (reqOrderVO.industryVO.industryNum == 8 ? '其他' : '')))))))}"></td>
-
-									<td
-										th:text="${reqOrderVO.userVO.userId} + '-[' + ${reqOrderVO.userVO.comName} + ']'"></td>
-
-									<td th:text="${reqOrderVO.reqProdname}"></td>
-									<td th:text="${reqOrderVO.reqProdqty}"></td>
-									<td th:text="${reqOrderVO.reqUnitname}"></td>
-									<td th:text="${reqOrderVO.reqDes}"></td>
-									<td><img
-										th:src="@{/reqorder/DBGifReader} + '?reqNum=' + ${reqOrderVO.reqNum}"
-										width="100px"></td>
-
-									<td><a th:href="@{/userinformation/addQuotation}"> <input
-											type="submit" value="報價"> <input type="hidden"
+				<table id="example1" class="display" style="width: 100%">
+					<thead>
+						<tr style="background-color: #CCCCFF">
+							<th>序號</th>
+							<th>日期</th>
+							<th>產業類別</th>
+							<th>會員</th>
+							<th>商品名稱</th>
+							<th>數量</th>
+							<th>單位</th>
+							<th>文字敘述</th>
+							<th>照片</th>
+							<th>報價</th>
+							<th>忽略</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="reqOrderVO, stat : ${reqOrderListData}">
+							<tr>
+								<td th:text="${stat.count}"></td>
+								<td th:text="${reqOrderVO.reqOrderdate}"></td>
+								<td th:text="${reqOrderVO.industryVO.industryName}"></td>
+								<td
+									th:text="${reqOrderVO.userVO.userId + '-[' + reqOrderVO.userVO.comName + ']'}"></td>
+								<td th:text="${reqOrderVO.reqProdname}"></td>
+								<td th:text="${reqOrderVO.reqProdqty}"></td>
+								<td th:text="${reqOrderVO.reqUnitname}"></td>
+								<td th:text="${reqOrderVO.reqDes}"></td>
+								<td><img
+									th:src="@{/reqorder/DBGifReader(reqNum=${reqOrderVO.reqNum})}"
+									width="100px"></td>
+								<td><a
+									th:href="@{/userinformation/addQuotation(reqNum=${reqOrderVO.reqNum})}"><input
+										type="submit" value="報價"></a></td>
+								<td><form method="post"
+										th:action="@{/userinformation/userpage/complete}">
+										<input type="submit" value="忽略"><input type="hidden"
 											name="reqNum" th:value="${reqOrderVO.reqNum}">
-									</a> <!-- <form method="post"
-											th:action="@{/userinformation/addQuotation}"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="報價"> <input type="hidden"
-												name="reqNum" th:value="${reqOrderVO.reqNum}">
-										</form> --></td>
-									<td>
-										<form method="post"
-											th:action="@{/userinformation/userpage/complete}"
-											style="margin-bottom: 0px;">
-											<input type="submit" value="忽略"> <input type="hidden"
-												name="reqNum" th:value="${reqOrderVO.reqNum}">
-										</form>
-
-									</td>
-								</tr>
-							</th:block>
-						</tbody>
-					</table>
-				</ul>
+									</form></td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
 			</div>
+
 		</div>
 
 		<div class="tab-pane fade" id="nav-profile" role="tabpanel"
@@ -280,6 +263,7 @@ th, td {
 						<tr style="background-color: #CCCCFF">
 							<th>序號</th>
 							<th>日期</th>
+							<th>會員</th>
 							<th>商品名稱</th>
 							<th>數量</th>
 							<th>單位</th>
@@ -292,6 +276,8 @@ th, td {
 							<tr>
 								<td th:text="${quoVOStat.count}"></td>
 								<td th:text="${quoVO.quoDate}"></td>
+								<td
+									th:text="${quoVO.userVO.userId + '-[' + quoVO.userVO.comName + ']'}"></td>
 								<td th:text="${quoVO.quoProdname}"></td>
 								<td th:text="${quoVO.quoProdqty}"></td>
 								<td th:text="${quoVO.quoUnitname}"></td>

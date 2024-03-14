@@ -383,36 +383,61 @@ public class IndexController_inSpringBoot {
 
 	// -------------------需求單-----------------------
 	@GetMapping("/userinformation/userpage")
-	public String userpage(Model model) {
-		return "front-end/userinformation/userpage";
+	public String userpage(Model model, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
+
+	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+	    model.addAttribute("reqOrderListData", list);
+	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+	    return "front-end/userinformation/userpage";
 	}
-	
-	@ModelAttribute("reqOrderListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+
+	@ModelAttribute("reqOrderListData")
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-		
-		if (userVO == null) {
-			return null;
-		} else {
-			List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-			List<ReqOrderVO> list2 = reqOrderSvc.getOneStatQuestions(userVO);
-			return list;
-		}
-		
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+	    if (userVO == null) {
+	        return null;
+	    } else {
+//	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+//			return list;
+	        return reqOrderSvc.getOneStatReqOrder(userVO);
+	    }
 	}
 
 	// ----------------報價單--------------------
 		@GetMapping("/userinformation/quotation_list")
-		public String quotation_list(Model model) {
+		public String quotation_list(Model model, HttpServletRequest request) {
+			HttpSession session = request.getSession();
+		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		    
+		    if (userVO == null) {
+		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		    }
+
+		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+		    model.addAttribute("quoListData", list);
+		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 			return "front-end/userinformation/quotation_list";
 		}
 
 		@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-		protected List<QuoVO> referenceListData(Model model) {
+		protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-			List<QuoVO> list = quoSvc.getAll();
-			return list;
+		    if (userVO == null) {
+		        return null;
+		    } else {
+		        return quoSvc.getOneStatQuotation(userVO);
+		    }
+
 		}
 	
 

@@ -1,6 +1,7 @@
 package com.reqorder.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -41,11 +42,22 @@ public class ReqOrderController {
 
     @Autowired
     IndustryService industrySvc;
-
+    
+    
     @GetMapping("/addReqOrder")
-    public String addReqOrder(ModelMap model) {
+    public String addReqOrder(ModelMap model, HttpServletRequest request) {
+    	HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
+
+	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+	    
         ReqOrderVO reqOrderVO = new ReqOrderVO();
         model.addAttribute("reqOrderVO", reqOrderVO);
+        model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
         return "front-end/userinformation/addReqOrder";
     }
     
@@ -81,9 +93,8 @@ public class ReqOrderController {
 //        List<ReqOrderVO> list = reqOrderSvc.getAll();
 //        model.addAttribute("reqOrderListData", list);
         
-        List<ReqOrderVO> list = reqOrderSvc.getOneStatQuestions(userVO);
+        List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
         model.addAttribute("reqOrderListData", list);
-        
         model.addAttribute("success", "- (新增成功)");
         return "redirect:/userinformation/userpage";
     }
@@ -122,23 +133,6 @@ public class ReqOrderController {
 //        return "front-end/userinformation/req_userpage";
 //    }
 
-//    @PostMapping("complete")
-//    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
-//        if (reqNum == null) {
-//            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
-//            return "errorPage"; // 返回一個錯誤頁面
-//        }
-//
-//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-//        int valid = 1;
-//        reqOrderVO.setReqIsValid(valid);
-//        reqOrderSvc.updateReqOrder(reqOrderVO);
-//
-//        model.addAttribute("success", "- (完成需求)");
-//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-//        model.addAttribute("reqOrderVO", reqOrderVO);
-//        return "front-end/userinformation/req_userpage";
-//    }
     @PostMapping("/userpage/complete")
     public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
         if (reqNum == null) {
