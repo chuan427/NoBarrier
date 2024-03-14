@@ -533,11 +533,19 @@ public class IndexController_inSpringBoot {
 
 	//------------------------ForumPost--------------------------------------
 	
-	@GetMapping("/forumPost/select_page1")
-	public String select_page1(Model model) {
-		return "back-end/forumPost/select_page1";
+	@GetMapping("/forum/listOneForumPost/{fpNum}")
+	public String listOneForumPost(@PathVariable("fpNum") Integer fpNum, Model model) {
+	    ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(fpNum);
+	    if (forumPostVO != null) {
+	        model.addAttribute("forumPostVO", forumPostVO);
+	        return "front-end/forum/listOneForumPost";
+	    } else {
+	        model.addAttribute("errorMessage", "查無此文章資料");
+	        return "redirect:/forum/forumIndex"; // 或是重定向到一個錯誤頁面或文章列表頁面
+	    }
 	}
 
+	
 	@GetMapping("/forum/forumIndex")
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
@@ -545,6 +553,8 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
+	
+	
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {

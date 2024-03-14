@@ -37,17 +37,18 @@ body {
 	color: #ffffff !important;
 }
 
+
 .transparent-box {
+	display: flex;
 	background-color: rgba(245, 233, 233, 0.5);
+    width: 90%; /* 或其他你希望的寬度 */
 	padding: 15px;
-	width: 60%;
-	margin-right: auto; /* 推動到左側 */
-	max-width: 2000px;
+	max-width: 1300px;
 	margin-bottom: 20px;
 	border-radius: 15px;
 	flex: 1; /* 讓主內容彈性填滿除側邊欄外的空間 */
-	margin-right: 20px; /* 添加右邊距，與側邊欄保持間距 */
-	margin-left: 50px; /* 添加右邊距，與側邊欄保持間距 */
+	margin-right: 30px; /* 添加右邊距，與側邊欄保持間距 */
+	margin-left: 65px; /* 添加右邊距，與側邊欄保持間距 */
 }
 
 .content {
@@ -73,10 +74,6 @@ body {
 	justify-content: space-between;
 }
 
-.post-header i {
-	align-self: right; /* 將圖標置於左邊 */
-}
-
 .title-time-container {
 	width: 100%; /* 確保容器佔滿整行 */
 	display: flex;
@@ -95,33 +92,15 @@ body {
 
 .fabotton {
 	display: flex;
-	justify-content: flex-end; /* 正確地將內容對齊到右邊 */
 	gap: 25px; /* 在圖標之間添加一些間隙 */
 }
-
-/* 側邊欄位 */
-.sidebar {
-	background-color: rgba(245, 233, 233, 0.5); /* 背景色 */
-	width: 25%;
-	padding: 20px;
-	border-radius: 15px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	position: absolute;
-	left: 880px;
-	top: 185px;
-}
-
-/* 使用者及3個點點圖示 & USER顯示名稱 */
 
 /* 使用者及3個點點圖示 & USER顯示名稱 */
 
 .icon-wrapper {
-	display: flex;
-	justify-content: space-between; /* 使圖示分別對齊到左右兩側 */
-	align-items: center;
-	width: 100%; /* 或根據需要設定特定的寬度 */
-	position: relative;
-    top: -3px; /* 或其他根據實際情況調整的值 */
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .user-name {
@@ -150,47 +129,33 @@ body {
 	margin: 5px 0;
 }
 
-/* 搜尋Bar */
-.search-form {
-	display: flex; /* 使用 flexbox 佈局 */
-	margin-bottom: 35px; /* 按需調整 */
-	margin-left: 60px; /* 增加左側外邊距 */
+.comments-section {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.search-input {
-	padding: 5px;
-	width: 400px; /* 設定固定寬度 */
-	border: 1px solid #ccc; /* 邊框樣式 */
-	border-radius: 5px 0 0 5px; /* 左側圓角 */
-	outline: none; /* 移除輸入框的默認輪廓 */
+
+/* 留言部份 */
+
+.comment {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eaeaea;
 }
 
-.search-button {
-	padding: 8px 12px;
-	border: none;
-	border-radius: 0 5px 5px 0; /* 右側圓角 */
-	cursor: pointer;
-	outline: none;
+.comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
 }
 
-.search-button i {
-	font-size: 16px; /* FontAwesome 圖標大小 */
+.comment-header .fa-user-circle {
+    margin-right: 10px;
 }
 
-.new-article-button {
-	padding: 8px 15px; /* 按需調整 */
-	margin-left: 590px; /* 把按鈕推到右側 */
-	border: 2px solid white; /* 加上白色邊框 */
-	border-radius: 15px; /* 圓角設定 */
-	background-color: transparent; /* 移除底色，設為透明 */
-	color: white; /* 文字顏色 */
-	cursor: pointer; /* 滑鼠標誌變更 */
-	text-decoration: none; /* 移除超鏈接下劃線 */
-	display: inline-block; /* 使超鏈接的布局表現如按鈕 */
-}
-
-.new-article-button:hover {
-	background-color: grey; /* 滑鼠懸停時的背景色，可調整為淡灰色或其他顏色 */
-	border-color: #007bff; /* 滑鼠懸停時的邊框顏色變化 */
-	color: #007bff; /* 滑鼠懸停時文字顏色變化 */
+.comment-time {
+    margin-left: auto;
+    color: #666;
 }
