@@ -683,6 +683,119 @@ public class IndexController_inSpringBoot {
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
+	
+	
+	//--------------------------後臺管理----------------------------------------------------
+	
+		@GetMapping("/ad_order")
+		public String ad_order() {
+			return "back-end/ad_order"; // view
+		}
+
+		@GetMapping("/advertising")
+		public String advertising() {
+			return "back-end/advertising"; // view
+		}
+		
+		@GetMapping("/arrived")
+		public String arrived() {
+			return "back-end/arrived"; // view
+		}
+		
+		@GetMapping("/authorization_new_member")
+		public String authorization_new_member() {
+			return "back-end/authorization_new_member"; // view
+		}
+		
+		@GetMapping("/authorization_update_member")
+		public String authorization_update_member() {
+			return "back-end/authorization_update_member"; // view
+		}
+			
+		@GetMapping("/buy_list")
+		public String buy_list() {
+			return "back-end/buy_list"; // view
+		}
+		
+		@GetMapping("/buy_operation_list")
+		public String buy_operation_list() {
+			return "back-end/buy_operation_list"; // view
+		}
+		
+		@GetMapping("/buy_operation")
+		public String buy_operation() {
+			return "back-end/buy_operation"; // view
+		}
+		
+		@GetMapping("/customer_completed")
+		public String customer_completed() {
+			return "back-end/customer_completed"; // view
+		}
+		
+		@GetMapping("/customer_pending")
+		public String customer_pending() {
+			return "back-end/customer_pending"; // view
+		}
+		
+		@GetMapping("/forum")
+		public String forum() {
+			return "back-end/forum"; // view
+		}
+		
+		@GetMapping("/in_logistics")
+		public String in_logistics() {
+			return "back-end/in_logistics"; // view
+		}
+		
+		@GetMapping("/industry_judge")
+		public String industry_judge() {
+			return "back-end/industry_judge"; // view
+		}
+		
+		@GetMapping("/industry_update")
+		public String industry_update() {
+			return "back-end/industry_update"; // view
+		}
+		
+		@GetMapping("/member_admin")
+		public String member_admin() {
+			return "back-end/member_admin"; // view
+		}
+		
+		@GetMapping("/member")
+		public String member() {
+			return "back-end/member"; // view
+		}
+		
+		@GetMapping("/msg_contact")
+		public String msg_contact() {
+			return "back-end/msg_contact"; // view
+		}
+		
+		@GetMapping("/msg_history")
+		public String msg_history() {
+			return "back-end/msg_history"; // view
+		}
+		
+		@GetMapping("/news")
+		public String news() {
+			return "back-end/news"; // view
+		}
+		
+		@GetMapping("/order_completed")
+		public String order_completed() {
+			return "back-end/order_completed"; // view
+		}
+		
+		@GetMapping("/order_error")
+		public String order_error() {
+			return "back-end/order_error"; // view
+		}
+		
+		@GetMapping("/sign_in")
+		public String login() {
+			return "back-end/sign_in"; // view
+		}
 
 }
 
