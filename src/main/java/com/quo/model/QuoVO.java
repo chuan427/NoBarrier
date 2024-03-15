@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -49,6 +50,12 @@ public class QuoVO implements java.io.Serializable {
 	@Column(name = "quoInfo", columnDefinition = "text")
 	private String quoInfo;
 
+	// 訂單對報價一對一
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "quoNum", referencedColumnName = "ordNum") // 先改為order的ID
+	private OrderVO orderVO;
+	
 	@ManyToOne
 	@JoinColumn(name = "quoReqnum", referencedColumnName = "reqNum")
 	private ReqOrderVO reqOrderVO;
@@ -163,6 +170,7 @@ public class QuoVO implements java.io.Serializable {
         this.orderVO = orderVO;
     }
     
+
 	@Override
 	public String toString() {
 		return "QuoVO [quoNum=" + quoNum + ", quoDate=" + quoDate + ", quoProdname=" + quoProdname + ", quoUnitname="

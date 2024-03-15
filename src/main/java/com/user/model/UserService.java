@@ -12,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 import com.forumpost.model.ForumPostVO;
-import com.quo.model.QuoVO;
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderVO;
 
 
@@ -110,6 +109,8 @@ public class UserService {
 		public Set<ForumPostVO> getForumPostByfpUserid(Integer fpUserid){
 		return getOneUser(fpUserid).getForumPost();
 	}
-
+		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
+			return getOneUser(ordSellerid).getOrders();
+		}
 		
 }

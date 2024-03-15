@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
+import com.order.model.OrderService;
 
 @Controller
 @RequestMapping("/limitSale")
@@ -28,8 +29,8 @@ public class LimitSaleController {
 	@Autowired
 	LimitSaleService limitSaleSvc;
 
-//	@Autowired
-//	DeptService deptSvc;
+	@Autowired
+	OrderService orderSvc;
 
 	/*
 	 * This method will serve as addEmp.html handler.
