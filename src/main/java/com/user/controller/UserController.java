@@ -257,6 +257,13 @@ public class UserController {
 //		List<DeptVO> list = deptSvc.getAll();
 //		return list;
 //	}
+	
+	@ModelAttribute("userListData")
+	protected List<UserVO> referenceListData() {
+		// DeptService deptSvc = new DeptService();
+		List<UserVO> list = userSvc.getAll();
+		return list;
+	}
 
 	/*
 	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : <form:select
