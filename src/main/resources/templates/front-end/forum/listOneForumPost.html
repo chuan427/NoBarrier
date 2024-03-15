@@ -20,7 +20,6 @@
 <body>
 	<!-- header -->
 <head th:insert="~{/front-end/header_Dora}"></head>
-    
 
  <div class="transparent-box">
         <div class="content">
@@ -42,7 +41,8 @@
                         </span>
                     </div>
                     <br>
-                    <p th:text="${forumPostVO.fpContent}">文章內容</p>
+                    <p style="white-space: pre-wrap;" th:text="${forumPostVO.fpContent}"></p>
+                    <img th:src="@{/forumPost/DBGifReader(fpNum=${forumPostVO.fpNum})}" width="300px"><br/>
                     <br>
                     <!-- 顯示文章的類別 -->
                     <p> 
@@ -61,38 +61,32 @@
                         
                     </div>                    
             </div>
-            <div class="comment-section">
-    <h6>新增留言</h6>
-    <form th:action="@{/forumReply/insert}" method="post">
-        <textarea name="frContent" placeholder="請輸入留言..." required="required" class="comment-input"></textarea>
-        <button type="submit" class="btn btn-primary">送出</button>
-        <button type="button" class="btn btn-secondary" onclick="resetForm()">取消</button>
-    </form>
-</div>
-
-<!-- 留言展示區域 -->
-<div class="comments-display">
-    <h7>留言</h7>
-    <div th:each="forumReplyVO: ${forumReplyListData}">
-        <div class="comment">
-            <div class="comment-user">
-                <span th:text="${forumReplyVO.userVO.comName}">用戶名稱</span>
-            </div>
-            <div class="comment-content">
-                <p th:text="${forumReplyVO.frContent}">留言內容</p>
-            </div>
-            <div class="comment-time">
-                <span th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}">留言時間</span>
-            </div>
-        </div>
-    </div>
-</div>
-        </div>
-    </div>
             
+            
+		<div class="article-comments">
+    <h6>留言</h6>
+    <!-- 新增留言表單 -->
+    <form action="/forumReply/insert" method="POST">
+        <textarea name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
+        <button type="submit">送出</button>
+        <button type="button" onclick="cancelFunction()">取消</button>
+    </form>
+    <br>
+    <!-- 留言展示 -->
+    <div th:each="forumReplyVO : ${forumReplyListData}">
+        <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
+            <p class="comment-user" th:text="${forumReplyVO.userVO.comName}"></p>
+            <p th:text="${forumReplyVO.frContent}"></p>
+            <span class="comment-time" th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+    </div>
+</div>
+ </div>
+    </div>
 
 
-    
+
+    	
 
 
 <!-- footer -->
