@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserVO;
 
@@ -57,6 +59,10 @@ public class QuoVO implements java.io.Serializable {
 
 	@Column(name = "quoIsValid")
 	private Integer quoIsValid;
+	
+	@OneToOne
+    @JoinColumn(name = "quoNum", referencedColumnName = "ordNum")
+	private OrderVO orderVO;
 
 	public QuoVO() {
 	}
@@ -149,6 +155,14 @@ public class QuoVO implements java.io.Serializable {
 		this.quoIsValid = quoIsValid;
 	}
 
+	public OrderVO getOrderVO() {
+        return orderVO;
+    }
+
+    public void setOrderVO(OrderVO orderVO) {
+        this.orderVO = orderVO;
+    }
+    
 	@Override
 	public String toString() {
 		return "QuoVO [quoNum=" + quoNum + ", quoDate=" + quoDate + ", quoProdname=" + quoProdname + ", quoUnitname="

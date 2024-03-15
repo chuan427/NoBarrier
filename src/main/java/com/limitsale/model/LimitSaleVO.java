@@ -5,16 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.limitsale.model.LimitSaleVO;
+import com.order.model.OrderVO;
 
 
 
 	@Entity // 要加上@Entity才能成為JPA的一個Entity類別
 	@Table(name = "limitSale") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
 	public class LimitSaleVO implements java.io.Serializable {
-		private static final long serialVersionUID = 1L; 
+		private static final long serialVersionUID = 1L;
+		
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "limNum")
 		private Integer limNum;
 		@Column(name = "limOrdernum")
@@ -33,6 +39,10 @@ import com.limitsale.model.LimitSaleVO;
 		private String limDes;
 		@Column(name = "limUnitname")
 		private String limUnitname;
+		
+		@OneToOne
+	    @PrimaryKeyJoinColumn
+		private OrderVO orderVO;
 		
 		
 		
@@ -54,8 +64,17 @@ import com.limitsale.model.LimitSaleVO;
 			// TODO Auto-generated constructor stub
 		}
 		
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		
+	    public OrderVO getOrderVO() {
+	        return orderVO;
+	    }
+
+	    public void setOrderVO(OrderVO orderVO) {
+	        this.orderVO = orderVO;
+	    }
+		
+//		@Id
+//		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Integer getLimNum() {
 			return limNum;
 		}

@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -26,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.industry.model.IndustryService;
 import com.quo.model.QuoService;
+import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.security.model.MailService;
 import com.security.model.RandomPasswordGenerator;
@@ -62,20 +66,19 @@ public class UserController {
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-//	@GetMapping("/memberCen")
+//	@GetMapping("/memberCen1")
 //	public String addUser(ModelMap model) {
 //		UserVO userVO = new UserVO();
 //		model.addAttribute("userVO", userVO);
-//		return "front-end/userinformation/memberCen";
+//		return "front-end/userinformation/memberCen1";
 //	}
 	
-//	@GetMapping("/memberCen")
-//	public String yourHandler(ModelMap model) {
+//	@GetMapping("/memberCen1")
+//	public String memberCen1(ModelMap model) {
 //	    List<UserVO> userListData = userSvc.getAll(); // 假设这是您获取用户数据的方法
 //	    model.addAttribute("userListData", userListData);
-//	    return "front-end/userinformation/memberCen"; // 返回到您的模板页面
+//	    return "front-end/userinformation/memberCen1"; // 返回到您的模板页面
 //	}
-
 	
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
@@ -186,7 +189,7 @@ public class UserController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen"; // 查詢完成後轉交update_user_input.html
+		return "front-end/userinformation/memberCen1"; // 查詢完成後轉交update_user_input.html
 	}
 
 	/*
@@ -213,7 +216,7 @@ public class UserController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "front-end/userinformation/memberCen";
+			return "front-end/userinformation/memberCen1";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -223,7 +226,7 @@ public class UserController {
 		model.addAttribute("success", "- (修改成功)");
 		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
 		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen"; // 修改成功後轉交listOneUser.html
+		return "front-end/userinformation/memberCen1"; // 修改成功後轉交listOneUser.html
 	}
 
 	/*
