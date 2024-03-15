@@ -47,7 +47,6 @@ public class ReqOrderVO implements java.io.Serializable {
 //	private Integer reqCategory;
 //	private Integer reqUserid;
 	private Integer reqIsValid;
-	private OrderVO orderVO;
 	private Set<QuoVO> quotations = new HashSet<QuoVO>();
 	public ReqOrderVO() {
 
@@ -64,6 +63,7 @@ public class ReqOrderVO implements java.io.Serializable {
 		this.reqNum = reqNum;
 	}
 	
+	@OneToOne
 	@MapsId 
 	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
 	public OrderVO getOrderVO() {

@@ -67,10 +67,6 @@ public class QuoVO implements java.io.Serializable {
 	@Column(name = "quoIsValid")
 	private Integer quoIsValid;
 	
-	@OneToOne
-    @JoinColumn(name = "quoNum", referencedColumnName = "ordNum")
-	private OrderVO orderVO;
-
 	public QuoVO() {
 	}
 
