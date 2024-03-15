@@ -144,3 +144,10 @@ body {
 	font-size: 0.9em;
 	margin-top: 5px;
 }
+
+
+/* 	ADD上傳圖片CSS  */
+  
+#frImage{
+	width: 30%;
+}
