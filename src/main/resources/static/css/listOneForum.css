@@ -80,7 +80,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-	position: relative;
+	position: relative; /* 確保.post-header是相對定位的 */
 	justify-content: space-between;
 }
 
@@ -145,9 +145,25 @@ body {
 	margin-top: 5px;
 }
 
-
 /* 	ADD上傳圖片CSS  */
-  
-#frImage{
+#frImage {
 	width: 30%;
 }
+
+
+/* 三小點&回到上一頁 */
+
+.icon-wrapper {
+    position: absolute; /* 使用絕對定位 */
+    right: 0; /* 將其定位到右邊界 */
+    top: 50%; /* 調整至垂直中間 */
+    transform: translateY(-40%); /* 使用轉換來精確地居中 */
+}
+
+.fa-rotate-left {
+    margin-right: 5px; /* 在右邊添加間隔 */
+}
+.fa-ellipsis-vertical {
+    margin-left: 5px; /* 在左邊添加間隔 */
+}
+

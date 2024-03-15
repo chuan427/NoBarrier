@@ -25,13 +25,16 @@
         <div class="content">
             <div class="post">
                 <div class="post-header">
-                    <div class="icon-wrapper">
-                        <i class="fa-solid fa-user">
-                        <span th:text="${forumPostVO.userVO.comName}">用戶名稱</span></i>
-                        <i class="fa-solid fa-rotate-left fa-lg"></i>
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-				</div>
-   			<br>
+   					 <div class="user-info">
+       					 <i class="fa-solid fa-user"></i>
+       						 <span th:text="${forumPostVO.userVO.comName}">用戶名稱</span>
+    							</div>
+    								<div class="icon-wrapper"> <!-- 保留此容器來放置圖標 -->
+       		 							<i class="fa-solid fa-rotate-left fa-lg"></i>
+       		 							<i class="fa-solid fa-ellipsis-vertical"></i>
+    								</div>
+								</div>
+   							<br>
    		
    				
    		
