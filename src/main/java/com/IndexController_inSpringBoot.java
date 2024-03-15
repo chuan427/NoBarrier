@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
 import com.addday.AdDate;
+import com.administrator.model.AdministratorService;
+import com.administrator.model.AdministratorVO;
 import com.advertisements.model.AdvertisementsService;
 import com.advertisements.model.AdvertisementsVO;
 import com.forumpost.model.ForumPostService;
@@ -106,6 +108,9 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	OrderService orderSvc;
+	
+	@Autowired
+	AdministratorService administratorSvc;
 //	@Autowired
 //	NotificationService notificationSvc;
 
@@ -463,7 +468,7 @@ public class IndexController_inSpringBoot {
 		} else {
 			return quoSvc.getOneStatQuotation(userVO);
 		}
-
+	}
 	
 		// -------------------order------------------------
 		
@@ -480,7 +485,7 @@ public class IndexController_inSpringBoot {
 		        return orderSvc.getOneStatOrder(userVO);
 		    }
 		}
-	}
+	
 	// -------------------------------------------------
 
 	@GetMapping("/industry/select_page")
@@ -921,7 +926,7 @@ public class IndexController_inSpringBoot {
  // -------------------------------administrator-----------------------------------
 	
   	@GetMapping("/administrator/select_page")
-	public String select_page(Model model) {
+	public String select_page1(Model model) {
 		return "back-end/administrator/select_page";
 	}
     
