@@ -180,54 +180,54 @@ public class UserController {
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
 	 */
-	@PostMapping("getOne_For_Update_user")
-	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		/*************************** 2.開始查詢資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
-
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen1"; // 查詢完成後轉交update_user_input.html
-	}
+//	@PostMapping("getOne_For_Update_user")
+//	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		/*************************** 2.開始查詢資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
+//
+//		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/userinformation/memberCen1"; // 查詢完成後轉交update_user_input.html
+//	}
 
 	/*
 	 * This method will be called on update_user_input.html form submission,
 	 * handling POST request It also validates the user input
 	 */
-	@PostMapping("updateUser")
-	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
-
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
-
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
-			// EmpService empSvc = new EmpService();
-			byte[] comAboutImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
-			userVO.setComAboutImage(comAboutImage);
-
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] comAboutImage = multipartFile.getBytes();
-				userVO.setComAboutImage(comAboutImage);
-			}
-		}
-		if (result.hasErrors()) {
-			return "front-end/userinformation/memberCen1";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.updateUser(userVO);
-
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen1"; // 修改成功後轉交listOneUser.html
-	}
+//	@PostMapping("updateUser")
+//	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
+//			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+//
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		result = removeFieldError(userVO, result, "comAboutImage");
+//
+//		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
+//			// EmpService empSvc = new EmpService();
+//			byte[] comAboutImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
+//			userVO.setComAboutImage(comAboutImage);
+//
+//		} else {
+//			for (MultipartFile multipartFile : parts) {
+//				byte[] comAboutImage = multipartFile.getBytes();
+//				userVO.setComAboutImage(comAboutImage);
+//			}
+//		}
+//		if (result.hasErrors()) {
+//			return "front-end/userinformation/memberCen1";
+//		}
+//		/*************************** 2.開始修改資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		userSvc.updateUser(userVO);
+//
+//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("success", "- (修改成功)");
+//		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/userinformation/memberCen1"; // 修改成功後轉交listOneUser.html
+//	}
 
 	/*
 	 * This method will be called on listAllUser.html form submission, handling POST

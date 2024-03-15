@@ -328,11 +328,7 @@ public class IndexController_inSpringBoot {
 		return "front-end/order/transaction_check"; // view
 	}
 
-	// 訂單交易狀態表 成功
-	@GetMapping("/order/transaction_stat")
-	public String transaction_stat() {
-		return "front-end/order/transaction_stat"; // view
-	}
+	
 
 	// 訂單交易 成功
 	@GetMapping("/order/transaction")
@@ -468,8 +464,23 @@ public class IndexController_inSpringBoot {
 			return quoSvc.getOneStatQuotation(userVO);
 		}
 
-	}
+	
+		// -------------------order------------------------
+		
+		@ModelAttribute("orderListData")
+		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
+		    HttpSession session = request.getSession();
+		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
+		    if (userVO == null) {
+		        return null;
+		    } else {
+//		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+//				return list;
+		        return orderSvc.getOneStatOrder(userVO);
+		    }
+		}
+	}
 	// -------------------------------------------------
 
 	@GetMapping("/industry/select_page")
@@ -507,7 +518,7 @@ public class IndexController_inSpringBoot {
 		return list;
 	}
 
-	// ------------------------------------------
+	// ----------------member--------------------------
 
 //	@GetMapping("/userinformation/memberCen")
 //	public String memberCen(Model model) {
@@ -906,13 +917,25 @@ public class IndexController_inSpringBoot {
 		List<LimitSaleVO> list = limitSaleSvc.getAll();
 		return list;
 	}
-
-	// -------------------------------order-----------------------------------
-
-	@ModelAttribute("orderListData")
-	protected List<OrderVO> referenceListOrderData() {
-		List<OrderVO> list = orderSvc.getAll();
+  	
+ // -------------------------------administrator-----------------------------------
+	
+  	@GetMapping("/administrator/select_page")
+	public String select_page(Model model) {
+		return "back-end/administrator/select_page";
+	}
+    
+    @GetMapping("/administrator/listAllAdministrator")
+	public String listAllAdministrator(Model model) {
+		return "back-end/administrator/listAllAdministrator";
+	}
+    
+    @ModelAttribute("administratorListData")  // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<AdministratorVO> referenceListData(Model model) {
+		
+    	List<AdministratorVO> list = administratorSvc.getAll();
 		return list;
 	}
+
 
 }
