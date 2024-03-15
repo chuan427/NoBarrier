@@ -1,13 +1,17 @@
+
 package com.order.controller;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -38,13 +42,13 @@ public class OrderController {
 
 	@Autowired
 	UserService userSvc;
-	
+
 	@Autowired
 	LimitSaleService limitSaleSvc;
-	
+
 	@Autowired
 	ReqOrderService reqOrderSvc;
-	
+
 	@Autowired
 	QuoService quoOrderSvc;
 
@@ -55,17 +59,32 @@ public class OrderController {
 		return "back-end/order/addOrder";
 	}
 
+	// 訂單交易狀態表 成功
+	@GetMapping("/transaction_stat")
+	public String transaction_stat(Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+
+		List<OrderVO> list = orderSvc.getOneStatOrder(userVO);
+		model.addAttribute("orderListData", list);
+		return "front-end/order/transaction_stat"; // view
+	}
+
 	/*
-	 * This method will be called on addEmp.html form submission, handling POST request It also validates the order input
+	 * This method will be called on addEmp.html form submission, handling POST
+	 * request It also validates the order input
 	 */
 	@PostMapping("insert")
 	public String insert(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(orderVO, result,"ordNum");
+		result = removeFieldError(orderVO, result, "ordNum");
 
-		
 		if (result.hasErrors()) {
 			return "back-end/order/addOrder";
 		}
@@ -79,7 +98,8 @@ public class OrderController {
 	}
 
 	/*
-	 * This method will be called on listAllEmp.html form submission, handling POST request
+	 * This method will be called on listAllEmp.html form submission, handling POST
+	 * request
 	 */
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("ordNum") String ordNum, ModelMap model) {
@@ -94,14 +114,15 @@ public class OrderController {
 	}
 
 	/*
-	 * This method will be called on update_order_input.html form submission, handling POST request It also validates the order input
+	 * This method will be called on update_order_input.html form submission,
+	 * handling POST request It also validates the order input
 	 */
 	@PostMapping("update")
 	public String update(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(orderVO, result,"ordNum");
+		result = removeFieldError(orderVO, result, "ordNum");
 
 		if (result.hasErrors()) {
 			return "back-end/order/update_order_input";
@@ -115,21 +136,16 @@ public class OrderController {
 		model.addAttribute("orderVO", orderVO);
 		return "back-end/order/listOneOrder"; // 修改成功後轉交listOneorder.html
 	}
-	
-	
-	
-	
-	
-	
-	//送出價格 轉去付款流程
+
+	// 送出價格 轉去付款流程
 	@GetMapping("sentOrder")
 	public String sentOrder(ModelMap model) {
 		OrderVO orderVO = new OrderVO();
 		model.addAttribute("orderVO", orderVO);
 		return "front-end/order/transaction";
 	}
-	
-	//直接購買
+
+	// 直接購買
 //	@PostMapping("straightOrder")
 //	public String straightOrder(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
 //
@@ -149,28 +165,28 @@ public class OrderController {
 //		model.addAttribute("success", "- (新增成功)");
 //		return "redirect:/order/listAllOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/order/listAllOrder")
 //	}
-	
-	
-	//訂單完成
+
+	// 訂單完成
 	@PostMapping("complete")
-	public String complete(@Valid OrderVO orderVO,@RequestParam("ordNum") String ordNum,ModelMap model) throws IOException {
-		OrderVO completeOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));//取出要改的VO號碼
-		//無效改成有效 0改成1
+	public String complete(@Valid OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
+			throws IOException {
+		OrderVO completeOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));// 取出要改的VO號碼
+		// 無效改成有效 0改成1
 		int valid = 1;
 		completeOrder.setOrdStat(valid);
 //		
-		//有效改成無效 1改成0
+		// 有效改成無效 1改成0
 //		int invalid = 0;
 //		orderVO1.setOrdStat(invalid);
 //		
-		orderSvc.updateOrder(completeOrder);//存檔
-		
+		orderSvc.updateOrder(completeOrder);// 存檔
+
 		model.addAttribute("success", "- (完成訂單)");
 		completeOrder = orderSvc.getOneOrder(Integer.valueOf(completeOrder.getOrdNum()));
 		model.addAttribute("orderVO", completeOrder);
 		return "redirect:/order/transaction_stat"; // 訂單完成後轉交到訂單狀態
 	}
-	//新增訂單
+//新增訂單
 	@PostMapping("/order/addOrder")
 	public String addOrder(@Valid OrderVO orderVO,@RequestParam("ordNum") String ordNum,ModelMap model) throws IOException {
 		OrderVO addOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));//取出要改的VO號碼
@@ -184,64 +200,59 @@ public class OrderController {
 		addOrder = orderSvc.getOneOrder(Integer.valueOf(addOrder.getOrdNum()));
 		model.addAttribute("orderVO", addOrder);
 		return "redirect:/order/transaction"; // 訂單完成後轉交到訂單狀態
-	}
-	
-	
-	//付款流程
-	@PostMapping("payment")
-	public String payment(@Valid OrderVO orderVO,@RequestParam("ordNum") String ordNum,ModelMap model) throws IOException {
-		OrderVO payment = orderSvc.getOneOrder(Integer.valueOf(ordNum));//取出要改的VO號碼
-		//無效改成有效 0改成1
+	}	@PostMapping("payment")
+	public String payment(@Valid OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
+			throws IOException {
+		OrderVO payment = orderSvc.getOneOrder(Integer.valueOf(ordNum));// 取出要改的VO號碼
+		// 無效改成有效 0改成1
 		int valid = 1;
 		payment.setOrdPaystat(valid);
 //		
-		//有效改成無效 1改成0
+		// 有效改成無效 1改成0
 //		int invalid = 0;
 //		orderVO1.setOrdStat(invalid);
 //		
-		orderSvc.updateOrder(payment);//存檔
-		
+		orderSvc.updateOrder(payment);// 存檔
+
 		model.addAttribute("success", "- (匯款完成)");
 		payment = orderSvc.getOneOrder(Integer.valueOf(payment.getOrdNum()));
 		model.addAttribute("payment", payment);
 		return "front-end/order/transaction_stat"; // 修改成功後轉交transaction_stat.html
 	}
 
-	
-	
-		@ModelAttribute("userListData")
-		protected List<UserVO> referenceListData(){
+	@ModelAttribute("userListData")
+	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
 		return list;
-		}
-		
-		@ModelAttribute("limitSaleListData")
-		protected List<LimitSaleVO> referenceListLimitSaleData(){
+	}
+
+	@ModelAttribute("limitSaleListData")
+	protected List<LimitSaleVO> referenceListLimitSaleData() {
 		List<LimitSaleVO> list = limitSaleSvc.getAll();
 		return list;
-		}
-		
-		@ModelAttribute("orderListData")
-		protected List<OrderVO> referenceListOrderData(){
+	}
+
+	@ModelAttribute("orderListData")
+	protected List<OrderVO> referenceListOrderData() {
 		List<OrderVO> list = orderSvc.getAll();
 		return list;
-		}
-	
-		
-		@ModelAttribute("reqOrderListData")
-		protected List<ReqOrderVO> referenceListReqOrderListData(){
+	}
+
+	@ModelAttribute("reqOrderListData")
+	protected List<ReqOrderVO> referenceListReqOrderListData() {
 		List<ReqOrderVO> list = reqOrderSvc.getAll();
 		return list;
-		}
-		
-		@ModelAttribute("quoListData")
-		protected List<QuoVO> referenceListQuoOrderListData(){
+	}
+
+	@ModelAttribute("quoListData")
+	protected List<QuoVO> referenceListQuoOrderListData() {
 		List<QuoVO> list = quoOrderSvc.getAll();
 		return list;
-		}
-		
+	}
+
 	/*
-	 * This method will be called on listAllUser.html form submission, handling POST request
+	 * This method will be called on listAllUser.html form submission, handling POST
+	 * request
 	 */
 //	@PostMapping("delete")
 //	public String delete(@RequestParam("userId") String userId, ModelMap model) {
@@ -256,17 +267,14 @@ public class OrderController {
 //		return "back-end/user/listAllUser"; // 刪除完成後轉交listAllUser.html
 //	}
 
-
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(OrderVO orderVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
-				.collect(Collectors.toList());
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
 		result = new BeanPropertyBindingResult(orderVO, "orderVO");
 		for (FieldError fieldError : errorsListToKeep) {
 			result.addError(fieldError);
 		}
 		return result;
 	}
-
 }
