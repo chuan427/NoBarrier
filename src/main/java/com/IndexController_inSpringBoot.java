@@ -913,7 +913,14 @@ public class IndexController_inSpringBoot {
   	}
   	
 	
-	
+//  	@GetMapping("order/transactioncheck")
+//	public String check(Model model) {
+//		return "front-end/order/transaction_check";
+//	}
+//  	@GetMapping("order/transaction")
+//	public String transaction(Model model) {
+//		return "front-end/order/transaction";
+//	}
 	
 	
 	
