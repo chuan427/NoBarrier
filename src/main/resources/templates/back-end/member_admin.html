@@ -51,16 +51,13 @@
 
 		.sidebar {
 			float: left;
-			width: 30%;
-			/* 調整側邊欄寬度 */
-			margin-right: 30px;
-			/* 給主內容區域留出空間 */
+			width: 30%; /* 調整側邊欄寬度 */
+			margin-right: 30px; /* 給主內容區域留出空間 */
 		}
 
 		.main-content {
 			float: left;
-			width: 70%;
-			/* 調整主內容區域寬度 */
+			width: 70%; /* 調整主內容區域寬度 */
 		}
 	</style>
 </head>
@@ -72,13 +69,13 @@
 
 	<div class="container">
 		<div class="row">
-			<!-- siderbar -->
-
-			<head th:insert="~{/back-end/sidebar}"></head>
-
+			<!-- sidebar -->
+			<div class="col-md-3">
+				<head th:insert="~{/back-end/sidebar}"></head>
+			</div>
 
 			<!-- Main Content -->
-			<section class="main-content">
+			<section class="main-content col-md-9">
 				<div class="user-item">
 					<h2 class="user-title">帳號管理</h2>
 					<div class="accordion" id="accordionExample">

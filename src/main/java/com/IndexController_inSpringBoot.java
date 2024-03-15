@@ -623,12 +623,12 @@ public class IndexController_inSpringBoot {
 		return "back-end/que/listAllQue";
 	}
 
-//	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-//	protected List<QueListVO> referenceListData3(Model model) {
-////		model.addAttribute("UserVO", new UserVO());
-//		List<QueListVO> list = queSvc.getAll();
-//		return list;
-//	}
+	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData3(Model model) {
+		model.addAttribute("UserVO", new UserVO());
+		List<QueListVO> list = queSvc.getAll();
+		return list;
+	}
 	
 	
 	@ModelAttribute("queListData1")
