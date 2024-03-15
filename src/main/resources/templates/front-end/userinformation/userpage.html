@@ -267,40 +267,43 @@ th, td {
 							<th>商品名稱</th>
 							<th>數量</th>
 							<th>單位</th>
+							<th>單價</th>
+							<th>總價</th>
 							<th>文字敘述</th>
-							<th>報價列表</th>
+							<th>直接購買</th>
+							<th>洽談</th>
 						</tr>
 					</thead>
 					<tbody>
 						<th:block th:each="quoVO : ${quoListData}">
 							<tr>
-								<td th:text="${quoVOStat.count}"></td>
-								<td th:text="${quoVO.quoDate}"></td>
-								<td
+							<td th:text="${quoVOStat.count}"></td>
+							<td th:text="${quoVO.quoDate}"></td>
+							<td
 									th:text="${quoVO.userVO.userId + '-[' + quoVO.userVO.comName + ']'}"></td>
-								<td th:text="${quoVO.quoProdname}"></td>
-								<td th:text="${quoVO.quoProdqty}"></td>
-								<td th:text="${quoVO.quoUnitname}"></td>
-								<td th:text="${quoVO.quoInfo}"></td>
+							<td th:text="${quoVO.quoProdname}"></td>
+							<td th:text="${quoVO.quoProdqty}"></td>
+							<td th:text="${quoVO.quoUnitname}"></td>
+							<td th:text="${quoVO.quoUnitprice}"></td>
+							<td th:text="${quoVO.quoTotalprice}"></td>
+							<td th:text="${quoVO.quoInfo}"></td>
 
-								<td><a th:href="@{/userinformation/quotation_list}"> <input
-										type="submit" value="報價列表"> <input type="hidden"
-										name="quoNum" th:value="${quoVO.quoNum}">
-								</a></td>
-							</tr>
+							<td>
+							<a th:href="@{/order/transaction_check}"> <input
+									type="submit" value="直接購買"> <input type="hidden"
+									name="quoNum" th:value="${quoVO.quoNum}">
+							</a>
+							</td>
+							<td>
+							<a th:href="@{/chat/privatechat}"> <input
+									type="submit" value="洽談"> <input type="hidden"
+									name="quoNum" th:value="${quoVO.quoNum}">
+							</a>
+							</td>
+						</tr>
 						</th:block>
 					</tbody>
 				</table>
-				<!-- <li th:each="quo : ${quoListData}"
-					class="list-group-item d-flex justify-content-between align-items-center">
-					<span
-					th:text="${quo.quoNum + '|' + quo.quoDate + '|' + quo.quoProdname + ' | ' + quo.quoProdqty + quo.quoUnitname}"></span>
-					<div>
-						<a th:href="@{/userinformation/quotation_list}">
-							<button class="btn btn-primary" type="button">報價列表</button>
-						</a>
-					</div>
-				</li> -->
 			</ul>
 		</div>
 	</div>
@@ -310,9 +313,6 @@ th, td {
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
-<!-- 	<script th:src="@{/js/notification.js}"></script> -->
-<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
-<!-- 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script> -->
 
 </body>
 

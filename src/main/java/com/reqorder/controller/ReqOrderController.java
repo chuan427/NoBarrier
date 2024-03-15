@@ -1,30 +1,30 @@
 package com.reqorder.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
+import com.order.model.OrderService;
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
@@ -43,6 +43,8 @@ public class ReqOrderController {
     @Autowired
     IndustryService industrySvc;
     
+    @Autowired
+   	OrderService orderSvc; 
     
     @GetMapping("/addReqOrder")
     public String addReqOrder(ModelMap model, HttpServletRequest request) {
@@ -61,10 +63,12 @@ public class ReqOrderController {
         return "front-end/userinformation/addReqOrder";
     }
     
-    @GetMapping("/userpage/{userId}")
-    public List<ReqOrderVO> getOrdersByUserId(@PathVariable Integer userId) {
-        return reqOrderSvc.getReqOrderByUserId(userId);
-    }
+//	@GetMapping("/userpage")
+//    public List<ReqOrderVO> getOrdersByUserId(HttpSession session) {
+//		
+//	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//        return reqOrderSvc.getReqOrderByUserId(userVO.getUserId());
+//    }
 
 
     @PostMapping("insertreq")
@@ -167,6 +171,12 @@ public class ReqOrderController {
         return industrySvc.getAll();
     }
 
+    @ModelAttribute("orderListData")
+	protected List<OrderVO> referenceListOrderData(){
+	List<OrderVO> list = orderSvc.getAll();
+	return list;
+	}
+    
     public BindingResult removeFieldError(ReqOrderVO reqOrderVO, BindingResult result, String removedFieldname) {
         List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
                 .filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());

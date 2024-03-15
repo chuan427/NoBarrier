@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import com.ad.model.AdVO;
 import com.forumpost.model.ForumPostVO;
 import com.industry.model.IndustryVO;
+import com.order.model.OrderVO;
 import com.productinformation.model.ProductInformationVO;
 import com.questionList.model.QueListVO;
 import com.quo.model.QuoVO;
@@ -64,6 +65,7 @@ import com.reqorder.model.ReqOrderVO;
 		private Set<QueListVO> quelists = new HashSet<QueListVO>();
 		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>();
 		private Set<AdVO> ad = new HashSet<AdVO>();
+		private Set<OrderVO> orders = new HashSet<OrderVO>();
 
 
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
@@ -414,5 +416,15 @@ import com.reqorder.model.ReqOrderVO;
 
 		public void setAd(Set<AdVO> ad) {
 			this.ad = ad;
+		}
+		
+		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userVO")
+//		@OrderBy("userId asc") 
+		public Set<OrderVO> getOrders() {
+			return this.orders;
+		}
+		
+		public void setOrders(Set<OrderVO> orders) {
+			this.orders = orders;
 		}
 	}

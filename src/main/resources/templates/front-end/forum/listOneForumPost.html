@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http ://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>NoBerrierTech 討論區</title>
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css}" />
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                  
+<script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>            
+
+<!-- 引入css -->
+<link rel="stylesheet" th:href="@{/css/listOneForum.css}" />
+</head>
+
+<body>
+	<!-- header -->
+<head th:insert="~{/front-end/header_Dora}"></head>
+
+ <div class="transparent-box">
+        <div class="content">
+            <div class="post">
+                <div class="post-header">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-user">
+                        <span th:text="${forumPostVO.userVO.comName}">用戶名稱</span></i>
+
+   			</div>
+   			</div>
+                    
+                    <br>
+                    <div class="title-time-container">
+                        <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
+                        <span class="post-time">
+                            <i class="fa-regular fa-clock fa-lg"></i>
+                            <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd')}">發布時間</span>
+                        </span>
+                    </div>
+                    <br>
+                    <p style="white-space: pre-wrap;" th:text="${forumPostVO.fpContent}"></p>
+                    <img th:src="@{/forumPost/DBGifReader(fpNum=${forumPostVO.fpNum})}" width="300px"><br/>
+                    <br>
+                    <!-- 顯示文章的類別 -->
+                    <p> 
+                        #<span th:text="${forumPostVO.fpCategory == 1 ? '工業加工' : 
+                                        forumPostVO.fpCategory == 2 ? '照明配件' : 
+                                        forumPostVO.fpCategory == 3 ? '金屬物件' : 
+                                        forumPostVO.fpCategory == 4 ? '機械材料' : 
+                                        forumPostVO.fpCategory == 5 ? '電子元件' : 
+                                        forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
+                                        '其他'}"></span>
+                    </p>
+                    <br>  
+                    <div class="fabotton">
+                        <i class="fa-regular fa-heart fa-xl"></i>
+                        <i class="fa-regular fa-bookmark fa-xl"></i>
+                        
+                    </div>                    
+            </div>
+            
+            
+		<div class="article-comments">
+    <h6>留言</h6>
+    <!-- 新增留言表單 -->
+    <form action="/forumReply/insert" method="POST">
+        <textarea name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
+        <button type="submit">送出</button>
+        <button type="button" onclick="cancelFunction()">取消</button>
+    </form>
+    <br>
+    <!-- 留言展示 -->
+    <div th:each="forumReplyVO : ${forumReplyListData}">
+        <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
+            <p class="comment-user" th:text="${forumReplyVO.userVO.comName}"></p>
+            <p th:text="${forumReplyVO.frContent}"></p>
+            <span class="comment-time" th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}"></span>
+        </div>
+    </div>
+</div>
+ </div>
+    </div>
+
+
+
+    	
+
+
+<!-- footer -->
+<head th:insert="~{/front-end/footer}"></head>
+<!-- JS -->
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/forum.js}"></script>
+
+
+</body>
+</html>
