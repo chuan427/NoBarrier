@@ -66,14 +66,13 @@ public class ForumReplyController {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(forumReplyVO, result, "frImage");
 
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "貼文圖片: 請上傳照片，謝謝");
-		} else {
+		if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
 			for (MultipartFile multipartFile : parts) {
 				byte[] buf = multipartFile.getBytes();
 				forumReplyVO.setFrImage(buf);
 			}
 		}
+		
 		if (result.hasErrors() || parts[0].isEmpty()) {
 			return "front-end/forum/listOneForumPost";
 		}
