@@ -159,12 +159,12 @@
 			<version>1.6.2</version>
 		</dependency>
 
+
 		<!--
 		========================================================================================== -->
 		<!-- ●以下為 JSR 303/349/380 Bean Validation Framework 預備使用● -->
 
-		<!-- javax.validation -->                             <!--
-		spring-boot(2.7.0)
+		<!-- javax.validation -->                             <!-- spring-boot(2.7.0)
 		已內建依賴，但預設未下載 -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -204,12 +204,6 @@
 			已內建依賴8.029，但預設未下載 -->
 		</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 
 		<!--
 		========================================================================================== -->
@@ -238,6 +232,30 @@
 			<artifactId>bootstrap</artifactId>
 			<version>5.3.2</version>
 		</dependency>
+
+		<!-- chat測試 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<dependency>
+	         <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+</dependency>
 
 	</dependencies>
 
