@@ -309,9 +309,9 @@ public class IndexController_inSpringBoot {
 //				}
 
 	// 訂單聊天室 成功
-	@GetMapping("/order/chatroom")
+	@GetMapping("/caht/chat")
 	public String chetroom() {
-		return "front-end/order/chatroom"; // view
+		return "front-end/caht/chat"; // view
 	}
 
 	// 訂單明細 成功
@@ -329,6 +329,9 @@ public class IndexController_inSpringBoot {
 	// 訂單交易確認 成功
 	@GetMapping("/order/transaction_check")
 	public String transaction_check() {
+		
+//		model.addAttribute("", xxx);
+//		model.addAttribute("", xxx);
 		return "front-end/order/transaction_check"; // view
 	}
 
@@ -550,6 +553,21 @@ public class IndexController_inSpringBoot {
 	    List<UserVO> list = userSvc.getOneStatUser(userVO);
 	    model.addAttribute("userListData", list);
 		return "front-end/userinformation/memberCen";
+    }
+	
+	@GetMapping("/userinformation/memberCen1")
+    public String memberCen1(Model model, HttpServletRequest request) {
+        // 检查会话中是否有登录的用户信息
+		HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    
+	    if (userVO == null) {
+	        return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
+	    }
+	    
+	    List<UserVO> list = userSvc.getOneStatUser(userVO);
+	    model.addAttribute("userListData", list);
+		return "front-end/userinformation/memberCen1";
     }
 	
 	@ModelAttribute("userListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用

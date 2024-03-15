@@ -66,6 +66,10 @@ public class QuoVO implements java.io.Serializable {
 
 	@Column(name = "quoIsValid")
 	private Integer quoIsValid;
+	
+	@OneToOne
+    @JoinColumn(name = "quoNum", referencedColumnName = "ordNum")
+	private OrderVO orderVO;
 
 	public QuoVO() {
 	}
@@ -159,13 +163,14 @@ public class QuoVO implements java.io.Serializable {
 	}
 
 	public OrderVO getOrderVO() {
-		return orderVO;
-	}
+        return orderVO;
+    }
 
-	public void setOrderVO(OrderVO orderVO) {
-		this.orderVO = orderVO;
-	}
-	
+    public void setOrderVO(OrderVO orderVO) {
+        this.orderVO = orderVO;
+    }
+    
+
 	@Override
 	public String toString() {
 		return "QuoVO [quoNum=" + quoNum + ", quoDate=" + quoDate + ", quoProdname=" + quoProdname + ", quoUnitname="

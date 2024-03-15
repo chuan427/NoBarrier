@@ -157,33 +157,33 @@ main {
 				role="tablist" aria-orientation="vertical">
 
 				<a class="nav-link active button-add" id="v-pills-home-tab"
-					href="/userinformation/memberCen" role="tab"
-					aria-controls="v-pills-home" aria-selected="true"> 资料修改 </a>
+					th:href="@{/userinformation/memberCen}" role="tab"
+					aria-controls="v-pills-home" aria-selected="true"> 基本資料 </a>
 
 				<div style="margin-top: 30px"></div>
 				<a class="nav-link active button-add" id="v-pills-home-tab"
-					href="/userinformation/memberCen1" role="tab"
+					th:href="@{/userinformation/memberCen1}" role="tab"
 					aria-controls="v-pills-home" aria-selected="true"> 帳戶資訊 </a>
 
 				<div style="margin-top: 30px"></div>
 				<a class="nav-link active button-add" id="v-pills-home-tab"
-					href="/userinformation/memberCen2" role="tab"
+					th:href="@{/userinformation/memberCen2}" role="tab"
 					aria-controls="v-pills-home" aria-selected="true"> 更改密碼 </a>
 			</div>
 
 			<!-- 加了 container-add-style -->
 			<div class="tab-content container-add-style" id="v-pills-tabContent">
 
-				 <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+				<div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
 					aria-labelledby="v-pills-profile-tab">
 					<div class="acc-very-big" style="display: flex">
-						<div class="acc-big-left">
-							<div th:each="user, iterStat : ${userListData}"
+						<!-- <div class="acc-big-left">
+							<div th:each="userVO, iterStat : ${userListData}"
 								th:id="'acc-' + ${iterStat.index + 1}" class="acc-medium">
 								<div class="acc-title" th:text="${'帳戶' + (iterStat.index + 1)}"></div>
 								<div class="acc-body" style="display: flex">
 									<div class="acc-content">
-										<p th:text="${user.comBank}"></p>
+										<p th:text="${comBank}"></p>
 									</div>
 									<div class="acc-trash-can">
 										<a href="#"><img src="/image/trashcan.png"
@@ -191,16 +191,16 @@ main {
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="acc-space" style="width: 100px"></div>
-						<div class="acc-big-right">
+						<form class="acc-big-right">
 							<div class="row">
 								<div class="col-sm-6">
 									<div class="mb-3">
-										<label for="comContactperson" class="form-label">自訂代稱</label>
+										<label for="comContactPerson" class="form-label">自訂代稱</label>
 										<input type="text" class="form-control form-control-sm"
-											id="comContactperson" name="comContactperson"
-											th:field="*{comContactperson}" />
+											id="comContactPerson" name="comContactPerson"
+											th:value="${session.loggingInUser.comContactPerson}" />
 									</div>
 								</div>
 							</div>
@@ -210,7 +210,7 @@ main {
 										<label for="comBank" class="form-label">銀行代碼</label> <select
 											class="form-select form-select-sm"
 											aria-label=".form-select-sm example" id="comBank"
-											name="comBank" th:field="*{comBank}">
+											name="comBank" th:value="${session.loggingInUser.comBank}">
 											<option disabled selected>銀行代碼選擇</option>
 											<option th:value="004">004 臺灣銀行</option>
 											<option th:value="005">005 台灣土地銀行</option>
@@ -292,15 +292,16 @@ main {
 									<div class="mb-3">
 										<label for="comBank" class="form-label">帳號</label> <input
 											type="text" class="form-control form-control-sm" id="comBank"
-											name="comBank" placeholder="" th:field=*{comBank} />
+											name="comBank" placeholder=""
+											th:value="${session.loggingInUser.comBank}" />
 									</div>
 								</div>
 							</div>
 							<button type="submit" id="submit" class="btn btn-secondary">新增帳戶</button>
-						</div>
+						</form>
 					</div>
-				</div> 
-				
+				</div>
+
 
 				<script>
 					document
