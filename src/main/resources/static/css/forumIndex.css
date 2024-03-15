@@ -73,6 +73,10 @@ body {
 	justify-content: space-between;
 }
 
+.post-header i {
+	align-self: right; /* 將圖標置於左邊 */
+}
+
 .title-time-container {
 	width: 100%; /* 確保容器佔滿整行 */
 	display: flex;
@@ -91,6 +95,7 @@ body {
 
 .fabotton {
 	display: flex;
+	justify-content: flex-end; /* 正確地將內容對齊到右邊 */
 	gap: 25px; /* 在圖標之間添加一些間隙 */
 }
 
@@ -105,6 +110,8 @@ body {
 	left: 880px;
 	top: 185px;
 }
+
+/* 使用者及3個點點圖示 & USER顯示名稱 */
 
 /* 使用者及3個點點圖示 & USER顯示名稱 */
 

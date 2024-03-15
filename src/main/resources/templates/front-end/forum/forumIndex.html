@@ -19,6 +19,7 @@
 
 <body>
 	<!-- header -->
+
 <head th:insert="~{/front-end/header_Dora}"></head>
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
@@ -98,6 +99,11 @@
 		      <br>
 		        
               <div class="fabotton">
+              <br>
+              <p th:text="${forumPostVO.fpContent}">文章內容</p>
+              <br>  
+              <div class="fabotton">
+                  <i class="fa-solid fa-comment fa-xl"></i>
                   <i class="fa-regular fa-heart fa-xl"></i>
                   <i class="fa-regular fa-bookmark fa-xl"></i>
               </div>

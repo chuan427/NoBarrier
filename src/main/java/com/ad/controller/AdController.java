@@ -21,6 +21,7 @@ import com.ad.model.AdVO;
 import com.addday.AdDate;
 import com.advertisements.model.AdvertisementsService;
 import com.advertisements.model.AdvertisementsVO;
+import com.user.model.UserVO;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,9 +61,10 @@ public class AdController {
 	public String insert(@ModelAttribute AdDate addate, BindingResult result, ModelMap model,
 			@RequestParam("adImageadd") MultipartFile[] parts,HttpServletRequest request) throws IOException {
 		// 去除BindingResult中upFiles欄位的FieldError紀錄
-//	    result = removeFieldError(addate, result, "adImageadd");
+	    result = removeFieldError(addate, result, "adImageadd");
 //	    result = removeFieldError(addate, result, "adPriceadd");
-		
+		 UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+
 //
 		if (parts[0].isEmpty()) {
 			model.addAttribute("errorMessage", "廣告圖片: 請上傳照片");
@@ -89,10 +91,13 @@ public class AdController {
 		}
 
 		// 开始新增数据
-		adSvc.addAdAndAdvertisements(addate);
+		adSvc.addAdAndAdvertisements(addate,userVO);
+		model.addAttribute("success","訂單成功新增");
 
 		// 新增完成，准备重定向到成功页面
-		return "redirect:/ad/listAllEmp";
+//		return  "redirect:/ad/listAllEmp";
+		return  "back-end/ad/addEmp";
+
 	}
 
 	/*

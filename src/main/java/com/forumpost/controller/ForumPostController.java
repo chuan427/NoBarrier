@@ -3,6 +3,7 @@ package com.forumpost.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -227,3 +228,4 @@ public class ForumPostController {
 //	model.addAttribute("forumPostVO", forumPostVO);
 //	return "front-end/forum/forumIndex"; // 修改成功後轉交listOneUser.html
 //}
+
