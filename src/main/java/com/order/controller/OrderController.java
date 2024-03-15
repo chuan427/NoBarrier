@@ -170,6 +170,21 @@ public class OrderController {
 		model.addAttribute("orderVO", completeOrder);
 		return "redirect:/order/transaction_stat"; // 訂單完成後轉交到訂單狀態
 	}
+	//新增訂單
+	@PostMapping("/order/addOrder")
+	public String addOrder(@Valid OrderVO orderVO,@RequestParam("ordNum") String ordNum,ModelMap model) throws IOException {
+		OrderVO addOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));//取出要改的VO號碼
+		//先將付款狀態設為0，之後由付款畫面將付款狀態改為完成
+		int invalid = 0;
+		addOrder.setOrdPaystat(invalid);
+		
+		orderSvc.updateOrder(addOrder);//存檔
+		
+		model.addAttribute("success", "- (完成訂單)");
+		addOrder = orderSvc.getOneOrder(Integer.valueOf(addOrder.getOrdNum()));
+		model.addAttribute("orderVO", addOrder);
+		return "redirect:/order/transaction"; // 訂單完成後轉交到訂單狀態
+	}
 	
 	
 	//付款流程
@@ -189,7 +204,7 @@ public class OrderController {
 		model.addAttribute("success", "- (匯款完成)");
 		payment = orderSvc.getOneOrder(Integer.valueOf(payment.getOrdNum()));
 		model.addAttribute("payment", payment);
-		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
+		return "front-end/order/transaction_stat"; // 修改成功後轉交transaction_stat.html
 	}
 
 	
