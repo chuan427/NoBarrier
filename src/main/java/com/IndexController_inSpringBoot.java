@@ -111,8 +111,6 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
-	private Object userVO;
-
 //	@GetMapping("/")
 //	public String index(Model model) {
 //		model.addAttribute("message", message);
@@ -184,11 +182,14 @@ public class IndexController_inSpringBoot {
 
 	// 廠商資訊 完成
 	@GetMapping("/com/com_homepage/{userId}")
-	public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
+	public String homepage(@PathVariable("userId") String userId, Model model) {
 	    // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 	    // 將相關數據添加到 Model 中，以便在視圖中使用
-		
-	    model.addAttribute("userVO", userVO);
+		UserVO userVo = userSvc.getOneUser(Integer.valueOf(userId));
+		boolean and = adSvc.hasValidAdOrder(userVo);
+//		System.out.println(and);
+		model.addAttribute("and", and);
+	    model.addAttribute("userVO", userVo);
 	    return "front-end/com/com_homepage"; // view
 	}
 
@@ -623,12 +624,12 @@ public class IndexController_inSpringBoot {
 		return "back-end/que/listAllQue";
 	}
 
-//	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-//	protected List<QueListVO> referenceListData3(Model model) {
-////		model.addAttribute("UserVO", new UserVO());
-//		List<QueListVO> list = queSvc.getAll();
-//		return list;
-//	}
+	@ModelAttribute("queListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<QueListVO> referenceListData3(Model model) {
+//		model.addAttribute("UserVO", new UserVO());
+		List<QueListVO> list = queSvc.getAll();
+		return list;
+	}
 	
 	
 	@ModelAttribute("queListData1")
