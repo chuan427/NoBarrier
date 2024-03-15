@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.industry.model.IndustryRepository;
 import com.industry.model.IndustryVO;
+import com.order.model.OrderVO;
+import com.quo.model.QuoVO;
 import com.user.model.UserRepository;
 import com.user.model.UserVO;
 
@@ -76,4 +78,13 @@ public class ReqOrderService {
     }
 
    
+	
+	//需求對報價一對一
+	public QuoVO getOrderByquoNum(Integer ordReqnum){
+		return getOneReqOrder(ordReqnum).getQuoVO();
+	}
+	//需求對訂單一對一
+	public OrderVO getOrderByreqNum(Integer ordReqnum){
+		return getOneReqOrder(ordReqnum).getOrderVO();
+	}
 }

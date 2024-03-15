@@ -3,6 +3,7 @@ package com.quo.model;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserVO;
 
@@ -47,8 +52,14 @@ public class QuoVO implements java.io.Serializable {
 	@Column(name = "quoInfo", columnDefinition = "text")
 	private String quoInfo;
 
-	@ManyToOne
-	@JoinColumn(name = "quoReqnum", referencedColumnName = "reqNum")
+	// 訂單對報價一對一
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "quoNum", referencedColumnName = "ordNum") // 先改為order的ID
+	private OrderVO orderVO;
+	
+	@OneToOne(mappedBy = "quoVO", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private ReqOrderVO reqOrderVO;
 	
 	@ManyToOne
@@ -61,6 +72,23 @@ public class QuoVO implements java.io.Serializable {
 	public QuoVO() {
 	}
 
+	// ReqOrderVO 與 OrderVO都是一對一 getter & setter
+	public ReqOrderVO getReqOrderVO() {
+		return reqOrderVO;
+	}
+
+	public void setReqOrderVO(ReqOrderVO reqOrderVO) {
+		this.reqOrderVO = reqOrderVO;
+	}
+
+	public OrderVO getOrderVO() {
+		return orderVO;
+	}
+
+	public void setOrderVO(OrderVO orderVO) {
+		this.orderVO = orderVO;
+	}
+	
 	public Integer getQuoNum() {
 		return quoNum;
 	}
@@ -125,14 +153,6 @@ public class QuoVO implements java.io.Serializable {
 		this.quoInfo = quoInfo;
 	}
 
-	public ReqOrderVO getReqOrderVO() {
-		return reqOrderVO;
-	}
-
-	public void setReqOrderVO(ReqOrderVO reqOrderVO) {
-		this.reqOrderVO = reqOrderVO;
-	}
-
 	public UserVO getUserVO() {
 		return userVO;
 	}
@@ -149,13 +169,15 @@ public class QuoVO implements java.io.Serializable {
 		this.quoIsValid = quoIsValid;
 	}
 
-	@Override
-	public String toString() {
-		return "QuoVO [quoNum=" + quoNum + ", quoDate=" + quoDate + ", quoProdname=" + quoProdname + ", quoUnitname="
-				+ quoUnitname + ", quoProdqty=" + quoProdqty + ", quoUnitprice=" + quoUnitprice + ", quoTotalprice="
-				+ quoTotalprice + ", quoInfo=" + quoInfo + ", reqOrderVO=" + reqOrderVO + ", userVO=" + userVO
-				+ ", quoIsValid=" + quoIsValid + "]";
-	}
+
+	
+//	@Override
+//	public String toString() {
+//		return "QuoVO [quoNum=" + quoNum + ", quoDate=" + quoDate + ", quoProdname=" + quoProdname + ", quoUnitname="
+//				+ quoUnitname + ", quoProdqty=" + quoProdqty + ", quoUnitprice=" + quoUnitprice + ", quoTotalprice="
+//				+ quoTotalprice + ", quoInfo=" + quoInfo + ", reqOrderVO=" + reqOrderVO + ", userVO=" + userVO
+//				+ ", quoIsValid=" + quoIsValid + "]";
+//	}
 
 	
 
