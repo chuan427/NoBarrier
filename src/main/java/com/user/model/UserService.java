@@ -113,4 +113,8 @@ public class UserService {
 			return getOneUser(ordSellerid).getOrders();
 		}
 		
+		public void updateComStatToOne(Integer userId) {
+			repository.updateComStatToOne(userId);
+	    }
+		
 }

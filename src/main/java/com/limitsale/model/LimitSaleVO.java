@@ -80,13 +80,7 @@ import com.order.model.OrderVO;
 		}
 		
 		
-	    public OrderVO getOrderVO() {
-	        return orderVO;
-	    }
-
-	    public void setOrderVO(OrderVO orderVO) {
-	        this.orderVO = orderVO;
-	    }
+	   
 		
 //		@Id
 //		@GeneratedValue(strategy = GenerationType.IDENTITY)

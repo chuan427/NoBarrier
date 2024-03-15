@@ -38,8 +38,8 @@ import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
-import com.newsmodel.NewsService;
-import com.newsmodel.NewsVO;
+import com.news.model.NewsService;
+import com.news.model.NewsVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.productinformation.model.ProductInformationService;
@@ -520,10 +520,10 @@ public class IndexController_inSpringBoot {
 //		return "front-end/userinformation/memberCen";
 //	}
 
-//	@GetMapping("/user/listAllUser")
-//	public String listAllUser(Model model) {
-//		return "back-end/user/listAllUser";
-//	}
+	@GetMapping("/user/listAllUser")
+	public String listAllUser(Model model) {
+		return "back-end/user/listAllUser";
+	}
 
 //	@GetMapping("/userinformation/memberCen")
 //	public String memberCen(Model model, HttpServletRequest request) {

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.newsmodel.NewsService;
-import com.newsmodel.NewsVO;
+import com.news.model.NewsService;
+import com.news.model.NewsVO;
 
 @Controller
 @RequestMapping("/news")
