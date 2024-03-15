@@ -7,10 +7,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderRepository;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserRepository;
-import com.user.model.UserVO;@Service("quoService")
+import com.user.model.UserVO;
+
+@Service("quoService")
 public class QuoService {
 
 	@Autowired
@@ -59,6 +62,7 @@ public class QuoService {
 	public List<QuoVO> getAll(){
 		return repository.findAll();
 	}
+	
 	public List<QuoVO> getOneStatQuotation(UserVO userVO) {
         List<QuoVO> allQuotation = repository.findAll();
         List<QuoVO> validQuotation = new ArrayList<>();
@@ -69,11 +73,11 @@ public class QuoService {
             }
         }
         return validQuotation;
-    }	//報價單與訂單一對一
+    }
 	public OrderVO getOrderByquoNum(Integer ordQuonum){
 		return getOneQuo(ordQuonum).getOrderVO();
 	}
-	//報價單與需求單一對一
 	public ReqOrderVO getOrderByreqNum(Integer ordReqnum){
 		return getOneQuo(ordReqnum).getReqOrderVO();
-	}}
+	}
+}

@@ -67,6 +67,7 @@ import com.reqorder.model.ReqOrderVO;
 		private Set<AdVO> ad = new HashSet<AdVO>();
 		private Set<OrderVO> orders = new HashSet<OrderVO>();
 
+
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 		}
 		
@@ -416,7 +417,7 @@ import com.reqorder.model.ReqOrderVO;
 		public void setAd(Set<AdVO> ad) {
 			this.ad = ad;
 		}
-		//------------------Order----------------------
+		
 		@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "userVO")
 //		@OrderBy("userId asc") 
 		public Set<OrderVO> getOrders() {

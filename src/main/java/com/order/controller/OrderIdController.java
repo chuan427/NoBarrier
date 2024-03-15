@@ -59,14 +59,14 @@ public class OrderIdController {
 		
 		if (orderVO == null) {
 			model.addAttribute("errorMessage", "查無資料");
-			return "back-end/order/select_page";
+			return "front-end/order/transaction_stat";
 		}
 		
 		/***************************3.查詢完成,準備轉交(Send the Success view)*****************/
 		model.addAttribute("orderVO", orderVO);
 		model.addAttribute("getOne_For_Display", "true"); // 旗標getOne_For_Display見select_page.html的第126行 -->
 		
-		return "back-end/order/select_page"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneOrder-div
+		return "front-end/order/transaction_stat"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneOrder-div
 	}
 
 	
@@ -82,7 +82,7 @@ public class OrderIdController {
 		model.addAttribute("orderListData", list); // for select_page.html 第行用
 		
 		String message = strBuilder.toString();
-	    return new ModelAndView("back-end/order/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
+	    return new ModelAndView("front-end/order/transaction_stat", "errorMessage", "請修正以下錯誤:<br>"+message);
 	}
 	
 }

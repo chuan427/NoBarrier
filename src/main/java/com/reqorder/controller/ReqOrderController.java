@@ -1,33 +1,15 @@
 package com.reqorder.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;import javax.validation.Valid;
-
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -60,9 +42,10 @@ public class ReqOrderController {
 
     @Autowired
     IndustryService industrySvc;
-	@Autowired
-	OrderService orderSvc;
-
+    
+    @Autowired
+   	OrderService orderSvc; 
+    
     @GetMapping("/addReqOrder")
     public String addReqOrder(ModelMap model, HttpServletRequest request) {
     	HttpSession session = request.getSession();
@@ -71,6 +54,7 @@ public class ReqOrderController {
 	    if (userVO == null) {
 	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 	    }
+
 	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
 	    
         ReqOrderVO reqOrderVO = new ReqOrderVO();
@@ -79,19 +63,12 @@ public class ReqOrderController {
         return "front-end/userinformation/addReqOrder";
     }
     
-    @GetMapping("/userpage/{userId}")
-    public List<ReqOrderVO> getOrdersByUserId(@PathVariable Integer userId) {
-        return reqOrderSvc.getReqOrderByUserId(userId);
-    }
-
-
-
-    @GetMapping("/userinformation/reqorder_page")
-    public String reqOrderList(Model model) {
-        List<ReqOrderVO> list = reqOrderSvc.getAll();
-        model.addAttribute("reqOrderListData", list);
-        return "redirect:/userinformation/reqorder_page";
-    }
+//	@GetMapping("/userpage")
+//    public List<ReqOrderVO> getOrdersByUserId(HttpSession session) {
+//		
+//	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//        return reqOrderSvc.getReqOrderByUserId(userVO.getUserId());
+//    }
 
 
     @PostMapping("insertreq")
@@ -160,23 +137,7 @@ public class ReqOrderController {
 //        return "front-end/userinformation/req_userpage";
 //    }
 
-@PostMapping("complete")
-//    public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) throws IOException {
-//        if (reqNum == null) {
-//            // 如果 reqNum 為空，則進行相應的處理，例如返回一個錯誤頁面或者提示信息
-//            return "errorPage"; // 返回一個錯誤頁面
-//        }
-//
-//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-//        int valid = 1;
-//        reqOrderVO.setReqIsValid(valid);
-//        reqOrderSvc.updateReqOrder(reqOrderVO);
-//
-//        model.addAttribute("success", "- (完成需求)");
-//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-//        model.addAttribute("reqOrderVO", reqOrderVO);
-//        return "front-end/userinformation/req_userpage";
-//    }    @PostMapping("/userpage/complete")
+    @PostMapping("/userpage/complete")
     public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
         if (reqNum == null) {
             return "errorPage"; // 如果 reqNum 為空，返回一個錯誤頁面
@@ -200,7 +161,6 @@ public class ReqOrderController {
     }
 
 
-
     @ModelAttribute("userListData")
     protected List<UserVO> referenceListData() {
         return userSvc.getAll();
@@ -210,13 +170,13 @@ public class ReqOrderController {
     protected List<IndustryVO> referenceListData1() {
         return industrySvc.getAll();
     }
-    
+
     @ModelAttribute("orderListData")
 	protected List<OrderVO> referenceListOrderData(){
 	List<OrderVO> list = orderSvc.getAll();
 	return list;
 	}
-
+    
     public BindingResult removeFieldError(ReqOrderVO reqOrderVO, BindingResult result, String removedFieldname) {
         List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
                 .filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
@@ -227,4 +187,3 @@ public class ReqOrderController {
         return result;
     }
 }
-

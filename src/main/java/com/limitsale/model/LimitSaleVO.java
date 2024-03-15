@@ -5,11 +5,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
+import com.limitsale.model.LimitSaleVO;
+
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.order.model.OrderVO;
 
 
@@ -17,7 +22,10 @@ import com.order.model.OrderVO;
 	@Entity // 要加上@Entity才能成為JPA的一個Entity類別
 	@Table(name = "limitSale") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
 	public class LimitSaleVO implements java.io.Serializable {
-		private static final long serialVersionUID = 1L; 
+		private static final long serialVersionUID = 1L;
+		
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "limNum")
 		private Integer limNum;
 		@Column(name = "limOrdernum")
@@ -37,13 +45,29 @@ import com.order.model.OrderVO;
 		@Column(name = "limUnitname")
 		private String limUnitname;
 		
+		@OneToOne
+	    @PrimaryKeyJoinColumn
 		private OrderVO orderVO;
+		
+
+		
+//		public LimitSaleVO(Integer limNum, Integer limOrdernum, String limProdname, String limDes, Integer limQty,
+//				String limUnitname, Integer limPrice, byte[] limImage, Integer limSellerid) {
+//
+//			this.limNum = limNum;
+//			this.limOrdernum = limOrdernum;
+//			this.limProdname = limProdname;
+//			this.limDes = limDes;
+//			this.limQty = limQty;
+//			this.limUnitname = limUnitname;
+//			this.limPrice = limPrice;
+//			this.limImage = limImage;
+//			this.limSellerid = limSellerid;
+//		}
 		public LimitSaleVO() {
 			
 		}
 		
-		
-//		@OneToOne(mappedBy="limitsaleVO",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 		@OneToOne
 		@MapsId 
 		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
@@ -54,10 +78,10 @@ import com.order.model.OrderVO;
 		public void setOrderVO(OrderVO orderVO) {
 			this.orderVO = orderVO;
 		}
-
-
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		
+		
+//		@Id
+//		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Integer getLimNum() {
 			return limNum;
 		}
@@ -114,7 +138,7 @@ import com.order.model.OrderVO;
 		public void setLimSellerid(Integer limSellerid) {
 			this.limSellerid = limSellerid;
 		}
-		
+
 		
 		
 	}

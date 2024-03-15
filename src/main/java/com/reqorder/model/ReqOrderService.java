@@ -3,6 +3,7 @@ package com.reqorder.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,15 +77,14 @@ public class ReqOrderService {
         }
         return validReqOrder;
     }
-
-   
-	
-	//需求對報價一對一
-	public QuoVO getOrderByquoNum(Integer ordReqnum){
-		return getOneReqOrder(ordReqnum).getQuoVO();
+    
+	public Set<QuoVO> getOrderByquoNum(Integer ordReqnum){
+		return getOneReqOrder(ordReqnum).getQuotations();
 	}
 	//需求對訂單一對一
 	public OrderVO getOrderByreqNum(Integer ordReqnum){
 		return getOneReqOrder(ordReqnum).getOrderVO();
 	}
+	
+	
 }

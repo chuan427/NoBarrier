@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -41,7 +40,8 @@ public class QuoController {
 	ReqOrderService reqOrderSvc;
 
 	@Autowired
-	OrderService orderSvc;	/*
+	OrderService orderSvc;
+	/*
 	 * This method will serve as addEmp.html handler.
 	 */
 	@GetMapping("/addQuotation")

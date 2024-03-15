@@ -1,9 +1,12 @@
 package com.user.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.forumpost.model.ForumPostVO;
 import com.order.model.OrderVO;
+import com.reqorder.model.ReqOrderVO;
 
 
 @Service("userService")
@@ -84,18 +88,29 @@ public class UserService {
 		public List<UserVO> getAll() {
 			return repository.findAll();
 		}
-	
 		
-		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
-			return getOneUser(ordSellerid).getOrders();
+		public List<UserVO> getOneStatUser(UserVO userVO) {
+	        List<UserVO> allUser = repository.findAll();
+	        List<UserVO> validUser = new ArrayList<>();
+
+	        for (UserVO User : allUser) {
+	            if (User.getUserId() == userVO.getUserId() && User.getComIsValid() == 1) {
+	                validUser.add(User);
+	            }
+	        }
+	        return validUser;
+	    }
+		
+	
+		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
+			return getOneUser(userId).getReqOrder();
 		}
-//		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
-//			return getOneUser(userId).getReqOrder();
-//		}
 		
 		public Set<ForumPostVO> getForumPostByfpUserid(Integer fpUserid){
 		return getOneUser(fpUserid).getForumPost();
 	}
-
+		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
+			return getOneUser(ordSellerid).getOrders();
+		}
 		
 }

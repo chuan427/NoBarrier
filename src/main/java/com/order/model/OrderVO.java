@@ -1,6 +1,7 @@
 package com.order.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ import com.user.model.UserVO;
 	public class OrderVO implements java.io.Serializable {
 		private static final long serialVersionUID = 1L; 
 		private Integer ordNum;
-		private Date ordDate;
+		private Date ordDate = Date.valueOf(LocalDate.now());;
 		private String ordProdname;
 		private Integer ordProdqty;
 		private String ordUnitname;
@@ -52,6 +53,7 @@ import com.user.model.UserVO;
 		private ReqOrderVO reqOrderVO;
 		private QuoVO quoVO;
 		private RptdlistVO rptdlistVO;
+		
 		public OrderVO() { 
 		}
 		
@@ -67,15 +69,15 @@ import com.user.model.UserVO;
 		
 		
 		//訂單與需求是一對一 用@PrimaryKeyJoinColumn寫法 
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
+		@OneToOne(mappedBy = "orderVO", cascade = CascadeType.ALL)
 		@PrimaryKeyJoinColumn 
 		public ReqOrderVO getReqOrderVO() {
-				return reqOrderVO;
+		    return reqOrderVO;
 		}
 		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
-				this.reqOrderVO = reqOrderVO;
+		    this.reqOrderVO = reqOrderVO;
 		}
-		
+
 
 		@OneToOne
 		@MapsId 
@@ -276,6 +278,8 @@ import com.user.model.UserVO;
 		public void setOrdIsValid(Integer ordIsValid) {
 			this.ordIsValid = ordIsValid;
 		}
+		
+		
 		
 		
 	}

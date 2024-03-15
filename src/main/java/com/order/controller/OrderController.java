@@ -107,7 +107,6 @@ public class OrderController {
 			return "back-end/order/update_order_input";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
 		orderSvc.updateOrder(orderVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
@@ -169,7 +168,7 @@ public class OrderController {
 		model.addAttribute("success", "- (完成訂單)");
 		completeOrder = orderSvc.getOneOrder(Integer.valueOf(completeOrder.getOrdNum()));
 		model.addAttribute("orderVO", completeOrder);
-		return "back-end/order/listOneOrder"; // 修改成功後轉交listOneorder.html
+		return "redirect:/order/transaction_stat"; // 訂單完成後轉交到訂單狀態
 	}
 	
 	

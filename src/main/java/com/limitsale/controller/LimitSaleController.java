@@ -31,11 +31,9 @@ public class LimitSaleController {
 
 	@Autowired
 	OrderService orderSvc;
-	
-
 
 	/*
-	 * This method will serve as add.html handler.
+	 * This method will serve as addEmp.html handler.
 	 */
 	@GetMapping("addLimitSale")
 	public String addLimitSale(ModelMap model) {
