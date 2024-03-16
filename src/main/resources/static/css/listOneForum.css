@@ -155,15 +155,24 @@ body {
 
 .icon-wrapper {
     position: absolute; /* 使用絕對定位 */
-    right: 0; /* 將其定位到右邊界 */
+    right: -1100%; /* 將其定位到右邊界 */
     top: 50%; /* 調整至垂直中間 */
-    transform: translateY(-40%); /* 使用轉換來精確地居中 */
+    display: flex;
+    gap: 10px; /* 增加圖標之間的間距 */
 }
 
-.fa-rotate-left {
-    margin-right: 5px; /* 在右邊添加間隔 */
-}
-.fa-ellipsis-vertical {
-    margin-left: 5px; /* 在左邊添加間隔 */
-}
 
+.menu {
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  width: 110px; /* 設置一個固定的寬度 */
+  height: 70px; /* 設置一個固定的高度，與寬度相同以形成圓形 */
+  padding: 10px;
+  position: absolute;
+  left: 100%; /* 使其位於觸發元素的右側 */
+  top: 0px; /* 調整這個值以適應具體情況 */
+  z-index: 1000;
+  display: none; /* 預設不顯示，由 JavaScript 控制 */
+  overflow: hidden; /* 防止內容溢出 */
+}

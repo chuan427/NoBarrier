@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
 import com.addday.AdDate;
+import com.administrator.model.AdministratorService;
+import com.administrator.model.AdministratorVO;
 import com.advertisements.model.AdvertisementsService;
 import com.advertisements.model.AdvertisementsVO;
 import com.forumpost.model.ForumPostService;
@@ -103,6 +105,9 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	LimitSaleService limitSaleSvc;
+	
+	@Autowired
+	AdministratorService administratorSvc;
 
 	@Autowired
 	OrderService orderSvc;
@@ -452,35 +457,35 @@ public class IndexController_inSpringBoot {
 //			return "front-end/userinformation/quotation_list";
 //		}
 
-	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-
-		if (userVO == null) {
-			return null;
-		} else {
-			return quoSvc.getOneStatQuotation(userVO);
-		}
+//	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		if (userVO == null) {
+//			return null;
+//		} else {
+//			return quoSvc.getOneStatQuotation(userVO);
+//		}
 
 	
 		// -------------------order------------------------
 		
-		@ModelAttribute("orderListData")
-		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
-		    HttpSession session = request.getSession();
-		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-
-		    if (userVO == null) {
-		        return null;
-		    } else {
-//		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-//				return list;
-		        return orderSvc.getOneStatOrder(userVO);
-		    }
-		}
-	}
+//		@ModelAttribute("orderListData")
+//		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
+//		    HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		    if (userVO == null) {
+//		        return null;
+//		    } else {
+////		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+////				return list;
+//		        return orderSvc.getOneStatOrder(userVO);
+//		    }
+//		}
+//	}
 	// -------------------------------------------------
 
 	@GetMapping("/industry/select_page")
@@ -920,10 +925,10 @@ public class IndexController_inSpringBoot {
   	
  // -------------------------------administrator-----------------------------------
 	
-  	@GetMapping("/administrator/select_page")
-	public String select_page(Model model) {
-		return "back-end/administrator/select_page";
-	}
+//  	@GetMapping("/administrator/select_page")
+//	public String select_page(Model model) {
+//		return "back-end/administrator/select_page";
+//	}
     
     @GetMapping("/administrator/listAllAdministrator")
 	public String listAllAdministrator(Model model) {

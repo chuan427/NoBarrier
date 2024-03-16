@@ -78,6 +78,7 @@ public class ForumReplyController {
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
+//		ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(1);
 		long currentTimeMillis = System.currentTimeMillis();
 		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
 		forumReplyVO.setFrTime(currentTimestamp);
@@ -87,7 +88,8 @@ public class ForumReplyController {
 		List<ForumReplyVO> list = forumReplySvc.getAll();
 		model.addAttribute("forumReplyListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/forum/listOneForumPost"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+//		model.addAttribute("forumPostVO" , forumPostVO);
+		return "redirect:/forum/listOneForumPost/{fpNum}"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
 	/*
@@ -178,30 +180,6 @@ public class ForumReplyController {
 		return "back-end/forumReply/listAllForumReply"; // 刪除完成後轉交listAllUser.html
 	}
 
-	/*
-	 * 第一種作法 Method used to populate the List Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${deptListData}" itemValue="deptno" itemLabel="dname" />
-	 */
-//	@ModelAttribute("deptListData")
-//	protected List<DeptVO> referenceListData() {
-//		// DeptService deptSvc = new DeptService();
-//		List<DeptVO> list = deptSvc.getAll();
-//		return list;
-//	}
-
-	/*
-	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : 
-	 * <form:select path="deptno" id="deptno" items="${depMapData}" />
-	 */
-//	@ModelAttribute("deptMapData") //
-//	protected Map<Integer, String> referenceMapData() {
-//		Map<Integer, String> map = new LinkedHashMap<Integer, String>();
-//		map.put(10, "財務部");
-//		map.put(20, "研發部");
-//		map.put(30, "業務部");
-//		map.put(40, "生管部");
-//		return map;
-//	}
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(ForumReplyVO forumReplyVO, BindingResult result, String removedFieldname) {
