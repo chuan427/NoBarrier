@@ -79,6 +79,7 @@ a{
     max-width: 50%; 	/* 調整容器的最大寬度 */
     margin: left;  		/*如果需要，可以讓容器居中 */
   }
+  
 #fpImage{
 	width: 50%;
 }

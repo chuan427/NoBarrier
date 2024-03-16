@@ -6,12 +6,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -27,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.industry.model.IndustryService;
 import com.quo.model.QuoService;
+import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.security.model.MailService;
 import com.security.model.RandomPasswordGenerator;
@@ -36,7 +40,9 @@ import com.user.model.UserVO;
 //import com.dept.model.DeptService;
 
 @Controller
-@RequestMapping("/com")
+
+@RequestMapping("/userinformation")
+
 public class UserController {
 
 	private final PasswordEncoder passwordEncoder;
@@ -60,18 +66,22 @@ public class UserController {
 	
 	
 
-//	@Autowired
-//	DeptService deptSvc;
-
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	@GetMapping("addUser")
-	public String addUser(ModelMap model) {
-		UserVO userVO = new UserVO();
-		model.addAttribute("userVO", userVO);
-		return "back-end/user/addUser";
-	}
+//	@GetMapping("/memberCen1")
+//	public String addUser(ModelMap model) {
+//		UserVO userVO = new UserVO();
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/userinformation/memberCen1";
+//	}
+	
+//	@GetMapping("/memberCen1")
+//	public String memberCen1(ModelMap model) {
+//	    List<UserVO> userListData = userSvc.getAll(); // 假设这是您获取用户数据的方法
+//	    model.addAttribute("userListData", userListData);
+//	    return "front-end/userinformation/memberCen1"; // 返回到您的模板页面
+//	}
 	
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
@@ -124,13 +134,35 @@ public class UserController {
 	 * This method will be called on addEmp.html form submission, handling POST
 	 * request It also validates the user input
 	 */
-	@PostMapping("insert")
-	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
+
+	@PostMapping("insertUser")
+	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
+			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+		
+//	@PostMapping("insert")
+//	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
+
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		 //去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+		result = removeFieldError(userVO, result, "comAboutImage");
+
+		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
+			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
+		} else {
+			for (MultipartFile multipartFile : parts) {
+				byte[] buf = multipartFile.getBytes();
+				userVO.setComAboutImage(buf);
+			}
+		}
+		if (result.hasErrors() || parts[0].isEmpty()) {
+			return "front-end/userinformation/memberCen";
+		}
 
 		String password = userVO.getComPassword();
 		String encodeNewPassword = passwordEncoder.encode(password);
 		
 		userVO.setComPassword(encodeNewPassword);
+
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		userSvc.addUser(userVO);
@@ -139,13 +171,19 @@ public class UserController {
 		List<UserVO> list = userSvc.getAll();
 		model.addAttribute("userListData", list);
 		model.addAttribute("success", "- (新增成功)");
+
+//		return "redirect:/userinformation/memberCen"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+//	}
+
 		return "redirect:/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}	//我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
+
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
 	 */
+
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -158,10 +196,6 @@ public class UserController {
 		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
 	}
 
-	/*
-	 * This method will be called on update_user_input.html form submission,
-	 * handling POST request It also validates the user input
-	 */
 	@PostMapping("update")
 	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
 			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {

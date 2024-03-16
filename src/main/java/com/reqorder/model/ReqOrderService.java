@@ -3,12 +3,15 @@ package com.reqorder.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.industry.model.IndustryRepository;
 import com.industry.model.IndustryVO;
+import com.order.model.OrderVO;
+import com.quo.model.QuoVO;
 import com.user.model.UserRepository;
 import com.user.model.UserVO;
 
@@ -74,6 +77,14 @@ public class ReqOrderService {
         }
         return validReqOrder;
     }
-
-   
+    
+	public Set<QuoVO> getOrderByquoNum(Integer ordReqnum){
+		return getOneReqOrder(ordReqnum).getQuotations();
+	}
+	//需求對訂單一對一
+	public OrderVO getOrderByreqNum(Integer ordReqnum){
+		return getOneReqOrder(ordReqnum).getOrderVO();
+	}
+	
+	
 }

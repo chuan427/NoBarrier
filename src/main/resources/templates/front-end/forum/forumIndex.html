@@ -19,7 +19,6 @@
 
 <body>
 	<!-- header -->
-
 <head th:insert="~{/front-end/header_Dora}"></head>
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
@@ -27,7 +26,7 @@
           <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
           <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
           
-          <a href="#" th:href="@{/forum/forum/addForumPost}" class="new-article-button">新增文章</a>
+          <a href="#" th:href="@{/forum/addForumPost}" class="new-article-button">新增文章</a>
         </form>
     </div>
     
@@ -64,7 +63,7 @@
                 <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
                 
             <div id="menu" class="menu" style="display: none;">
-   			 <a th:href="@{/forum/forum/getOne_For_Update}">
+   			 <a th:href="@{/forum/getOne_For_Update(fpNum=${forumPostVO.fpNum})}">
         	<i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i>編輯文章</a>
     		<a href="javascript:void(0);" th:onclick="'deletePostAndRedirect(' + ${forumPostVO.fpNum} + ');'">
     		<i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章
@@ -81,7 +80,7 @@
               
               <br>
          
-             <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 35)}">
+             <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 20)}">
     		<span th:text="${shortContent}">文章開頭內容</span><a>...</a>
     		 <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${forumPostVO.fpNum})}" >閱讀全文</a>
 			</p>	
@@ -99,11 +98,6 @@
 		      <br>
 		        
               <div class="fabotton">
-              <br>
-              <p th:text="${forumPostVO.fpContent}">文章內容</p>
-              <br>  
-              <div class="fabotton">
-                  <i class="fa-solid fa-comment fa-xl"></i>
                   <i class="fa-regular fa-heart fa-xl"></i>
                   <i class="fa-regular fa-bookmark fa-xl"></i>
               </div>

@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderRepository;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserRepository;
@@ -73,4 +74,10 @@ public class QuoService {
         }
         return validQuotation;
     }
+	public OrderVO getOrderByquoNum(Integer ordQuonum){
+		return getOneQuo(ordQuonum).getOrderVO();
+	}
+	public ReqOrderVO getOrderByreqNum(Integer ordReqnum){
+		return getOneQuo(ordReqnum).getReqOrderVO();
+	}
 }

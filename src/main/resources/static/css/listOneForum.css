@@ -37,22 +37,32 @@ body {
 	color: #ffffff !important;
 }
 
-
 .transparent-box {
-	display: flex;
 	background-color: rgba(245, 233, 233, 0.5);
-    width: 90%; /* 或其他你希望的寬度 */
+	width: 90%;
 	padding: 15px;
-	max-width: 1300px;
+	max-width: 1150px;
 	margin-bottom: 20px;
-	border-radius: 15px;
-	flex: 1; /* 讓主內容彈性填滿除側邊欄外的空間 */
-	margin-right: 30px; /* 添加右邊距，與側邊欄保持間距 */
-	margin-left: 65px; /* 添加右邊距，與側邊欄保持間距 */
+	border-radius: 10px;
+	flex: 1;
+	margin-right: 30px;
+	margin-left: 65px;
+	max-height: 600px; /* 最大高度設定 */
+	overflow-y: auto; /* 啟用垂直滾動條 */
 }
 
-.content {
-	margin-bottom: 10px;
+/* 針對Webkit瀏覽器的滾動條樣式 */
+.transparent-box::-webkit-scrollbar {
+	width: 8px; /* 滾動條的寬度 */
+}
+
+.transparent-box::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0); /* 滾動條軌道設置為完全透明 */
+}
+
+.transparent-box::-webkit-scrollbar-thumb {
+	background: #cccccc; /* 滾動條顏色 */
+	border-radius: 4px; /* 滾動條圓角 */
 }
 
 .post {
@@ -95,67 +105,49 @@ body {
 	gap: 25px; /* 在圖標之間添加一些間隙 */
 }
 
-/* 使用者及3個點點圖示 & USER顯示名稱 */
-
-.icon-wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+/* 留言 */
+.comment-section, .comments-display {
+	margin-top: 20px;
+	padding: 15px;
+	background: #f9f9f9;
+	border-radius: 8px;
 }
 
-.user-name {
-    font-size: 0.7rem;
-    font-weight: normal;
-    font-family: 'Microsoft JhengHei', sans-serif; /* 加入微軟正黑體 */
+.comment-section h3, .comments-display h3 {
+	margin-bottom: 15px;
 }
 
-.menu {
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
-  border-radius: 15px;
-  width: 110px; /* 設置一個固定的寬度 */
-  height: 90px; /* 設置一個固定的高度，與寬度相同以形成圓形 */
-  padding: 10px;
-  position: absolute;
-  left: 100%; /* 使其位於觸發元素的右側 */
-  top: 0px; /* 調整這個值以適應具體情況 */
-  z-index: 1000;
-  display: none; /* 預設不顯示，由 JavaScript 控制 */
-  overflow: hidden; /* 防止內容溢出 */
+.comment-input {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical; /* 允許垂直調整大小 */
 }
-
-.menu a {
-	display: block;
-	margin: 5px 0;
-}
-
-.comments-section {
-    margin-top: 20px;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-
-/* 留言部份 */
 
 .comment {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eaeaea;
+	padding: 10px;
+	background: #f9f9f9;
 }
 
-.comment-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+.comment:last-child {
+	border-bottom: none;
 }
 
-.comment-header .fa-user-circle {
-    margin-right: 10px;
+.comment-user {
+	font-weight: bold;
 }
 
 .comment-time {
-    margin-left: auto;
-    color: #666;
+	color: #777;
+	font-size: 0.9em;
+	margin-top: 5px;
+}
+
+
+/* 	ADD上傳圖片CSS  */
+  
+#frImage{
+	width: 30%;
 }
