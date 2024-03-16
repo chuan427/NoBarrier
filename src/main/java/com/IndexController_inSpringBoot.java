@@ -563,9 +563,28 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("userListData", list);
 		return "front-end/userinformation/memberCen";
 	}
-
+	
 	@GetMapping("/userinformation/memberCen1")
 	public String memberCen1(Model model, HttpServletRequest request) {
+		// 检查会话中是否有登录的用户信息
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		
+		//沒找到符合用戶的情形，請他離開
+		if (userVO == null) {
+			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+	
+		//拿出登入用戶的資訊，並放進Model送到更新頁面做渲染
+		model.addAttribute("userVO", userVO);
+		return "front-end/userinformation/memberCen1";
+	}
+
+	
+
+	@GetMapping("/userinformation/memberCen2")
+	public String memberCen2(Model model, HttpServletRequest request) {
 		// 检查会话中是否有登录的用户信息
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
@@ -576,9 +595,9 @@ public class IndexController_inSpringBoot {
 
 		List<UserVO> list = userSvc.getOneStatUser(userVO);
 		model.addAttribute("userListData", list);
-		return "front-end/userinformation/memberCen1";
+		return "front-end/userinformation/memberCen2";
 	}
-
+	
 	@ModelAttribute("userListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<UserVO> referenceListData_user(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
