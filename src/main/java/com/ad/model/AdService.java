@@ -1,11 +1,14 @@
 package com.ad.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +85,43 @@ public class AdService {
 		repository.save(advo);
 		
 	}
+	
+//	public  boolean hasValidAdOrder(UserVO userVo) {
+//        List<AdVO> userAds = repository.findByUserVO(userVo);
+//        for (AdVO ad : userAds) {
+//            // 检查广告订单是否有效
+//            if (ad.getAdOrdernum() != null) {
+//                // 获取广告订单的截止日期
+//            	List<AdvertisementsVO> advertisements = ad.getAdvertisements();
+//            	LocalDate currentDate = LocalDate.now();
+//            	for (AdvertisementsVO adv : advertisements) {
+//            	    // 获取广告信息的截止日期
+//            	    Date endDate = adv.getAdsDays();
+//            	    // 转换为 LocalDate
+//            	    LocalDate endDateLocal = ((java.sql.Date) endDate).toLocalDate();
+//            	    // 获取当前日期的年月日部分
+//            	    
+////            	    System.out.println(currentDate);
+//            	    // 检查截止日期的年月日部分是否在当前日期之后
+//            	    if (endDateLocal.isEqual(currentDate)) {
+//            	        return true; // 存在有效的广告订单
+//            	    }
+//            	}
+//
+//            }
+//        }
+//        return false; // 不存在有效的广告订单
+//    }
 
+	public boolean hasValidAdOrder(UserVO userVo) {
+	    List<AdVO> userAds = repository.findByUserVO(userVo);
+	    LocalDate currentDate = LocalDate.now();
+	    return userAds.stream()
+	            .filter(ad -> ad.getAdOrdernum() != null)
+	            .flatMap(ad -> ad.getAdvertisements().stream())
+	            .map(AdvertisementsVO::getAdsDays)
+	            .map(endDate -> ((java.sql.Date) endDate).toLocalDate())
+	            .anyMatch(endDateLocal -> endDateLocal.isEqual(currentDate));
+	}
 
 }

@@ -82,7 +82,8 @@
 }
 
 .hidden-section {
-	/* 	display: none; */
+	 	display: none;
+    display: none;
 	
 }
 </style>
@@ -119,7 +120,7 @@
 			<button type="button" data-bs-target="#carouselExampleIndicators"data-bs-slide-to="3" aria-label="Slide 4"></button>
 		</div>
 		<div class="carousel-inner">
-			<div class="carousel-item active">
+				<div class="carousel-item active">
 					<img th:src="@{/user/DBGifReader1} + '?userId=' + ${userVO.userId}" height="300" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
 				</div>
 				<div class="carousel-item">
@@ -148,70 +149,45 @@
 </div>
 
 	<!-- 限時商品 -->
-	<div class="hidden-section">
-	
-		<section class="py-5 text-center container"
-			style="background-color: lightgray; max-width: 100%;">
-			<div class="row py-lg-5 justify-content-center">
-				<div class="col-lg-8 col-md-10 mx-auto">
-					<h1 style="text-align: left; font-style: oblique; color: red;">!!限時商品</h1>
-					<p id="countdown" class="lead text-body-secondary"></p>
-					<div id="carouselExampleControls" class="carousel slide"
-						data-bs-ride="carousel">
-						<div class="carousel-inner">
-							<div class="carousel-item active">
-								<div class="d-flex justify-content-around">
-									<div class="carousel-content">
-										<img src="image/200x200.png" class="d-block" alt="Image 1">
-										<div class="carousel-caption d-none d-md-block">
-											<h5>螺絲起子</h5>
-											<p>NT$500</p>
-											<button type="button" class="btn btn-primary">立即購買</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="carousel-item">
-								<div class="d-flex justify-content-around">
-									<div class="carousel-content">
-										<img src="image/200x200.png" class="d-block" alt="Image 2">
-										<div class="carousel-caption d-none d-md-block">
-											<h5>商品名稱</h5>
-											<p>NT$1000</p>
-											<button type="button" class="btn btn-primary">立即購買</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="carousel-item">
-								<div class="d-flex justify-content-around">
-									<div class="carousel-content">
-										<img src="image/200x200.png" class="d-block" alt="Image 3">
-										<div class="carousel-caption d-none d-md-block">
-											<h5>商品名稱</h5>
-											<p>NT$600</p>
-											<button type="button" class="btn btn-primary">立即購買</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<button class="carousel-control-prev" type="button"
-							data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						<button class="carousel-control-next" type="button"
-							data-bs-target="#carouselExampleControls" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
-	
+<div th:class="${and} ? '' : 'hidden-section'">
+    <section class="py-5 text-center container" style="background-color: lightgray; max-width: 100%;">
+        <div class="row py-lg-5 justify-content-center">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <h1 style="text-align: left; font-style: oblique; color: red;">!!限時商品</h1>
+                <p id="countdown" class="lead text-body-secondary"></p>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Iterate over the limitSaleOneData list -->
+                        <div th:each="item, iterStat : ${limitSaleOneData}" 
+                             th:class="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                            <div class="d-flex justify-content-around">
+                                <div class="carousel-content">
+                                    <img th:src="@{/limitSale/DBGifReader} + '?limNum=' + ${item.limNum}" class="d-block" alt="Image" />
+<!--                                     <div class="carousel-caption d-none d-md-block"> -->
+                                    <div class="carousel">
+                                        <h5 th:text="${item.limProdname}"></h5>
+                                        <p th:text="'NT$' + ${item.limPrice}"></p>
+                                        <button type="button" class="btn btn-primary">立即購買</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 		<!-- About us & Manufacturer-->
     <div class="container">
         <div class="row">
