@@ -68,6 +68,8 @@ public class UserIdController {
 		
 		return "front-end/userinformation/memberCen"; // 查詢完成後轉交select_page.html由其第128行insert listOneEmp.html內的th:fragment="listOneUser-div
 	}
+	
+	
 
 	
 	@ExceptionHandler(value = { ConstraintViolationException.class })

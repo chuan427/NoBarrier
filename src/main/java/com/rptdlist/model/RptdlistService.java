@@ -40,7 +40,7 @@ public class RptdlistService {
 		}
 		return null;
 	}
-	
+
 	public List<RptdlistVO> getAll(){
 		return repository.findAll();
 	}

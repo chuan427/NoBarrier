@@ -19,7 +19,6 @@
 
 <body>
 	<!-- header -->
-
 <head th:insert="~{/front-end/header_Dora}"></head>
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
@@ -27,7 +26,7 @@
           <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
           <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
           
-          <a href="#" th:href="@{/forum/forum/addForumPost}" class="new-article-button">新增文章</a>
+          <a href="#" th:href="@{/forum/addForumPost}" class="new-article-button">新增文章</a>
         </form>
     </div>
     
@@ -99,11 +98,6 @@
 		      <br>
 		        
               <div class="fabotton">
-              <br>
-              <p th:text="${forumPostVO.fpContent}">文章內容</p>
-              <br>  
-              <div class="fabotton">
-                  <i class="fa-solid fa-comment fa-xl"></i>
                   <i class="fa-regular fa-heart fa-xl"></i>
                   <i class="fa-regular fa-bookmark fa-xl"></i>
               </div>
