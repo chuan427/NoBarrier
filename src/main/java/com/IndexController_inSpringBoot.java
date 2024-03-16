@@ -1013,11 +1013,6 @@ public String chat(Model model) {
 
 	// -------------------------------order-----------------------------------
 
-	@ModelAttribute("orderListData")
-	protected List<OrderVO> referenceListOrderData() {
-		List<OrderVO> list = orderSvc.getAll();
-		return list;
-	}
 
 }
 
