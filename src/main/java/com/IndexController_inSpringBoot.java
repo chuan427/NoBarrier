@@ -951,7 +951,7 @@ public String chat(Model model) {
   	List<OrderVO> list = orderSvc.getAll();
   	return list;
   	}
-  	
+}
 	
 //  	@GetMapping("order/transactioncheck")
 //	public String check(Model model) {
