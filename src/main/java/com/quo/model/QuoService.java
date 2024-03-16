@@ -74,9 +74,9 @@ public class QuoService {
         }
         return validQuotation;
     }
-	public OrderVO getOrderByquoNum(Integer ordQuonum){
-		return getOneQuo(ordQuonum).getOrderVO();
-	}
+//	public OrderVO getOrderByquoNum(Integer ordQuonum){
+//		return getOneQuo(ordQuonum).getOrderVO();
+//	}
 	public ReqOrderVO getOrderByreqNum(Integer ordReqnum){
 		return getOneQuo(ordReqnum).getReqOrderVO();
 	}
