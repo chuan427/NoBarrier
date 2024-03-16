@@ -65,6 +65,7 @@ import com.reqorder.model.ReqOrderVO;
 		private Set<ForumPostVO> forumPost = new HashSet<ForumPostVO>();
 		private Set<AdVO> ad = new HashSet<AdVO>();
 		
+		
 
 
 		public UserVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)

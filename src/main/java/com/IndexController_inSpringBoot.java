@@ -186,8 +186,6 @@ public class IndexController_inSpringBoot {
 //		return "index"; // view
 //	}
 	
-
-	// 廠商資訊 完成
 // 廠商資訊 完成
     @GetMapping("/com/com_homepage/{userId}")
     public String homepage(@PathVariable("userId") UserVO userVO, Model model) {
@@ -209,10 +207,21 @@ public class IndexController_inSpringBoot {
 		return "front-end/com/editmember_aboutus_view"; // view
 	}
 
-	// 廠商編輯頁面 完成
+//	// 廠商編輯頁面 完成
+//	@GetMapping("/com/editmember_aboutus")
+//	public String editmember_aboutus(Model model) {
+//	    List<UserVO> userVOlist = referenceListData_user(model);
+//	    model.addAttribute("userVO", userVOlist);
+//	    return "front-end/com/editmember_aboutus"; // view
+//	}
+	
+//	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_aboutus")
-	public String editmember_aboutus() {
-		return "front-end/com/editmember_aboutus"; // view
+	public String editmember_aboutus(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_aboutus"; // 返回 view 的名稱
 	}
 
 	// 廠商廣告預覽頁面 完成
@@ -227,11 +236,14 @@ public class IndexController_inSpringBoot {
 		return "front-end/com/editmember_ad"; // view
 	}
 
-	// 廠商產品預覽頁面 完成
+//	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_product_view")
-	public String editmember_product_view(Model model) {
+	public String editmember_product_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
 	        // 添加到模型中
+	        model.addAttribute("userVO", userVO);
 	        model.addAttribute("productInformationList", productInformationList);
 	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
 	}
@@ -253,18 +265,39 @@ public class IndexController_inSpringBoot {
 	public String editmember_sale() {
 		return "front-end/com/editmember_sale"; // view
 	}
-
-	// 廠商聯絡資料預覽頁面 完成
-	@GetMapping("/com/editmember_user_view")
-	public String editmember_user_view() {
-		return "front-end/com/editmember_user_view"; // view
+	
+	//從session中取的userVO
+	@ModelAttribute("userVOlist")
+	protected List<UserVO> referenceListData_user(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		if (userVO == null) {
+			return null;
+		} else {
+			return userSvc.getOneStatUser(userVO);
+		}
 	}
+	
 
-	// 廠商聯絡資料編輯頁面 完成
-	@GetMapping("/com/editmember_user")
-	public String editmember_user() {
-		return "front-end/com/editmember_user"; // view
-	}
+//	// 廠商聯絡資料預覽頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user_view")
+//	public String editmember_user_view() {
+//		return "front-end/com/editmember_user_view"; // view
+//	}
+
+//	// 廠商聯絡資料編輯頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user")
+//	public String editmember_user() {
+//		return "front-end/com/editmember_user"; // view
+//	}
+//	  廠商聯絡資料編輯頁面 修改前暫時不用
+//    @GetMapping("/com/editmember_user/{userId}")
+//    public String editmember_user(@PathVariable("userId") String userId, Model model) {
+//        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+//        // 將相關數據添加到 Model 中，以便在視圖中使用
+//        model.addAttribute("userVO", userVO);
+//        return "front-end/com/editmember_user_view"; // view
+//    }
 
 	// 廠商產品資訊編輯頁面 完成
 	@GetMapping("/com/editmemeber_product")
@@ -280,7 +313,7 @@ public class IndexController_inSpringBoot {
 		    model.addAttribute("userVO", userVO);
 		    return "front-end/com/member_AboutUs"; // view
 		}
-////	 廠商產品資訊編輯頁面 完成
+////	 廠商產品資訊編輯頁面 修改前暫時不用
 //	@GetMapping("/com/member_AboutUs")
 //	public String member_AboutUs () {
 //			    return "front-end/com/member_AboutUs"; // view
@@ -297,7 +330,7 @@ public class IndexController_inSpringBoot {
 	    return "front-end/com/member_Prod"; // view
 	}
 	
-////	 廠商產品資訊編輯頁面 完成
+////	 廠商產品資訊編輯頁面 修改前暫時不用
 //		@GetMapping("/com/member_Prod")
 //		public String member_Prod () {
 //				    return "front-end/com/member_Prod"; // view
@@ -523,6 +556,8 @@ public class IndexController_inSpringBoot {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
+	
+	
 //	-----------------------------------------------------------------------
 
 	@GetMapping("/ad/select_page")
@@ -715,6 +750,13 @@ public class IndexController_inSpringBoot {
 	protected List<NewsVO> referenceListData_news(Model model) {
 
 		List<NewsVO> list = newsSvc.getAll();
+		return list;
+	}
+	
+	@ModelAttribute("newsListDatacheck") // for 最新消息
+	protected List<NewsVO> referenceListData_checknews(Model model) {
+
+		List<NewsVO> list = newsSvc.getAllAndHandleStatus();
 		return list;
 	}
 // -------------------------------limitsale-----------------------------------

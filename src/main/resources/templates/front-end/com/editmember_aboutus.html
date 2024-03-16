@@ -86,7 +86,7 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
+                        <span class="fs-2" style="color: black;" th:text="${userVO.comName}"></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -95,11 +95,11 @@
                                 廠商廣告
                             </a>
                         </li>
-                        <li>
-                            <a th:href="@{/com/editmember_user}" class="nav-link text-white fs-4">
-                                聯絡資料
-                            </a>
-                        </li>
+<!--                         <li> -->
+<!--                             <a th:href="@{/com/editmember_user}" class="nav-link text-white fs-4"> -->
+<!--                                 聯絡資料 -->
+<!--                             </a> -->
+<!--                         </li> -->
                         <li>
                             <a th:href="@{/com/editmember_aboutus}" class="nav-link text-white fs-4">
                                 關於我們
@@ -119,27 +119,123 @@
                 </div>
             </div>
 
-            <div class="col-md-9">
-                <h3>關於我們</h3>
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top: 50px;"></div>
-                <div class="input-group">
-                    <div class="col-7">
-                        <span class="input-group-text">關於我們</span>
-                        <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" type="button">修改完成</button>
-              </div>
+     <div align="center">
+		<h3><b>所有欄位皆為必填欄位</b></h3>
+		<form th:action="@{updateAboutUs}" method="post" th:object="${userVO}" enctype="multipart/form-data">
+		
+			<div>
+			<input type="hidden" th:field="${userVO.userId}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			</div>
+			
+			<div>
+<!-- 			<label>公司名稱:</label> -->
+			<input type="hidden" th:field="*{comName}" onclick="hideContent('comName.errors');" /><br/>
+			<span th:if="${#fields.hasErrors('comName')}" th:errors="*{comName}" class="error" id="comName.errors"></span>
+			</div>
+		
+			
+			<div>
+<!-- 			<label >公司帳號:</label> -->
+			<input type="hidden" th:field="*{comAccount}" onclick="hideContent('comAccount.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comAccount')}" th:errors="*{comAccount}" class="error" id="comAccount.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司密碼:</label> -->
+			<input type="hidden" th:field="*{comPassword}" onclick="hideContent('comPassword.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comPassword')}" th:errors="*{comPassword}" class="error" id="comPassword.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司統編:</label> -->
+			<input type="hidden" th:field="*{comUniNumber}" onclick="hideContent('comUniNumber.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comUniNumber')}" th:errors="*{comUniNumber}" class="error" id="comUniNumber.errors"></span>
+			</div>
+
+			<div>
+<!-- 			<label>註冊日期:</label> -->
+			<input type="hidden" th:field="*{comRegDate}" onclick="hideContent('comRegDate.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comRegDate')}" th:errors="*{comRegDate}" class="error" id="comRegDate.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司聯絡人:</label> -->
+			<input type="hidden" th:field="*{comContactPerson}" onclick="hideContent('comContactPerson.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comContactPerson')}" th:errors="*{comContactPerson}" class="error" id="comContactPerson.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司聯絡人電話:</label> -->
+			<input type="hidden" th:field="*{comContactPhone}" onclick="hideContent('comContactPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comContactPhone')}" th:errors="*{comContactPhone}" class="error" id="comContactPhone.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司地址:</label> -->
+			<input type="hidden" th:field="*{comAddress}" onclick="hideContent('comAddress.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comAddress')}" th:errors="*{comAddress}" class="error" id="comAddress.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司信箱:</label> -->
+			<input type="hidden" th:field="*{comMail}" onclick="hideContent('comMail.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comMail')}" th:errors="*{comMail}" class="error" id="comMail.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>公司電話:</label> -->
+			<input type="hidden" th:field="*{comPhone}" onclick="hideContent('comPhone.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error" id="comPhone.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>銀行帳號資訊:</label> -->
+			<input type="hidden" th:field="*{comBank}" onclick="hideContent('comBank.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comBank')}" th:errors="*{comBank}" class="error" id="comBank.errors"></span>
+			</div>
+			
+			
+			<div>
+<!-- 			<label>會員狀態:</label> -->
+			<input type="hidden" th:field="*{comStat}" onclick="hideContent('comStat.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comStat')}" th:errors="*{comStat}" class="error" id="comStat.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>評價總星數:</label> -->
+			<input type="hidden" th:field="*{comRatStars}" onclick="hideContent('comRatStars.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comRatStars')}" th:errors="*{comRatStars}" class="error" id="comRatStars.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>評價總筆數:</label> -->
+			<input type="hidden" th:field="*{comRatCount}" onclick="hideContent('comRatCount.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comRatCount')}" th:errors="*{comRatCount}" class="error" id="comRatCount.errors"></span>
+			</div>
+			
+			<div>
+<!-- 			<label>關於我們圖片:</label> -->
+			<input type="file" th:field="*{comAboutImage}" onclick="previewImage()" multiple="multiple" />
+            <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
+			<div id="blob_holder"><img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" width="100px"></div>
+			</div>
+			
+			<div>
+<!-- 			<label>關於我們文字描述:</label> -->
+			<input type="text" th:field="*{comAboutContent}" onclick="hideContent('comAboutContent.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('comAboutContent')}" th:errors="*{comAboutContent}" class="error" id="comAboutContent.errors"></span>
+			</div>
+			
+			<div>
+				<div></div>
+				<div><button type="submit" id="submit"> 送出修改 </button></div>
+				<div></div>
+			</div>		
+		</form>
+	</div>
+	</div>
+
+	</div>
 	<head th:insert="@{/front-end/footer}"></head>
 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/notification.js}"></script>

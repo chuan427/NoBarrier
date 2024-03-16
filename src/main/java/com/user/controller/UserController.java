@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ import com.user.model.UserVO;
 //import com.dept.model.DeptService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/com")
 public class UserController {
 
 	private final PasswordEncoder passwordEncoder;
@@ -154,7 +155,7 @@ public class UserController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("userVO", userVO);
-		return "back-end/user/update_user_input"; // 查詢完成後轉交update_user_input.html
+		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
 	}
 
 	/*
@@ -191,8 +192,70 @@ public class UserController {
 		model.addAttribute("success", "- (修改成功)");
 		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
 		model.addAttribute("userVO", userVO);
-		return "back-end/user/listOneUser"; // 修改成功後轉交listOneUser.html
+		return "front-end/com/listOneUser"; // 修改成功後轉交listOneUser.html
 	}
+//	==========================================================================
+//	@PostMapping("updateUser")
+//	public String updateUser(@Valid UserVO userVO,BindingResult result, ModelMap model,HttpServletRequest request) throws IOException {
+//		result = removeFieldError(userVO, result, null);
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		if (result.hasErrors()) {
+//			System.out.println("跳錯了");
+//			return "front-end/com/editmember_user";
+//		}
+//		
+//		UserVO userVO1 = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+//		userVO1.setComAddress(userVO.getComAddress());
+//		userVO1.setComPhone(userVO.getComPhone());
+//		userVO1.setComMail(userVO.getComMail());
+//		/*************************** 2.開始修改資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		userSvc.updateUser(userVO1);
+//		// 重新获取更新后的用户信息并将其存储到会话中
+//		UserVO updatedUser = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+//		request.getSession().setAttribute("loggingInUser", updatedUser);
+//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("success", "- (修改成功)");
+//		model.addAttribute("userVO", updatedUser);
+//		return "front-end/com/editmember_user_view"; // 修改成功後轉交listOneUser.html
+//	}
+	
+	//修改關於我頁面====================================================================================
+	@PostMapping("updateAboutUs")
+	public String updateAboutUs(@Valid UserVO userVO, BindingResult result, ModelMap model,HttpServletRequest request, @RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+	    // 接收請求參數 - 輸入格式的錯誤處理
+	    result = removeFieldError(userVO, result, "comAboutImage");
+	    
+	    // 检查是否有上传的新图片
+	    if (!parts[0].isEmpty()) {
+	        byte[] comAboutImage = parts[0].getBytes();
+	        userVO.setComAboutImage(comAboutImage);
+	    } else {
+	        // 如果用户未选择上传新图片，则保留原有图片
+	        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
+	        userVO.setComAboutImage(existingImage);
+	    }
+	    
+	    // 如果存在输入格式错误，返回编辑页面
+//	    if (result.hasErrors()) {
+//	    	  System.out.println("老鐵666");
+//	        return "front-end/com/editmember_aboutus";
+//	    }
+	    
+	    // 执行修改数据的逻辑
+	    userSvc.updateUser(userVO);
+	    UserVO updateAboutUs = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+		request.getSession().setAttribute("loggingInUser", updateAboutUs);
+
+	    // 修改完成，准备转交
+	    model.addAttribute("success", "- (修改成功)");
+	    userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+	    model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_aboutus_view";
+	}
+
+//	=======================================廠商資料update====================
 
 	/*
 	 * This method will be called on listAllUser.html form submission, handling POST
