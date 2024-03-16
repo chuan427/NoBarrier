@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.user.model.UserVO;
+
 public interface AdRepository extends JpaRepository<AdVO, Integer> {
 
 	@Transactional
@@ -16,7 +18,7 @@ public interface AdRepository extends JpaRepository<AdVO, Integer> {
 	@Query(value = "delete from ad where adOrdernum =?1", nativeQuery = true)
 	void deleteByAd_ordernum(int adOrdernum);
 	
-	
+	List<AdVO> findByUserVO(UserVO userVo);
 	
 
 }
