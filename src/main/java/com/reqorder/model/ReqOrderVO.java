@@ -37,7 +37,7 @@ public class ReqOrderVO implements java.io.Serializable {
 	private Integer reqNum;
 	private UserVO userVO;
 	private IndustryVO industryVO;
-	private OrderVO orderVO; 
+//	private OrderVO orderVO; 
 	private Date reqOrderdate = Date.valueOf(LocalDate.now());
 	private String reqProdname;
 	private String reqUnitname;
@@ -48,6 +48,9 @@ public class ReqOrderVO implements java.io.Serializable {
 //	private Integer reqUserid;
 	private Integer reqIsValid;
 	private Set<QuoVO> quotations = new HashSet<QuoVO>();
+	private Set<OrderVO> order = new HashSet<OrderVO>();
+	
+
 	public ReqOrderVO() {
 
 	}
@@ -63,16 +66,16 @@ public class ReqOrderVO implements java.io.Serializable {
 		this.reqNum = reqNum;
 	}
 	
-	@OneToOne
-	@MapsId 
-	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
-	public OrderVO getOrderVO() {
-		return orderVO;
-	}
-
-	public void setOrderVO(OrderVO orderVO) {
-		this.orderVO = orderVO;
-	}
+//	@OneToOne
+//	@MapsId 
+//	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
+//	public OrderVO getOrderVO() {
+//		return orderVO;
+//	}
+//
+//	public void setOrderVO(OrderVO orderVO) {
+//		this.orderVO = orderVO;
+//	}
 
 	@ManyToOne
 	@JoinColumn(name = "reqUserid", referencedColumnName = "userid")   // 指定用來join table的column
@@ -189,6 +192,17 @@ public class ReqOrderVO implements java.io.Serializable {
 
 	public void setQuotations(Set<QuoVO> quotations) {
 		this.quotations = quotations;
+	}
+	
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="reqOrderVO")
+	@OrderBy("ordNum asc")
+	public Set<OrderVO> getOrder() {
+		return order;
+	}
+
+	public void setOrder(Set<OrderVO> order) {
+		this.order = order;
 	}
 	
 	
