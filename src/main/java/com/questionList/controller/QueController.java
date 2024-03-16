@@ -64,7 +64,6 @@ public class QueController {
         queListVO.setQueImage(buf);
     }
 
-		
 		if (queListVO.getQueNotitime() == null) {
 			queListVO.setQueNotitime(new java.sql.Timestamp(System.currentTimeMillis()));
 		}

@@ -14,15 +14,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.hibernate.annotations.Where;
-
 import com.industry.model.IndustryVO;
+import com.order.model.OrderVO;
 import com.quo.model.QuoVO;
 import com.user.model.UserVO;
 
@@ -35,6 +37,7 @@ public class ReqOrderVO implements java.io.Serializable {
 	private Integer reqNum;
 	private UserVO userVO;
 	private IndustryVO industryVO;
+	private OrderVO orderVO; 
 	private Date reqOrderdate = Date.valueOf(LocalDate.now());
 	private String reqProdname;
 	private String reqUnitname;
@@ -45,9 +48,6 @@ public class ReqOrderVO implements java.io.Serializable {
 //	private Integer reqUserid;
 	private Integer reqIsValid;
 	private Set<QuoVO> quotations = new HashSet<QuoVO>();
-
-	
-
 	public ReqOrderVO() {
 
 	}
@@ -63,7 +63,17 @@ public class ReqOrderVO implements java.io.Serializable {
 		this.reqNum = reqNum;
 	}
 	
-	
+	@OneToOne
+	@MapsId 
+	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
+	public OrderVO getOrderVO() {
+		return orderVO;
+	}
+
+	public void setOrderVO(OrderVO orderVO) {
+		this.orderVO = orderVO;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "reqUserid", referencedColumnName = "userid")   // 指定用來join table的column
 	public UserVO getUserVO() {
@@ -73,6 +83,7 @@ public class ReqOrderVO implements java.io.Serializable {
 	public void setUserVO(UserVO userVO) {
 		this.userVO = userVO;
 	}
+	
 	
 	@ManyToOne
 	@JoinColumn(name = "reqCategory", referencedColumnName = "industryNum")   // 指定用來join table的column

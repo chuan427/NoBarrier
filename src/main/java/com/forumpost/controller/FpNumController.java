@@ -25,7 +25,7 @@ import com.forumpost.model.ForumPostVO;
 
 @Controller
 @Validated
-@RequestMapping("/forumPost")
+@RequestMapping("/forum")
 public class FpNumController {
 
 	@Autowired
@@ -51,7 +51,7 @@ public class FpNumController {
 
 		if (forumPostVO == null) {
 			model.addAttribute("errorMessage", "查無資料");
-			return "back-end/forumPost/select_page1";
+			return "front-end/forum/listOneForumPost";
 		}
 
 		/***************************
@@ -60,7 +60,7 @@ public class FpNumController {
 		model.addAttribute("forumPostVO", forumPostVO);
 		model.addAttribute("getOne_For_Display", "true"); // 旗標getOne_For_Display見select_page.html的第126行 -->
 
-		return "back-end/forumPost/select_page1"; // 查詢完成後轉交select_page.html由其第128行insert
+		return "front-end/forum/listOneForumPost"; // 查詢完成後轉交select_page.html由其第128行insert
 													// listOneEmp.html內的th:fragment="listOneUser-div
 	}
 
@@ -76,7 +76,7 @@ public class FpNumController {
 		model.addAttribute("forumPostListData", list); // for select_page.html 第行用
 
 		String message = strBuilder.toString();
-		return new ModelAndView("back-end/forumPost/select_page1", "errorMessage", "請修正以下錯誤:<br>" + message);
+		return new ModelAndView("front-end/forum/listOneForumPost", "errorMessage", "請修正以下錯誤:<br>" + message);
 	}
 
 }

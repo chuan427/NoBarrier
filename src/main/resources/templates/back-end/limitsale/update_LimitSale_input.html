@@ -1,0 +1,270 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>特賣商品資料修改 - update_LimitSale_input.html</title>
+
+<head th:insert="~{/back-end/limitSale/included-fragment}"></head>
+<style type="text/css">
+	
+	button {
+		padding: 5px;
+	}
+	form {
+		display: table;
+	}
+	form div {
+		display: table-row;
+	}
+	label, input, span, select {
+		display: table-cell;
+		margin: 5px;
+		text-align: left;		
+	}
+	input[type=text], input[type=password], select, textarea {
+		width: 200px;
+		margin: 5px;
+	}
+	form div div {
+		display: table-cell;
+	}
+	.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>特賣商品資料修改 - update_LimitSale_input.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/limitSale/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+</nav>
+<!-- 24個欄位 -->
+	<div align="center">
+		<h3><b>所有欄位皆為必填欄位</b></h3>
+		<form th:action="@{update}" method="post" th:object="${limitSaleVO}" enctype="multipart/form-data">
+			<div>
+			<label>限時特賣編號:</label>
+			<input type="text" th:field="*{limNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			</div>
+			
+<!-- 			<div> -->
+<!-- 			<label>限時特賣編號:</label> -->
+<!-- 			<input type="text" th:field="*{limNum}" onclick="hideContent('limNum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('limNum')}" th:errors="*{limNum}" class="error" id="limNum.errors"></span> -->
+<!-- 			</div> -->
+			
+			<div>
+			<label>廣告訂單編號:</label>
+			<input type="text" th:field="*{limOrdernum}" onclick="hideContent('limOrdernum.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limOrdernum')}" th:errors="*{limOrdernum}" class="error" id="limOrdernum.errors"></span>
+			</div>
+			
+			<div>
+			<label>會員編號:</label>
+			<input type="text" th:field="*{limSellerid}" onclick="hideContent('limSellerid.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limSellerid')}" th:errors="*{limSellerid}" class="error" id="limSellerid.errors"></span>
+			</div>
+			
+			<div>
+			<label>特賣商品名稱:</label>
+			<input type="text" th:field="*{limProdname}" onclick="hideContent('limProdname.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limProdname')}" th:errors="*{limProdname}" class="error" id="limProdname.errors"></span>
+			</div>
+
+			<div>
+			<label>特賣商品數量:</label>
+			<input type="text" th:field="*{limQty}" onclick="hideContent('limQty.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limQty')}" th:errors="*{limQty}" class="error" id="limQty.errors"></span>
+			</div>
+			
+			<div>
+			<label>特賣商品價格:</label>
+			<input type="text" th:field="*{limPrice}" onclick="hideContent('limPrice.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limPrice')}" th:errors="*{limPrice}" class="error" id="limPrice.errors"></span>
+			</div>
+			
+			<div>
+			<label>特賣商品圖片:</label>
+			<input type="file" th:field="*{limImage}" onclick="previewImage()" multiple="multiple" />
+            <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
+			<div id="blob_holder"><img th:src="@{/limitSale/DBGifReader} + '?limNum=' + ${limitSaleVO.limNum}" width="100px"></div>
+			</div>
+			
+			
+			<div>
+			<label>特賣商品詳情:</label>
+			<input type="text" th:field="*{limDes}" onclick="hideContent('limDes.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limDes')}" th:errors="*{limDes}" class="error" id="limDes.errors"></span>
+			</div>
+			
+			<div>
+			<label>特賣商品單位:</label>
+			<input type="text" th:field="*{limUnitname}" onclick="hideContent('limUnitname.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limUnitname')}" th:errors="*{limUnitname}" class="error" id="limUnitname.errors"></span>
+			</div>
+			
+<!-- 			<div> -->
+<!-- 			<label>公司信箱:</label> -->
+<!-- 			<input type="text" th:field="*{comMail}" onclick="hideContent('comMail.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comMail')}" th:errors="*{comMail}" class="error" id="comMail.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>公司電話:</label> -->
+<!-- 			<input type="text" th:field="*{comPhone}" onclick="hideContent('comPhone.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error" id="comPhone.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>銀行帳號資訊:</label> -->
+<!-- 			<input type="text" th:field="*{comBank}" onclick="hideContent('comBank.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comBank')}" th:errors="*{comBank}" class="error" id="comBank.errors"></span> -->
+<!-- 			</div> -->
+			
+			
+<!-- 			<div> -->
+<!-- 			<label>會員狀態:</label> -->
+<!-- 			<input type="text" th:field="*{comStat}" onclick="hideContent('comStat.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comStat')}" th:errors="*{comStat}" class="error" id="comStat.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>評價總星數:</label> -->
+<!-- 			<input type="text" th:field="*{comRatStars}" onclick="hideContent('comRatStars.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comRatStars')}" th:errors="*{comRatStars}" class="error" id="comRatStars.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>評價總筆數:</label> -->
+<!-- 			<input type="text" th:field="*{comRatCount}" onclick="hideContent('comRatCount.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comRatCount')}" th:errors="*{comRatCount}" class="error" id="comRatCount.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>產業類別1:</label> -->
+<!-- 			<input type="text" th:field="*{comIndustry1}" onclick="hideContent('comIndustry1.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comIndustry1')}" th:errors="*{comIndustry1}" class="error" id="comIndustry1.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>產業類別2:</label> -->
+<!-- 			<input type="text" th:field="*{comIndustry2}" onclick="hideContent('comIndustry2.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comIndustry2')}" th:errors="*{comIndustry2}" class="error" id="comIndustry2.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>產業類別3:</label> -->
+<!-- 			<input type="text" th:field="*{comIndustry3}" onclick="hideContent('comIndustry3.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comIndustry3')}" th:errors="*{comIndustry3}" class="error" id="comIndustry3.errors"></span> -->
+<!-- 			</div> -->
+			
+
+			
+<!-- 			<div> -->
+<!-- 			<label>特賣圖片1:</label> -->
+<!-- 			<input type="file" th:field="*{comImage1}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage1')}" th:errors="*{comImage1}" class="error" id="comImage1.errors"></span> --> -->
+<!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader1} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
+<!-- 			</div> -->
+<!-- 			<div> -->
+<!-- 			<label>特賣圖片2:</label> -->
+<!-- 			<input type="file" th:field="*{comImage2}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage2')}" th:errors="*{comImage2}" class="error" id="comImage2.errors"></span> --> -->
+<!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader2} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
+<!-- 			</div> -->
+<!-- 			<div> -->
+<!-- 			<label>特賣圖片3:</label> -->
+<!-- 			<input type="file" th:field="*{comImage3}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage3')}" th:errors="*{comImage3}" class="error" id="comImage3.errors"></span> --> -->
+<!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader3} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
+<!-- 			</div> -->
+<!-- 			<div> -->
+<!-- 			<label>特賣圖片4:</label> -->
+<!-- 			<input type="file" th:field="*{comImage4}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage4')}" th:errors="*{comImage4}" class="error" id="comImage4.errors"></span> --> -->
+<!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader4} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>關於我們文字描述:</label> -->
+<!-- 			<input type="text" th:field="*{comAboutContent}" onclick="hideContent('comAboutContent.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comAboutContent')}" th:errors="*{comAboutContent}" class="error" id="comAboutContent.errors"></span> -->
+<!-- 			</div> -->
+			
+			
+			<div>
+				<div></div>
+				<div><button type="submit" id="submit"> 送出修改 </button></div>
+				<div></div>
+			</div>		
+		</form>
+	
+	</div>
+
+
+<!-- JavaScript part -->
+<script type="text/javascript">
+//清除提示信息
+function hideContent(d) {
+     document.getElementById(d).style.display = "none";
+}
+
+//照片上傳-預覽用
+var filereader_support = typeof FileReader != 'undefined';
+if (!filereader_support) {
+	alert("No FileReader support");
+}
+acceptedTypes = {
+		'image/png' : true,
+		'image/jpeg' : true,
+		'image/gif' : true
+};
+function previewImage() {
+	var upfile1 = document.getElementById("limImage");
+	upfile1.addEventListener("change", function(event) {
+		var files = event.target.files || event.dataTransfer.files;
+		for (var i = 0; i < files.length; i++) {
+			previewfile(files[i])
+		}
+	}, false);
+}
+function previewfile(file) {
+	if (filereader_support === true && acceptedTypes[file.type] === true) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var image = new Image();
+			image.src = event.target.result;
+			image.width = 100;
+			image.height = 75;
+			image.border = 2;
+			if (blob_holder.hasChildNodes()) {
+				blob_holder.removeChild(blob_holder.childNodes[0]);
+			}
+			blob_holder.appendChild(image);
+		};
+		reader.readAsDataURL(file);
+		document.getElementById('submit').disabled = false;
+	} else {
+		blob_holder.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
+				+ "<br>" + "● ContentTyp: " + file.type
+				+ "<br>" + "● size: " + file.size + "bytes"
+				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+		document.getElementById('submit').disabled = true;
+	}
+}
+</script>
+
+</body>
+</html>

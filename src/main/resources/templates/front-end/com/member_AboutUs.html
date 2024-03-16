@@ -92,7 +92,7 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;" th:text="${userVO.comName}"></span>
+                        <span class="fs-2" style="color: black;" th:text=${userVO.comName}></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -116,7 +116,7 @@
                     <h3>關於我們</h3>
                     <div class="col-md-8">
                         <div class="card shadow-sm custom-card">
-                         <img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" height="300" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
+                         <img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" height="200" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
                                 <title>公司名稱</title>
                                 <text x="50%" y="50%" fill="#eceeef" dy=".3em"> </text>
                             </svg>
@@ -131,7 +131,7 @@
     </div>
 
 	<!-- <footer> -->
-    <head th:insert="~{/front-end/footer}"></head>
+    <head th:insert="@{/front-end/footer}"></head>
 	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 	
 <!--     <script src="js/notification.js"></script> -->

@@ -52,7 +52,7 @@ public class ForumReplyController {
 	public String addForumReply(ModelMap model) {
 		ForumReplyVO forumReplyVO = new ForumReplyVO();
 		model.addAttribute("forumReplyVO", forumReplyVO);
-		return "back-end/forumReply/addForumReply";
+		return "front-end/forum/listOneForumPost";
 	}
 
 	/*
@@ -75,7 +75,7 @@ public class ForumReplyController {
 			}
 		}
 		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/forumReply/addForumReply";
+			return "front-end/forum/listOneForumPost";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
@@ -88,7 +88,7 @@ public class ForumReplyController {
 		List<ForumReplyVO> list = forumReplySvc.getAll();
 		model.addAttribute("forumReplyListData", list);
 		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/forumReply/listAllForumReply"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+		return "redirect:/forum/listOneForumPost"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
 	/*

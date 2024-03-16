@@ -1,0 +1,146 @@
+html {
+	height: 100%;
+}
+
+body {
+	margin-top: 20px;
+	background: #eee;
+	color: #708090;
+	min-height: 100vh; /* 確保至少與視窗一樣高 */
+	background-image: url('/images/abstract-painted.JPG');
+	background-size: cover;
+	background-position: center;
+}
+
+/* footer 改成白色 */
+.container footer.nav a, .container footer p {
+	color: #ffffff !important;
+}
+
+/* 針對所有在 .container 內的 .nav-link 應用白色文字 */
+.container .nav-link {
+	color: #ffffff !important;
+}
+
+/* 如果導航連結位於特定區域，如 footer，則可以更具體 */
+.container footer .nav-link {
+	color: #ffffff !important;
+}
+
+/* 針對所有狀態的導航連結：正常、懸停、聚焦 */
+.container .nav-link, .container .nav-link:hover, .container .nav-link:focus
+	{
+	color: #ffffff !important;
+}
+
+.container header a {
+	color: #ffffff !important;
+}
+
+.transparent-box {
+	background-color: rgba(245, 233, 233, 0.5);
+	width: 90%;
+	padding: 15px;
+	max-width: 1150px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	flex: 1;
+	margin-right: 30px;
+	margin-left: 65px;
+	max-height: 600px; /* 最大高度設定 */
+	overflow-y: auto; /* 啟用垂直滾動條 */
+}
+
+/* 針對Webkit瀏覽器的滾動條樣式 */
+.transparent-box::-webkit-scrollbar {
+	width: 8px; /* 滾動條的寬度 */
+}
+
+.transparent-box::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0); /* 滾動條軌道設置為完全透明 */
+}
+
+.transparent-box::-webkit-scrollbar-thumb {
+	background: #cccccc; /* 滾動條顏色 */
+	border-radius: 4px; /* 滾動條圓角 */
+}
+
+.post {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch; /* 確保子元素可以擴展到整個容器的寬度 */
+	background-color: white;
+	padding: 15px;
+	margin: 15px 0;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+	justify-content: space-between;
+}
+
+.title-time-container {
+	width: 100%; /* 確保容器佔滿整行 */
+	display: flex;
+	justify-content: space-between; /* 標題靠左，時間靠右 */
+	align-items: baseline;
+}
+
+.post-time {
+	font-size: 0.9em;
+	color: black;
+}
+
+.post h4, .post p {
+	color: #333;
+}
+
+.fabotton {
+	display: flex;
+	gap: 25px; /* 在圖標之間添加一些間隙 */
+}
+
+/* 留言 */
+.comment-section, .comments-display {
+	margin-top: 20px;
+	padding: 15px;
+	background: #f9f9f9;
+	border-radius: 8px;
+}
+
+.comment-section h3, .comments-display h3 {
+	margin-bottom: 15px;
+}
+
+.comment-input {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: vertical; /* 允許垂直調整大小 */
+}
+
+.comment {
+	padding: 10px;
+	background: #f9f9f9;
+}
+
+.comment:last-child {
+	border-bottom: none;
+}
+
+.comment-user {
+	font-weight: bold;
+}
+
+.comment-time {
+	color: #777;
+	font-size: 0.9em;
+	margin-top: 5px;
+}
