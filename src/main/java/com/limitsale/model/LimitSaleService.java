@@ -1,11 +1,15 @@
 package com.limitsale.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.questionList.model.QueListVO;
+import com.user.model.UserVO;
 
 
 @Service()
@@ -37,5 +41,21 @@ public class LimitSaleService {
 		public List<LimitSaleVO> getAll() {
 			return repository.findAll();
 		}
+		
+		
+		public List<LimitSaleVO> getOneLimitSalebyUserid(UserVO userVo) {
+			List<LimitSaleVO> allQuestions = repository.findAll();
+		    List<LimitSaleVO> validQuestions = new ArrayList<>();
+//		    System.out.println(userVo.getUserId());
+//		    System.out.println("===========================");
+		    for (LimitSaleVO sale : allQuestions) {
+		        if (sale.getLimSellerid() == userVo.getUserId()) {
+//		            System.out.println(question.getUserVO().getUserId());
+		        	validQuestions.add(sale);
+		        }
+		    }
+		    return validQuestions;
+		}
+		
 	
 }
