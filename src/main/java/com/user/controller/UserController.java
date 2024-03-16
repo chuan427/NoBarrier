@@ -62,17 +62,57 @@ public class UserController {
 
 	@Autowired
 	QuoService quoSvc;
+	
+	@GetMapping("/memberCen")
+	public String memberCen(Model model, HttpServletRequest request) {
+		// 检查会话中是否有登录的用户信息
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-	/*
-	 * This method will serve as addEmp.html handler.
-	 */
+		if (userVO == null) {
+			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
+		}
 
-//	@GetMapping("/memberCen1")
-//	public String memberCen1(ModelMap model) {
-//	    List<UserVO> userListData = userSvc.getAll(); // 假设这是您获取用户数据的方法
-//	    model.addAttribute("userListData", userListData);
-//	    return "front-end/userinformation/memberCen1"; // 返回到您的模板页面
-//	}
+		List<UserVO> list = userSvc.getOneStatUser(userVO);
+		model.addAttribute("userListData", list);
+		return "front-end/userinformation/memberCen";
+
+	}
+	
+
+	@GetMapping("/memberCen1")
+	public String memberCen1(Model model, HttpServletRequest request) {
+		// 检查会话中是否有登录的用户信息
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		
+		//沒找到符合用戶的情形，請他離開
+		if (userVO == null) {
+			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+	
+		//拿出登入用戶的資訊，並放進Model送到更新頁面做渲染
+		model.addAttribute("userVO", userVO);
+		return "front-end/userinformation/memberCen1";
+	}
+
+	
+
+	@GetMapping("/memberCen2")
+	public String memberCen2(Model model, HttpServletRequest request) {
+		// 检查会话中是否有登录的用户信息
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+
+		List<UserVO> list = userSvc.getOneStatUser(userVO);
+		model.addAttribute("userListData", list);
+		return "front-end/userinformation/memberCen2";
+	}
 
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
@@ -258,10 +298,7 @@ public class UserController {
 		if (userVO == null) {
 			return "redirect:/login"; // 用户未登录，重定向到登录页面
 		}
-
-		// 从用户信息中获取用户ID
-//		Integer userId = userVO.getUserId();
-		
+ 
 		//如果輸入的舊密碼比對成功，進行新密碼的資料庫更新
 		if(oldPassword == userVO.getComPassword()) {
 			userVO.setComPassword(newPassword);
@@ -273,66 +310,8 @@ public class UserController {
 		}
 		
 	}
-		
-		
-//		try {
-//			// 调用UserService的方法更新银行信息
-//			userSvc.changeUserPassword(userId, comPassword, newPassword);
-//			System.out.println("Password updated successfully.");
-//		} catch (Exception e) {
-//			// 如果更新过程中出现异常，记录日志并返回错误信息给前端
-//			System.err.println("Failed to update bank information: " + e.getMessage());
-//			// 在实际应用中，你可能需要返回一个错误页面或者给用户适当的提示信息
-//			return "front-end/userinformation/memberCen2"; // 例如，返回一个错误页面
-//		}
 
-		// 处理完毕后，重定向到某个页面，或者返回JSON数据给前端
-//		return "redirect:/userinformation/memberCen"; // 重定向到某个页面
-//	}
-
-
-	/*
-	 * This method will be called on listAllUser.html form submission, handling POST
-	 * request
-	 */
-//	@PostMapping("delete")
-//	public String delete(@RequestParam("userId") String userId, ModelMap model) {
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		/*************************** 2.開始刪除資料 *****************************************/
-//		// EmpService empSvc = new EmpService();
-//		userSvc.deleteUser(Integer.valueOf(userId));
-//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-//		List<UserVO> list = userSvc.getAll();
-//		model.addAttribute("userListData", list);
-//		model.addAttribute("success", "- (刪除成功)");
-//		return "back-end/user/listAllUser"; // 刪除完成後轉交listAllUser.html
-//	}
-
-	/*
-	 * 第一種作法 Method used to populate the List Data in view. 如 : <form:select
-	 * path="deptno" id="deptno" items="${deptListData}" itemValue="deptno"
-	 * itemLabel="dname" />
-	 */
-//	@ModelAttribute("deptListData")
-//	protected List<DeptVO> referenceListData() {
-//		// DeptService deptSvc = new DeptService();
-//		List<DeptVO> list = deptSvc.getAll();
-//		return list;
-//	}
-
-	/*
-	 * 【 第二種作法 】 Method used to populate the Map Data in view. 如 : <form:select
-	 * path="deptno" id="deptno" items="${depMapData}" />
-	 */
-//	@ModelAttribute("deptMapData") //
-//	protected Map<Integer, String> referenceMapData() {
-//		Map<Integer, String> map = new LinkedHashMap<Integer, String>();
-//		map.put(10, "財務部");
-//		map.put(20, "研發部");
-//		map.put(30, "業務部");
-//		map.put(40, "生管部");
-//		return map;
-//	}
+	
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(UserVO userVO, BindingResult result, String removedFieldname) {

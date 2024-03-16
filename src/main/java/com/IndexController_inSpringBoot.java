@@ -320,34 +320,7 @@ public class IndexController_inSpringBoot {
 		return "front-end/caht/chat"; // view
 	}
 
-	// 訂單明細 成功
-	@GetMapping("/order/order_details")
-	public String order_details() {
-		return "front-end/order/order_details"; // view
-	}
-
-	// 訂單檢舉 成功
-	@GetMapping("/order/reports")
-	public String reports() {
-		return "front-end/order/reports"; // view
-	}
-
-	// 訂單交易確認 成功
-	@GetMapping("/order/transaction_check")
-	public String transaction_check() {
-
-//		model.addAttribute("", xxx);
-//		model.addAttribute("", xxx);
-		return "front-end/order/transaction_check"; // view
-	}
-
 	
-
-	// 訂單交易 成功
-	@GetMapping("/order/transaction")
-	public String transaction() {
-		return "front-end/order/transaction"; // view
-	}
 
 	// 聯絡我們 客服 成功
 	@GetMapping("/userinformation/customer_service")
@@ -402,11 +375,7 @@ public class IndexController_inSpringBoot {
 //	return "front-end/customer_service"; // view
 //	}
 
-	// =========== 以下第57~62行是提供給
-	// /src/main/resources/templates/back-end/emp/select_page.html 與 listAllEmp.html
-	// 要使用的資料 ===================
-
-	// ------------------------------------------
+	// -----------------rptdlist-------------------------
 	@GetMapping("/rptdlist/select_page")
 	public String select_page_rptdlist(Model model) {
 		return "back-end/rptdlist/select_page";
@@ -456,21 +425,7 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ----------------報價單--------------------
-//		@GetMapping("/userinformation/quotation_list")
-//		public String quotation_list(Model model, HttpServletRequest request) {
-//			HttpSession session = request.getSession();
-//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-//		    
-//		    if (userVO == null) {
-//		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-//		    }
-//
-//		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
-//		    model.addAttribute("quoListData", list);
-//		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
-//			return "front-end/userinformation/quotation_list";
-//		}
-
+	
 	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -539,81 +494,6 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ----------------member--------------------------
-
-//	@GetMapping("/userinformation/memberCen")
-//	public String memberCen(Model model) {
-//		return "front-end/userinformation/memberCen";
-//	}
-
-//	@GetMapping("/user/listAllUser")
-//	public String listAllUser(Model model) {
-//		return "back-end/user/listAllUser";
-//	}
-
-//	@GetMapping("/userinformation/memberCen")
-//	public String memberCen(Model model, HttpServletRequest request) {
-//	    HttpSession session = request.getSession();
-//	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-//
-//	    if (userVO == null) {
-//	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-//	    }
-//
-//	    List<UserVO> list = userSvc.getOneStatUser(userVO);
-//	    model.addAttribute("userListData", list);
-//	    return "front-end/userinformation/memberCen";
-//	}
-
-	@GetMapping("/userinformation/memberCen")
-	public String memberCen(Model model, HttpServletRequest request) {
-		// 检查会话中是否有登录的用户信息
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-
-		if (userVO == null) {
-			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
-		}
-
-		List<UserVO> list = userSvc.getOneStatUser(userVO);
-		model.addAttribute("userListData", list);
-		return "front-end/userinformation/memberCen";
-
-	}
-	
-
-	@GetMapping("/userinformation/memberCen1")
-	public String memberCen1(Model model, HttpServletRequest request) {
-		// 检查会话中是否有登录的用户信息
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-
-		
-		//沒找到符合用戶的情形，請他離開
-		if (userVO == null) {
-			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
-		}
-	
-		//拿出登入用戶的資訊，並放進Model送到更新頁面做渲染
-		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen1";
-	}
-
-	
-
-	@GetMapping("/userinformation/memberCen2")
-	public String memberCen2(Model model, HttpServletRequest request) {
-		// 检查会话中是否有登录的用户信息
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-
-		if (userVO == null) {
-			return "redirect:/front-end/testLogin"; // 如果使用者未登入，將其重定向到登入頁面
-		}
-
-		List<UserVO> list = userSvc.getOneStatUser(userVO);
-		model.addAttribute("userListData", list);
-		return "front-end/userinformation/memberCen2";
-	}
 	
 	@ModelAttribute("userListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<UserVO> referenceListData_user(Model model, HttpServletRequest request,
@@ -1005,6 +885,30 @@ public class IndexController_inSpringBoot {
 
 	// -------------------------------order-----------------------------------
 
+ // 訂單明細 成功
+ 	@GetMapping("/order/order_details")
+ 	public String order_details() {
+ 		return "front-end/order/order_details"; // view
+ 	}
+
+ 	// 訂單檢舉 成功
+ 	@GetMapping("/order/reports")
+ 	public String reports() {
+ 		return "front-end/order/reports"; // view
+ 	}
+
+ 	// 訂單交易確認 成功
+ 	@GetMapping("/order/transaction_check")
+ 	public String transaction_check() {
+ 		return "front-end/order/transaction_check"; // view
+ 	}
+
+ 	// 訂單交易 成功
+ 	@GetMapping("/order/transaction")
+ 	public String transaction() {
+ 		return "front-end/order/transaction"; // view
+ 	}
+ 	
 	@ModelAttribute("orderListData")
 	protected List<OrderVO> referenceListOrderData() {
 		List<OrderVO> list = orderSvc.getAll();
