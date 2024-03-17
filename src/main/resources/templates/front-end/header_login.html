@@ -3,7 +3,6 @@
 <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
 
 
-<header>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a th:href="@{/}"
@@ -116,6 +115,130 @@
                     </div>
                 </nav>
             </ul>
+             <script>
+//---------------以下是websocket配置--------------------
+//---------------指的是載入header建立ws連線
+    
+	var MyPoint ="/xxx";
+	var host = window.location.host;//localhost:8080
+	var endPointURL = "ws://" + host + MyPoint;
+	// ws://localhost:8080/xxx
+	var webSocket;
+	
+	console.log(endPointURL);
+	
+	loadHeader();
+	function loadHeader(){
+		 console.log("載入header，loadHeader()被使用!");
+		 connect();
+	}
+	//------------------------------------------------
+	function connect() {
+		webSocket = new WebSocket(endPointURL);
+		webSocket.onopen = function(event){
+			console.log("建立ws連線",event);
+		}
+		webSocket.onmessage = function(event){
+			 if (event.data instanceof Blob) {
+			        // 如果是 Blob（位元型式），可以使用 FileReader 将其读取为文本
+			        var reader = new FileReader();
+			        reader.onload = function() {
+			            var receivedText = reader.result;
+			            console.log("接收到 WebSocket 消息：" + receivedText);
+
+// 			            window.alert("收到新增通知!" + receivedText);
+			            showBootstrapAlert("收到一項新的需求單!");
+			            
+			        };
+			        reader.readAsText(event.data);
+			    } else {
+			        // 如果不是 Blob，可能是字串
+			        var receivedMsg = JSON.parse(event.data);
+			        console.log("接收到 WebSocket 消息", receivedMsg);
+
+// 			        window.alert("收到新增通知!" + receivedMsg);
+			        showBootstrapAlert("收到一項新的需求單!");
+			        showNotification("New Notification", "This is a new notification.");
+			    }
+		}
+		webSocket.onclose = function(event){
+			console.log("ws關閉",event);
+		}
+		webSocket.onerror = function(event){
+			console.error("ws發生問題",event);
+		}
+	}
+	//----------------------以下是一個bs警告框--------------------------
+// 	function showBootstrapAlert(message) {
+//     var alertDiv = document.createElement("div");
+//     alertDiv.classList.add("alert", "alert-warning", "alert-dismissible", "fade", "show");
+//     alertDiv.setAttribute("role", "alert");
+
+//     var closeButton = document.createElement("button");
+//     closeButton.classList.add("btn-close");
+//     closeButton.setAttribute("type", "button");
+//     closeButton.setAttribute("data-bs-dismiss", "alert");
+//     closeButton.setAttribute("aria-label", "Close");
+
+//     alertDiv.textContent = message;
+//     alertDiv.appendChild(closeButton);
+
+//     document.querySelector(".notification-container").appendChild(alertDiv);
+
+//     // 5秒後框關閉
+//     setTimeout(function() {
+//         alertDiv.remove();
+//     }, 5000);
+// }
+	function showBootstrapAlert(message) {
+    var alertDiv = document.createElement("div");
+    alertDiv.classList.add("alert", "alert-warning", "alert-dismissible", "fade", "show");
+    alertDiv.setAttribute("role", "alert");
+
+    var closeButton = document.createElement("button");
+    closeButton.classList.add("btn-close");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("data-bs-dismiss", "alert");
+    closeButton.setAttribute("aria-label", "Close");
+
+    var extraButton = document.createElement("button");
+    extraButton.classList.add("btn", "btn-primary");
+    extraButton.textContent = "Extra Button"; // 设置按钮的文本内容
+    // 设置按钮点击事件
+    extraButton.addEventListener("click", function() {
+        // 添加您想要执行的额外操作
+        console.log("Extra button clicked!");
+    });
+
+    alertDiv.textContent = message;
+    alertDiv.appendChild(closeButton);
+    alertDiv.appendChild(extraButton); // 添加额外的按钮
+
+    document.querySelector(".notification-container").appendChild(alertDiv);
+    
+
+    // 3秒后自动关闭警告框
+    setTimeout(function() {
+        alertDiv.remove();
+    }, 5000);
+}
+//-------------------------------------------
+var notificationElement = document.createElement("a");
+notificationElement.setAttribute("href", "#");
+
+var titleElement = document.createElement("h3");
+titleElement.textContent = "Notification Title";
+notificationElement.appendChild(titleElement);
+
+var contentElement = document.createElement("p");
+contentElement.textContent = "Notification Content";
+notificationElement.appendChild(contentElement);
+
+
+// 将消息元素添加到通知下拉菜单中
+notificationDropdown.appendChild(notificationElement);
+	
+	</script>
         </header>
     </div>
     

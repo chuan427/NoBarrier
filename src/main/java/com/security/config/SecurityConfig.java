@@ -127,9 +127,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/userinformation/register1").permitAll()
 					.antMatchers("/userinformation/register2").permitAll()
 					.antMatchers("/userinformation/register3").permitAll()
-					.antMatchers("/user/storeRegister1Data").permitAll()
-					.antMatchers("/user/sendVerificationCode").permitAll()
-					.antMatchers("/user/insert").permitAll()
+					.antMatchers("/userinformation/storeRegister1Data").permitAll()
+					.antMatchers("/userinformation/sendVerificationCode").permitAll()
+					.antMatchers("/userinformation/insertUser").permitAll()
+					.antMatchers("/userinformation/insertIndustry").permitAll()
 //					// 權限判斷
 //					// 必須要有 admin 權限才可以訪問
 //					.antMatchers("/adminpage").hasAuthority("admin")

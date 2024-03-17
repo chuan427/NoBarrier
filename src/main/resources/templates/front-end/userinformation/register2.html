@@ -22,7 +22,7 @@
 	<!-- 提交驗證碼的按鈕 -->
 	<button type="button" id="submitVerificationCode">提交驗證碼</button>
 
-	<form th:action="@{insert}" method="post" th:object="${userVO}">
+	<form th:action="@{insertUser}" method="post" th:object="${userVO}">
 	
 						
 			<input type="hidden" th:field="*{comName}" id="comName"/>
@@ -81,7 +81,7 @@ document.getElementById("sendVerificationCode").addEventListener("click", functi
 
     // 使用 Ajax 發送 POST 請求
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/user/sendVerificationCode", true);
+    xhr.open("POST", "/userinformation/sendVerificationCode", true);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
     xhr.onreadystatechange = function() {

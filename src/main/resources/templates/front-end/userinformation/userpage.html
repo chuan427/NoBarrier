@@ -397,6 +397,43 @@ th, td {
 	</div>
 </div>
 
+<script>
+    // 获取URL中的参数
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // 检查是否存在成功消息
+    var successMessage = getParameterByName('successMessage');
+    if (successMessage) {
+        // 弹出成功消息提示框
+        alert("新增需求單成功");
+        
+        sendMsg();
+    }
+    
+    //-----------以下是使用在header建立的ws連線-------------
+    function sendMsg(){
+		var Msg = "有一份新增的需求單!" ;
+		
+		var jsonObj = {
+// 				"tryBtnValue":testMsg
+				"addReq":Msg
+		}
+		
+		var jsonString = JSON.stringify(jsonObj);
+		webSocket.send(jsonString);
+		console.log("有寄出ws訊息!");
+	}
+    
+</script>
+
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>

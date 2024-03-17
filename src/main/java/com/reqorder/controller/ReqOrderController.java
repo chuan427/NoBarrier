@@ -93,7 +93,9 @@ public class ReqOrderController {
         List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "redirect:/userinformation/userpage";
+        return "redirect:/userinformation/userpage?successMessage=addsuccess";
+
+//        return "redirect:/userinformation/userpage";
     }
 
     //=======================按下忽略改變需求單狀態=================================
