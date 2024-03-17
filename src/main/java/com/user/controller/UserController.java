@@ -26,12 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.industry.model.IndustryService;
+import com.industry.model.IndustryVO;
 import com.quo.model.QuoService;
-import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.security.model.MailService;
 import com.security.model.RandomPasswordGenerator;
@@ -116,15 +114,17 @@ public class UserController {
 
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
-	public String storeRegister1Data(@ModelAttribute("userVO") @Valid UserVO userVO, ModelMap model,
-			BindingResult result) throws IOException {
+
+	public String storeRegister1Data(@ModelAttribute("userVO")@Valid UserVO userVO, BindingResult result , ModelMap model)
+			throws IOException {
+		System.out.println("comStat: " + userVO.getComStat());
 
 		model.addAttribute("userVO", userVO);// 儲存錯誤的值以免使用者還要再輸入一次
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		if (userSvc.userIsExist(userVO.getComAccount())) {
 
-			result.rejectValue("comCccount", "error.userVO", "此帳號已存在");
+			result.rejectValue("comAccount", "error.userVO", "此帳號已存在");
 
 			return "front-end/userinformation/register1";
 		}
@@ -135,13 +135,11 @@ public class UserController {
 
 			return "front-end/userinformation/register1";
 		}
-
 		if (result.hasErrors()) {
 			return "front-end/userinformation/register1";
 		}
-
-		System.out.println("comStat: " + userVO.getComStat());
-		/**************************** 2.把輸入的資料儲存進model跳轉到register2 *******************/
+		
+		/**************************** 2.把輸入的資料儲存進model跳轉到register2*******************/
 
 		return "front-end/userinformation/register2"; // 改用forward不然好麻煩
 	}
@@ -167,33 +165,14 @@ public class UserController {
 	 */
 
 	@PostMapping("insertUser")
-	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
-
-//	@PostMapping("insert")
-//	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
+	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
-
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				userVO.setComAboutImage(buf);
-			}
-		}
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "front-end/userinformation/memberCen";
-		}
 
 		String password = userVO.getComPassword();
 		String encodeNewPassword = passwordEncoder.encode(password);
 
 		userVO.setComPassword(encodeNewPassword);
-
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		userSvc.addUser(userVO);
@@ -202,13 +181,27 @@ public class UserController {
 		List<UserVO> list = userSvc.getAll();
 		model.addAttribute("userListData", list);
 		model.addAttribute("success", "- (新增成功)");
+		
+		return "front-end/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+	}	//我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
 
-//		return "redirect:/userinformation/memberCen"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-//	}
-
-		return "redirect:/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-	} // 我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
-
+	@PostMapping("insertIndustry")
+	public String insertIndustry(@RequestParam String comAccount, @RequestParam(name = "industry-category") String industryCategory) {
+		
+		System.out.println(comAccount+"    00");
+		System.out.println(industryCategory+"    00");
+		UserVO userVO= userSvc.getOneUserByAccount(comAccount);
+		
+		int industryNum = Integer.parseInt(industryCategory);
+		IndustryVO industryVO = industrySvc.getOneIndustry(industryNum);
+		
+		userVO.setIndustryVO(industryVO);
+		
+		userSvc.updateUser(userVO);
+		
+		return "front-end/userinformation/registerFinished";
+	}
+	
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
