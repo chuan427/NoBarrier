@@ -63,19 +63,34 @@ public class OrderController {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
 
-		List<OrderVO> list = orderSvc.getOneStatOrder(userVO);
+		List<OrderVO> list = orderSvc.getOrdersByUserId(userVO.getUserId());
 		model.addAttribute("orderListData", list);
 		return "front-end/order/transaction_stat"; // view
 	}
-
-	@GetMapping("addOrder")
-	public String addOrder(ModelMap model) {
-		OrderVO orderVO = new OrderVO();
-		model.addAttribute("orderVO", orderVO);
-		return "back-end/order/addOrder";
-	}
 	
-	@PostMapping("insert")
+	//訂單明細
+	@GetMapping("/order_details")
+	public String order_details(Model model, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果用户未登录，将其重定向到登录页面
+	    }
+
+	    // 根据当前登录用户的ID获取订单列表
+	    List<OrderVO> list = orderSvc.getOrderDetails(userVO.getUserId());
+	    model.addAttribute("orderListData", list);
+
+	    return "front-end/order/order_details";
+	}
+
+
+
+	/*
+	 * This method will be called on addEmp.html form submission, handling POST
+	 * request It also validates the order input
+	 */	@PostMapping("insert")
 	public String insert(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/

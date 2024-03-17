@@ -50,20 +50,24 @@ public class OrderService {
 		public List<OrderVO> getAll() {
 			return repository.findAll();
 		}
+
 		//訂單對特賣一對一
 		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
 			return getOneOrder(limNum).getLimitsaleVO();
 		}
-		public List<OrderVO> getOneStatOrder(UserVO userVO) {
-	        List<OrderVO> allOrder = repository.findAll();
-	        List<OrderVO> validOrder = new ArrayList<>();
+		
+		public List<OrderVO> getOrderDetails(Integer userId) {
+			return repository.findByUserVOUserId(userId);
+		}
 
-	        for (OrderVO order : allOrder) {
-	            if (order.getUserVO().getUserId() == userVO.getUserId() && order.getOrdIsValid() == 1) {
-	                validOrder.add(order);
-	            }
-	        }
-	        return validOrder;
+		
+		public List<OrderVO> getOrdersByUserId(Integer userId) {
+	        // 调用 OrderRepository 中的方法查询订单
+	        return repository.findByUserVOUserId(userId);
 	    }
+
+
+
+		
 }
 

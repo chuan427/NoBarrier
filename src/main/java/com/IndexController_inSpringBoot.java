@@ -404,7 +404,7 @@ public class IndexController_inSpringBoot {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
 
-		List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+		List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 		model.addAttribute("reqOrderListData", list);
 		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 		return "front-end/userinformation/userpage";
@@ -421,7 +421,7 @@ public class IndexController_inSpringBoot {
 		} else {
 //	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
 //			return list;
-			return reqOrderSvc.getOneStatReqOrder(userVO);
+			return reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 		}
 	}
 
@@ -451,9 +451,8 @@ public class IndexController_inSpringBoot {
 		    if (userVO == null) {
 		        return null;
 		    } else {
-//		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-//				return list;
-		        return orderSvc.getOneStatOrder(userVO);
+		    	List<OrderVO> list = orderSvc.getAll();
+				return list;
 		    }
 		}
 
@@ -887,12 +886,6 @@ public String chat(Model model) {
 
 
 	// -------------------------------order-----------------------------------
-
-// 訂單明細 成功
- 	@GetMapping("/order/order_details")
- 	public String order_details() {
- 		return "front-end/order/order_details"; // view
- 	}
 
  	// 訂單檢舉 成功
  	@GetMapping("/order/reports")
