@@ -79,6 +79,7 @@ import com.order.model.OrderVO;
 		}
 		
 		
+		
 //		@Id
 //		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Integer getLimNum() {

@@ -12,9 +12,5 @@ public interface UserRepository extends JpaRepository<UserVO, Integer> {
 	public UserVO findByComAccount(String comAccount);
 
 	public UserVO findByComUniNumber(String ComUniNumber);
-
-	@Modifying
-	@Transactional
-	@Query("UPDATE UserVO u SET u.comStat = 1 WHERE u.userId = :userId")
-	void updateComStatToOne(Integer userId);
-}
+	public UserVO findByComContactPerson(String comContactPerson);
+	}

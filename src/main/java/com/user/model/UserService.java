@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.forumpost.model.ForumPostVO;
 import com.order.model.OrderVO;
@@ -23,7 +24,7 @@ public class UserService {
 
 		@Autowired
 		UserRepository repository;
-		
+
 		private final PasswordEncoder passwordEncoder;
 		
 	    @Autowired
@@ -84,6 +85,16 @@ public class UserService {
 //			return optional.get();
 			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 		}
+		
+		public UserVO getOneUserByAccount(String comAccount) {
+			UserVO userVO = repository.findByComAccount(comAccount);
+			
+			if(userVO!=null) {
+				return userVO;
+			}else {
+				return null;
+			}
+		}
 
 		public List<UserVO> getAll() {
 			return repository.findAll();
@@ -112,9 +123,40 @@ public class UserService {
 		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
 			return getOneUser(ordSellerid).getOrders();
 		}
-		
-		public void updateComStatToOne(Integer userId) {
-			repository.updateComStatToOne(userId);
+
+		public void updateBankInfo(Integer userId, String comContactPerson, String comBank, String accountNumber) {
+	        
+			
+			UserVO userVO = getOneUser(userId);
+	        if (userVO != null) {
+	        	userVO.setComContactPerson(comContactPerson);
+	            userVO.setComBank(comBank);
+	            userVO.setAccountNumber(accountNumber);
+	            repository.save(userVO);
+	        } else {
+	            throw new RuntimeException("User not found");
+	        }
 	    }
 		
+nal
+		public boolean changeUserPassword(Integer userId, String comPassword, String newPassword) {
+			
+		    UserVO userVO = getOneUser(userId);
+		    if (userVO != null) {
+		        // 使用passwordEncoder来验证旧密码是否与数据库中的密码匹配
+		        if(passwordEncoder.matches(comPassword, userVO.getComPassword())) {
+		            // 如果旧密码正确，使用passwordEncoder加密新密码
+		            String encodedNewPassword = passwordEncoder.encode(newPassword);
+		            // 更新用户密码
+		            userVO.setComPassword(encodedNewPassword);
+		            repository.save(userVO);
+		            return true; // 更改密码成功
+		        } else {
+		            // 旧密码不匹配
+		            return false; // 更改密码失败
+		        }
+		    } else {
+		        throw new RuntimeException("User not found");
+		    }
+		}
 }
