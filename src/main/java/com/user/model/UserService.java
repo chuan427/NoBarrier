@@ -40,6 +40,10 @@ public class UserService {
 		public void updateUser(UserVO userVO) {
 			repository.save(userVO);
 		}
+		
+		public void update(UserVO userVO) {
+			repository.save(userVO);
+		}
 
 		public void deleteUser(Integer userId) {
 			if (repository.existsById(userId))
@@ -82,8 +86,8 @@ public class UserService {
 		
 		public UserVO getOneUser(Integer userId) {
 			Optional<UserVO> optional = repository.findById(userId);
-//			return optional.get();
-			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
+			return optional.get();
+//			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 		}
 
 		public List<UserVO> getAll() {

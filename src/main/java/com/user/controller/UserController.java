@@ -184,50 +184,50 @@ public class UserController {
 	 * request
 	 */
 
-	@PostMapping("getOne_For_Update")
-	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		/*************************** 2.開始查詢資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
+//	@PostMapping("getOne_For_Update")
+//	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		/*************************** 2.開始查詢資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
+//
+//		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
+//	}
 
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("userVO", userVO);
-		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
-	}
-
-	@PostMapping("update")
-	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
-
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
-
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
-			// EmpService empSvc = new EmpService();
-			byte[] comAboutImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
-			userVO.setComAboutImage(comAboutImage);
-
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] comAboutImage = multipartFile.getBytes();
-				userVO.setComAboutImage(comAboutImage);
-			}
-		}
-		if (result.hasErrors()) {
-			return "back-end/user/update_user_input";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.updateUser(userVO);
-
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-		model.addAttribute("userVO", userVO);
-		return "front-end/com/listOneUser"; // 修改成功後轉交listOneUser.html
-	}
+//	@PostMapping("update")
+//	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,
+//			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+//
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		result = removeFieldError(userVO, result, "comAboutImage");
+//
+//		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的新圖片時
+//			// EmpService empSvc = new EmpService();
+//			byte[] comAboutImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
+//			userVO.setComAboutImage(comAboutImage);
+//
+//		} else {
+//			for (MultipartFile multipartFile : parts) {
+//				byte[] comAboutImage = multipartFile.getBytes();
+//				userVO.setComAboutImage(comAboutImage);
+//			}
+//		}
+//		if (result.hasErrors()) {
+//			return "back-end/user/update_user_input";
+//		}
+//		/*************************** 2.開始修改資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		userSvc.updateUser(userVO);
+//
+//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("success", "- (修改成功)");
+//		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/com/listOneUser"; // 修改成功後轉交listOneUser.html
+//	}
 //	==========================================================================
 //	@PostMapping("updateUser")
 //	public String updateUser(@Valid UserVO userVO,BindingResult result, ModelMap model,HttpServletRequest request) throws IOException {

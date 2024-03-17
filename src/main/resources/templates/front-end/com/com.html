@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                    	<th:block th:each="userVO : ${userListData}">
+                    	<th:block th:each="userVO : ${userListDataCom}">
 							<tr>
 			  					 <td th:text="${userVOStat.count}"></td>
 								 <td th:text="${userVO.userId}"></td>

@@ -1,6 +1,7 @@
 package com.user.model;
 
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -308,7 +309,7 @@ import com.reqorder.model.ReqOrderVO;
 		}
 		
 		//--------------------------------------------
-
+		@NotEmpty(message="關於我們文字描述請勿空白!!")
 		@Column(name = "comAboutcontent")
 		public String getComAboutContent() {
 			return this.comAboutContent;
@@ -427,7 +428,6 @@ import com.reqorder.model.ReqOrderVO;
 			return ad;
 		}
 
-
 		public void setAd(Set<AdVO> ad) {
 			this.ad = ad;
 		}
@@ -441,5 +441,6 @@ import com.reqorder.model.ReqOrderVO;
 		public void setOrders(Set<OrderVO> orders) {
 			this.orders = orders;
 		}
+		
 	}
 
