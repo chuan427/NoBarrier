@@ -118,26 +118,25 @@ function cancelFunction() {
 }
 
 //使用者留言後重新加載畫面(Ajax)
-
 function submitForumReply() {
-    var formData = new FormData(document.querySelector('form'));
-
-    fetch('/forumReply/insert', {
-        method: 'POST',
-        body: formData
-    }).then(response => response.json()) // 假設後端返回的是JSON格式的響應
-      .then(data => {
-          if (data.success) {
-              // 在這裡更新頁面上的留言列表，例如：
-              // document.getElementById('comments').innerHTML += ...;
-              alert('留言提交成功');
-              window.location.reload(); // 或者選擇不刷新頁面，直接在留言列表中動態添加一條留言
-          } else {
-              alert('留言提交失敗');
-          }
-      })
-      .catch(error => console.error('Error:', error));
+    var formData = new FormData(document.getElementById("forumReplyForm")); // 假設你的表單ID是forumReplyForm
+    $.ajax({
+        url: '/forumReply/insert',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            // 留言成功後的操作，例如刷新留言列表
+            alert("留言成功！");
+            location.reload(); // 重新加載當前頁面
+        },
+        error: function() {
+            alert("留言失敗！");
+        }
+    });
 }
+
 
 
 

@@ -82,12 +82,13 @@
     
     <!-- 新增留言表單 -->
     
-	<form action="/forumReply/insert" method="POST" enctype="multipart/form-data">
+	<form id="forumReplyForm" action="/forumReply/insert" method="POST" enctype="multipart/form-data">
     <div class="user-info">
         <i class="fa-solid fa-user"></i>
         <span th:text="${session.loggingInUser.comName}">登入者名稱</span>
-    </div>
-   <textarea id="frContent" name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
+       </div>
+   	 <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}" />
+   	<textarea id="frContent" name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
     
     <!-- 插入圖片的輸入 -->
     <div class="mb-3">

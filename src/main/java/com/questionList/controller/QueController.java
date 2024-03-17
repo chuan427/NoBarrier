@@ -67,7 +67,6 @@ public class QueController {
 		if (queListVO.getQueNotitime() == null) {
 			queListVO.setQueNotitime(new java.sql.Timestamp(System.currentTimeMillis()));
 		}
-		
 		if (result.hasErrors()) {
 			return "front-end/userinformation/customer_service";
 		}

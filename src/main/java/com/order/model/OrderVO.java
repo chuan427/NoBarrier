@@ -57,26 +57,26 @@ import com.user.model.UserVO;
 		public OrderVO() { 
 		}
 		
-		//一對一 使用原版mappedBy
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public QuoVO getQuoVO() {
-			return quoVO;
-		}
-		public void setQuoVO(QuoVO quoVO) {
-			this.quoVO = quoVO;
-		}
+//		//一對一 使用原版mappedBy
+//		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public QuoVO getQuoVO() {
+//			return quoVO;
+//		}
+//		public void setQuoVO(QuoVO quoVO) {
+//			this.quoVO = quoVO;
+//		}
 		
 		
 		//訂單與需求是一對一 用@PrimaryKeyJoinColumn寫法 
-		@OneToOne(mappedBy = "orderVO", cascade = CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public ReqOrderVO getReqOrderVO() {
-		    return reqOrderVO;
-		}
-		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
-		    this.reqOrderVO = reqOrderVO;
-		}
+//		@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public ReqOrderVO getReqOrderVO() {
+//		    return reqOrderVO;
+//		}
+//		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
+//		    this.reqOrderVO = reqOrderVO;
+//		}
 
 
 		@OneToOne
@@ -106,9 +106,28 @@ import com.user.model.UserVO;
 			return userVO;
 		}
 
-
 		public void setUserVO(UserVO userVO) {
 				this.userVO = userVO;
+		}
+		
+		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
+		@JoinColumn(name = "ordReqNum",referencedColumnName = "reqNum")
+		public ReqOrderVO getReqOrderVO() {
+			return reqOrderVO;
+		}
+
+		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
+				this.reqOrderVO = reqOrderVO;
+		}
+		
+		@ManyToOne
+	    @JoinColumn(name = "ordQuonum", referencedColumnName = "quoNum", insertable = false, updatable = false)
+		public QuoVO getQuoVO() {
+			return quoVO;
+		}
+
+		public void setQuoVO(QuoVO quoVO) {
+				this.quoVO = quoVO;
 		}
 		
 		//以上是關聯的 getter & setter

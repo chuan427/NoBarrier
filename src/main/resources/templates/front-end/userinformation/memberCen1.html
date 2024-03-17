@@ -162,20 +162,19 @@ main {
 			<div class="tab-content container-add-style" id="v-pills-tabContent">
 				<div class="tab-pane fade show active" id="v-pills-home"
 					role="tabpanel" aria-labelledby="v-pills-home-tab">
-					<form class="row g-3 mx-auto" th:object="${session.loggingInUser}">
+					<form class="row g-3 mx-auto" th:action="@{updateBankInfo}" method="post" th:object="${userVO}" enctype="multipart/form-data">
 						<div class="col-6">
 							<label for="comContactPerson" class="form-label">自訂代稱</label> <input
 								type="text" class="form-control form-control-sm"
 								id="comContactPerson" name="comContactPerson"
-								th:value="${session.loggingInUser.comContactPerson}" />
+								th:field="*{comContactPerson}" />
 						</div>
 						<div class="row">
 							<div class="col-6">
 								<label for="comBank" class="form-label">銀行代碼</label> <select
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example" id="comBank"
-									name="comBank" th:value="${session.loggingInUser.comBank}">
-									<option disabled selected>銀行代碼選擇</option>
+									name="comBank" th:field="*{comBank}">
 									<option th:value="004">004 臺灣銀行</option>
 									<option th:value="005">005 台灣土地銀行</option>
 									<option th:value="006">006 合作金庫銀行</option>
@@ -254,14 +253,36 @@ main {
 						</div>
 						<div class="row">
 							<div class="col-6">
-								<label for="comBank" class="form-label">帳號</label> <input
-									type="text" class="form-control form-control-sm" id="comBank"
-									name="comBank" placeholder=""
-									th:value="${session.loggingInUser.accountNumber}" />
+								<label for="accountNumber" class="form-label">帳號</label> <input
+									type="text" class="form-control form-control-sm"
+									id="accountNumber" name="accountNumber" placeholder=""
+									th:field="*{accountNumber}" />
 							</div>
 						</div>
 						<div style="margin-top: 30px"></div>
-						<button type="submit" id="submit" class="btn btn-secondary">新增帳戶</button>
+						
+						<button type="submit" id="submit" class="btn btn-secondary">修改帳戶</button>
+						
+						<div style="margin-top: 30px"></div>
+						<div class="row">
+							<div class="col-6">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title">銀行帳號訊息</h5>
+										<p class="card-text">
+											自訂代稱: <span th:text="*{comContactPerson}"></span>
+										</p>
+										<p class="card-text">
+											銀行代碼: <span th:text="*{comBank}"></span>
+										</p>
+										<p class="card-text">
+											帳號: <span th:text="*{accountNumber}"></span>
+										</p>
+										<!-- 如果有其他银行账号信息，可以继续添加 -->
+									</div>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 			</div>

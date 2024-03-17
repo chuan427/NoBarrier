@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,39 +59,91 @@ public class ForumReplyController {
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("insert")
+//	@PostMapping("insert")
+//	public String insert(@Valid ForumReplyVO forumReplyVO, BindingResult result, ModelMap model,
+//			@RequestParam("frImage") MultipartFile[] parts,@RequestParam("fpNum") Integer fpNum ,HttpServletRequest request) throws IOException {
+//
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		result = removeFieldError(forumReplyVO, result, "frImage");
+//		UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+//
+//		if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
+//			for (MultipartFile multipartFile : parts) {
+//				byte[] buf = multipartFile.getBytes();
+//				forumReplyVO.setFrImage(buf);
+//			}
+//		}
+//		
+//		if (result.hasErrors() || parts[0].isEmpty()) {
+//			return "front-end/forum/listOneForumPost";
+//		}
+//		
+//		// 設定發文者
+//	    if (userVO != null) {
+//	        forumReplyVO.setUserVO(userVO);
+//	    }        
+//	    
+//	   
+//		/*************************** 2.開始新增資料 *****************************************/
+//		long currentTimeMillis = System.currentTimeMillis();
+//		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+//		forumReplyVO.setFrTime(currentTimestamp);
+//		forumReplyVO.setFrUpdate(currentTimestamp);
+//		//新增資料
+//		forumReplySvc.addForumReply(forumReplyVO);
+//		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
+//		List<ForumReplyVO> list = forumReplySvc.getAll();
+//		model.addAttribute("forumReplyListData", list);
+//		model.addAttribute("success", "- (新增成功)");
+//		return "redirect:/forum/listOneForumPost/" +fpNum; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+//	}
+	
+	
+	
+	@PostMapping("/insert")
 	public String insert(@Valid ForumReplyVO forumReplyVO, BindingResult result, ModelMap model,
-			@RequestParam("frImage") MultipartFile[] parts) throws IOException {
+	                     @RequestParam("frImage") MultipartFile[] parts, @RequestParam("fpNum") Integer fpNum,
+	                     HttpServletRequest request) throws IOException {
 
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(forumReplyVO, result, "frImage");
+	    UserVO userVO = (UserVO) request.getSession().getAttribute("loggingInUser");
+	    if (userVO == null) {
+	        // 若使用者未登入，可重導至登入頁面或顯示錯誤訊息
+	        return "redirect:/loginPage";
+	    }
 
-		if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				forumReplyVO.setFrImage(buf);
-			}
-		}
-		
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "front-end/forum/listOneForumPost";
-		}
-		/*************************** 2.開始新增資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-//		ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(1);
-		long currentTimeMillis = System.currentTimeMillis();
-		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
-		forumReplyVO.setFrTime(currentTimestamp);
-		forumReplyVO.setFrUpdate(currentTimestamp);
-		forumReplySvc.addForumReply(forumReplyVO);
-		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<ForumReplyVO> list = forumReplySvc.getAll();
-		model.addAttribute("forumReplyListData", list);
-		model.addAttribute("success", "- (新增成功)");
-//		model.addAttribute("forumPostVO" , forumPostVO);
-		return "redirect:/forum/listOneForumPost/{fpNum}"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+	    // 設定留言者
+	    forumReplyVO.setUserVO(userVO);
+
+	    // 根據fpNum獲取對應的ForumPostVO
+	    ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(fpNum);
+	    if (forumPostVO == null) {
+	        // 若找不到對應的論壇文章，可重導至錯誤頁面或顯示錯誤訊息
+	        return "redirect:/errorPage";
+	    }
+
+	    // 處理圖片上傳
+	    if (parts.length > 0 && !parts[0].isEmpty()) {
+	        byte[] buf = parts[0].getBytes();
+	        forumReplyVO.setFrImage(buf);
+	    }
+
+	    // 設定留言所屬的論壇帖子
+	    forumReplyVO.setForumPostVO(forumPostVO);
+
+	    // 設定留言時間
+	    long currentTimeMillis = System.currentTimeMillis();
+	    forumReplyVO.setFrTime(new Timestamp(currentTimeMillis));
+	    forumReplyVO.setFrUpdate(new Timestamp(currentTimeMillis));
+
+	    // 新增留言
+	    forumReplySvc.addForumReply(forumReplyVO);
+
+	    // 新增完成後，重導至該論壇文章的詳細頁面
+	    return "redirect:/forum/listOneForumPost/" + fpNum;
 	}
+
+
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST request
