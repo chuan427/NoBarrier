@@ -100,7 +100,9 @@ public class ReqOrderController {
         List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
-        return "redirect:/userinformation/userpage";
+        return "redirect:/userinformation/userpage?successMessage=addsuccess";
+
+//        return "redirect:/userinformation/userpage";
     }
 
 //    @PostMapping("getOne_For_Update")
