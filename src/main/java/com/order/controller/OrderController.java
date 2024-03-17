@@ -137,15 +137,15 @@ public class OrderController {
 		return "back-end/order/listOneOrder"; // 修改成功後轉交listOneorder.html
 	}
 
-	// 送出價格 轉去付款流程
-	@GetMapping("sentOrder")
-	public String sentOrder(ModelMap model) {
-		OrderVO orderVO = new OrderVO();
-		model.addAttribute("orderVO", orderVO);
-		return "front-end/order/transaction";
-	}
+	// 送出價格 轉去付款流程 暫用不到
+//	@GetMapping("sentOrder")
+//	public String sentOrder(ModelMap model) {
+//		OrderVO orderVO = new OrderVO();
+//		model.addAttribute("orderVO", orderVO);
+//		return "front-end/order/transaction";
+//	}
 
-	// 直接購買
+	// 直接購買 暫用不到
 //	@PostMapping("straightOrder")
 //	public String straightOrder(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
 //
@@ -167,7 +167,7 @@ public class OrderController {
 //	}
 
 	// 訂單完成
-	@PostMapping("complete")
+	@GetMapping("complete")
 	public String complete(@Valid OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
 			throws IOException {
 		OrderVO completeOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));// 取出要改的VO號碼

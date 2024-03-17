@@ -50,14 +50,6 @@ public class OrderService {
 		public List<OrderVO> getAll() {
 			return repository.findAll();
 		}
-//		//訂單對需求一對一
-//		public ReqOrderVO getReqOrderByordReqnum(Integer reqNum){
-//			return getOneOrder(reqNum).getReqOrderVO();
-//		}
-////		//訂單對報價一對一
-//		public QuoVO getQuoByordQuonum(Integer quoNum){
-//			return getOneOrder(quoNum).getQuoVO();
-//		}
 		//訂單對特賣一對一
 		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
 			return getOneOrder(limNum).getLimitsaleVO();

@@ -866,11 +866,6 @@ public String chat(Model model) {
 		return list;
 	}
 
-@ModelAttribute("orderListData")
-  	protected List<OrderVO> referenceListOrderData(){
-  	List<OrderVO> list = orderSvc.getAll();
-  	return list;
-  	}
 //	@ModelAttribute("limitSaleOneData") // for select_page.html 第行用 // for listAllUser.html 第行用
 //	protected List<LimitSaleVO> referenceListData_limitsale1(Model model,HttpServletRequest request) {
 //	HttpSession session = request.getSession();
@@ -924,11 +919,3 @@ public String chat(Model model) {
 	}
 }
 
-//  	@GetMapping("order/transactioncheck")
-//	public String check(Model model) {
-//		return "front-end/order/transaction_check";
-//	}
-//  	@GetMapping("order/transaction")
-//	public String transaction(Model model) {
-//		return "front-end/order/transaction";
-//	}}
