@@ -323,10 +323,20 @@ th, td {
 								<td th:text="${quoVO.quoTotalprice}"></td>
 								<td th:text="${quoVO.quoInfo}"></td>
 
-								<td><a th:href="@{/order/transaction_check}"> <input
+								<td>
+								
+								
+								<a th:href="@{/order/transaction_check(quoNum=${quoVO.quoNum})}">直接購買</a>
+								<!-- <a th:href="@{/order/transaction_check}"> <input
 										type="submit" value="直接購買"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
-								</a></td>
+								</a>
+								 -->
+								
+								
+								
+								
+								</td>
 								<td><a th:href="@{/chat/privatechat}"> <input
 										type="submit" value="洽談"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
