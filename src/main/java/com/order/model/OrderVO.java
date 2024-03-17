@@ -48,7 +48,7 @@ import com.user.model.UserVO;
 		private Integer ordReqnum;
 		private Integer ordQuonum;
 		private Integer ordIsValid;
-		private UserVO userVO;
+		private UserVO userVO; //買家
 		private LimitSaleVO limitsaleVO;
 		private ReqOrderVO reqOrderVO;
 		private QuoVO quoVO;
