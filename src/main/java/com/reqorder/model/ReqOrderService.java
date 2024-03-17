@@ -85,6 +85,6 @@ public class ReqOrderService {
 	public OrderVO getOrderByreqNum(Integer ordReqnum){
 		return getOneReqOrder(ordReqnum).getOrderVO();
 	}
-
-   
+	
+	
 }

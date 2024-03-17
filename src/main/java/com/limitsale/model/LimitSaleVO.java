@@ -46,7 +46,8 @@ import com.order.model.OrderVO;
 		private String limUnitname;
 		
 		@OneToOne
-	    @PrimaryKeyJoinColumn
+		@MapsId 
+		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
 		private OrderVO orderVO;
 		
 
@@ -68,9 +69,7 @@ import com.order.model.OrderVO;
 			
 		}
 		
-		@OneToOne
-		@MapsId 
-		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
+		
 		public OrderVO getOrderVO() {
 			return orderVO;
 		}
@@ -79,8 +78,6 @@ import com.order.model.OrderVO;
 			this.orderVO = orderVO;
 		}
 		
-		
-	   
 		
 //		@Id
 //		@GeneratedValue(strategy = GenerationType.IDENTITY)

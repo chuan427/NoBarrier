@@ -45,6 +45,7 @@ import com.reqorder.model.ReqOrderVO;
 		private String comMail;
 		private String comPhone;
 		private String comBank;
+		private String accountNumber;
 		private Date comRegDate;
 		private String comContactPerson;
 		private String comContactPhone;
@@ -187,13 +188,25 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comBank")
-		@Size(min=2,max=50,message="銀行帳號: 長度必需在{min}到{max}之間")
+		@Size(min=2,max=50,message="銀行代碼: 長度必需在{min}到{max}之間")
 		public String getComBank() {
 			return this.comBank;
 		}
 		public void setComBank(String comBank) {
 			this.comBank = comBank;
 		}
+		
+		@Column(name = "accountNumber")
+		@Size(min=2,max=50,message="銀行帳號: 長度必需在{min}到{max}之間")
+		public String getAccountNumber() {
+			return accountNumber;
+		}
+
+
+		public void setAccountNumber(String accountNumber) {
+			this.accountNumber = accountNumber;
+		}
+
 		
 		//--------------------------------------------
 

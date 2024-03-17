@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<audio controls autoplay>
+		<source src="/goodthing.mp3" type="audio/mpeg">
+	</audio>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>open</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		/* 小型設備（手機） */
+		@media (max-width: 767.98px) {
+			/* 樣式設定 */
+		}
+
+		/* 中型設備（平板） */
+		@media (min-width: 768px) and (max-width: 991.98px) {
+			/* 樣式設定 */
+		}
+
+		/* 大型設備（桌面） */
+		@media (min-width: 992px) {
+			/* 樣式設定 */
+		}
+
+		.news-item {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+
+		.news-title {
+			font-size: 30px;
+			text-align: left;
+			color: darkgoldenrod;
+			font-weight: bold;
+		}
+
+		.accordion-button {
+			font-size: 30px;
+		}
+
+		.news-content {
+			font-size: 20px;
+		}
+
+		.form-floating,
+		.form-check {
+			max-width: 300px;
+			margin: 0 auto;
+		}
+
+		.sidebar {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓 sidebar 擁有整個寬度 */
+		}
+
+		.main-content {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓主內容區域擁有整個寬度 */
+		}
+	</style>
+</head>
+
+<body>
+	<!-- header -->
+
+	<header th:insert="~{/back-end/header}"></header>
+
+	<div class="container">
+		<div class="row">
+			<!-- sidebar -->
+			<div class="col-md-3">
+
+				<head th:insert="~{/back-end/sidebar}"></head>
+			</div>
+
+			<!-- Main Content -->
+			<section class="main-content col-md-9">
+				<a href="https://www.ddm.org.tw/">
+					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrDc-uJ4teXwMDxrllzYQqzC4ALiyE1OTvsA&usqp=CAU"/>
+				</a>
+			</section>
+		</div>
+	</div>
+
+
+	<!-- <footer> -->
+
+	<footer th:insert="~{/back-end/footer}"></footer>
+
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -81,6 +81,8 @@ public class UserIdController {
 		String message = strBuilder.toString();
 		return new ModelAndView("front-end/userinformation/memberCen", "errorMessage", "請修正以下錯誤:<br>" + message);
 	}
+	
+	
 
 	
 	//修改帳號狀態
