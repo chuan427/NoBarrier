@@ -258,30 +258,35 @@ th, td {
 					</thead>
 					<tbody>
 						<th:block th:each="reqOrderVO, stat : ${reqOrderListData}">
-							<tr>
-								<td th:text="${stat.count}"></td>
-								<td th:text="${reqOrderVO.reqOrderdate}"></td>
-								<td th:text="${reqOrderVO.industryVO.industryName}"></td>
-								<td
-									th:text="${reqOrderVO.userVO.userId + '-[' + reqOrderVO.userVO.comName + ']'}"></td>
-								<td th:text="${reqOrderVO.reqProdname}"></td>
-								<td th:text="${reqOrderVO.reqProdqty}"></td>
-								<td th:text="${reqOrderVO.reqUnitname}"></td>
-								<td th:text="${reqOrderVO.reqDes}"></td>
-								<td><img
-									th:src="@{/reqorder/DBGifReader(reqNum=${reqOrderVO.reqNum})}"
-									width="100px"></td>
-								<td><a
-									th:href="@{/userinformation/addQuotation(reqNum=${reqOrderVO.reqNum})}"><input
-										type="submit" value="報價"></a></td>
-								<td><form method="post"
-										th:action="@{/userinformation/userpage/complete}">
-										<input type="submit" value="忽略"><input type="hidden"
-											name="reqNum" th:value="${reqOrderVO.reqNum}">
-									</form></td>
-							</tr>
+							<th:if>
+								<tr>
+									<td th:text="${stat.count}"></td>
+									<td th:text="${reqOrderVO.reqOrderdate}"></td>
+									<td th:text="${reqOrderVO.industryVO.industryName}"></td>
+									<td
+										th:text="${reqOrderVO.userVO.userId + '-[' + reqOrderVO.userVO.comName + ']'}"></td>
+									<td th:text="${reqOrderVO.reqProdname}"></td>
+									<td th:text="${reqOrderVO.reqProdqty}"></td>
+									<td th:text="${reqOrderVO.reqUnitname}"></td>
+									<td th:text="${reqOrderVO.reqDes}"></td>
+									<td><img
+										th:src="@{/reqorder/DBGifReader(reqNum=${reqOrderVO.reqNum})}"
+										width="100px"></td>
+									<td><a
+										th:href="@{/userinformation/addQuotation(reqNum=${reqOrderVO.reqNum})}"><input
+											type="submit" value="報價"></a></td>
+									<td>
+										<form method="post"
+											th:action="@{/userinformation/userpage/complete}">
+											<input type="submit" value="忽略"> <input type="hidden"
+												name="reqNum" th:value="${reqOrderVO.reqNum}">
+										</form>
+									</td>
+								</tr>
+							</th:if>
 						</th:block>
 					</tbody>
+
 				</table>
 			</div>
 
@@ -422,7 +427,6 @@ th, td {
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-
 
 </body>
 

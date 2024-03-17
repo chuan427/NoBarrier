@@ -69,10 +69,29 @@ public class OrderController {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
 
-		List<OrderVO> list = orderSvc.getOneStatOrder(userVO);
+		List<OrderVO> list = orderSvc.getOrdersByUserId(userVO.getUserId());
 		model.addAttribute("orderListData", list);
 		return "front-end/order/transaction_stat"; // view
 	}
+	
+	//訂單明細
+	@GetMapping("/order_details")
+	public String order_details(Model model, HttpServletRequest request) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+	    if (userVO == null) {
+	        return "redirect:/login"; // 如果用户未登录，将其重定向到登录页面
+	    }
+
+	    // 根据当前登录用户的ID获取订单列表
+	    List<OrderVO> list = orderSvc.getOrderDetails(userVO.getUserId());
+	    model.addAttribute("orderListData", list);
+
+	    return "front-end/order/order_details";
+	}
+
+
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST
