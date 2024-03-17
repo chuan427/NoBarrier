@@ -188,7 +188,7 @@ th, td {
 								th:text="${orderVO.userVO.userId + '-[' + orderVO.userVO.comName + ']'}"></td>
 							<td th:text="${orderVO.ordNum}"></td>
 							<td th:text="${orderVO.ordTotalamount}"></td>
-							<td th:text="${orderVO.ordStat}"></td>
+							
 							<td><a
 								th:href="@{/userinformation/order_details(ordNum=${orderVO.ordNum})}"><input
 									type="submit" value="訂單狀態"></a></td>

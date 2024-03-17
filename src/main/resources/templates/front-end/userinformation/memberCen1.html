@@ -4,11 +4,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>member_center</title>
-
-<!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
+<title>memberCen1</title>
 
 <style>
+#submit {
+	width: 100px; /* 設定按鈕寬度 */
+	font-size: 14px; /* 設定字體大小 */
+	padding: 5px 10px; /* 設定內邊距 */
+	margin: 0 auto; /* 水平置中 */
+	display: block; /* 轉換為區塊元素 */
+}
+
 main {
 	width: 100%;
 	/* 設定寬度為100% */
@@ -20,25 +26,6 @@ main {
 	/* 設定高度，可以根據需要調整 */
 	overflow: auto;
 	/* 添加捲軸，如果內容超出高度 */
-}
-
-.pass_show {
-	position: relative;
-}
-
-.pass_show .ptxt {
-	position: absolute;
-	top: 50%;
-	right: 10px;
-	z-index: 1;
-	color: #f36c01;
-	margin-top: -10px;
-	cursor: pointer;
-	transition: 0.3s ease all;
-}
-
-.pass_show .ptxt:hover {
-	color: #333333;
 }
 
 .button-add {
@@ -173,162 +160,133 @@ main {
 
 			<!-- 加了 container-add-style -->
 			<div class="tab-content container-add-style" id="v-pills-tabContent">
-
-				<div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-					aria-labelledby="v-pills-profile-tab">
-					<div class="acc-very-big" style="display: flex">
-						<!-- <div class="acc-big-left">
-							<div th:each="userVO, iterStat : ${userListData}"
-								th:id="'acc-' + ${iterStat.index + 1}" class="acc-medium">
-								<div class="acc-title" th:text="${'帳戶' + (iterStat.index + 1)}"></div>
-								<div class="acc-body" style="display: flex">
-									<div class="acc-content">
-										<p th:text="${comBank}"></p>
-									</div>
-									<div class="acc-trash-can">
-										<a href="#"><img src="/image/trashcan.png"
-											alt="trashcan-icon" height="16px" /></a>
+				<div class="tab-pane fade show active" id="v-pills-home"
+					role="tabpanel" aria-labelledby="v-pills-home-tab">
+					<form class="row g-3 mx-auto" th:action="@{updateBankInfo}" method="post" th:object="${userVO}" enctype="multipart/form-data">
+						<div class="col-6">
+							<label for="comContactPerson" class="form-label">自訂代稱</label> <input
+								type="text" class="form-control form-control-sm"
+								id="comContactPerson" name="comContactPerson"
+								th:field="*{comContactPerson}" />
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<label for="comBank" class="form-label">銀行代碼</label> <select
+									class="form-select form-select-sm"
+									aria-label=".form-select-sm example" id="comBank"
+									name="comBank" th:field="*{comBank}">
+									<option th:value="004">004 臺灣銀行</option>
+									<option th:value="005">005 台灣土地銀行</option>
+									<option th:value="006">006 合作金庫銀行</option>
+									<option th:value="007">007 第一商業銀行</option>
+									<option th:value="008">008 華南商業銀行</option>
+									<option th:value="009">009 彰化商業銀行</option>
+									<option th:value="010">010 花旗(台灣)(原華僑銀行)</option>
+									<option th:value="011">011 上海商業銀行</option>
+									<option th:value="012">012 台北富邦銀行</option>
+									<option th:value="013">013 國泰世華商業銀行</option>
+									<option th:value="016">016 高雄銀行</option>
+									<option th:value="017">017 兆豐國際商業銀行</option>
+									<option th:value="021">021 花旗銀行</option>
+									<option th:value="024">024 美國運通銀行</option>
+									<option th:value="025">025 首都銀行</option>
+									<option th:value="039">039 荷蘭銀行</option>
+									<option th:value="040">040 中華開發</option>
+									<option th:value="050">050 台灣中小企業銀行</option>
+									<option th:value="052">052 渣打國際商銀(原新竹商銀)</option>
+									<option th:value="053">053 台中商業銀行</option>
+									<option th:value="054">054 京城商銀</option>
+									<option th:value="057">057 台東區中小企業銀行</option>
+									<option th:value="072">072 德意志銀行</option>
+									<option th:value="073">073 東亞銀行</option>
+									<option th:value="081">081 匯豐銀行</option>
+									<option th:value="101">101 稻江商銀</option>
+									<option th:value="102">102 華泰商業銀行</option>
+									<option th:value="103">103 新光商業銀行</option>
+									<option th:value="104">104 台北市第五信用合作社</option>
+									<option th:value="106">106 台北市第九信用合作社</option>
+									<option th:value="108">108 陽信商業銀行</option>
+									<option th:value="114">114 基隆第一信用合作社</option>
+									<option th:value="115">115 基隆第二信用合作社</option>
+									<option th:value="118">118 板信商業銀行</option>
+									<option th:value="119">119 台北縣淡水第一信用合作社</option>
+									<option th:value="120">120 台北縣淡水信用合作社</option>
+									<option th:value="124">124 宜蘭信用合作社</option>
+									<option th:value="127">127 桃園信用合作社</option>
+									<option th:value="130">130 新竹第一信用合作社</option>
+									<option th:value="132">132 新竹第三信用合作社</option>
+									<option th:value="139">139 苗栗縣竹南信用合作社</option>
+									<option th:value="146">146 台中市第二信用合作社</option>
+									<option th:value="147">147 三信商業銀行</option>
+									<option th:value="158">158 彰化第一信用合作社</option>
+									<option th:value="161">161 彰化第五信用合作社</option>
+									<option th:value="162">162 彰化第六信用合作社</option>
+									<option th:value="163">163 彰化第十信用合作社</option>
+									<option th:value="165">165 彰化縣鹿港信用合作社</option>
+									<option th:value="178">178 嘉義市第三信用合作社</option>
+									<option th:value="179">179 嘉義市第四信用合作社</option>
+									<option th:value="188">188 台南第三信用合作社</option>
+									<option th:value="203">203 高雄第二信用合作社</option>
+									<option th:value="204">204 高雄第三信用合作社</option>
+									<option th:value="215">215 花蓮第一信用合作社</option>
+									<option th:value="216">216 花蓮第二信用合作社</option>
+									<option th:value="222">222 澎湖縣第一信用合作社</option>
+									<option th:value="223">223 澎湖縣第二信用合作社</option>
+									<option th:value="224">224 金門縣信用合作社</option>
+									<option th:value="700">700 中華郵政</option>
+									<option th:value="803">803 聯邦商業銀行</option>
+									<option th:value="804">804 滙豐銀行(原中華銀行)</option>
+									<option th:value="805">805 遠東商業銀行</option>
+									<option th:value="806">806 元大銀行</option>
+									<option th:value="807">807 永豐銀行</option>
+									<option th:value="808">808 玉山商業銀行</option>
+									<option th:value="809">809 萬泰商業銀行</option>
+									<option th:value="810">810 星辰銀行(原寶華銀行)</option>
+									<option th:value="812">812 台新國際商業銀行</option>
+									<option th:value="814">814 大眾商業銀行</option>
+									<option th:value="815">815 日盛國際商業銀行</option>
+									<option th:value="816">816 安泰商業銀行</option>
+									<option th:value="822">822 中國信託商業銀行</option>
+									<option th:value="825">825 慶豐商業銀</option>
+								</select>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<label for="accountNumber" class="form-label">帳號</label> <input
+									type="text" class="form-control form-control-sm"
+									id="accountNumber" name="accountNumber" placeholder=""
+									th:field="*{accountNumber}" />
+							</div>
+						</div>
+						<div style="margin-top: 30px"></div>
+						
+						<button type="submit" id="submit" class="btn btn-secondary">修改帳戶</button>
+						
+						<div style="margin-top: 30px"></div>
+						<div class="row">
+							<div class="col-6">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title">銀行帳號訊息</h5>
+										<p class="card-text">
+											自訂代稱: <span th:text="*{comContactPerson}"></span>
+										</p>
+										<p class="card-text">
+											銀行代碼: <span th:text="*{comBank}"></span>
+										</p>
+										<p class="card-text">
+											帳號: <span th:text="*{accountNumber}"></span>
+										</p>
+										<!-- 如果有其他银行账号信息，可以继续添加 -->
 									</div>
 								</div>
 							</div>
-						</div> -->
-						<div class="acc-space" style="width: 100px"></div>
-						<form class="acc-big-right">
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="mb-3">
-										<label for="comContactPerson" class="form-label">自訂代稱</label>
-										<input type="text" class="form-control form-control-sm"
-											id="comContactPerson" name="comContactPerson"
-											th:value="${session.loggingInUser.comContactPerson}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="mb-3">
-										<label for="comBank" class="form-label">銀行代碼</label> <select
-											class="form-select form-select-sm"
-											aria-label=".form-select-sm example" id="comBank"
-											name="comBank" th:value="${session.loggingInUser.comBank}">
-											<option disabled selected>銀行代碼選擇</option>
-											<option th:value="004">004 臺灣銀行</option>
-											<option th:value="005">005 台灣土地銀行</option>
-											<option th:value="006">006 合作金庫銀行</option>
-											<option th:value="007">007 第一商業銀行</option>
-											<option th:value="008">008 華南商業銀行</option>
-											<option th:value="009">009 彰化商業銀行</option>
-											<option th:value="010">010 花旗(台灣)(原華僑銀行)</option>
-											<option th:value="011">011 上海商業銀行</option>
-											<option th:value="012">012 台北富邦銀行</option>
-											<option th:value="013">013 國泰世華商業銀行</option>
-											<option th:value="016">016 高雄銀行</option>
-											<option th:value="017">017 兆豐國際商業銀行</option>
-											<option th:value="021">021 花旗銀行</option>
-											<option th:value="024">024 美國運通銀行</option>
-											<option th:value="025">025 首都銀行</option>
-											<option th:value="039">039 荷蘭銀行</option>
-											<option th:value="040">040 中華開發</option>
-											<option th:value="050">050 台灣中小企業銀行</option>
-											<option th:value="052">052 渣打國際商銀(原新竹商銀)</option>
-											<option th:value="053">053 台中商業銀行</option>
-											<option th:value="054">054 京城商銀</option>
-											<option th:value="057">057 台東區中小企業銀行</option>
-											<option th:value="072">072 德意志銀行</option>
-											<option th:value="073">073 東亞銀行</option>
-											<option th:value="081">081 匯豐銀行</option>
-											<option th:value="101">101 稻江商銀</option>
-											<option th:value="102">102 華泰商業銀行</option>
-											<option th:value="103">103 新光商業銀行</option>
-											<option th:value="104">104 台北市第五信用合作社</option>
-											<option th:value="106">106 台北市第九信用合作社</option>
-											<option th:value="108">108 陽信商業銀行</option>
-											<option th:value="114">114 基隆第一信用合作社</option>
-											<option th:value="115">115 基隆第二信用合作社</option>
-											<option th:value="118">118 板信商業銀行</option>
-											<option th:value="119">119 台北縣淡水第一信用合作社</option>
-											<option th:value="120">120 台北縣淡水信用合作社</option>
-											<option th:value="124">124 宜蘭信用合作社</option>
-											<option th:value="127">127 桃園信用合作社</option>
-											<option th:value="130">130 新竹第一信用合作社</option>
-											<option th:value="132">132 新竹第三信用合作社</option>
-											<option th:value="139">139 苗栗縣竹南信用合作社</option>
-											<option th:value="146">146 台中市第二信用合作社</option>
-											<option th:value="147">147 三信商業銀行</option>
-											<option th:value="158">158 彰化第一信用合作社</option>
-											<option th:value="161">161 彰化第五信用合作社</option>
-											<option th:value="162">162 彰化第六信用合作社</option>
-											<option th:value="163">163 彰化第十信用合作社</option>
-											<option th:value="165">165 彰化縣鹿港信用合作社</option>
-											<option th:value="178">178 嘉義市第三信用合作社</option>
-											<option th:value="179">179 嘉義市第四信用合作社</option>
-											<option th:value="188">188 台南第三信用合作社</option>
-											<option th:value="203">203 高雄第二信用合作社</option>
-											<option th:value="204">204 高雄第三信用合作社</option>
-											<option th:value="215">215 花蓮第一信用合作社</option>
-											<option th:value="216">216 花蓮第二信用合作社</option>
-											<option th:value="222">222 澎湖縣第一信用合作社</option>
-											<option th:value="223">223 澎湖縣第二信用合作社</option>
-											<option th:value="224">224 金門縣信用合作社</option>
-											<option th:value="700">700 中華郵政</option>
-											<option th:value="803">803 聯邦商業銀行</option>
-											<option th:value="804">804 滙豐銀行(原中華銀行)</option>
-											<option th:value="805">805 遠東商業銀行</option>
-											<option th:value="806">806 元大銀行</option>
-											<option th:value="807">807 永豐銀行</option>
-											<option th:value="808">808 玉山商業銀行</option>
-											<option th:value="809">809 萬泰商業銀行</option>
-											<option th:value="810">810 星辰銀行(原寶華銀行)</option>
-											<option th:value="812">812 台新國際商業銀行</option>
-											<option th:value="814">814 大眾商業銀行</option>
-											<option th:value="815">815 日盛國際商業銀行</option>
-											<option th:value="816">816 安泰商業銀行</option>
-											<option th:value="822">822 中國信託商業銀行</option>
-											<option th:value="825">825 慶豐商業銀</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="mb-3">
-										<label for="comBank" class="form-label">帳號</label> <input
-											type="text" class="form-control form-control-sm" id="comBank"
-											name="comBank" placeholder=""
-											th:value="${session.loggingInUser.comBank}" />
-									</div>
-								</div>
-							</div>
-							<button type="submit" id="submit" class="btn btn-secondary">新增帳戶</button>
-						</form>
-					</div>
+						</div>
+					</form>
 				</div>
-
-
-				<script>
-					document
-							.addEventListener(
-									"DOMContentLoaded",
-									function() {
-										var showPasswordButtons = document
-												.querySelectorAll(".pass_show .ptxt");
-										showPasswordButtons
-												.forEach(function(button) {
-													button
-															.addEventListener(
-																	"click",
-																	function() {
-																		var passwordInput = this.previousElementSibling;
-																		passwordInput.type = passwordInput.type === "password" ? "text"
-																				: "password";
-																		this.textContent = passwordInput.type === "password" ? "Show"
-																				: "Hide";
-																	});
-												});
-									});
-				</script>
 			</div>
-		</div>
-</div>
-</main>
+	</main>
 </div>
 
 <!-- <footer> -->

@@ -81,10 +81,10 @@ public class ReqOrderService {
 	public Set<QuoVO> getOrderByquoNum(Integer ordReqnum){
 		return getOneReqOrder(ordReqnum).getQuotations();
 	}
-	//需求對訂單一對一
-	public OrderVO getOrderByreqNum(Integer ordReqnum){
-		return getOneReqOrder(ordReqnum).getOrderVO();
-	}
-	
+//	//需求對訂單一對一
+//	public OrderVO getOrderByreqNum(Integer ordReqnum){
+//		return getOneReqOrder(ordReqnum).getOrderVO();
+//	}
+//	
 	
 }

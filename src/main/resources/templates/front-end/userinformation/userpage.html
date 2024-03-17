@@ -146,6 +146,36 @@ th, td {
 												}
 											}
 										});
+
+						$('#example3')
+								.DataTable(
+										{
+											"lengthMenu" : [ 5, 10, 20, 50, 100 ],
+											"searching" : true,
+											"paging" : true,
+											"ordering" : true,
+											"language" : {
+												"processing" : "處理中...",
+												"loadingRecords" : "載入中...",
+												"lengthMenu" : "顯示 _MENU_ 筆結果",
+												"zeroRecords" : "沒有符合的結果",
+												"info" : "顯示第 _START_ 至 _END_ 筆結果，共<font color=red> _TOTAL_ </font>筆",
+												"infoEmpty" : "顯示第 0 至 0 筆結果，共 0 筆",
+												"infoFiltered" : "(從 _MAX_ 筆結果中過濾)",
+												"infoPostFix" : "",
+												"search" : "搜尋:",
+												"paginate" : {
+													"first" : "第一頁",
+													"previous" : "上一頁",
+													"next" : "下一頁",
+													"last" : "最後一頁"
+												},
+												"aria" : {
+													"sortAscending" : ": 升冪排列",
+													"sortDescending" : ": 降冪排列"
+												}
+											}
+										});
 					});
 </script>
 
@@ -156,7 +186,7 @@ th, td {
 			<div
 				class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
 				<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-					<span th:text="${comName}">User</span>!
+					<span th:text="${session.loggingInUser.comName}">User</span>!
 				</span>
 			</div>
 
@@ -200,6 +230,9 @@ th, td {
 				<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
 					data-bs-target="#nav-profile" type="button" role="tab"
 					aria-controls="nav-profile" aria-selected="false">賣家報價</button>
+				<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab"
+					data-bs-target="#nav-contact" type="button" role="tab"
+					aria-controls="nav-contact" aria-selected="false">等待洽談</button>
 			</div>
 		</nav>
 
@@ -252,12 +285,9 @@ th, td {
 				</table>
 			</div>
 
-		</div>
-
-		<div class="tab-pane fade" id="nav-profile" role="tabpanel"
-			aria-labelledby="nav-profile-tab" tabindex="0"
-			style="overflow-y: scroll; max-height: 500px;">
-			<ul id="orderList" class="list-group">
+			<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+				aria-labelledby="nav-profile-tab" tabindex="0"
+				style="overflow-y: scroll; max-height: 500px;">
 				<table id="example2" class="display" style="width: 100%">
 					<thead>
 						<tr style="background-color: #CCCCFF">
@@ -277,34 +307,77 @@ th, td {
 					<tbody>
 						<th:block th:each="quoVO : ${quoListData}">
 							<tr>
-							<td th:text="${quoVOStat.count}"></td>
-							<td th:text="${quoVO.quoDate}"></td>
-							<td
+								<td th:text="${quoVOStat.count}"></td>
+								<td th:text="${quoVO.quoDate}"></td>
+								<td
 									th:text="${quoVO.userVO.userId + '-[' + quoVO.userVO.comName + ']'}"></td>
-							<td th:text="${quoVO.quoProdname}"></td>
-							<td th:text="${quoVO.quoProdqty}"></td>
-							<td th:text="${quoVO.quoUnitname}"></td>
-							<td th:text="${quoVO.quoUnitprice}"></td>
-							<td th:text="${quoVO.quoTotalprice}"></td>
-							<td th:text="${quoVO.quoInfo}"></td>
+								<td th:text="${quoVO.quoProdname}"></td>
+								<td th:text="${quoVO.quoProdqty}"></td>
+								<td th:text="${quoVO.quoUnitname}"></td>
+								<td th:text="${quoVO.quoUnitprice}"></td>
+								<td th:text="${quoVO.quoTotalprice}"></td>
+								<td th:text="${quoVO.quoInfo}"></td>
 
-							<td>
-							<a th:href="@{/order/transaction_check}"> <input
-									type="submit" value="直接購買"> <input type="hidden"
-									name="quoNum" th:value="${quoVO.quoNum}">
-							</a>
-							</td>
-							<td>
-							<a th:href="@{/chat/privatechat}"> <input
-									type="submit" value="洽談"> <input type="hidden"
-									name="quoNum" th:value="${quoVO.quoNum}">
-							</a>
-							</td>
-						</tr>
+								<td><a th:href="@{/order/transaction_check}"> <input
+										type="submit" value="直接購買"> <input type="hidden"
+										name="quoNum" th:value="${quoVO.quoNum}">
+								</a></td>
+								<td><a th:href="@{/chat/privatechat}"> <input
+										type="submit" value="洽談"> <input type="hidden"
+										name="quoNum" th:value="${quoVO.quoNum}">
+								</a></td>
+							</tr>
 						</th:block>
 					</tbody>
 				</table>
-			</ul>
+			</div>
+
+			<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+				aria-labelledby="nav-contact-tab" tabindex="0"
+				style="overflow-y: scroll; max-height: 500px;">
+				<table id="example3" class="display" style="width: 100%">
+					<thead>
+						<tr style="background-color: #CCCCFF">
+							<th>序號</th>
+							<th>日期</th>
+							<th>會員</th>
+							<th>商品名稱</th>
+							<th>數量</th>
+							<th>單位</th>
+							<th>單價</th>
+							<th>總價</th>
+							<th>文字敘述</th>
+							<th>直接購買</th>
+							<th>洽談</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="quoVO : ${quoListData}">
+							<tr>
+								<td th:text="${quoVOStat.count}"></td>
+								<td th:text="${quoVO.quoDate}"></td>
+								<td
+									th:text="${quoVO.userVO.userId + '-[' + quoVO.userVO.comName + ']'}"></td>
+								<td th:text="${quoVO.quoProdname}"></td>
+								<td th:text="${quoVO.quoProdqty}"></td>
+								<td th:text="${quoVO.quoUnitname}"></td>
+								<td th:text="${quoVO.quoUnitprice}"></td>
+								<td th:text="${quoVO.quoTotalprice}"></td>
+								<td th:text="${quoVO.quoInfo}"></td>
+
+								<td><a th:href="@{/order/transaction_check}"> <input
+										type="submit" value="直接購買"> <input type="hidden"
+										name="quoNum" th:value="${quoVO.quoNum}">
+								</a></td>
+								<td><a th:href="@{/chat/privatechat}"> <input
+										type="submit" value="洽談"> <input type="hidden"
+										name="quoNum" th:value="${quoVO.quoNum}">
+								</a></td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

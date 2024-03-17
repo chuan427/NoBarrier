@@ -69,8 +69,8 @@ public class QueController {
 		}
 
 		if (result.hasErrors()) {
-            return "front-end/userinformation/customer_service";
-        }
+			return "front-end/userinformation/customer_service";
+		}
 
 		/*************************** 2.開始新增資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
