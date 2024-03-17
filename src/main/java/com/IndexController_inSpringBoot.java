@@ -893,17 +893,8 @@ public String chat(Model model) {
  		return "front-end/order/reports"; // view
  	}
 
- 	// 訂單交易確認 成功
- 	@GetMapping("/order/transaction_check")
- 	public String transaction_check() {
- 		return "front-end/order/transaction_check"; // view
- 	}
-
- 	// 訂單交易 成功
- 	@GetMapping("/order/transaction")
- 	public String transaction() {
- 		return "front-end/order/transaction"; // view
- 	}
+ 	
+ 	
  	
 	@ModelAttribute("orderListData")
 	protected List<OrderVO> referenceListOrderData() {

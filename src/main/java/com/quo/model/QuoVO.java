@@ -32,7 +32,7 @@ public class QuoVO implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	
-	private Integer quoNum;
+	private Integer quoNum;//PK 報價單Id
 	private Date quoDate = Date.valueOf(LocalDate.now());
 	private String quoProdname;
 	private String quoUnitname;
@@ -41,7 +41,7 @@ public class QuoVO implements java.io.Serializable {
 	private Integer quoTotalprice;
 	private String quoInfo;
 	private ReqOrderVO reqOrderVO;
-	private UserVO userVO;
+	private UserVO userVO;//賣家VO
 	private Integer quoIsValid;
 	private List<OrderVO> orders;
 
