@@ -37,7 +37,7 @@ import com.user.model.UserVO;
 		private String ordUnitname;
 		private Integer ordProdprice;
 		private Integer ordTotalamount;
-		private Integer ordBuyerid;
+//		private Integer ordBuyerid;
 //		private Integer ordSellerid;
 		private Integer ordStat;
 		private Integer ordTranStat;
@@ -101,7 +101,7 @@ import com.user.model.UserVO;
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
-		@JoinColumn(name = "ordSellerid",referencedColumnName = "userid")
+		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid")
 		public UserVO getUserVO() {
 			return userVO;
 		}
@@ -199,15 +199,15 @@ import com.user.model.UserVO;
 		public void setOrdTotalamount(Integer ordTotalamount) {
 			this.ordTotalamount = ordTotalamount;
 		}
-		@Column(name = "ordBuyerid")
-//		@NotEmpty(message="買家編號: 請勿空白")
-//		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
-		public Integer getOrdBuyerid() {
-			return this.ordBuyerid;
-		}
-		public void setOrdBuyerid(Integer ordBuyerid) {
-			this.ordBuyerid = ordBuyerid;
-		}
+//		@Column(name = "ordBuyerid")
+////		@NotEmpty(message="買家編號: 請勿空白")
+////		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
+//		public Integer getOrdBuyerid() {
+//			return this.ordBuyerid;
+//		}
+//		public void setOrdBuyerid(Integer ordBuyerid) {
+//			this.ordBuyerid = ordBuyerid;
+//		}
 		
 //		@Column(name = "ordSellerid")
 ////		@NotEmpty(message="賣家編號: 請勿空白")
