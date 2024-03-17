@@ -1,6 +1,8 @@
 package com.order.model;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.limitsale.model.LimitSaleVO;
@@ -43,7 +44,7 @@ import com.user.model.UserVO;
 		private Integer ordPaystat;
 		private Double ordRatstar;
 		private String ordComment;
-		private Integer ordLimnum;
+//		private Integer ordLimnum;
 		private Integer ordReqnum;
 		private Integer ordQuonum;
 		private Integer ordIsValid;
@@ -54,27 +55,17 @@ import com.user.model.UserVO;
 		private RptdlistVO rptdlistVO;
 		public OrderVO() { 
 		}
-		
-//		//一對一 使用原版mappedBy
-//		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-//		@PrimaryKeyJoinColumn 
-//		public QuoVO getQuoVO() {
-//			return quoVO;
-//		}
-//		public void setQuoVO(QuoVO quoVO) {
-//			this.quoVO = quoVO;
-//		}
-		
-		
-		//訂單與需求是一對一 用@PrimaryKeyJoinColumn寫法 
-//		@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
-//		@PrimaryKeyJoinColumn 
-//		public ReqOrderVO getReqOrderVO() {
-//		    return reqOrderVO;
-//		}
-//		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
-//		    this.reqOrderVO = reqOrderVO;
-//		}		
+	
+		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
+		@JoinColumn(name = "ordLimnum",referencedColumnName = "limNum")
+		public LimitSaleVO getLimitsaleVO() {
+			return limitsaleVO;
+		}
+
+		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
+			this.limitsaleVO = limitsaleVO;
+		}
+
 
 		@OneToOne
 		@MapsId 
@@ -83,17 +74,10 @@ import com.user.model.UserVO;
 			return rptdlistVO;
 		}
 
+	
+
 		public void setRptdlistVO(RptdlistVO rptdlistVO) {
 			this.rptdlistVO = rptdlistVO;
-		}
-
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public LimitSaleVO getLimitsaleVO() {
-			return limitsaleVO;
-		}
-		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
-			this.limitsaleVO = limitsaleVO;
 		}
 		
 
@@ -258,14 +242,14 @@ import com.user.model.UserVO;
 		public void setOrdComment(String ordComment) {
 			this.ordComment = ordComment;
 		}
-		@Column(name = "ordLimnum")
-//		@NotNull(message="限時特賣單號: 請勿空白")
-		public Integer getOrdLimnum() {
-			return this.ordLimnum;
-		}
-		public void setOrdLimnum(Integer ordLimnum) {
-			this.ordLimnum = ordLimnum;
-		}
+//		@Column(name = "ordLimnum")
+////		@NotNull(message="限時特賣單號: 請勿空白")
+//		public Integer getOrdLimnum() {
+//			return this.ordLimnum;
+//		}
+//		public void setOrdLimnum(Integer ordLimnum) {
+//			this.ordLimnum = ordLimnum;
+//		}
 		@Column(name = "ordReqnum")
 //		@NotEmpty(message="需求單號: 請勿空白")
 //		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")

@@ -23,7 +23,10 @@ public class OrderService {
 		@Autowired
 		OrderRepository repository;
 
-		public void addOrder(OrderVO OrderVO) {
+		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
+			OrderVO.setUserVO(loggingInUser);
+			OrderVO.setQuoVO(quoVO);
+			
 			repository.save(OrderVO);
 		}
 
@@ -51,7 +54,7 @@ public class OrderService {
 			return repository.findAll();
 		}
 
-		//訂單對特賣一對一
+		//訂單對特賣多對一
 		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
 			return getOneOrder(limNum).getLimitsaleVO();
 		}
