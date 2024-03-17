@@ -17,6 +17,9 @@ public interface ReqOrderRepository extends JpaRepository<ReqOrderVO, Integer>{
 	
 	@Query(value = "SELECT * FROM reqorder WHERE reqIsValid = 1", nativeQuery = true)
 	List<ReqOrderVO> findByReqIsValid();
+	
+	@Query(value = "SELECT * FROM reqorder WHERE reqIsValid = 1 AND reqUserid != ?\n" + "", nativeQuery = true)
+	List<ReqOrderVO> findByReqUseridAndReqIsValid(Integer reqUserid);
 
 	@Query(value = "SELECT r FROM ReqOrderVO r WHERE r.userVO.userId = :userId")
 	List<ReqOrderVO> findByUserId(@Param("userId") Integer userId);

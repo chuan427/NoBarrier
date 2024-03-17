@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.forumpost.model.ForumPostVO;
 import com.order.model.OrderVO;
@@ -24,7 +24,7 @@ public class UserService {
 
 		@Autowired
 		UserRepository repository;
-		
+
 		private final PasswordEncoder passwordEncoder;
 		
 	    @Autowired
@@ -38,10 +38,6 @@ public class UserService {
 		}
 
 		public void updateUser(UserVO userVO) {
-			repository.save(userVO);
-		}
-		
-		public void update(UserVO userVO) {
 			repository.save(userVO);
 		}
 
@@ -86,8 +82,8 @@ public class UserService {
 		
 		public UserVO getOneUser(Integer userId) {
 			Optional<UserVO> optional = repository.findById(userId);
-			return optional.get();
-//			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
+//			return optional.get();
+			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 		}
 
 		public List<UserVO> getAll() {
@@ -117,13 +113,42 @@ public class UserService {
 		public Set<OrderVO> getOrderByordSellerid(Integer ordSellerid){
 			return getOneUser(ordSellerid).getOrders();
 		}
+
+		public void updateBankInfo(Integer userId, String comContactPerson, String comBank, String accountNumber) {
+	        
+			
+			UserVO userVO = getOneUser(userId);
+	        if (userVO != null) {
+	        	userVO.setComContactPerson(comContactPerson);
+	            userVO.setComBank(comBank);
+	            userVO.setAccountNumber(accountNumber);
+	            repository.save(userVO);
+	        } else {
+	            throw new RuntimeException("User not found");
+	        }
+	    }
 		
-		public List<UserVO> getOneStatUserCom(UserVO userVO) {
-		    List<UserVO> allUser = repository.findAll();
-		    
-		    return allUser.stream()
-		                  .filter(uersVO -> uersVO.getUserId() == userVO.getUserId())
-		                  .collect(Collectors.toList());
+		@Transactional
+		public boolean changeUserPassword(Integer userId, String comPassword, String newPassword) {
+			
+		    UserVO userVO = getOneUser(userId);
+		    if (userVO != null) {
+		        // 使用passwordEncoder来验证旧密码是否与数据库中的密码匹配
+		        if(passwordEncoder.matches(comPassword, userVO.getComPassword())) {
+		            // 如果旧密码正确，使用passwordEncoder加密新密码
+		            String encodedNewPassword = passwordEncoder.encode(newPassword);
+		            // 更新用户密码
+		            userVO.setComPassword(encodedNewPassword);
+		            repository.save(userVO);
+		            return true; // 更改密码成功
+		        } else {
+		            // 旧密码不匹配
+		            return false; // 更改密码失败
+		        }
+		    } else {
+		        throw new RuntimeException("User not found");
+		    }
 		}
+
 }
 

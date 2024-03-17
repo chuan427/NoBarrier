@@ -10,6 +10,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -55,22 +56,16 @@ public class ReqOrderController {
 	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 	    }
 
-	    List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 	    
         ReqOrderVO reqOrderVO = new ReqOrderVO();
         model.addAttribute("reqOrderVO", reqOrderVO);
         model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
         return "front-end/userinformation/addReqOrder";
     }
+
     
-//	@GetMapping("/userpage")
-//    public List<ReqOrderVO> getOrdersByUserId(HttpSession session) {
-//		
-//	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-//        return reqOrderSvc.getReqOrderByUserId(userVO.getUserId());
-//    }
-
-
+  //=======================新增需求單=================================
     @PostMapping("insertreq")
     public String insert(HttpServletRequest request,@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
             @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
@@ -78,6 +73,7 @@ public class ReqOrderController {
         result = removeFieldError(reqOrderVO, result, "reqProdimage");
         
         UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+        IndustryVO industryVO = (IndustryVO)request.getSession().getAttribute("loggingInUser");
         
         if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
@@ -92,51 +88,15 @@ public class ReqOrderController {
             return "front-end/userinformation/addReqOrder";
         }
 
-        reqOrderSvc.addReqOrder(reqOrderVO, userVO);
+        reqOrderSvc.addReqOrder(reqOrderVO, userVO, industryVO);
         
-//        List<ReqOrderVO> list = reqOrderSvc.getAll();
-//        model.addAttribute("reqOrderListData", list);
-        
-        List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
+        List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
         model.addAttribute("reqOrderListData", list);
         model.addAttribute("success", "- (新增成功)");
         return "redirect:/userinformation/userpage";
     }
 
-//    @PostMapping("getOne_For_Update")
-//    public String getOne_For_Update(@RequestParam("reqNum") String reqNum, ModelMap model) {
-//        ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
-//        model.addAttribute("reqOrderVO", reqOrderVO);
-//        return "front-end/userinformation/updateReqOrder";
-//    }
-//
-//    @PostMapping("update")
-//    public String update(@Valid ReqOrderVO reqOrderVO, BindingResult result, ModelMap model,
-//            @RequestParam("reqProdimage") MultipartFile[] parts) throws IOException {
-//
-//        result = removeFieldError(reqOrderVO, result, "reqProdimage");
-//
-//        if (parts.length == 0) {
-//            byte[] reqProdimage = reqOrderSvc.getOneReqOrder(reqOrderVO.getReqNum()).getReqProdimage();
-//            reqOrderVO.setReqProdimage(reqProdimage);
-//        } else {
-//            for (MultipartFile multipartFile : parts) {
-//                byte[] reqProdimage = multipartFile.getBytes();
-//                reqOrderVO.setReqProdimage(reqProdimage);
-//            }
-//        }
-//
-//        if (result.hasErrors()) {
-//            return "front-end/userinformation/updateReqOrder";
-//        }
-//
-//        reqOrderSvc.updateReqOrder(reqOrderVO);
-//        model.addAttribute("success", "- (修改成功)");
-//        reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqOrderVO.getReqNum()));
-//        model.addAttribute("reqOrderVO", reqOrderVO);
-//        return "front-end/userinformation/req_userpage";
-//    }
-
+    //=======================按下忽略改變需求單狀態=================================
     @PostMapping("/userpage/complete")
     public String complete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
         if (reqNum == null) {

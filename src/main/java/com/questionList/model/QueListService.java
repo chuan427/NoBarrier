@@ -59,8 +59,8 @@ public class QueListService {
 	public List<QueListVO> getONE1StatQuestions(UserVO userVO) {
 	    List<QueListVO> allQuestions = repository.findAll();
 	    List<QueListVO> validQuestions = new ArrayList<>();
-	    System.out.println(userVO.getUserId());
-	    System.out.println("===========================");
+//	    System.out.println(userVO.getUserId());
+//	    System.out.println("===========================");
 	    for (QueListVO question : allQuestions) {
 	        if (question.getUserVO().getUserId() == userVO.getUserId() && question.getQueStat() == 1) {
 //	            System.out.println(question.getUserVO().getUserId());
