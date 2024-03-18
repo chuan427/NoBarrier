@@ -258,27 +258,35 @@ public class UserController {
 	
 	
 	//=====================updateBankInfo===============================
+	
 	@PostMapping("/updateBankInfo")
-	public String updateBankInfo(@Valid UserVO userVO, BindingResult result, ModelMap model ) throws IOException {
+	public String updateBankInfo(HttpSession session, @ModelAttribute("userVO") UserVO formUserVO, BindingResult result, Model model) {
+	    if (result.hasErrors()) {
+	        return "redirect:/userinformation/memberCen1"; // 或返回錯誤提示
+	    }
 
-		
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "userId");
+	    UserVO currentUser = (UserVO) session.getAttribute("loggingInUser");
+	    if (currentUser == null) {
+	        return "redirect:/login"; // 或其他登入頁面路徑
+	    }
 
-		if (result.hasErrors()) {
-			return "front-end/userinformation/memberCen1";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.updateUser(userVO);
+	    // 更新資料庫中的資訊
+	    try {
+	        userSvc.updateBankInfo(currentUser.getUserId(), formUserVO.getComContactPerson(), formUserVO.getComBank(), formUserVO.getAccountNumber());
+	    } catch (Exception e) {
+	        model.addAttribute("errorMessage", "更新失敗，請稍後再試。");
+	        return "front-end/userinformation/memberCen1";
+	    }
 
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen"; // 修改成功後轉交listOneEmp.html
+	    // 從資料庫重新獲取更新後的用戶資訊
+	    UserVO updatedUserVO = userSvc.getOneUser(currentUser.getUserId());
+	    session.setAttribute("loggingInUser", updatedUserVO); // 更新session中的用戶資訊
+	    model.addAttribute("userVO", updatedUserVO);
+	    model.addAttribute("successMessage", "資料更新成功！");
+	    return "redirect:/userinformation/memberCen"; // 重定向到展示頁面
 	}
+
+	
 	
 	
 	//=====================changePassword===============================
