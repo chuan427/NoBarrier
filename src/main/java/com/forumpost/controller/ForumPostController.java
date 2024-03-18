@@ -3,14 +3,13 @@ package com.forumpost.controller;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -63,36 +62,45 @@ public class ForumPostController {
 	 */
 	@PostMapping("insert")
 	public String insert(@Valid ForumPostVO forumPostVO, BindingResult result, ModelMap model,
-			@RequestParam("fpImage") MultipartFile[] parts) throws IOException {
+	        @RequestParam("fpImage") MultipartFile[] parts, HttpServletRequest request) throws IOException {
 
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(forumPostVO, result, "fpImage");
+	    // 接收請求參數 - 輸入格式的錯誤處理
+	    result = removeFieldError(forumPostVO, result, "fpImage");
+	    UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
 
-		if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				forumPostVO.setFpImage(buf);
-			}
-		}
-		// 即使沒有上傳圖片，也可以繼續進行其他處理流程
-		if (result.hasErrors()) {
-			return "front-end/forum/addForumPost";
-		}
-		/*************************** 2.開始新增資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		long currentTimeMillis = System.currentTimeMillis();
-		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
-		forumPostVO.setFpTime(currentTimestamp);
-		forumPostVO.setFpUpdate(currentTimestamp);
-		forumPostSvc.addForumPost(forumPostVO);
-		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<ForumPostVO> list = forumPostSvc.getAll();
-		model.addAttribute("forumPostListData", list);
-		model.addAttribute("success", "- (新增成功)");
+	    if (!parts[0].isEmpty()) { // 使用者選擇了要上傳的圖片
+	        for (MultipartFile multipartFile : parts) {
+	            byte[] buf = multipartFile.getBytes();
+	            forumPostVO.setFpImage(buf);
+	        }
+	    }
+	    
+	    if (result.hasErrors()) {
+	        return "front-end/forum/addForumPost";
+	    }
 
-		return "redirect:/forum/forumIndex"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+	    // 設定發文者
+	    if (userVO != null) {
+	        forumPostVO.setUserVO(userVO);
+	    }
+	    
+	    // 設定時間戳記
+	    long currentTimeMillis = System.currentTimeMillis();
+	    Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+	    forumPostVO.setFpTime(currentTimestamp);
+	    forumPostVO.setFpUpdate(currentTimestamp);
+	    
+	    // 開始新增資料
+	    forumPostSvc.addForumPost(forumPostVO);
+
+	    // 新增完成, 準備轉交(Send the Success view)
+	    List<ForumPostVO> list = forumPostSvc.getAll();
+	    model.addAttribute("forumPostListData", list);
+	    model.addAttribute("success", "- (新增成功)");
+
+	    return "redirect:/forum/forumIndex"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
+
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST
