@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -34,7 +36,7 @@ public class ForumReplyVO implements java.io.Serializable {
 	private Timestamp frTime;
 	private Timestamp frUpdate;
 	private Integer frLike;
-	private Integer frStat;
+	private Integer frStat = 1;
 	private Set<ForumReportVO> forumReport = new HashSet<ForumReportVO>();
 
 //	private Integer frUserid; //與user關聯
@@ -124,12 +126,21 @@ public class ForumReplyVO implements java.io.Serializable {
 		this.frUpdate = frUpdate;
 	}
 
+	@Column(name = "frStat")
 	public Integer getFrStat() {
-		return frStat;
+		return this.frStat;
 	}
 
 	public void setFrStat(Integer frStat) {
 		this.frStat = frStat;
+	}
+	
+	@PrePersist
+	@PreUpdate
+	private void validateUpdate() {
+		if (this.frStat == null || this.frStat == 1) {
+			this.frStat = 1;
+		}
 	}
 
 	

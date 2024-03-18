@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.forumreply.model.ForumReplyVO;
@@ -61,7 +65,10 @@ public class ForumPostService {
         System.out.println(latestPost);
         return latestPost.orElse(null);  // 如果沒有找到，返回null
     }
-	
-	
     
+    public Page<ForumPostVO> findByComNameOrFpTitleContaining(String searchTerm, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return repository.findByComNameOrFpTitleContaining(searchTerm, pageable);
+    }
+     
 }

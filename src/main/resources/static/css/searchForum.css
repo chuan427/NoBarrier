@@ -1,0 +1,13 @@
+html {
+	height: 165%;
+}
+
+body {
+	margin-top: 20px;
+	background: #eee;
+	color: #708090;
+	min-height: 100vh; /* 確保至少與視窗一樣高 */
+	background-image: url('/images/abstract-painted.JPG');
+	background-size: cover;
+	background-position: center;
+}

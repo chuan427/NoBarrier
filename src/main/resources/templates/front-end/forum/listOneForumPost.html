@@ -106,7 +106,7 @@
     <div th:each="forumReplyVO : ${forumReplyListData}">
         <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
             <p class="comment-user" th:text="${forumReplyVO.userVO != null ? forumReplyVO.userVO.comName : '未知使用者'}"></p>
-            <p th:text="${forumReplyVO.frContent}"></p>
+           	 <pre th:utext="${forumReplyVO.frContent}"></pre>
             <img th:if="${forumReplyVO.frImage != null}" th:src="@{/forumReply/DBGifReader(frNum=${forumReplyVO.frNum})}"  width="200px"/>
             <br>
             <span class="comment-time" th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}"></span>
