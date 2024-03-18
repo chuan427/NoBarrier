@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import com.limitsale.model.LimitSaleVO;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderVO;
-import com.rptdlist.model.RptdlistVO;
 //import com.rptdlist.model.RptdlistVO;
 import com.user.model.UserVO;
 
@@ -46,26 +45,17 @@ import com.user.model.UserVO;
 		private Double ordRatstar;//評分
 		private String ordComment;//留言
 		private Integer ordLimnum;//限時特賣單號
-		
 		//關聯打開後無用
 //		private Integer ordReqnum;//需求編號
 //		private Integer ordQuonum;//報價編號
 		//////
-		
 		private Integer ordIsValid;//啟用狀態
-
-		
-
-
-		private UserVO userVO; //買家
-
-		
-		
-		private LimitSaleVO limitsaleVO;//FK:限時特賣單號
-		private ReqOrderVO reqOrderVO;//FK:需求編號
-		private QuoVO quoVO;//FK:報價單編號
-		private RptdlistVO rptdlistVO;//FK:檢舉編號
-
+		private UserVO userVO; //買家(Integer userId)
+//		private LimitSaleVO limitsaleVO;//FK:限時特賣單號
+		private ReqOrderVO reqOrderVO;//FK:需求編號(Integer reqNum)
+		private QuoVO quoVO;//FK:報價單編號(Integer quoNum)
+//		private RptdlistVO rptdlistVO;//FK:檢舉編號(Integer rptdNum)
+//		private Integer rptdNum;
 		
 
 		
@@ -94,16 +84,16 @@ import com.user.model.UserVO;
 //		}
 
 
-		@OneToOne
-		@MapsId 
-		@JoinColumn(name="ordNum", referencedColumnName = "rptdOrdernum")
-		public RptdlistVO getRptdlistVO() {
-			return rptdlistVO;
-		}
-
-		public void setRptdlistVO(RptdlistVO rptdlistVO) {
-			this.rptdlistVO = rptdlistVO;
-		}
+//		@OneToOne
+//		@MapsId 
+//		@JoinColumn(name="ordNum", referencedColumnName = "rptdOrdernum")
+//		public RptdlistVO getRptdlistVO() {
+//			return rptdlistVO;
+//		}
+//
+//		public void setRptdlistVO(RptdlistVO rptdlistVO) {
+//			this.rptdlistVO = rptdlistVO;
+//		}
 
 //		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
 //		@PrimaryKeyJoinColumn 

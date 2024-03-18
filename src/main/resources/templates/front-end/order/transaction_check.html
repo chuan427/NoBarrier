@@ -84,7 +84,7 @@
 <h2 class="mb-3" style="margin-left: 100px;">交易確認</h2>
 <div style="margin-top: 30px;"></div>
 
-<form class="needs-validation" th:action="@{transaction_check}"
+<form class="needs-validation" th:action="@{transaction}"
 	method="post" th:object="${quoVO}" enctype="multipart/form-data"
 	novalidate>
 	<div class="row g-3 justify-content-center">
@@ -140,17 +140,22 @@
 		</div>
 	</div>
 	<input type="hidden" name="quoNum" th:field="${quoVO.quoNum}" />
-</form>
 <div style="margin-top: 30px;"></div>
 <div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
-		<a th:href="@{/order/transaction}" class="btn btn-primary"
+	
+	<button type="submit" id="submit"> 送出新增 </button>
+	
+	
+	
+		<!-- <a th:href="@{/order/transaction(reqNum=quoVO.quoNum)}" class="btn btn-primary"
 			onclick="return confirm('確定要送出嗎？')">確認送出</a> <a
 			th:href="@{/userinformation/userpage}" class="btn btn-primary"
-			onclick="return confirm('確定要取消嗎？')">取消</a>
+			onclick="return confirm('確定要取消嗎？')">取消</a> -->
 
 	</div>
 </div>
+</form>
 
 
 

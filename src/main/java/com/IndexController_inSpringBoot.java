@@ -51,8 +51,6 @@ import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
-import com.rptdlist.model.RptdlistService;
-import com.rptdlist.model.RptdlistVO;
 import com.security.model.MailService;
 import com.security.model.RandomPasswordGenerator;
 import com.user.model.UserService;
@@ -67,8 +65,8 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	QuoService quoSvc;
 
-	@Autowired
-	RptdlistService rptdlistSvc;
+//	@Autowired
+//	RptdlistService rptdlistSvc;
 
 	@Autowired
 	ReqOrderService reqOrderSvc;
@@ -391,12 +389,12 @@ public class IndexController_inSpringBoot {
 		return "back-end/rptdlist/listAllRptdlist";
 	}
 
-	@ModelAttribute("rptdlistListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<RptdlistVO> referenceListData_rptdlist(Model model) {
-
-		List<RptdlistVO> list = rptdlistSvc.getAll();
-		return list;
-	}
+//	@ModelAttribute("rptdlistListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<RptdlistVO> referenceListData_rptdlist(Model model) {
+//
+//		List<RptdlistVO> list = rptdlistSvc.getAll();
+//		return list;
+//	}
 
 	// -------------------需求單-----------------------
 //	@GetMapping("/userinformation/userpage")
