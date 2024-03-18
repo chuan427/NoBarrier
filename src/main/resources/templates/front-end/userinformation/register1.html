@@ -13,7 +13,7 @@
 <main>
 	<div class="container mt-5">
 		<h2 class="mb-4">用戶註冊</h2>
-		<form th:action="@{/user/storeRegister1Data}" method="post"
+		<form th:action="@{/userinformation/storeRegister1Data}" method="post"
 			th:object="${userVO}">
 			<div class="row">
 				<!-- 左邊註冊區塊 -->
@@ -22,35 +22,35 @@
 					<div class="mb-3">
 						<label for="comName" class="form-label">公司登記名稱</label> 
 						<input th:field="*{comName}" type="text" class="form-control" id="comName" name="comName" required />
-						<span th:if="${#fields.hasErrors('comName')}" th:errors="*{comName}" class="error" id="comName.errors"></span>
+						<span th:if="${#fields.hasErrors('comName')}" th:errors="*{comName}" class="error" id="comName.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 公司統一編號 -->
 					<div class="mb-3">
 						<label for="comUniNumber" class="form-label">公司統一編號</label>
 						<input th:field="*{comUniNumber}" type="text" class="form-control" id="comUniNumber" name="comUniNumber" required />
-						<span  th:if="${#fields.hasErrors('comUniNumber')}" th:errors="*{comUniNumber}" class="error" id="comUniNumber.errors"></span>
+						<span  th:if="${#fields.hasErrors('comUniNumber')}" th:errors="*{comUniNumber}" class="error" id="comUniNumber.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 公司註冊地址 -->
 					<div class="mb-3">
 						<label for="comAddress" class="form-label">公司註冊地址</label>
 						<input th:field="*{comAddress}" type="text" class="form-control" id="comAddress" name="comAddress" required />
-						<span  th:if="${#fields.hasErrors('comAddress')}" th:errors="*{comAddress}" class="error" id="comAddress.errors"></span>
+						<span  th:if="${#fields.hasErrors('comAddress')}" th:errors="*{comAddress}" class="error" id="comAddress.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 公司用郵件 -->
 					<div class="mb-3">
 						<label for="comMail" class="form-label">Email</label>
 						<input th:field="*{comMail}" type="email" class="form-control" id="comMail" name="comMail" required />
-						<span  th:if="${#fields.hasErrors('comMail')}" th:errors="*{comMail}" class="error" id="comMail.errors"></span>
+						<span  th:if="${#fields.hasErrors('comMail')}" th:errors="*{comMail}" class="error" id="comMail.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 公司用電話 -->
 					<div class="mb-3">
 						<label for="comPhone" class="form-label">公司用電話</label>
 						<input th:field="*{comPhone}" type="tel" class="form-control" id="comPhone" name="comPhone" required />
-						<span  th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error" id="comPhone.errors"></span>
+						<span  th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error" id="comPhone.errors" style="color: red;"></span>
 					</div>
 				</div>
 
@@ -60,28 +60,28 @@
 					<div class="mb-3">
 						<label for="comContactPerson" class="form-label">註冊聯絡人</label>
 						<input th:field="*{comContactPerson}" type="text" class="form-control" id="comContactPerson" name="comContactPerson" required />
-						<span  th:if="${#fields.hasErrors('comContactPerson')}" th:errors="*{comContactPerson}" class="error" id="comContactPerson.errors"></span>
+						<span  th:if="${#fields.hasErrors('comContactPerson')}" th:errors="*{comContactPerson}" class="error" id="comContactPerson.errors" style="color: red;"></span>
 					</div>
 
 					<!--             註冊聯絡人電話 -->
 					<div class="mb-3">
 						<label for="comContactPhone" class="form-label">註冊聯絡人電話</label>
 						<input th:field="*{comContactPhone}" type="text" class="form-control" id="comContactPhone" name="comContactPhone" required />
-						<span  th:if="${#fields.hasErrors('comContactPhone')}" th:errors="*{comContactPhone}" class="error" id="comContactPhone.errors"></span>
+						<span  th:if="${#fields.hasErrors('comContactPhone')}" th:errors="*{comContactPhone}" class="error" id="comContactPhone.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 會員登入帳號 -->
 					<div class="mb-3">
 						<label for="comAccount" class="form-label">會員登入帳號</label>
 						<input th:field="*{comAccount}" type="text" class="form-control" id="comAccount" name="comAccount" required />
-						<span  th:if="${#fields.hasErrors('comAccount')}" th:errors="*{comAccount}" class="error" id="comAccount.errors"></span>
+						<span  th:if="${#fields.hasErrors('comAccount')}" th:errors="*{comAccount}" class="error" id="comAccount.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 會員登入密碼 -->
 					<div class="mb-3">
 						<label for="comPassword" class="form-label">會員登入密碼</label>
 						<input th:field="*{comPassword}" type="password" class="form-control" id="comPassword" name="comPassword" required />
-						<span  th:if="${#fields.hasErrors('comPassword')}" th:errors="*{comPassword}" class="error" id="comPassword.errors"></span>
+						<span  th:if="${#fields.hasErrors('comPassword')}" th:errors="*{comPassword}" class="error" id="comPassword.errors" style="color: red;"></span>
 					</div>
 
 					<!-- 會員登入密碼確認 -->

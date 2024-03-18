@@ -27,11 +27,8 @@ public class ReqOrderService {
     @Autowired
     IndustryRepository industryrepository;
 
-    public void addReqOrder(ReqOrderVO reqOrderVO, UserVO loggingInUser) {
+    public void addReqOrder(ReqOrderVO reqOrderVO, UserVO loggingInUser, IndustryVO industryVO) {
         reqOrderVO.setUserVO(loggingInUser);
-
-        Integer industryNum = 1;
-        IndustryVO industryVO = industryrepository.findById(industryNum).orElse(null);
         reqOrderVO.setIndustryVO(industryVO);
 
         repository.save(reqOrderVO);
@@ -66,24 +63,16 @@ public class ReqOrderService {
         return repository.findAll();
     }
 
-    public List<ReqOrderVO> getOneStatReqOrder(UserVO userVO) {
-        List<ReqOrderVO> allReqOrder = repository.findAll();
-        List<ReqOrderVO> validReqOrder = new ArrayList<>();
-
-        for (ReqOrderVO reqorder : allReqOrder) {
-            if (reqorder.getUserVO().getUserId() == userVO.getUserId() && reqorder.getReqIsValid() == 1) {
-                validReqOrder.add(reqorder);
-            }
-        }
-        return validReqOrder;
+    public List<ReqOrderVO> getAllReqOrderExceptMe(Integer reqUserid) {
+        List<ReqOrderVO> allReqOrder = repository.findByReqUseridAndReqIsValid(reqUserid);
+        return allReqOrder;
     }
+    
+    
+    
     
 	public Set<QuoVO> getOrderByquoNum(Integer ordReqnum){
 		return getOneReqOrder(ordReqnum).getQuotations();
-	}
-	//需求對訂單一對一
-	public OrderVO getOrderByreqNum(Integer ordReqnum){
-		return getOneReqOrder(ordReqnum).getOrderVO();
 	}
 	
 	

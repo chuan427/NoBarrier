@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
@@ -50,7 +51,7 @@ public class OrderController {
 	ReqOrderService reqOrderSvc;
 
 	@Autowired
-	QuoService quoOrderSvc;
+	QuoService quoSvc;
 
 	@GetMapping("addOrder")
 	public String addOrder(ModelMap model) {
@@ -58,6 +59,40 @@ public class OrderController {
 		model.addAttribute("orderVO", orderVO);
 		return "back-end/order/addOrder";
 	}
+
+	// 訂單（報價單）內容確認
+	@GetMapping("/transaction_check")
+	public String transaction_check(@RequestParam("quoNum") Integer quoNum, Model model, HttpServletRequest request) {
+		System.out.println("hi我在這");
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+
+		QuoVO quoVO = quoSvc.getOneQuo(quoNum);
+
+		model.addAttribute("quoVO", quoVO);
+
+		return "front-end/order/transaction_check"; // view
+	}
+
+	// 訂單交易 成功
+	@GetMapping("/transaction")
+	public String transaction(Model model, HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+		
+		model.addAttribute("userVO", userVO);
+		return "front-end/order/transaction"; // view
+	}
+	
 
 	// 訂單交易狀態表 成功
 	@GetMapping("/transaction_stat")
@@ -69,9 +104,29 @@ public class OrderController {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
 
-		List<OrderVO> list = orderSvc.getOneStatOrder(userVO);
+		List<OrderVO> list = orderSvc.getOrdersByUserId(userVO.getUserId());
 		model.addAttribute("orderListData", list);
 		return "front-end/order/transaction_stat"; // view
+	}
+
+	// 訂單明細
+	@GetMapping("/order_details")
+	public String order_details(@RequestParam("ordNum") Integer ordNum, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果用户未登录，将其重定向到登录页面
+		}
+
+		// 根据当前登录用户的ID获取订单列表
+//		List<OrderVO> list = orderSvc.getOrderDetails(userVO.getUserId());
+//		model.addAttribute("orderListData", list);
+
+		OrderVO orderVO = orderSvc.getOneOrder(ordNum);
+		model.addAttribute("orderVO", orderVO);
+		model.addAttribute("userVO", userVO);
+		return "front-end/order/order_details";
 	}
 
 	/*
@@ -208,6 +263,7 @@ public class OrderController {
 		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
 	}
 
+
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
@@ -234,26 +290,11 @@ public class OrderController {
 
 	@ModelAttribute("quoListData")
 	protected List<QuoVO> referenceListQuoOrderListData() {
-		List<QuoVO> list = quoOrderSvc.getAll();
+		List<QuoVO> list = quoSvc.getAll();
 		return list;
 	}
 
-	/*
-	 * This method will be called on listAllUser.html form submission, handling POST
-	 * request
-	 */
-//	@PostMapping("delete")
-//	public String delete(@RequestParam("userId") String userId, ModelMap model) {
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		/*************************** 2.開始刪除資料 *****************************************/
-//		// EmpService empSvc = new EmpService();
-//		userSvc.deleteUser(Integer.valueOf(userId));
-//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-//		List<UserVO> list = userSvc.getAll();
-//		model.addAttribute("userListData", list);
-//		model.addAttribute("success", "- (刪除成功)");
-//		return "back-end/user/listAllUser"; // 刪除完成後轉交listAllUser.html
-//	}
+	
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(OrderVO orderVO, BindingResult result, String removedFieldname) {

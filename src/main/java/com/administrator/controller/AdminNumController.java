@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.administrator.model.AdministratorService;
 import com.administrator.model.AdministratorVO;
+import com.user.model.UserService;
+import com.user.model.UserVO;
 
 
 @Controller
@@ -33,6 +36,8 @@ public class AdminNumController {
 	
 	@Autowired
 	AdministratorService administratorSvc;
+	
+	
 
 	@PostMapping("getOne_For_Display")
 	public String getOne_For_Display(
@@ -77,4 +82,6 @@ public class AdminNumController {
 			String message = strBuilder.toString();
 		    return new ModelAndView("back-end/administrator/select_page", "errorMessage", "請修正以下錯誤:<br>"+message);
 		}
+		
+		
 }

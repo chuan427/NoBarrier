@@ -9,6 +9,14 @@
 <!--   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /> -->
 
 <style>
+#submit {
+	width: 100px; /* 設定按鈕寬度 */
+	font-size: 14px; /* 設定字體大小 */
+	padding: 5px 10px; /* 設定內邊距 */
+	margin: 0 auto; /* 水平置中 */
+	display: block; /* 轉換為區塊元素 */
+}
+
 main {
 	width: 100%;
 	/* 設定寬度為100% */
@@ -173,76 +181,120 @@ main {
 
 			<!-- 加了 container-add-style -->
 			<div class="tab-content container-add-style" id="v-pills-tabContent">
-			
-				<div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-					aria-labelledby="v-pills-messages-tab">
-					<div class="container">
+				<div class="tab-pane fade show active" id="v-pills-home"
+					role="tabpanel" aria-labelledby="v-pills-home-tab">
+					
+					<form id="changePasswordForm" class="row g-3 mx-auto" th:action="@{/userinformation/changePassword}" method="post">
+						
+						
+						<div style="height: 10px;"></div>
+
+						<input type="hidden" th:value="${session.loggingInUser.comAccount}" name="comAccount">
+						
 						<div class="row">
-							<div class="col-sm-4">
-								<form action="#">
-									<label for="comPassword" class="form-label">Current
-										Password</label>
-									<div class="input-group mb-3 pass_show">
-										<input type="password" class="form-control" id="comPassword"
-											name="comPassword" th:value="${currentPassword}" readonly />
-										<button
-											class="btn btn-outline-secondary ptxt button-add-style-2"
-											type="button">Show</button>
-									</div>
-
-									<label for="newPassword" class="form-label">New
-										Password</label>
-									<div class="input-group mb-3 pass_show">
-										<input type="password" class="form-control" id="newPassword"
-											name="newPassword" placeholder="New Password" />
-										<button
-											class="btn btn-outline-secondary ptxt button-add-style-2"
-											type="button">Show</button>
-									</div>
-
-									<label for="confirmPassword" class="form-label">Confirm
-										Password</label>
-									<div class="input-group mb-3 pass_show">
-										<input type="password" class="form-control"
-											id="confirmPassword" name="confirmPassword"
-											placeholder="Confirm Password" />
-										<button
-											class="btn btn-outline-secondary ptxt button-add-style-2"
-											type="button">Show</button>
-									</div>
-									<button type="submit" class="btn btn-secondary">確認修改</button>
-								</form>
-
+						<div class="col-6">
+							<label for="comPassword" class="form-label">舊有密碼</label>
+							<div class="input-group mb-3 pass_show">
+								<input type="password" class="form-control" id="comPassword" name="comPassword" required/>
+								<button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">Show</button>
 							</div>
 						</div>
-					</div> 
+						</div>
+						
+						
+						<div class="row">
+						<div class="col-6">
+							<label for="newPassword" class="form-label">新密碼</label>
+							<div class="input-group mb-3 pass_show">
+								<input type="password" class="form-control" id="newPassword" name="newPassword" required/>
+								<button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">Show</button>
+							</div>
+						</div>
+						</div>
+						
+						
+						<div class="row">
+						<div class="col-6">
+							<label for="confirmPassword" class="form-label">新密碼確認</label>
+							<div class="input-group mb-3 pass_show">
+								<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required />
+								<button class="btn btn-outline-secondary ptxt button-add-style-2" type="button">Show</button>
+							</div>
+						</div>
+						</div>
+						<div style="margin-top: 30px"></div>
+						<button type="submit" id="submitButton" class="btn btn-secondary" style="width: 100px;">確認修改</button>
+					</form>
+					
+					
 
-				<script>
-					document
-							.addEventListener(
-									"DOMContentLoaded",
-									function() {
-										var showPasswordButtons = document
-												.querySelectorAll(".pass_show .ptxt");
-										showPasswordButtons
-												.forEach(function(button) {
-													button
-															.addEventListener(
-																	"click",
-																	function() {
-																		var passwordInput = this.previousElementSibling;
-																		passwordInput.type = passwordInput.type === "password" ? "text"
-																				: "password";
-																		this.textContent = passwordInput.type === "password" ? "Show"
-																				: "Hide";
-																	});
-												});
-									});
-				</script>
+					<script>
+						document
+								.addEventListener(
+										"DOMContentLoaded",
+										function() {
+											var showPasswordButtons = document
+													.querySelectorAll(".pass_show .ptxt");
+											showPasswordButtons
+													.forEach(function(button) {
+														button
+																.addEventListener(
+																		"click",
+																		function() {
+																			var passwordInput = this.previousElementSibling;
+																			passwordInput.type = passwordInput.type === "password" ? "text"
+																					: "password";
+																			this.textContent = passwordInput.type === "password" ? "Show"
+																					: "Hide";
+																		});
+													});
+										});
+						
+						
+						//----------------------前端確認兩個密碼相同------------------------
+ 	document.addEventListener("DOMContentLoaded", function() {
+    // 監聽表單提交事件
+    document.getElementById("submitButton").addEventListener("click", function(event) {
+        // 阻止表單默認提交行為
+        event.preventDefault();
+        
+        // 獲取新密碼和確認密碼字段的值
+        var newPassword = document.getElementById("newPassword").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+        
+        // 檢查兩個密碼是否相同
+        if (newPassword !== confirmPassword) {
+            // 如果不相同，顯示警告訊息
+            alert("新密碼和新密碼確認不匹配！");
+        } else {
+            // 如果相同，提交表單
+            document.getElementById("changePasswordForm").submit();
+        }
+    });
+});
+						
+						
+					</script>
+		<script th:inline="javascript">
+    /*<![CDATA[*/
+    /* 判斷 alertMessage 是否為空 */
+    var alertMessage = /*[[@{${alertMessage}}]]*/ null;
+    if (alertMessage !== null && alertMessage !== '') {
+        /* 如果不為空，顯示警示框 */
+        if(alertMessage==="修改成功，請重新登入。"){
+        	alert(alertMessage);
+        	window.location.href = "/logout";
+        }else{
+        alert(alertMessage);
+        }
+    }
+    /*]]>*/
+</script>
+
+				</div>
 			</div>
 		</div>
-</div>
-</main>
+	</main>
 </div>
 
 <!-- <footer> -->

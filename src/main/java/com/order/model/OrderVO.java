@@ -37,10 +37,10 @@ import com.user.model.UserVO;
 		private String ordUnitname;
 		private Integer ordProdprice;
 		private Integer ordTotalamount;
-		private Integer ordBuyerid;
+//		private Integer ordBuyerid;
 //		private Integer ordSellerid;
 		private Integer ordStat;
-		private Integer ordTranStat;
+		private Integer ordTranstat;
 		private Integer ordPaystat;
 		private Double ordRatstar;
 		private String ordComment;
@@ -48,8 +48,10 @@ import com.user.model.UserVO;
 		private Integer ordReqnum;
 		private Integer ordQuonum;
 		private Integer ordIsValid;
-		private UserVO userVO;
-//		private LimitSaleVO limitsaleVO;
+
+		private UserVO userVO; //買家
+		private LimitSaleVO limitsaleVO;
+
 		private ReqOrderVO reqOrderVO;
 		private QuoVO quoVO;
 		private RptdlistVO rptdlistVO;
@@ -57,26 +59,26 @@ import com.user.model.UserVO;
 		public OrderVO() { 
 		}
 		
-		//一對一 使用原版mappedBy
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public QuoVO getQuoVO() {
-			return quoVO;
-		}
-		public void setQuoVO(QuoVO quoVO) {
-			this.quoVO = quoVO;
-		}
+//		//一對一 使用原版mappedBy
+//		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public QuoVO getQuoVO() {
+//			return quoVO;
+//		}
+//		public void setQuoVO(QuoVO quoVO) {
+//			this.quoVO = quoVO;
+//		}
 		
 		
 		//訂單與需求是一對一 用@PrimaryKeyJoinColumn寫法 
-		@OneToOne(mappedBy = "orderVO", cascade = CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public ReqOrderVO getReqOrderVO() {
-		    return reqOrderVO;
-		}
-		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
-		    this.reqOrderVO = reqOrderVO;
-		}
+//		@OneToMany(mappedBy = "orderVO", cascade = CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public ReqOrderVO getReqOrderVO() {
+//		    return reqOrderVO;
+//		}
+//		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
+//		    this.reqOrderVO = reqOrderVO;
+//		}
 
 
 		@OneToOne
@@ -101,14 +103,33 @@ import com.user.model.UserVO;
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
-		@JoinColumn(name = "ordSellerid",referencedColumnName = "userid")
+		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid")
 		public UserVO getUserVO() {
 			return userVO;
 		}
 
-
 		public void setUserVO(UserVO userVO) {
 				this.userVO = userVO;
+		}
+		
+		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
+		@JoinColumn(name = "ordReqNum",referencedColumnName = "reqNum")
+		public ReqOrderVO getReqOrderVO() {
+			return reqOrderVO;
+		}
+
+		public void setReqOrderVO(ReqOrderVO reqOrderVO) {
+				this.reqOrderVO = reqOrderVO;
+		}
+		
+		@ManyToOne
+	    @JoinColumn(name = "ordQuonum", referencedColumnName = "quoNum", insertable = false, updatable = false)
+		public QuoVO getQuoVO() {
+			return quoVO;
+		}
+
+		public void setQuoVO(QuoVO quoVO) {
+				this.quoVO = quoVO;
 		}
 		
 		//以上是關聯的 getter & setter
@@ -180,15 +201,15 @@ import com.user.model.UserVO;
 		public void setOrdTotalamount(Integer ordTotalamount) {
 			this.ordTotalamount = ordTotalamount;
 		}
-		@Column(name = "ordBuyerid")
-//		@NotEmpty(message="買家編號: 請勿空白")
-//		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
-		public Integer getOrdBuyerid() {
-			return this.ordBuyerid;
-		}
-		public void setOrdBuyerid(Integer ordBuyerid) {
-			this.ordBuyerid = ordBuyerid;
-		}
+//		@Column(name = "ordBuyerid")
+////		@NotEmpty(message="買家編號: 請勿空白")
+////		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
+//		public Integer getOrdBuyerid() {
+//			return this.ordBuyerid;
+//		}
+//		public void setOrdBuyerid(Integer ordBuyerid) {
+//			this.ordBuyerid = ordBuyerid;
+//		}
 		
 //		@Column(name = "ordSellerid")
 ////		@NotEmpty(message="賣家編號: 請勿空白")
@@ -206,13 +227,13 @@ import com.user.model.UserVO;
 		public void setOrdStat(Integer ordStat) {
 			this.ordStat = ordStat;
 		}
-		@Column(name = "ordTranStat")
+		@Column(name = "ordTranstat")
 //		@NotEmpty(message="物流狀態: 請勿空白")
-		public Integer getOrdTranStat() {
-			return this.ordTranStat;
+		public Integer getOrdTranstat() {
+			return this.ordTranstat;
 		}
-		public void setOrdTranStat(Integer ordTranStat) {
-			this.ordTranStat = ordTranStat;
+		public void setOrdTranstat(Integer ordTranstat) {
+			this.ordTranstat = ordTranstat;
 		}
 		@Column(name = "ordPaystat")
 //		@NotEmpty(message="交易狀態: 請勿空白")
@@ -278,8 +299,11 @@ import com.user.model.UserVO;
 		public void setOrdIsValid(Integer ordIsValid) {
 			this.ordIsValid = ordIsValid;
 		}
+
+
 		
 		
 		
 		
 	}
+

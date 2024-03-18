@@ -2,16 +2,23 @@ package com.quo.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import com.order.model.OrderVO;
@@ -24,52 +31,27 @@ public class QuoVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "quoNum")
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment的@
-	private Integer quoNum;
-
-	@Column(name = "quoDate",columnDefinition = "DATE DEFAULT CURRENT_DATE" )
+	
+	private Integer quoNum;//PK 報價單Id
 	private Date quoDate = Date.valueOf(LocalDate.now());
-
-	@Column(name = "quoProdname")
 	private String quoProdname;
-
-	@Column(name = "quoUnitname")
 	private String quoUnitname;
-
-	@Column(name = "quoProdqty")
 	private Integer quoProdqty;
-
-	@Column(name = "quoUnitprice")
 	private Integer quoUnitprice;
-
-	@Column(name = "quoTotalprice")
 	private Integer quoTotalprice;
-
-	@Column(name = "quoInfo", columnDefinition = "text")
 	private String quoInfo;
-
-	// 訂單對報價一對一
-	@OneToOne
-	@MapsId
-	@JoinColumn(name = "quoNum", referencedColumnName = "ordNum") // 先改為order的ID
-	private OrderVO orderVO;
-	
-	@ManyToOne
-	@JoinColumn(name = "quoReqnum", referencedColumnName = "reqNum")
 	private ReqOrderVO reqOrderVO;
-	
-	@ManyToOne
-	@JoinColumn(name = "quoUserid", referencedColumnName = "userid")
-	private UserVO userVO;
-
-	@Column(name = "quoIsValid")
+	private UserVO userVO;//賣家VO
 	private Integer quoIsValid;
+	private List<OrderVO> orders;
+
 	
 	public QuoVO() {
 	}
 
+	@Id
+	@Column(name = "quoNum")
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment的@
 	public Integer getQuoNum() {
 		return quoNum;
 	}
@@ -78,6 +60,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoNum = quoNum;
 	}
 
+	@Column(name = "quoDate",columnDefinition = "DATE DEFAULT CURRENT_DATE" )
 	public Date getQuoDate() {
 		return quoDate;
 	}
@@ -86,6 +69,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoDate = quoDate;
 	}
 
+	@Column(name = "quoProdname")
 	public String getQuoProdname() {
 		return quoProdname;
 	}
@@ -94,6 +78,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoProdname = quoProdname;
 	}
 
+	@Column(name = "quoUnitname")
 	public String getQuoUnitname() {
 		return quoUnitname;
 	}
@@ -102,6 +87,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoUnitname = quoUnitname;
 	}
 
+	@Column(name = "quoProdqty")
 	public Integer getQuoProdqty() {
 		return quoProdqty;
 	}
@@ -110,6 +96,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoProdqty = quoProdqty;
 	}
 
+	@Column(name = "quoUnitprice")
 	public Integer getQuoUnitprice() {
 		return quoUnitprice;
 	}
@@ -118,6 +105,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoUnitprice = quoUnitprice;
 	}
 
+	@Column(name = "quoTotalprice")
 	public Integer getQuoTotalprice() {
 		return quoTotalprice;
 	}
@@ -126,6 +114,7 @@ public class QuoVO implements java.io.Serializable {
 		this.quoTotalprice = quoTotalprice;
 	}
 
+	@Column(name = "quoInfo", columnDefinition = "text")
 	public String getQuoInfo() {
 		return quoInfo;
 	}
@@ -134,6 +123,8 @@ public class QuoVO implements java.io.Serializable {
 		this.quoInfo = quoInfo;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "quoReqnum", referencedColumnName = "reqNum")
 	public ReqOrderVO getReqOrderVO() {
 		return reqOrderVO;
 	}
@@ -142,6 +133,8 @@ public class QuoVO implements java.io.Serializable {
 		this.reqOrderVO = reqOrderVO;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "quoUserid", referencedColumnName = "userid")
 	public UserVO getUserVO() {
 		return userVO;
 	}
@@ -150,6 +143,7 @@ public class QuoVO implements java.io.Serializable {
 		this.userVO = userVO;
 	}
 
+	@Column(name = "quoIsValid")
 	public Integer getQuoIsValid() {
 		return quoIsValid;
 	}
@@ -158,13 +152,15 @@ public class QuoVO implements java.io.Serializable {
 		this.quoIsValid = quoIsValid;
 	}
 
-	public OrderVO getOrderVO() {
-        return orderVO;
+	@OneToMany(mappedBy = "quoVO", cascade = CascadeType.ALL)
+	public List<OrderVO> getOrders() {
+        return orders;
     }
 
-    public void setOrderVO(OrderVO orderVO) {
-        this.orderVO = orderVO;
+    public void setOrders(List<OrderVO> orders) {
+        this.orders = orders;
     }
+	
     
 
 	@Override
