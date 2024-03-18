@@ -33,16 +33,16 @@ public class QuoVO implements java.io.Serializable {
 
 	
 	private Integer quoNum;//PK 報價單Id
-	private Date quoDate = Date.valueOf(LocalDate.now());
-	private String quoProdname;
-	private String quoUnitname;
-	private Integer quoProdqty;
-	private Integer quoUnitprice;
-	private Integer quoTotalprice;
-	private String quoInfo;
-	private ReqOrderVO reqOrderVO;
+	private Date quoDate = Date.valueOf(LocalDate.now());//報價單建立時間
+	private String quoProdname;//產品名稱
+	private String quoUnitname;//單位名稱
+	private Integer quoProdqty;//產品數量
+	private Integer quoUnitprice;//產品單價
+	private Integer quoTotalprice;//產品總價
+	private String quoInfo;//文字敘述
+	private ReqOrderVO reqOrderVO;//需求單的VO
 	private UserVO userVO;//賣家VO
-	private Integer quoIsValid;
+	private Integer quoIsValid;//啟用狀態
 	private List<OrderVO> orders;
 
 	
