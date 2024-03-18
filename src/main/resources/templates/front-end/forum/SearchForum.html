@@ -22,29 +22,55 @@
 <body>
 <head th:insert="~{/front-end/header_Dora}"></head>
 
- <h1>搜索結果</h1>
-    <div th:if="${searchResults.empty}">
-        <p>沒有找到相關結果。</p>
-    </div>
-    <div th:unless="${searchResults.empty}">
-        <div th:each="result : ${searchResults}">
-            <h2 th:text="${result.fpTitle}">文章標題</h2>
-            <p th:text="${result.userVO.comName}">發布者</p>
-            <!-- 其他你想展示的信息 -->
+            <h3 class="search-result-title">搜尋結果</h3>
+            <div th:if="${searchResults.empty}">
+             <p class="no-results">沒有找到相關結果。</p>
+            </div>
+
+  <div class="transparent-box">
+        <div class="content">
+            <div th:unless="${searchResults.empty}">
+                <div th:each="result : ${searchResults}" class="post">
+                    <div class="post-header">
+                    
+                    
+                        <div class="icon-wrapper">
+                            <i class="fa-solid fa-user">
+                                <span th:text="${result.userVO.comName}" class="user-name"></span>
+                            </i>
+                            </div>
+                            
+                             <div class="icon-left">
+        					<i class="fa-solid fa-rotate-left fa-lg" onclick="window.location.href='/forum/forumIndex';"></i>
+              				 </div>
+                                  
+                             <div class="title-time-container">
+                            <h4 th:text="${result.fpTitle}">文章標題</h4>
+                            <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> <span th:text="${#dates.format(result.fpTime, 'yyyy-MM-dd')}">發布時間</span></span>
+                        </div>
+                 
+                 <br>
+                 
+                        <p th:with="shortContent=${#strings.substring(result.fpContent, 0, 20)}">
+                            <span th:text="${shortContent}">文章開頭內容</span><a>...</a>
+                            <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${result.fpNum})}">閱讀全文</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!-- 分頁導航 -->
-    <div>
-        <a th:if="${currentPage > 0}" th:href="@{/search(search=${search}, page=${currentPage - 1}, size=${size})}">上一頁</a>
-        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-            <a th:href="@{/search(search=${search}, page=${i}, size=${size})}" th:text="${i + 1}">1</a>
-        </span>
-        <a th:if="${currentPage < totalPages - 1}" th:href="@{/search(search=${search}, page=${currentPage + 1}, size=${size})}">下一頁</a>
-    </div>
+        </div>
+       
+    
+    
 
-
-
-
+<!--       <div> -->
+<!--                 <a th:if="${currentPage > 0}" th:href="@{/search(search=${search}, page=${currentPage - 1}, size=${size})}">上一頁</a> -->
+<!--                 <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}"> -->
+<!--                     <a th:href="@{/search(search=${search}, page=${i}, size=${size})}" th:text="${i + 1}">1</a> -->
+<!--                 </span> -->
+<!--                 <a th:if="${currentPage < totalPages - 1}" th:href="@{/search(search=${search}, page=${currentPage + 1}, size=${size})}">下一頁</a> -->
+<!--             </div> -->
 
 
 

@@ -88,7 +88,9 @@
              <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 20)}">
     		<span th:text="${shortContent}">文章開頭內容</span><a>...</a>
     		 <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${forumPostVO.fpNum})}" >閱讀全文</a>
-			</p>	
+			</p>
+			
+			<br>	
 			
 			<p>
    			 #<span th:text="${forumPostVO.fpCategory == 1 ? '工業加工' : 
@@ -99,18 +101,13 @@
                       forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
                       '其他'}"></span>
 			</p>
-			
-		      <br>
+
 		        
-              <div class="fabotton">
-                  <i class="fa-regular fa-heart fa-xl"></i>
-                  <i class="fa-regular fa-bookmark fa-xl"></i>
-              </div>
-              <br>      
+              </div>    
             </div>
         </div>
     </div>
-</div>
+
 
 	
 
