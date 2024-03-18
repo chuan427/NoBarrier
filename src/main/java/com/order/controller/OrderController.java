@@ -63,7 +63,7 @@ public class OrderController {
 	// 訂單（報價單）內容確認
 	@GetMapping("/transaction_check")
 	public String transaction_check(@RequestParam("quoNum") Integer quoNum, Model model, HttpServletRequest request) {
-		System.out.println("hi我在這");
+//		System.out.println("hi我在這");
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
@@ -88,6 +88,20 @@ public class OrderController {
 		if (userVO == null) {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
+		
+	//建立訂單
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		model.addAttribute("userVO", userVO);
 		return "front-end/order/transaction"; // view

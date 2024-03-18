@@ -97,7 +97,7 @@ public class AdministratorController {
 //		List<UserVO> list = userSvc.getAll();
 //		return list;
 //	}
-	@PostMapping("getOne_For_Update_back")
+	@PostMapping("/getOne_For_Update_back")
 	public String getOne_For_Update_back(@RequestParam("userId") String userId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		/*************************** 2.開始查詢資料 *****************************************/

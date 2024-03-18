@@ -30,31 +30,44 @@ import com.user.model.UserVO;
 	@Table(name = "`order`") // 代表這個class是對應到資料庫的實體table，目前對應的table是userInformation
 	public class OrderVO implements java.io.Serializable {
 		private static final long serialVersionUID = 1L; 
-		private Integer ordNum;
-		private Date ordDate = Date.valueOf(LocalDate.now());;
-		private String ordProdname;
-		private Integer ordProdqty;
-		private String ordUnitname;
-		private Integer ordProdprice;
-		private Integer ordTotalamount;
+		private Integer ordNum;//PK 訂單Id
+		private Date ordDate = Date.valueOf(LocalDate.now());;//訂單建立時間
+		private String ordProdname;//訂單產品名稱
+		private Integer ordProdqty;//訂單數量
+		private String ordUnitname;//訂單單位名稱
+		private Integer ordProdprice;//訂單產品價格
+		private Integer ordTotalamount;//訂單總價
 //		private Integer ordBuyerid;
 //		private Integer ordSellerid;
-		private Integer ordStat;
-		private Integer ordTranstat;
-		private Integer ordPaystat;
-		private Double ordRatstar;
-		private String ordComment;
-		private Integer ordLimnum;
-		private Integer ordReqnum;
-		private Integer ordQuonum;
-		private Integer ordIsValid;
+
+		private Integer ordStat;//訂單狀態
+		private Integer ordTranstat;//物流狀態
+		private Integer ordPaystat;//交易狀態
+		private Double ordRatstar;//評分
+		private String ordComment;//留言
+		private Integer ordLimnum;//限時特賣單號
+		
+		//關聯打開後無用
+//		private Integer ordReqnum;//需求編號
+//		private Integer ordQuonum;//報價編號
+		//////
+		
+		private Integer ordIsValid;//啟用狀態
+
+		
+
 
 		private UserVO userVO; //買家
-		private LimitSaleVO limitsaleVO;
 
-		private ReqOrderVO reqOrderVO;
-		private QuoVO quoVO;
-		private RptdlistVO rptdlistVO;
+		
+		
+		private LimitSaleVO limitsaleVO;//FK:限時特賣單號
+		private ReqOrderVO reqOrderVO;//FK:需求編號
+		private QuoVO quoVO;//FK:報價單編號
+		private RptdlistVO rptdlistVO;//FK:檢舉編號
+
+		
+
 		
 		public OrderVO() { 
 		}
@@ -271,23 +284,23 @@ import com.user.model.UserVO;
 		public void setOrdLimnum(Integer ordLimnum) {
 			this.ordLimnum = ordLimnum;
 		}
-		@Column(name = "ordReqnum")
-//		@NotEmpty(message="需求單號: 請勿空白")
-//		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
-		public Integer getOrdReqnum() {
-			return this.ordReqnum;
-		}
-		public void setOrdReqnum(Integer ordReqnum) {
-			this.ordReqnum = ordReqnum;
-		}
-		@Column(name = "ordQuonum")
-//		@NotEmpty(message="報價單號: 請勿空白")
-		public Integer getOrdQuonum() {
-			return this.ordQuonum;
-		}
-		public void setOrdQuonum(Integer ordQuonum) {
-			this.ordQuonum = ordQuonum;
-		}
+//		@Column(name = "ordReqnum")
+////		@NotEmpty(message="需求單號: 請勿空白")
+////		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
+//		public Integer getOrdReqnum() {
+//			return this.ordReqnum;
+//		}
+//		public void setOrdReqnum(Integer ordReqnum) {
+//			this.ordReqnum = ordReqnum;
+//		}
+//		@Column(name = "ordQuonum")
+////		@NotEmpty(message="報價單號: 請勿空白")
+//		public Integer getOrdQuonum() {
+//			return this.ordQuonum;
+//		}
+//		public void setOrdQuonum(Integer ordQuonum) {
+//			this.ordQuonum = ordQuonum;
+//		}
 
 		@Column(name = "ordIsValid")
 //		@NotEmpty(message="訂單表格有效狀態: 請勿空白")
