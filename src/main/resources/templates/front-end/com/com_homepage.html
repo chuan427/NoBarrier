@@ -166,6 +166,7 @@
 <!--                                     <div class="carousel-caption d-none d-md-block"> -->
                                     <div class="carousel">
                                         <h5 th:text="${item.limProdname}"></h5>
+                                        <p th:text="${item.limQty} +  ${item.limUnitname}"></p>
                                         <p th:text="'NT$' + ${item.limPrice}"></p>
                                         <button type="button" class="btn btn-primary">立即購買</button>
                                     </div>
