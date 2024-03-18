@@ -53,30 +53,30 @@
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{insert}" method="post" th:object="${limitSaleVO}" enctype="multipart/form-data">
+		<form th:action="@{insertlimitSale}" method="post" th:object="${limitSaleVO}" enctype="multipart/form-data">
 			
 			
 			
 			
 			
 			
-			<div>
-			<label>限時特賣編號:</label>
-			<input type="text" th:field="*{limNum}" onclick="hideContent('limNum.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limNum')}" th:errors="*{limNum}" class="error" id="limNum.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 			<label>限時特賣編號:</label> -->
+<!-- 			<input type="text" th:field="*{limNum}" onclick="hideContent('limNum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('limNum')}" th:errors="*{limNum}" class="error" id="limNum.errors"></span> -->
+<!-- 			</div> -->
 			
-			<div>
-			<label>廣告訂單編號:</label>
-			<input type="text" th:field="*{limOrdernum}" onclick="hideContent('limOrdernum.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limOrdernum')}" th:errors="*{limOrdernum}" class="error" id="limOrdernum.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 			<label>廣告訂單編號:</label> -->
+<!-- 			<input type="text" th:field="*{limOrdernum}" onclick="hideContent('limOrdernum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('limOrdernum')}" th:errors="*{limOrdernum}" class="error" id="limOrdernum.errors"></span> -->
+<!-- 			</div> -->
 			
-			<div>
-			<label>會員編號:</label>
-			<input type="text" th:field="*{limSellerid}" onclick="hideContent('limSellerid.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limSellerid')}" th:errors="*{limSellerid}" class="error" id="limSellerid.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 			<label>會員編號:</label> -->
+<!-- 			<input type="text" th:field="*{limSellerid}" onclick="hideContent('limSellerid.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('limSellerid')}" th:errors="*{limSellerid}" class="error" id="limSellerid.errors"></span> -->
+<!-- 			</div> -->
 			
 			<div>
 			<label>特賣商品名稱:</label>

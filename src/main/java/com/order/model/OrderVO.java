@@ -49,7 +49,7 @@ import com.user.model.UserVO;
 		private Integer ordQuonum;
 		private Integer ordIsValid;
 		private UserVO userVO;
-		private LimitSaleVO limitsaleVO;
+//		private LimitSaleVO limitsaleVO;
 		private ReqOrderVO reqOrderVO;
 		private QuoVO quoVO;
 		private RptdlistVO rptdlistVO;
@@ -90,14 +90,14 @@ import com.user.model.UserVO;
 			this.rptdlistVO = rptdlistVO;
 		}
 
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public LimitSaleVO getLimitsaleVO() {
-			return limitsaleVO;
-		}
-		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
-			this.limitsaleVO = limitsaleVO;
-		}
+//		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public LimitSaleVO getLimitsaleVO() {
+//			return limitsaleVO;
+//		}
+//		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
+//			this.limitsaleVO = limitsaleVO;
+//		}
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位

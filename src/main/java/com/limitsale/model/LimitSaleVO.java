@@ -8,14 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.lang.NonNull;
 
 import com.limitsale.model.LimitSaleVO;
 
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.order.model.OrderVO;
+import com.user.model.UserVO;
 
 
 
@@ -28,27 +34,35 @@ import com.order.model.OrderVO;
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name = "limNum")
 		private Integer limNum;
-		@Column(name = "limOrdernum")
-		private Integer limOrdernum;
-		@Column(name = "limSellerid")
-		private Integer limSellerid;
+//		@Column(name = "limOrdernum")
+//		private Integer limOrdernum;
+//		@Column(name = "limSellerid")
+//		private Integer limSellerid;
 		@Column(name = "limProdname")
+		@NotEmpty(message="特賣商品名稱: 請勿空白")
 		private String limProdname;
 		@Column(name = "limQty")
+		@NotNull(message="特賣商品數量: 請勿空白")
 		private Integer limQty;
 		@Column(name = "limPrice")
+		@NotNull(message = "特賣商品價格: 請勿空白")
 		private Integer limPrice;
-		@Column(name = "limImage")
+		@Column(name = "limImage")		
+		@NotEmpty(message="特賣商品圖片: 請勿空白")
 		private byte[] limImage;
 		@Column(name = "limDes")
+		@NotEmpty(message="特賣商品詳情: 請勿空白")
 		private String limDes;
 		@Column(name = "limUnitname")
+		@NotEmpty(message="特賣商品單位: 請勿空白")
 		private String limUnitname;
-		
-		@OneToOne
-		@MapsId 
-		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
-		private OrderVO orderVO;
+		@ManyToOne
+		@JoinColumn(name = "limSellerid", referencedColumnName = "userId")
+		private UserVO userVO;
+//		@OneToOne
+//		@MapsId 
+//		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
+//		private OrderVO orderVO;
 		
 
 		
@@ -70,14 +84,14 @@ import com.order.model.OrderVO;
 		}
 		
 		
-		public OrderVO getOrderVO() {
-			return orderVO;
-		}
-
-		public void setOrderVO(OrderVO orderVO) {
-			this.orderVO = orderVO;
-		}
-		
+//		public OrderVO getOrderVO() {
+//			return orderVO;
+//		}
+//
+//		public void setOrderVO(OrderVO orderVO) {
+//			this.orderVO = orderVO;
+//		}
+//		
 		
 		
 //		@Id
@@ -90,12 +104,12 @@ import com.order.model.OrderVO;
 		}
 		
 		
-		public Integer getLimOrdernum() {
-			return limOrdernum;
-		}
-		public void setLimOrdernum(Integer limOrdernum) {
-			this.limOrdernum = limOrdernum;
-		}
+//		public Integer getLimOrdernum() {
+//			return limOrdernum;
+//		}
+//		public void setLimOrdernum(Integer limOrdernum) {
+//			this.limOrdernum = limOrdernum;
+//		}
 		public String getLimProdname() {
 			return limProdname;
 		}
@@ -132,11 +146,21 @@ import com.order.model.OrderVO;
 		public void setLimImage(byte[] limImage) {
 			this.limImage = limImage;
 		}
-		public Integer getLimSellerid() {
-			return limSellerid;
+//		public Integer getLimSellerid() {
+//			return limSellerid;
+//		}
+//		public void setLimSellerid(Integer limSellerid) {
+//			this.limSellerid = limSellerid;
+//		}
+
+
+		public UserVO getUserVO() {
+			return userVO;
 		}
-		public void setLimSellerid(Integer limSellerid) {
-			this.limSellerid = limSellerid;
+
+
+		public void setUserVO(UserVO userVO) {
+			this.userVO = userVO;
 		}
 
 		

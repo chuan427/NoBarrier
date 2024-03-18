@@ -195,8 +195,11 @@ public class IndexController_inSpringBoot {
 	public String homepage(@PathVariable("userId") String userId, Model model) {
 		// 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 		// 將相關數據添加到 Model 中，以便在視圖中使用
+		//確認使用者身分
 		UserVO userVo = userSvc.getOneUser(Integer.valueOf(userId));
+		//判斷是否會隱藏限時特賣
 		boolean and = adSvc.hasValidAdOrder(userVo);
+		//顯示限時特賣商品
 		List<LimitSaleVO> limitSaleOneData = limitSaleSvc.getOneLimitSalebyUserid(userVo);
 //		System.out.println(and);
 		model.addAttribute("and", and);
@@ -253,13 +256,24 @@ public class IndexController_inSpringBoot {
 
 	// 廠商產品限時預覽頁面 完成
 	@GetMapping("/com/editmember_sale_view")
-	public String editmember_sale_view() {
+	public String editmember_sale_view(Model model,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
+
 		return "front-end/com/editmember_sale_view"; // view
 	}
 
 	// 廠商產品限時編輯頁面 完成
 	@GetMapping("/com/editmember_sale")
-	public String editmember_sale() {
+	public String editmember_sale(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+		model.addAttribute("limitSaleVO", new LimitSaleVO());
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
 		return "front-end/com/editmember_sale"; // view
 	}
 
@@ -989,6 +1003,14 @@ public class IndexController_inSpringBoot {
 		List<OrderVO> list = orderSvc.getAll();
 		return list;
 	}
-
+	
+	
+	@GetMapping("addLimitSale")
+	public String addLimitSale(ModelMap model) {
+		LimitSaleVO limitSaleVO = new LimitSaleVO();
+		model.addAttribute("limitSaleVO", limitSaleVO);
+		return "back-end/limitSale/addLimitSale";
+	}
+	
 }
 

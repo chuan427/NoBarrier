@@ -59,9 +59,9 @@ public class OrderService {
 			return getOneOrder(quoNum).getQuoVO();
 		}
 		//訂單對特賣一對一
-		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
-			return getOneOrder(limNum).getLimitsaleVO();
-		}
+//		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
+//			return getOneOrder(limNum).getLimitsaleVO();
+//		}
 		public List<OrderVO> getOneStatOrder(UserVO userVO) {
 	        List<OrderVO> allOrder = repository.findAll();
 	        List<OrderVO> validOrder = new ArrayList<>();
