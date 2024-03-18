@@ -28,9 +28,9 @@ public class RptdlistVO implements java.io.Serializable{
 	@Column(name = "rptdTitle")
 	private String rptdTitle;
 	
-	@OneToOne(mappedBy="rptdlistVO",cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn 
-	private OrderVO orderVO;
+//	@OneToOne(mappedBy="rptdlistVO",cascade=CascadeType.ALL)
+//	@PrimaryKeyJoinColumn 
+//	private OrderVO orderVO;
 	
 	@Column(name = "rptdOrdernum")
 	private Integer rptdOrdernum;
@@ -108,13 +108,13 @@ public class RptdlistVO implements java.io.Serializable{
 		this.rptdIsValid = rptdIsValid;
 	}
 
-	public OrderVO getOrderVO() {
-		return orderVO;
-	}
-
-	public void setOrderVO(OrderVO orderVO) {
-		this.orderVO = orderVO;
-	}
+//	public OrderVO getOrderVO() {
+//		return orderVO;
+//	}
+//
+//	public void setOrderVO(OrderVO orderVO) {
+//		this.orderVO = orderVO;
+//	}
 
 	
 }

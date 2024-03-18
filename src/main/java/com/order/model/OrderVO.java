@@ -1,6 +1,7 @@
 package com.order.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,28 +32,28 @@ import com.user.model.UserVO;
 	public class OrderVO implements java.io.Serializable {
 		private static final long serialVersionUID = 1L; 
 		private Integer ordNum;
-		private Date ordDate;
+		private Date ordDate = Date.valueOf(LocalDate.now());
 		private String ordProdname;
 		private Integer ordProdqty;
 		private String ordUnitname;
 		private Integer ordProdprice;
 		private Integer ordTotalamount;
-//		private Integer ordBuyerid;
-//		private Integer ordSellerid;
+		private Integer ordBuyerid;
+		private Integer ordSellerid;
 		private Integer ordStat;
 		private Integer ordTranStat;
 		private Integer ordPaystat;
 		private Double ordRatstar;
 		private String ordComment;
 //		private Integer ordLimnum;
-		private Integer ordReqnum;
+//		private Integer ordReqnum;
 		private Integer ordQuonum;
 		private Integer ordIsValid;
 		private UserVO userVO; //買家
 		private LimitSaleVO limitsaleVO;
 		private ReqOrderVO reqOrderVO;
 		private QuoVO quoVO;
-		private RptdlistVO rptdlistVO;
+//		private RptdlistVO rptdlistVO;
 		public OrderVO() { 
 		}
 	
@@ -67,22 +68,22 @@ import com.user.model.UserVO;
 		}
 
 
-		@OneToOne
-		@MapsId 
-		@JoinColumn(name="ordNum", referencedColumnName = "rptdOrdernum")
-		public RptdlistVO getRptdlistVO() {
-			return rptdlistVO;
-		}
-
-	
-
-		public void setRptdlistVO(RptdlistVO rptdlistVO) {
-			this.rptdlistVO = rptdlistVO;
-		}
+//		@OneToOne
+//		@MapsId 
+//		@JoinColumn(name="ordNum", referencedColumnName = "rptdOrdernum")
+//		public RptdlistVO getRptdlistVO() {
+//			return rptdlistVO;
+//		}
+//
+//	
+//
+//		public void setRptdlistVO(RptdlistVO rptdlistVO) {
+//			this.rptdlistVO = rptdlistVO;
+//		}
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
-		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid")
+		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid", insertable = false, updatable = false)
 		public UserVO getUserVO() {
 			return userVO;
 		}
@@ -180,24 +181,24 @@ import com.user.model.UserVO;
 		public void setOrdTotalamount(Integer ordTotalamount) {
 			this.ordTotalamount = ordTotalamount;
 		}
-//		@Column(name = "ordBuyerid")
-////		@NotEmpty(message="買家編號: 請勿空白")
-////		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
-//		public Integer getOrdBuyerid() {
-//			return this.ordBuyerid;
-//		}
-//		public void setOrdBuyerid(Integer ordBuyerid) {
-//			this.ordBuyerid = ordBuyerid;
-//		}
+		@Column(name = "ordBuyerid")
+//		@NotEmpty(message="買家編號: 請勿空白")
+//		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
+		public Integer getOrdBuyerid() {
+			return this.ordBuyerid;
+		}
+		public void setOrdBuyerid(Integer ordBuyerid) {
+			this.ordBuyerid = ordBuyerid;
+		}
 		
-//		@Column(name = "ordSellerid")
-////		@NotEmpty(message="賣家編號: 請勿空白")
-//		public Integer getOrdSellerid() {
-//			return this.ordSellerid;
-//		}
-//		public void setOrdSellerid(Integer ordSellerid) {
-//			this.ordSellerid = ordSellerid;
-//		}
+		@Column(name = "ordSellerid")
+//		@NotEmpty(message="賣家編號: 請勿空白")
+		public Integer getOrdSellerid() {
+			return this.ordSellerid;
+		}
+		public void setOrdSellerid(Integer ordSellerid) {
+			this.ordSellerid = ordSellerid;
+		}
 		@Column(name = "ordStat")
 //		@NotEmpty(message="訂單狀態: 請勿空白")
 		public Integer getOrdStat() {
@@ -250,15 +251,15 @@ import com.user.model.UserVO;
 //		public void setOrdLimnum(Integer ordLimnum) {
 //			this.ordLimnum = ordLimnum;
 //		}
-		@Column(name = "ordReqnum")
-//		@NotEmpty(message="需求單號: 請勿空白")
-//		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
-		public Integer getOrdReqnum() {
-			return this.ordReqnum;
-		}
-		public void setOrdReqnum(Integer ordReqnum) {
-			this.ordReqnum = ordReqnum;
-		}
+//		@Column(name = "ordReqnum")
+////		@NotEmpty(message="需求單號: 請勿空白")
+////		@Size(min=2,max=255,message="關於我們敘述: 長度必需在{min}到{max}之間")
+//		public Integer getOrdReqnum() {
+//			return this.ordReqnum;
+//		}
+//		public void setOrdReqnum(Integer ordReqnum) {
+//			this.ordReqnum = ordReqnum;
+//		}
 		@Column(name = "ordQuonum")
 //		@NotEmpty(message="報價單號: 請勿空白")
 		public Integer getOrdQuonum() {

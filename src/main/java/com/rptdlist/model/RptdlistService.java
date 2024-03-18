@@ -44,7 +44,7 @@ public class RptdlistService {
 	public List<RptdlistVO> getAll(){
 		return repository.findAll();
 	}
-	public OrderVO getOrderByreqNum(Integer rptdOrdernum){
-		return getOneRptdlist(rptdOrdernum).getOrderVO();
-	}
+//	public OrderVO getOrderByreqNum(Integer rptdOrdernum){
+//		return getOneRptdlist(rptdOrdernum).getOrderVO();
+//	}
 }

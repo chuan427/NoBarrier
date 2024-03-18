@@ -23,10 +23,14 @@ public class OrderService {
 		@Autowired
 		OrderRepository repository;
 
+//		public void addOrder(OrderVO OrderVO) {
+//			
+//			repository.save(OrderVO);
+//		}
+		
 		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
 			OrderVO.setUserVO(loggingInUser);
 			OrderVO.setQuoVO(quoVO);
-			
 			repository.save(OrderVO);
 		}
 
