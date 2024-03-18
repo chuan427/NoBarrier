@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.limitsale.model.LimitSaleVO;
+
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserVO;
@@ -17,7 +18,7 @@ import com.user.model.UserVO;
 
 
 @Service("orderService")
-public class OrderService {
+public class OrderService<OrdRatstar> {
 
 
 		@Autowired
@@ -65,6 +66,20 @@ public class OrderService {
 	        // 调用 OrderRepository 中的方法查询订单
 	        return repository.findByUserVOUserId(userId);
 	    }
+
+		public void rateAndReviewOrder(Integer ordNum, Double ordRatstar, String ordComment) {
+		    OrderVO order = repository.findById(ordNum).orElse(null);
+		    if (order != null) {
+		        order.setOrdRatstar(ordRatstar);
+		        order.setOrdComment(ordComment);
+		        repository.save(order);
+		    }
+		}
+
+		public OrdRatstar getOrdRatstar() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 
 

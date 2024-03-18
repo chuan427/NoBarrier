@@ -85,6 +85,16 @@ public class UserService {
 //			return optional.get();
 			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 		}
+		
+		public UserVO getOneUserByAccount(String comAccount) {
+            UserVO userVO = repository.findByComAccount(comAccount);
+
+            if(userVO!=null) {
+                return userVO;
+            }else {
+                return null;
+            }
+        }
 
 		public List<UserVO> getAll() {
 			return repository.findAll();
