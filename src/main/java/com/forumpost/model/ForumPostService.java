@@ -9,13 +9,21 @@ import org.springframework.stereotype.Service;
 
 import com.forumreply.model.ForumReplyVO;
 import com.forumreport.model.ForumReportVO;
+import com.questionList.model.QueListVO;
+import com.user.model.UserVO;
 
 @Service("forumPostService")
 public class ForumPostService {
 
 	@Autowired
 	ForumPostRepository repository;
+	
+	public void addForumPost(ForumPostVO ForumPostVO ,UserVO loggingInUser) {        
+		ForumPostVO.setUserVO(loggingInUser); 
+		repository.save(ForumPostVO);
+	}
 
+	
 	public void addForumPost(ForumPostVO forumPostVO) {
 		repository.save(forumPostVO);
 	}
@@ -55,4 +63,5 @@ public class ForumPostService {
     }
 	
 	
+    
 }

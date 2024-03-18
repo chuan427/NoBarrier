@@ -39,8 +39,8 @@ import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
-import com.newsmodel.NewsService;
-import com.newsmodel.NewsVO;
+import com.news.model.NewsService;
+import com.news.model.NewsVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
 import com.productinformation.model.ProductInformationService;
@@ -105,12 +105,14 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	LimitSaleService limitSaleSvc;
+	
+	@Autowired
+	AdministratorService administratorSvc;
 
 	@Autowired
 	OrderService orderSvc;
 	
-	@Autowired
-	AdministratorService administratorSvc;
+	
 //	@Autowired
 //	NotificationService notificationSvc;
 
@@ -195,8 +197,11 @@ public class IndexController_inSpringBoot {
 	public String homepage(@PathVariable("userId") String userId, Model model) {
 		// 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 		// 將相關數據添加到 Model 中，以便在視圖中使用
+		//確認使用者身分
 		UserVO userVo = userSvc.getOneUser(Integer.valueOf(userId));
+		//判斷是否會隱藏限時特賣
 		boolean and = adSvc.hasValidAdOrder(userVo);
+		//顯示限時特賣商品
 		List<LimitSaleVO> limitSaleOneData = limitSaleSvc.getOneLimitSalebyUserid(userVo);
 //		System.out.println(and);
 		model.addAttribute("and", and);
@@ -253,13 +258,24 @@ public class IndexController_inSpringBoot {
 
 	// 廠商產品限時預覽頁面 完成
 	@GetMapping("/com/editmember_sale_view")
-	public String editmember_sale_view() {
+	public String editmember_sale_view(Model model,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
+
 		return "front-end/com/editmember_sale_view"; // view
 	}
 
 	// 廠商產品限時編輯頁面 完成
 	@GetMapping("/com/editmember_sale")
-	public String editmember_sale() {
+	public String editmember_sale(Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+		model.addAttribute("limitSaleVO", new LimitSaleVO());
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
 		return "front-end/com/editmember_sale"; // view
 	}
 
@@ -337,17 +353,6 @@ public class IndexController_inSpringBoot {
 		return "front-end/userinformation/customer_service"; // view
 	}
 
-	// 使用者修改 成功
-//	@GetMapping("/userinformation/memberCen")
-//	public String memberCen() {
-//		return "front-end/userinformation/memberCen"; // view
-//	}
-
-	// 報價單 成功
-	@GetMapping("/userinformation/quotation")
-	public String quotation() {
-		return "front-end/userinformation/quotation"; // view
-	}
 
 	// 註冊畫面 成功
 	@GetMapping("/userinformation/register1")
@@ -394,20 +399,42 @@ public class IndexController_inSpringBoot {
 	}
 
 	// -------------------需求單-----------------------
+//	@GetMapping("/userinformation/userpage")
+//	public String userpage(Model model, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		if (userVO == null) {
+//			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+//		}
+//
+//		List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+//		model.addAttribute("reqOrderListData", list);
+//		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+//		return "front-end/userinformation/userpage";
+//	}
+	
 	@GetMapping("/userinformation/userpage")
-	public String userpage(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	public String showUserPage(HttpSession session, Model model) {
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    if (userVO == null) {
+	        // 使用者未登入，重定向到登入頁面
+	        return "redirect:/login";
+	    }
 
-		if (userVO == null) {
-			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-		}
+	    // 這裡加載需要在使用者頁面顯示的資料
+	    model.addAttribute("userVO", userVO);
+	    
+	    // 假設你有方法來獲取相關資料列表
+	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+	    List<QuoVO> list1 = quoSvc.getOneStatQuotation(userVO);
+	    model.addAttribute("reqOrderListData", list);
+	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+	    model.addAttribute("quoListData", list1);
 
-		List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
-		model.addAttribute("reqOrderListData", list);
-		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
-		return "front-end/userinformation/userpage";
+	    return "front-end/userinformation/userpage"; // 返回使用者頁面視圖名稱
 	}
+
 
 	@ModelAttribute("reqOrderListData")
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request,
@@ -425,6 +452,34 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ----------------報價單--------------------
+//		@GetMapping("/userinformation/quotation_list")
+//		public String quotation_list(Model model, HttpServletRequest request) {
+//			HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//		    
+//		    if (userVO == null) {
+//		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+//		    }
+//
+//		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+//		    model.addAttribute("quoListData", list);
+//		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+//			return "front-end/userinformation/quotation_list";
+//		}
+
+//	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		if (userVO == null) {
+//			return null;
+//		} else {
+//			return quoSvc.getOneStatQuotation(userVO);
+//		}
+
+
 	
 	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
@@ -439,9 +494,26 @@ public class IndexController_inSpringBoot {
 			return quoSvc.getOneStatQuotation(userVO);
 		}
 	}
+
 	
 		// -------------------order------------------------
 		
+
+//		@ModelAttribute("orderListData")
+//		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
+//		    HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		    if (userVO == null) {
+//		        return null;
+//		    } else {
+////		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+////				return list;
+//		        return orderSvc.getOneStatOrder(userVO);
+//		    }
+//		}
+//	}
+
 		@ModelAttribute("orderListData")
 		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
 		    HttpSession session = request.getSession();
@@ -454,6 +526,7 @@ public class IndexController_inSpringBoot {
 				return list;
 		    }
 		}
+
 
 	// -------------------------------------------------
 
@@ -494,6 +567,64 @@ public class IndexController_inSpringBoot {
 
 	// ----------------member--------------------------
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@ModelAttribute("userListAllData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<UserVO> referenceListData_com(Model model) {
+
+		List<UserVO> list = userSvc.getAll();
+		return list;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	@ModelAttribute("userListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<UserVO> referenceListData_user(Model model, HttpServletRequest request,
 			HttpServletResponse response) {
@@ -661,7 +792,6 @@ public class IndexController_inSpringBoot {
 //			return list;
 //		}
 //	}
-
 //	@ModelAttribute("queListData0") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 //	protected List<QueListVO> referenceListData6(Model model, HttpServletRequest request, HttpServletResponse response)
 //			throws IOException {
@@ -821,6 +951,11 @@ public class IndexController_inSpringBoot {
 	public String login() {
 		return "back-end/sign_in"; // view
 	}
+	
+	@GetMapping("/open")
+	public String open() {
+		return "back-end/open"; // view
+	}
 
 // -------------------------------limitsale-----------------------------------
 
@@ -844,10 +979,17 @@ public class IndexController_inSpringBoot {
   	
  // -------------------------------administrator-----------------------------------
 	
+
+//  	@GetMapping("/administrator/select_page")
+//	public String select_page(Model model) {
+//		return "back-end/administrator/select_page";
+//	}
+
   	@GetMapping("/administrator/select_page")
 	public String select_page1(Model model) {
 		return "back-end/administrator/select_page";
 	}
+
     
     @GetMapping("/administrator/listAllAdministrator")
 	public String listAllAdministrator(Model model) {
@@ -898,6 +1040,14 @@ public class IndexController_inSpringBoot {
 		List<OrderVO> list = orderSvc.getAll();
 		return list;
 	}
-
+	
+	
+	@GetMapping("addLimitSale")
+	public String addLimitSale(ModelMap model) {
+		LimitSaleVO limitSaleVO = new LimitSaleVO();
+		model.addAttribute("limitSaleVO", limitSaleVO);
+		return "back-end/limitSale/addLimitSale";
+	}
+	
 }
 

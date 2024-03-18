@@ -38,11 +38,8 @@
 
 
 		<div>
-			<i class="fa-solid fa-user fa-xl"></i> 
-			<select th:field="*{userVO.userId}">
-			<option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" />
-			</select> 
-			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
+   		 <i class="fa-solid fa-user fa-xl"></i>
+    		<span th:text="${session.loggingInUser.comName}"></span> 
 		</div>
 
 		<br> 

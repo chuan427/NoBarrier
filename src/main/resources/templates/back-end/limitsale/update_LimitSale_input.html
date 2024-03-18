@@ -42,45 +42,48 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .h1{
+    display : none;
+    }
 </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>特賣商品資料修改 - update_LimitSale_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/limitSale/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>特賣商品資料修改</h2>
+		 <h3><a class="navbar-brand" th:href="@{/com/editmember_sale}">回上頁</a></h3></div>
 </nav>
 <!-- 24個欄位 -->
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update}" method="post" th:object="${limitSaleVO}" enctype="multipart/form-data">
-			<div>
+		<form th:action="@{updatelimitSale}" method="post" th:object="${limitSaleVO}" enctype="multipart/form-data">
+<!-- 			<div class="h1"> -->
+<!-- 			<label>限時特賣編號:</label> -->
+<!-- 			<input type="text" th:field="*{limNum}" style="border:0px ; font-weight: bold;" readonly /><br/> -->
+<!-- 			</div> -->
+			
+			<div class="h1">
 			<label>限時特賣編號:</label>
-			<input type="text" th:field="*{limNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			<input type="text" th:field="*{limNum}" onclick="hideContent('limNum.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('limNum')}" th:errors="*{limNum}" class="error" id="limNum.errors"></span>
 			</div>
 			
 <!-- 			<div> -->
-<!-- 			<label>限時特賣編號:</label> -->
-<!-- 			<input type="text" th:field="*{limNum}" onclick="hideContent('limNum.errors');" /><br/> -->
-<!-- 			<span  th:if="${#fields.hasErrors('limNum')}" th:errors="*{limNum}" class="error" id="limNum.errors"></span> -->
+<!-- 			<label>廣告訂單編號:</label> -->
+<!-- 			<input type="text" th:field="*{limOrdernum}" onclick="hideContent('limOrdernum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('limOrdernum')}" th:errors="*{limOrdernum}" class="error" id="limOrdernum.errors"></span> -->
 <!-- 			</div> -->
 			
-			<div>
-			<label>廣告訂單編號:</label>
-			<input type="text" th:field="*{limOrdernum}" onclick="hideContent('limOrdernum.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limOrdernum')}" th:errors="*{limOrdernum}" class="error" id="limOrdernum.errors"></span>
-			</div>
-			
-			<div>
+			<div class="h1">
 			<label>會員編號:</label>
-			<input type="text" th:field="*{limSellerid}" onclick="hideContent('limSellerid.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limSellerid')}" th:errors="*{limSellerid}" class="error" id="limSellerid.errors"></span>
+			<input type="text" th:field="*{userVO.userId}" onclick="hideContent('userVO.userId.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
 			</div>
 			
 			<div>
 			<label>特賣商品名稱:</label>
 			<input type="text" th:field="*{limProdname}" onclick="hideContent('limProdname.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('limProdname')}" th:errors="*{limProdname}" class="error" id="limProdname.errors"></span>
+			<span th:if="${#fields.hasErrors('limProdname')}" th:errors="*{limProdname}" class="error" id="limProdname.errors"></span>
 			</div>
 
 			<div>
@@ -175,32 +178,32 @@
 <!-- 			<div> -->
 <!-- 			<label>特賣圖片1:</label> -->
 <!-- 			<input type="file" th:field="*{comImage1}" onclick="previewImage()" multiple="multiple" /> -->
-<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage1')}" th:errors="*{comImage1}" class="error" id="comImage1.errors"></span> --> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage1')}" th:errors="*{comImage1}" class="error" id="comImage1.errors"></span> -->
 <!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader1} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
 <!-- 			</div> -->
 <!-- 			<div> -->
 <!-- 			<label>特賣圖片2:</label> -->
 <!-- 			<input type="file" th:field="*{comImage2}" onclick="previewImage()" multiple="multiple" /> -->
-<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage2')}" th:errors="*{comImage2}" class="error" id="comImage2.errors"></span> --> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage2')}" th:errors="*{comImage2}" class="error" id="comImage2.errors"></span> -->
 <!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader2} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
 <!-- 			</div> -->
 <!-- 			<div> -->
 <!-- 			<label>特賣圖片3:</label> -->
 <!-- 			<input type="file" th:field="*{comImage3}" onclick="previewImage()" multiple="multiple" /> -->
-<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage3')}" th:errors="*{comImage3}" class="error" id="comImage3.errors"></span> --> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage3')}" th:errors="*{comImage3}" class="error" id="comImage3.errors"></span> -->
 <!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader3} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
 <!-- 			</div> -->
 <!-- 			<div> -->
 <!-- 			<label>特賣圖片4:</label> -->
 <!-- 			<input type="file" th:field="*{comImage4}" onclick="previewImage()" multiple="multiple" /> -->
-<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage4')}" th:errors="*{comImage4}" class="error" id="comImage4.errors"></span> --> -->
+<!-- <!--             可以不修改圖片 <span  th:if="${#fields.hasErrors('comImage4')}" th:errors="*{comImage4}" class="error" id="comImage4.errors"></span> -->
 <!-- 			<div id="blob_holder"><img th:src="@{/user/DBGifReader4} + '?userId=' + ${userVO.userId}" width="100px"></div> -->
 <!-- 			</div> -->
 			
 <!-- 			<div> -->
 <!-- 			<label>關於我們文字描述:</label> -->
 <!-- 			<input type="text" th:field="*{comAboutContent}" onclick="hideContent('comAboutContent.errors');" /><br/> -->
-<!-- 			<span  th:if="${#fields.hasErrors('comAboutContent')}" th:errors="*{comAboutContent}" class="error" id="comAboutContent.errors"></span> -->
+<!-- 			<span  th:if="${#fields.hasErrors('comAboutContent')}" th:errors="*{comAboutContent}" class="error" id="comAboutContent.errors"></span>
 <!-- 			</div> -->
 			
 			

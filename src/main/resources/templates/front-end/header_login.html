@@ -16,7 +16,7 @@
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a th:href="@{/}" class="nav-link">最新消息</a></li>
                 <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                 <li class="nav-item"><a th:href="@{/forum/forumIndex}" class="nav-link">論壇</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
                <li class="nav-item"><a th:href="@{/logout}" class="nav-link">登出</a></li>
 
@@ -101,9 +101,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link" th:href="@{/order/transaction_stat}">交易狀態</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">月對帳單</a>
-                                    </li>
+                               
                                 </ul>
                                 <form class="d-flex mt-3" role="search">
                                     <input class="form-control me-2" type="search" placeholder="Search"

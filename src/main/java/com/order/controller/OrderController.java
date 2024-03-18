@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
@@ -62,7 +63,7 @@ public class OrderController {
 	// 訂單（報價單）內容確認
 	@GetMapping("/transaction_check")
 	public String transaction_check(@RequestParam("quoNum") Integer quoNum, Model model, HttpServletRequest request) {
-		System.out.println("hi我在這");
+//		System.out.println("hi我在這");
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
@@ -87,6 +88,20 @@ public class OrderController {
 		if (userVO == null) {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
+		
+	//建立訂單
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		model.addAttribute("userVO", userVO);
 		return "front-end/order/transaction"; // view
@@ -124,6 +139,7 @@ public class OrderController {
 
 		OrderVO orderVO = orderSvc.getOneOrder(ordNum);
 		model.addAttribute("orderVO", orderVO);
+		model.addAttribute("userVO", userVO);
 		return "front-end/order/order_details";
 	}
 
@@ -261,6 +277,7 @@ public class OrderController {
 		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
 	}
 
+
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
@@ -291,22 +308,7 @@ public class OrderController {
 		return list;
 	}
 
-	/*
-	 * This method will be called on listAllUser.html form submission, handling POST
-	 * request
-	 */
-//	@PostMapping("delete")
-//	public String delete(@RequestParam("userId") String userId, ModelMap model) {
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		/*************************** 2.開始刪除資料 *****************************************/
-//		// EmpService empSvc = new EmpService();
-//		userSvc.deleteUser(Integer.valueOf(userId));
-//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-//		List<UserVO> list = userSvc.getAll();
-//		model.addAttribute("userListData", list);
-//		model.addAttribute("success", "- (刪除成功)");
-//		return "back-end/user/listAllUser"; // 刪除完成後轉交listAllUser.html
-//	}
+	
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(OrderVO orderVO, BindingResult result, String removedFieldname) {

@@ -1,3 +1,4 @@
+
 package com.user.model;
 
 import java.sql.Date;
@@ -89,7 +90,7 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@ManyToOne
-	    @JoinColumn(name = "comIndustry", referencedColumnName = "industryNum"/**, insertable=false, updatable=false**/)
+	    @JoinColumn(name = "comIndustry", referencedColumnName = "industryNum", insertable=false, updatable=false)
 		public IndustryVO getIndustryVO() {
 			return this.industryVO;
 		}
