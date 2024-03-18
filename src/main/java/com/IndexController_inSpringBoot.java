@@ -529,7 +529,12 @@ public class IndexController_inSpringBoot {
 
 
 
+	@ModelAttribute("userListAllData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+	protected List<UserVO> referenceListData_com(Model model) {
 
+		List<UserVO> list = userSvc.getAll();
+		return list;
+	}
 
 
 
@@ -872,6 +877,11 @@ public class IndexController_inSpringBoot {
 	@GetMapping("/sign_in")
 	public String login() {
 		return "back-end/sign_in"; // view
+	}
+	
+	@GetMapping("/open")
+	public String open() {
+		return "back-end/open"; // view
 	}
 
 // -------------------------------limitsale-----------------------------------

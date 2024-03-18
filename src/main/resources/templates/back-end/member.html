@@ -83,7 +83,7 @@
 				<div class="user-item">
 					<h2 class="user-title">異動審核</h2>
 					<div class="accordion" id="accordionExample">
-						<th:block th:each="userVO : ${userListData}">
+						<th:block th:each="userVO : ${userListAllData}">
 							<!-- 添加判斷條件 -->
 							<th:block th:if="${userVO.comStat == 0}">
 								<div class="accordion-item">
@@ -104,13 +104,11 @@
 												<span th:text="${userVO.comBank}"></span><br>
 												<span th:text="${userVO.comPhone}"></span><br>
 												<span th:text="${userVO.comRegDate}"></span><br>
-
-												<form method="post" id="approveForm">
+												<form method="post" th:action="@{/userinformation/getOne_For_Update_back}" target="_blank">
+													<input type="submit" class="btn btn-primary" value="修改">
 													<input type="hidden" name="userId" th:value="${userVO.userId}">
-													<button type="button" class="btn btn-primary"
-														id="approveButton">放行</button>
 												</form>
-												<form method="post" th:action="@{/user/delete}">
+												<form method="post" th:action="@{/userinformation/delete}">
 													<input type="submit" class="btn btn-danger" value="刪除">
 													<input type="hidden" name="userId" th:value="${userVO.userId}">
 												</form>
@@ -124,30 +122,7 @@
 			</section>
 		</div>
 	</div>
-	<script>
-		document.getElementById("approveButton").addEventListener("click", function () {
-			var userId = document.querySelector("input[name='userId']").value;
-			fetch('/updateComStat', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({userId: userId})
-			})
-				.then(response => {
-					if (!response.ok) {
-						throw new Error('Network response was not ok');
-					}
-					return response.json();
-				})
-				.then(data => {
-					alert(data.message); // 显示后端返回的消息
-				})
-				.catch(error => {
-					console.error('There has been a problem with your fetch operation:', error);
-				});
-		});
-	</script>
+
 
 	<!-- <footer> -->
 
@@ -155,6 +130,11 @@
 
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+		function submitForm() {
+			document.getElementById("updateForm").submit(); // 提交表單
+		}
+	</script>
 </body>
 
 </html>

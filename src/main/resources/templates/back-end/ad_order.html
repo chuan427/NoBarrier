@@ -95,12 +95,12 @@
                                             <span th:text="價格+':'+${adVO.adPrice}"></span><br>
                                             <span th:text="日期+':'+${adVO.adDate}"></span><br>
                                             <span th:text="方案+':'+${adVO.adDuration}"></span><br>
-                                            <form method="post" th:action="@{/ad/getOne_For_Update}">
+                                            <form method="post" th:action="@{/ad/getOne_For_Update}" target="_blank">
                                                 <input type="submit" class="btn btn-primary" value="修改">
                                                 <input type="hidden" name="adOrdernum" th:value="${adVO.adOrdernum}">
                                             </form>
                                             <form method="post" th:action="@{/ad/delete}">
-                                                <input type="submit" class="btn btn-danger" value="刪除">
+                                                <input type="submit" class="btn btn-danger" value="刪除" target="_blank">
                                                 <input type="hidden" name="adOrdernum" th:value="${adVO.adOrdernum}">
                                             </form>
                                         </div>
