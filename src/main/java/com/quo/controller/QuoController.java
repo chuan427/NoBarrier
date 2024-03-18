@@ -50,6 +50,8 @@ public class QuoController {
 	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 		ReqOrderVO reqVO = reqOrderSvc.getOneReqOrder(Integer.parseInt(reqNum));
 		
+		List<QuoVO> list = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
+		
 		QuoVO quoVO = new QuoVO();
 		quoVO.setQuoProdname(reqVO.getReqProdname());
 		quoVO.setQuoUnitname(reqVO.getReqUnitname());
@@ -66,9 +68,9 @@ public class QuoController {
 	
 	//========================新增報價單=====================================
 	@PostMapping("insertQuo")
-	public String insertQuo(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
+	public String insertQuo(HttpServletRequest request,@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
 	    
-	    
+		UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
 	    
 	    if (result.hasErrors()) {
 	        return "front-end/userinformation/addQuotation";
@@ -77,7 +79,7 @@ public class QuoController {
 	    // 這裡加入您的邏輯來處理quoVO和userVO...
 	    quoSvc.addQuo(quoVO);
 
-	    List<QuoVO> list = quoSvc.getAll();
+	    List<QuoVO> list = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 	    model.addAttribute("quoListData", list);
 	    model.addAttribute("success", "- (新增成功)");
 	    return "redirect:/userinformation/userpage";
