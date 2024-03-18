@@ -116,32 +116,42 @@
 				<h2>報價單</h2>
 				<div style="margin-top: 30px;"></div>
 
-				<form th:action="@{insertQuo}" method="post" th:object="${quoVO}"
-					enctype="multipart/form-data">
 
-					<div class="row">
-						 <div class="col-md-1">
-							<!-- <div class="d-flex align-items-center" style="font-size: 25px;">
-								<label class="me-3" th:text="'需求品項: ' + ${quoVO.quoProdname}"></label>
+				<div class="row">
+					<!-- <form th:action="@{/userinformation/userpage}" method="post"
+						th:object="${reqOrderVO}" enctype="multipart/form-data">
+						<div class="col-md-1">
+							<div class="d-flex align-items-center" style="font-size: 25px;">
+								<label class="me-3"
+									th:text="'需求編號: ' + ${reqOrderVO.reqNum}"></label>
+							</div>
+							<div class="d-flex align-items-center" style="font-size: 25px;">
+								<label class="me-3"
+									th:text="'需求品項: ' + ${reqOrderVO.reqProdname}"></label>
 							</div>
 							<div style="margin-top: 30px;"></div>
 							<div class="d-flex align-items-center" style="font-size: 25px;"
 								th:if="${quoVO.userVO != null}">
-								<label class="me-3" th:text="'會員: ' + ${quoVO.userVO.userid}"></label>
+								<label class="me-3"
+									th:text="'會員: ' + ${reqOrderVO.userVO.userId}"></label>
 							</div>
 
 							<div style="margin-top: 30px;"></div>
 							<div class="d-flex align-items-center" style="font-size: 25px;">
 								<label class="me-3"
-									th:text="'需求數量: ' + ${quoVO.quoProdqty + '顆'}"></label>
+									th:text="'需求數量: ' + ${reqOrderVO.reqProdqty + '顆'}"></label>
 							</div>
 							<div style="margin-top: 30px;"></div>
 							<div class="d-flex align-items-center" style="font-size: 25px;">
 								<label class="me-2">圖片:</label> <img
 									th:src="@{${reqOrderVO.reqProdimage}}" class="img-thumbnail"
 									alt="200x200" style="width: 200px; height: 200px;">
-							</div> -->
+							</div>
 						</div>
+					</form> -->
+					
+					<form th:action="@{insertQuo}" method="post" th:object="${quoVO}"
+						enctype="multipart/form-data">
 
 						<div class="col-md-8">
 							<div class="d-flex align-items-center">
@@ -192,16 +202,15 @@
 								<button type="submit" id="submitBtn" class="btn btn-primary">報價</button>
 							</div>
 						</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 
-<!-- <footer> -->
-<head th:insert="~{/front-end/footer}"></head>
-<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-</body>
-
+	<!-- <footer> -->
+	<head th:insert="~{/front-end/footer}"></head>
+	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+	</body>
 </html>

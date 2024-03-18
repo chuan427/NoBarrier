@@ -25,15 +25,23 @@
         <div class="content">
             <div class="post">
                 <div class="post-header">
-                    <div class="icon-wrapper">
-                        <i class="fa-solid fa-user">
-                        <span th:text="${forumPostVO.userVO.comName}">用戶名稱</span></i>
-                        <i class="fa-solid fa-rotate-left fa-lg"></i>
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-				</div>
-   			<br>
-   		
-   				
+   					 <div class="post-header">
+    <div class="user-info">
+        <i class="fa-solid fa-user"></i>
+        <span th:text="${forumPostVO.userVO?.comName}">使用者名稱</span>
+    </div>
+    <div class="icon-wrapper">
+        <i class="fa-solid fa-rotate-left fa-lg" onclick="window.location.href='/forum/forumIndex';"></i>
+        <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
+        <div id="menu" class="menu" style="display: none;">
+            <a th:href="@{/forum/getOne_For_Update(fpNum=${forumPostVO.fpNum})}">
+                <i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i>編輯文章</a>
+            <a href="javascript:void(0);" th:onclick="'deletePostAndRedirect(' + ${forumPostVO.fpNum} + ');'">
+                <i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章 
+            </a>
+        </div>
+    </div>
+</div>
    		
                     
                     <br>
@@ -41,12 +49,12 @@
                         <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
                         <span class="post-time">
                             <i class="fa-regular fa-clock fa-lg"></i>
-                            <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd')}">發布時間</span>
+                            <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd HH:mm')}">發布時間</span>
                         </span>
                     </div>
                     <br>
                     <p style="white-space: pre-wrap;" th:text="${forumPostVO.fpContent}"></p>
-                    <img th:src="@{/forumPost/DBGifReader(fpNum=${forumPostVO.fpNum})}" width="300px"><br/>
+                    <img th:if="${forumPostVO.fpImage != null}" th:src="@{/forumPost/DBGifReader(fpNum=${forumPostVO.fpNum})}" width="300px"><br/>
                     <br>
                     <!-- 顯示文章的類別 -->
                     <p> 
@@ -60,8 +68,8 @@
                     </p>
                     <br>  
                     <div class="fabotton">
-                        <i class="fa-regular fa-heart fa-xl"></i>
-                        <i class="fa-regular fa-bookmark fa-xl"></i>
+                        <i class="fa-regular fa-heart fa-lg"></i>
+                        <i class="fa-regular fa-bookmark fa-lg"></i>
                         
                     </div>                    
             </div>
@@ -74,8 +82,13 @@
     
     <!-- 新增留言表單 -->
     
-	<form action="/forumReply/insert" method="POST" enctype="multipart/form-data">
-    <textarea name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
+	<form id="forumReplyForm" action="/forumReply/insert" method="POST" enctype="multipart/form-data">
+    <div class="user-info">
+        <i class="fa-solid fa-user"></i>
+        <span th:text="${session.loggingInUser.comName}">登入者名稱</span>
+       </div>
+   	 <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}" />
+   	<textarea id="frContent" name="frContent" class="comment-input" placeholder="請輸入您的留言"></textarea>
     
     <!-- 插入圖片的輸入 -->
     <div class="mb-3">
@@ -83,17 +96,19 @@
         <input type="file" class="form-control" id="frImage" name="frImage">
     </div>
     
-    <button type="submit">送出</button>
+    <button type="button" onclick="submitForumReply()">送出</button>
     <button type="button" onclick="cancelFunction()">取消</button>
-    
-	</form>
+</form>
+
     
     <br>
     <!-- 留言展示 -->
     <div th:each="forumReplyVO : ${forumReplyListData}">
         <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
-            <p class="comment-user" th:text="${forumReplyVO.userVO.comName}"></p>
+            <p class="comment-user" th:text="${forumReplyVO.userVO != null ? forumReplyVO.userVO.comName : '未知使用者'}"></p>
             <p th:text="${forumReplyVO.frContent}"></p>
+            <img th:if="${forumReplyVO.frImage != null}" th:src="@{/forumReply/DBGifReader(frNum=${forumReplyVO.frNum})}"  width="200px"/>
+            <br>
             <span class="comment-time" th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}"></span>
         </div>
     </div>

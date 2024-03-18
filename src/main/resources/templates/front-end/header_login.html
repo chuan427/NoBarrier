@@ -16,7 +16,7 @@
                 <li class="nav-item"><a th:href="@{/}" class="nav-link ">關於我們</a></li>
                 <li class="nav-item"><a th:href="@{/}" class="nav-link">最新消息</a></li>
                 <li class="nav-item"><a th:href="@{/com/com}" class="nav-link">廠商資訊</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">論壇</a></li>
+                 <li class="nav-item"><a th:href="@{/forum/forumIndex}" class="nav-link">論壇</a></li>
                 <li class="nav-item"><a th:href="@{/userinformation/customer_service}" class="nav-link">聯絡我們</a></li>
                <li class="nav-item"><a th:href="@{/logout}" class="nav-link">登出</a></li>
 
@@ -146,7 +146,7 @@
 			            var receivedText = reader.result;
 			            console.log("接收到 WebSocket 消息：" + receivedText);
 
-// 			            window.alert("收到新增通知!" + receivedText);
+ 			            window.alert("收到新增通知!" + receivedText);
 			            showBootstrapAlert("收到一項新的需求單!");
 			            
 			        };
@@ -156,9 +156,9 @@
 			        var receivedMsg = JSON.parse(event.data);
 			        console.log("接收到 WebSocket 消息", receivedMsg);
 
-// 			        window.alert("收到新增通知!" + receivedMsg);
+ 			        window.alert("收到新增通知!" + receivedMsg);
 			        showBootstrapAlert("收到一項新的需求單!");
-			        showNotification("New Notification", "This is a new notification.");
+// 			        showNotification("New Notification", "This is a new notification.");
 			    }
 		}
 		webSocket.onclose = function(event){
@@ -203,11 +203,12 @@
 
     var extraButton = document.createElement("button");
     extraButton.classList.add("btn", "btn-primary");
-    extraButton.textContent = "Extra Button"; // 设置按钮的文本内容
+    extraButton.textContent = "現在查看"; // 设置按钮的文本内容
     // 设置按钮点击事件
     extraButton.addEventListener("click", function() {
         // 添加您想要执行的额外操作
         console.log("Extra button clicked!");
+        window.location.href = "/userinformation/userpage";
     });
 
     alertDiv.textContent = message;
@@ -217,26 +218,26 @@
     document.querySelector(".notification-container").appendChild(alertDiv);
     
 
-    // 3秒后自动关闭警告框
+    // 警告視窗時間
     setTimeout(function() {
         alertDiv.remove();
     }, 5000);
 }
 //-------------------------------------------
-var notificationElement = document.createElement("a");
-notificationElement.setAttribute("href", "#");
+// var notificationElement = document.createElement("a");
+// notificationElement.setAttribute("href", "#");
 
-var titleElement = document.createElement("h3");
-titleElement.textContent = "Notification Title";
-notificationElement.appendChild(titleElement);
+// var titleElement = document.createElement("h3");
+// titleElement.textContent = "Notification Title";
+// notificationElement.appendChild(titleElement);
 
-var contentElement = document.createElement("p");
-contentElement.textContent = "Notification Content";
-notificationElement.appendChild(contentElement);
+// var contentElement = document.createElement("p");
+// contentElement.textContent = "Notification Content";
+// notificationElement.appendChild(contentElement);
 
 
-// 将消息元素添加到通知下拉菜单中
-notificationDropdown.appendChild(notificationElement);
+// // 将消息元素添加到通知下拉菜单中
+// notificationDropdown.appendChild(notificationElement);
 	
 	</script>
         </header>

@@ -53,6 +53,7 @@ public class QuoController {
 	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 	    }
 		QuoVO quoVO = new QuoVO();
+//		quoVO.setUserVO(userVO);
 		model.addAttribute("quoVO", quoVO);
 		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 		return "front-end/userinformation/addQuotation";

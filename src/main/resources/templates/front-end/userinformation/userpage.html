@@ -323,10 +323,20 @@ th, td {
 								<td th:text="${quoVO.quoTotalprice}"></td>
 								<td th:text="${quoVO.quoInfo}"></td>
 
-								<td><a th:href="@{/order/transaction_check}"> <input
+								<td>
+								
+								
+								<a th:href="@{/order/transaction_check(quoNum=${quoVO.quoNum})}">直接購買</a>
+								<!-- <a th:href="@{/order/transaction_check}"> <input
 										type="submit" value="直接購買"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
-								</a></td>
+								</a>
+								 -->
+								
+								
+								
+								
+								</td>
 								<td><a th:href="@{/chat/privatechat}"> <input
 										type="submit" value="洽談"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
@@ -387,8 +397,10 @@ th, td {
 	</div>
 </div>
 
+<!-- 順序不能動，會影響websocket的連線關係 -->
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 <script>
-    // 获取URL中的参数
+    // 獲取URL的參數
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, '\\$&');
@@ -399,7 +411,7 @@ th, td {
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    // 检查是否存在成功消息
+    // 是否存在成功消息
     var successMessage = getParameterByName('successMessage');
     if (successMessage) {
         // 弹出成功消息提示框
@@ -413,20 +425,23 @@ th, td {
 		var Msg = "有一份新增的需求單!" ;
 		
 		var jsonObj = {
-// 				"tryBtnValue":testMsg
 				"addReq":Msg
 		}
 		
+		
 		var jsonString = JSON.stringify(jsonObj);
+		
+		console.log(jsonString);
 		webSocket.send(jsonString);
 		console.log("有寄出ws訊息!");
 	}
+
     
 </script>
 
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
-<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
 
 </body>
 
