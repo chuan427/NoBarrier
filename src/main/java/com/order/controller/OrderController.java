@@ -262,25 +262,6 @@ public class OrderController {
 		model.addAttribute("payment", payment);
 		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
 	}
-	
-	//=============================訂單評分=========================================
-	@GetMapping("/rateOrder")
-    public String yourPage(Model model) {
-        // 假設 ordRatstar 是您從服務中獲取的對象
-        Object ordRatstar = orderSvc.getOrdRatstar();
-        model.addAttribute("ordRatstar", ordRatstar);
-        return "/userinformation/userpage"; // 返回Thymeleaf模板的名稱
-    }
-	
-	@PostMapping("/rateOrder")
-	public String rateOrder(@RequestParam("ordNum") Integer ordNum,
-	                        @RequestParam("ordRatstar") Double ordRatstar,
-	                        @RequestParam("ordComment") String ordComment,
-	                        RedirectAttributes redirectAttributes) {
-	    orderSvc.rateAndReviewOrder(ordNum, ordRatstar, ordComment);
-	    redirectAttributes.addFlashAttribute("successMessage", "訂單評價成功");
-	    return "redirect:/order/order_details?ordNum=" + ordNum;
-	}
 
 
 	@ModelAttribute("userListData")
