@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
@@ -63,7 +62,6 @@ public class OrderController {
 	// 訂單（報價單）內容確認
 	@GetMapping("/transaction_check")
 	public String transaction_check(@RequestParam("quoNum") Integer quoNum, Model model, HttpServletRequest request) {
-//		System.out.println("hi我在這");
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
@@ -79,8 +77,9 @@ public class OrderController {
 	}
 
 	// 訂單交易 成功
-	@GetMapping("/transaction")
-	public String transaction(Model model, HttpServletRequest request) {
+	@PostMapping("/transaction")
+	public String transaction(@RequestParam Integer quoNum, Model model, HttpServletRequest request) {
+		
 		
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
@@ -88,9 +87,30 @@ public class OrderController {
 		if (userVO == null) {
 			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
 		}
+		//調出當前頁面的報價單 quoVO
+		QuoVO quoVO = quoSvc.getOneQuo(quoNum);
+		ReqOrderVO reqOrderVO = quoSvc.getOrderByreqNum(quoNum);
+		
 		
 	//建立訂單
 		
+		OrderVO orderVO = new OrderVO();
+		
+		orderVO.setOrdProdname(quoVO.getQuoProdname());
+		orderVO.setOrdProdqty(quoVO.getQuoProdqty());
+		orderVO.setOrdUnitname(quoVO.getQuoUnitname());
+		orderVO.setOrdProdprice(quoVO.getQuoUnitprice());
+		orderVO.setOrdTotalamount(quoVO.getQuoTotalprice());
+		orderVO.setOrdStat(1);
+		orderVO.setOrdTranstat(0);
+		orderVO.setOrdPaystat(0);
+		orderVO.setOrdIsValid(1);
+		orderVO.setUserVO(userVO);//
+		orderVO.setReqOrderVO(reqOrderVO);
+		orderVO.setQuoVO(quoVO);
+//		orderVO.setRptdlistVO(null);
+		
+		orderSvc.addOrder(orderVO);
 		
 		
 		
