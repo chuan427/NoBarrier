@@ -39,6 +39,7 @@ import com.user.model.UserVO;
 		private Integer ordTotalamount;//訂單總價
 //		private Integer ordBuyerid;
 //		private Integer ordSellerid;
+
 		private Integer ordStat;//訂單狀態
 		private Integer ordTranstat;//物流狀態
 		private Integer ordPaystat;//交易狀態
@@ -52,13 +53,21 @@ import com.user.model.UserVO;
 		//////
 		
 		private Integer ordIsValid;//啟用狀態
+
+		
+
+
 		private UserVO userVO; //買家
+
 		
 		
 		private LimitSaleVO limitsaleVO;//FK:限時特賣單號
 		private ReqOrderVO reqOrderVO;//FK:需求編號
 		private QuoVO quoVO;//FK:報價單編號
 		private RptdlistVO rptdlistVO;//FK:檢舉編號
+
+		
+
 		
 		public OrderVO() { 
 		}
@@ -96,14 +105,14 @@ import com.user.model.UserVO;
 			this.rptdlistVO = rptdlistVO;
 		}
 
-		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
-		@PrimaryKeyJoinColumn 
-		public LimitSaleVO getLimitsaleVO() {
-			return limitsaleVO;
-		}
-		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
-			this.limitsaleVO = limitsaleVO;
-		}
+//		@OneToOne(mappedBy="orderVO",cascade=CascadeType.ALL)
+//		@PrimaryKeyJoinColumn 
+//		public LimitSaleVO getLimitsaleVO() {
+//			return limitsaleVO;
+//		}
+//		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
+//			this.limitsaleVO = limitsaleVO;
+//		}
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
@@ -303,8 +312,11 @@ import com.user.model.UserVO;
 		public void setOrdIsValid(Integer ordIsValid) {
 			this.ordIsValid = ordIsValid;
 		}
+
+
 		
 		
 		
 		
 	}
+

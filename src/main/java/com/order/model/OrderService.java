@@ -53,13 +53,15 @@ public class OrderService<OrdRatstar> {
 		}
 		
 		//訂單對特賣一對一
-		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
-			return getOneOrder(limNum).getLimitsaleVO();
-		}
+
+//		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
+//			return getOneOrder(limNum).getLimitsaleVO();
+//		}
 		
 		public List<OrderVO> getOrderDetails(Integer userId) {
 			return repository.findByUserVOUserId(userId);
 		}
+
 
 		
 		public List<OrderVO> getOrdersByUserId(Integer userId) {
@@ -85,4 +87,5 @@ public class OrderService<OrdRatstar> {
 
 		
 }
+
 
