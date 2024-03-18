@@ -62,16 +62,22 @@ public class QuoController {
 	//========================新增報價單=====================================
 	@PostMapping("insertQuo")
 	public String insertQuo(HttpServletRequest request, @Valid QuoVO quoVO, BindingResult result, ModelMap model, @RequestParam("reqNum") Integer reqNum) throws IOException {
-	    UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+	    UserVO userVO = (UserVO) request.getSession().getAttribute("loggingInUser");
 	    
-	    // 使用reqNum來獲取ReqOrderVO實例
+	    // 检查reqNum参数是否为空
+	    if (reqNum == null) {
+	        // 如果reqNum参数为空，返回错误页面或进行其他处理
+	        return "error-page"; // 替换为您的错误页面路径
+	    }
+	    
+	    // 使用reqNum来获取ReqOrderVO实例
 	    ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(reqNum);
 	    
 	    if (result.hasErrors()) {
 	        return "front-end/userinformation/addQuotation";
 	    }
 
-	    // 這裡加入您的邏輯來處理quoVO和userVO...
+	    // 这里加入您的逻辑来处理quoVO和userVO...
 	    quoSvc.addQuo(quoVO, userVO, reqOrderVO);
 
 	    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
@@ -79,6 +85,7 @@ public class QuoController {
 	    model.addAttribute("success", "- (新增成功)");
 	    return "front-end/userinformation/userpage";
 	}
+
 
 
 

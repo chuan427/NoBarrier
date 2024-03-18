@@ -93,7 +93,7 @@ th, td {
 											"lengthMenu" : [ 5, 10, 20, 50, 100 ],
 											"searching" : true,
 											"paging" : true,
-											"ordering" : true,
+											"ordering" : true, 
 											"language" : {
 												"processing" : "處理中...",
 												"loadingRecords" : "載入中...",
@@ -260,7 +260,7 @@ th, td {
 						<th:block th:each="reqOrderVO, stat : ${reqOrderListData}">
 							<th:if>
 								<tr>
-									<td th:text="${stat.count}"></td>
+									<td th:text="${reqOrderVO.reqNum}"></td>
 									<td th:text="${reqOrderVO.reqOrderdate}"></td>
 									<td th:text="${reqOrderVO.industryVO.industryName}"></td>
 									<td

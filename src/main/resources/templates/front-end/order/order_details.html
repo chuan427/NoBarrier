@@ -138,7 +138,7 @@ th, td {
 }
 
 th {
-	font-size: 20px;
+	font-size: 17px;
 }
 
 td {
@@ -146,7 +146,7 @@ td {
 }
 
 .wide-section {
-	max-width: 1400px; /* 设置您想要的最大宽度 */
+	max-width: 1500px; /* 设置您想要的最大宽度 */
 	margin: 0 auto; /* 将部分置于页面水平中央 */
 	padding: 0 20px; /* 可选的内边距 */
 }
@@ -175,7 +175,7 @@ td {
 			</thead>
 			<tbody>
 				<!-- 使用Thymeleaf循环渲染商品数据 -->
-				<tr >
+				<tr>
 					<td th:text="${orderVO.ordNum}"></td>
 					<td th:text="${orderVO.ordProdname}"></td>
 					<td th:text="${orderVO.ordProdqty + orderVO.ordUnitname}"></td>
@@ -190,7 +190,7 @@ td {
 		<div class="row">
 			<div class="col-6">
 				<div style="margin-top: 30px;"></div>
-				<!-- <form th:object="${orderVO}" method="post">
+				<form th:object="${orderVO}" method="post">
 					<div th:style="'font-size: 25px; padding-left: 50px;'">訂單資訊:</div>
 					<div th:style="'padding-left: 50px;'">
 						訂單編號:<span th:text="${orderVO.ordNum}"></span>
@@ -203,19 +203,34 @@ td {
 						訂購日期:<span th:text="${orderVO.ordDate}"></span>
 					</div>
 					<div th:style="'padding-left: 50px;'">
-						訂購狀態:<span th:text="${orderVO.ordStat}"></span>
+						訂購狀態:<span th:switch="${orderVO.ordStat}">
+							<span th:case="0">訂單異常</span> 
+							<span th:case="1">訂單完成</span>
+						</span>
 					</div>
-				</form> -->
+				</form>
 
 				<div style="margin-top: 30px;"></div>
-
-				<div style="font-size: 25px; padding-left: 50px;">運送資訊:</div>
-				<div style="padding-left: 50px;">收件人姓名:你好有限公司</div>
-				<div style="padding-left: 50px;">收件人電話號碼:268*-**13</div>
-				<div style="padding-left: 50px;">運送方式:新竹物流</div>
-				<div style="padding-left: 50px;">送貨狀態:訂單處理中</div>
-				<div style="margin-top: 30px;"></div>
+				<form th:object="${userVO}" method="post">
+					<div th:style="'font-size: 25px; padding-left: 50px;'">運送資訊:</div>
+					<div th:style="'padding-left: 50px;'">
+						公司名稱:<span th:text="${userVO.comName}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">
+						公司電話:<span th:text="${userVO.comPhone}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">運送方式:新竹物流</div>
+					<div th:style="'padding-left: 50px;'">
+						送貨狀態:
+						<span th:switch="${orderVO.ordTranstat}">
+							<span th:case="0">配送中</span> 
+							<span th:case="1">已配送</span>
+						</span>
+					</div>
+					<div th:style="'margin-top: 30px;'"></div>
+				</form>
 			</div>
+
 
 			<div class="col-6" style="position: relative;">
 				<a th:href="@{/order/reports}">
@@ -230,9 +245,16 @@ td {
 					</div>
 				</a>
 				<div style="margin-top: 20px;"></div>
-				<div style="font-size: 25px;">付款資訊:</div>
-				<div>付款方式:匯款</div>
-				<div>付款交易狀態:已付款</div>
+				<form th:object="${orderVO}" method="post">
+					<div th:style="'font-size: 25px;'">付款資訊:</div>
+					<div>付款方式:匯款</div>
+					<div>付款交易狀態:
+						<span th:switch="${orderVO.ordPaystat}"> 
+							<span th:case="0">未匯款</span> 
+							<span th:case="1">已匯款</span>
+						</span>
+					</div>
+				</form>
 				<div style="margin-top: 80px;"></div>
 				<div style="font-size: 25px; display: inline-block;">訂單評分:</div>
 				<div class="rating" style="display: inline-block;">

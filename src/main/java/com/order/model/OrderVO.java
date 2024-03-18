@@ -40,7 +40,7 @@ import com.user.model.UserVO;
 //		private Integer ordBuyerid;
 //		private Integer ordSellerid;
 		private Integer ordStat;
-		private Integer ordTranStat;
+		private Integer ordTranstat;
 		private Integer ordPaystat;
 		private Double ordRatstar;
 		private String ordComment;
@@ -225,13 +225,13 @@ import com.user.model.UserVO;
 		public void setOrdStat(Integer ordStat) {
 			this.ordStat = ordStat;
 		}
-		@Column(name = "ordTranStat")
+		@Column(name = "ordTranstat")
 //		@NotEmpty(message="物流狀態: 請勿空白")
-		public Integer getOrdTranStat() {
-			return this.ordTranStat;
+		public Integer getOrdTranstat() {
+			return this.ordTranstat;
 		}
-		public void setOrdTranStat(Integer ordTranStat) {
-			this.ordTranStat = ordTranStat;
+		public void setOrdTranstat(Integer ordTranstat) {
+			this.ordTranstat = ordTranstat;
 		}
 		@Column(name = "ordPaystat")
 //		@NotEmpty(message="交易狀態: 請勿空白")

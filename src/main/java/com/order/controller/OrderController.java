@@ -124,6 +124,7 @@ public class OrderController {
 
 		OrderVO orderVO = orderSvc.getOneOrder(ordNum);
 		model.addAttribute("orderVO", orderVO);
+		model.addAttribute("userVO", userVO);
 		return "front-end/order/order_details";
 	}
 
