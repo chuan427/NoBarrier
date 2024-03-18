@@ -425,7 +425,7 @@ public class IndexController_inSpringBoot {
 	    
 	    // 假設你有方法來獲取相關資料列表
 	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
-	    List<QuoVO> list1 = quoSvc.getOneStatQuotation(userVO);
+	    List<QuoVO> list1 = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 	    model.addAttribute("reqOrderListData", list);
 	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 	    model.addAttribute("quoListData", list1);
@@ -489,7 +489,7 @@ public class IndexController_inSpringBoot {
 		if (userVO == null) {
 			return null;
 		} else {
-			return quoSvc.getOneStatQuotation(userVO);
+			return quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 		}
 	}
 
