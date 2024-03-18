@@ -291,25 +291,42 @@ public class UserController {
 	
 	//=====================changePassword===============================
 	@PostMapping("/changePassword")
-	public String changePassword(HttpSession session, @RequestParam("comPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword) {
-
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");// 假设用户已登录并存在session中
-
-		if (userVO == null) {
-			return "redirect:/login"; // 用户未登录，重定向到登录页面
-		}
- 
-		//如果輸入的舊密碼比對成功，進行新密碼的資料庫更新
-		if(oldPassword == userVO.getComPassword()) {
-			userVO.setComPassword(newPassword);
-			userSvc.updateUser(userVO);
-			return "front-end/userinformation/memberCen";
-		}
-		else {
+	public String changePassword(
+			@RequestParam("comAccount") String comAccount ,
+			@RequestParam("comPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword,
+			Model model) {
+		
+		if (model.containsAttribute("alertMessage")) {
+	        model.asMap().remove("alertMessage");
+	    }
+		
+		UserVO userVO = userSvc.getOneUserByAccount(comAccount);
+		
+		String encodeOldPassword = userVO.getComPassword();
+		
+		Boolean isSame = passwordEncoder.matches(oldPassword,encodeOldPassword);
+		
+		
+		if(newPassword.isEmpty()) {
+			model.addAttribute("alertMessage", "請確實填寫欄位。");
 			return "front-end/userinformation/memberCen2";
 		}
-		
+		if(isSame) {
+			String encodeNewPassword = passwordEncoder.encode(newPassword);
+			userVO.setComPassword(encodeNewPassword);
+			
+			userSvc.updateUser(userVO);
+			
+			model.addAttribute("alertMessage", "修改成功，請重新登入。");
+			return "front-end/userinformation/memberCen2";
+		}
+		if(!isSame){
+			model.addAttribute("alertMessage", "舊有密碼輸入錯誤。");
+			return "front-end/userinformation/memberCen2";
+		}
+		model.addAttribute("alertMessage", "發生問題，請稍後再試。");
+		return "front-end/userinformation/memberCen2";
 	}
 
 	
