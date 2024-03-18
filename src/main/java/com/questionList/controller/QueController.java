@@ -31,10 +31,9 @@ public class QueController {
 
 	@Autowired
 	QueListService queSvc;
-	
+
 	@Autowired
 	UserService userSvc;
-
 
 	/*
 	 * This method will serve as addNews.html handler.
@@ -47,7 +46,8 @@ public class QueController {
 //	}
 
 	/*
-	 * This method will be called on addNews.html form submission, handling POST request It also validates the user input
+	 * This method will be called on addNews.html form submission, handling POST
+	 * request It also validates the user input
 	 */
 	@PostMapping("insertque")
 	public String insert(HttpServletRequest request,@Valid QueListVO queListVO, BindingResult result, ModelMap model,
@@ -91,17 +91,17 @@ public class QueController {
 	}
 
 	/*
-	 * This method will be called on listAllNews.html form submission, handling POST request
+	 * This method will be called on listAllNews.html form submission, handling POST
+	 * request
 	 */
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("queNum") String queNum, ModelMap model) {
-		
+
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		
+
 		/*************************** 2.開始查詢資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
 		QueListVO queListVO = queSvc.getOneQue(Integer.valueOf(queNum));
-		
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("queListVO", queListVO);
@@ -109,7 +109,8 @@ public class QueController {
 	}
 
 	/*
-	 * This method will be called on update_News_input.html form submission, handling POST request It also validates the user input
+	 * This method will be called on update_News_input.html form submission,
+	 * handling POST request It also validates the user input
 	 */
 	@PostMapping("update")
 	public String update(@Valid QueListVO queListVO, BindingResult result, ModelMap model) throws IOException {
@@ -130,7 +131,7 @@ public class QueController {
 		if (result.hasErrors()) {
 			return "back-end/que/update_que_input";
 		}
-		
+
 		/*************************** 2.開始修改資料 *****************************************/
 //		NewsService newsSvc = new NewsService();
 		queSvc.updateQue(queListVO);
@@ -143,7 +144,8 @@ public class QueController {
 	}
 
 	/*
-	 * This method will be called on listAllNews.html form submission, handling POST request
+	 * This method will be called on listAllNews.html form submission, handling POST
+	 * request
 	 */
 	@PostMapping("delete")
 	public String delete(@RequestParam("queNum") String queNum, ModelMap model) {
@@ -159,18 +161,15 @@ public class QueController {
 	}
 
 	@ModelAttribute("userListData")
-	protected List<UserVO> referenceListData(){
+	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
 		return list;
 	}
-	
-	
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(QueListVO queListVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
-				.filter(fieldname -> !fieldname.getField().equals(removedFieldname))
-				.collect(Collectors.toList());
+				.filter(fieldname -> !fieldname.getField().equals(removedFieldname)).collect(Collectors.toList());
 		result = new BeanPropertyBindingResult(queListVO, "queListVO");
 		for (FieldError fieldError : errorsListToKeep) {
 			result.addError(fieldError);

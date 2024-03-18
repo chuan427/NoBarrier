@@ -1,63 +1,61 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料新增 - addEmp.html</title>
-<head th:insert="~{/front-end/header}"></head>
-<!-- <link rel="stylesheet" -->
-<!-- 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" /> -->
-<!-- <link rel="stylesheet" th:href="@{/css/index.css}" /> -->
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>員工資料新增 - addEmp.html</title>
 
-<link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
-<!-- <script th:src="@{/out-statics/out-js/app4.js}" /></script> -->
-<style type="text/css">
-button {
-	padding: 5px;
-}
+	<head th:insert="~{/front-end/header}"></head>
+	<!-- <link rel="stylesheet" -->
+	<!-- 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" /> -->
+	<!-- <link rel="stylesheet" th:href="@{/css/index.css}" /> -->
 
-form {
-	display: table;
-}
+	<link rel="stylesheet" th:href="@{/out-statics/out-css/style.css}" />
+	<!-- <script th:src="@{/out-statics/out-js/app4.js}" /></script> -->
+	<style type="text/css">
+		button {
+			padding: 5px;
+		}
 
-form div {
-	display: table-row;
-}
+		form {
+			display: table;
+		}
 
-label, input, span, select {
-	display: table-cell;
-	margin: 5px;
-	text-align: left;
-}
+		form div {
+			display: table-row;
+		}
 
-input[type=text], input[type=password], select, textarea {
-	width: 200px;
-	margin: 5px;
-}
+		label,
+		input,
+		span,
+		select {
+			display: table-cell;
+			margin: 5px;
+			text-align: left;
+		}
 
-form div div {
-	display: table-cell;
-}
+		input[type=text],
+		input[type=password],
+		select,
+		textarea {
+			width: 200px;
+			margin: 5px;
+		}
 
-.center {
-	margin-left: auto;
-	margin-right: auto;
-}
+		form div div {
+			display: table-cell;
+		}
 
-.dateContainer {
-	display: block;
-}
-</style>
+		.center {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.dateContainer {
+			display: block;
+		}
+	</style>
 </head>
 
 <body>
@@ -154,31 +152,26 @@ form div div {
 	<!--         </header> -->
 	<!--     </div> -->
 	<h3 style="text-align: center;">
-		<a class="navbar-brand" th:href="@{/}"><img
-			th:src="@{/images/back1.gif}">回查詢頁</a>
+		<a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/back1.gif}">回查詢頁</a>
 	</h3>
-	
-	<div th:if="${success}"
-		class="alert alert-success alert-dismissible fade show" role="alert"
-		id="success">
-		
-		<button type="button" class="btn-close" data-bs-dismiss="alert"
-			aria-label="Close" onclick="clearInputField()"></button>
+
+	<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert" id="success">
+
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+			onclick="clearInputField()"></button>
 		<span th:text="${success}"></span>
 	</div>
-	
+
 	<div align="center">
 		<h3>
 			<b>請填寫所有欄位皆為必填欄位，3Q</b>
 		</h3>
-		<form th:action="@{insert}" method="post" th:object="${adDate}"
-			enctype="multipart/form-data">
+		<form th:action="@{insert}" method="post" th:object="${adDate}" enctype="multipart/form-data">
 
 
 			<div>
-				<label>廣告價格:</label> <input type="text" th:field="*{adPriceadd}"
-					readonly="readonly" onclick="hideContent('adPriceadd.errors')"
-					class="adprice-add" /> <span class="error"
+				<label>廣告價格:</label> <input type="text" th:field="*{adPriceadd}" readonly="readonly"
+					onclick="hideContent('adPriceadd.errors')" class="adprice-add" /> <span class="error"
 					th:utext="${errorMessage1}" id="adPriceadd.errors"></span>
 			</div>
 
@@ -192,10 +185,9 @@ form div div {
 
 
 			<div>
-				<label>上架廣告圖片:</label> <input type="file" id="adImageadd"
-					name="adImageadd" onclick="previewImage()" multiple="multiple"
-					onchange="hideContent('adImageadd.errors');" /> <span
-					class="error" th:utext="${errorMessage}" id="adImageadd.errors"></span>
+				<label>上架廣告圖片:</label> <input type="file" id="adImageadd" name="adImageadd" onclick="previewImage()"
+					multiple="multiple" onchange="hideContent('adImageadd.errors');" /> <span class="error"
+					th:utext="${errorMessage}" id="adImageadd.errors"></span>
 				<h2 id="errorMessage"></h2>
 				<div id="blob_holder"></div>
 
@@ -213,11 +205,9 @@ form div div {
 			<!-- 							<div id="blob_holder"></div> -->
 			<!-- 			</div> -->
 
-			<label>廣告日期:</label> <input type="date"
-				th:field="*{advertisements[0].adsDays}"
-				oninput="checkDateValidity(this);"
-				onclick="hideContent('advertisements[0].adsDays.errors');" id="advertisements[0].adsDays"/> <span
-				class="error" th:utext="${errorMessage2}"
+			<label>廣告日期:</label> <input type="date" th:field="*{advertisements[0].adsDays}"
+				oninput="checkDateValidity(this);" onclick="hideContent('advertisements[0].adsDays.errors');"
+				id="advertisements[0].adsDays" /> <span class="error" th:utext="${errorMessage2}"
 				id="advertisements[0].adsDays.errors"></span>
 			<div>
 				<div></div>
@@ -261,7 +251,7 @@ form div div {
 	<!-- JavaScript part -->
 	<!-- 		<script th:src="@{/js/home.js}"></script> -->
 	<!-- 	<script th:src="@{/js/popper.min.js}"></script> -->
-		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 	<script type="text/javascript">
 		//清除提示信息
 		function hideContent(d) {
@@ -274,13 +264,13 @@ form div div {
 			alert("No FileReader support");
 		}
 		acceptedTypes = {
-			'image/png' : true,
-			'image/jpeg' : true,
-			'image/gif' : true
+			'image/png': true,
+			'image/jpeg': true,
+			'image/gif': true
 		};
 		function previewImage() {
 			var upfile1 = document.getElementById("adImageadd");
-			upfile1.addEventListener("change", function(event) {
+			upfile1.addEventListener("change", function (event) {
 				var files = event.target.files || event.dataTransfer.files;
 				for (var i = 0; i < files.length; i++) {
 					previewfile(files[i])
@@ -289,9 +279,9 @@ form div div {
 		}
 		function previewfile(file) {
 			if (filereader_support === true
-					&& acceptedTypes[file.type] === true) {
+				&& acceptedTypes[file.type] === true) {
 				var reader = new FileReader();
-				reader.onload = function(event) {
+				reader.onload = function (event) {
 					var image = new Image();
 					image.src = event.target.result;
 					image.width = 100;
@@ -306,17 +296,17 @@ form div div {
 				document.getElementById('submit').disabled = false;
 			} else {
 				blob_holder.innerHTML = "<div  style='text-align: left;'>"
-						+ "● filename: "
-						+ file.name
-						+ "<br>"
-						+ "● ContentTyp: "
-						+ file.type
-						+ "<br>"
-						+ "● size: "
-						+ file.size
-						+ "bytes"
-						+ "<br>"
-						+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+					+ "● filename: "
+					+ file.name
+					+ "<br>"
+					+ "● ContentTyp: "
+					+ file.type
+					+ "<br>"
+					+ "● size: "
+					+ file.size
+					+ "bytes"
+					+ "<br>"
+					+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
 				document.getElementById('submit').disabled = true;
 			}
 		}
@@ -328,31 +318,31 @@ form div div {
 		document.querySelector(".adprice-add").value = defaultPrice;
 
 		function addEmployee() {
-		    const container = document.getElementById('dateContainer');
+			const container = document.getElementById('dateContainer');
 
-		    // 創建 input 元素
-		    const input = document.createElement('input');
-		    input.type = 'date';
-		    input.name = 'advertisements[' + adateIndex + '].adsDays'; // 使用連續索引
-		    input.oninput = function() {
-		        checkDateValidity(this); // 呼叫檢查日期有效性的函數
-		    };
-		    container.appendChild(input);
-		    container.appendChild(document.createElement('br'));
-		    adateIndex++; // 增加索引計數
+			// 創建 input 元素
+			const input = document.createElement('input');
+			input.type = 'date';
+			input.name = 'advertisements[' + adateIndex + '].adsDays'; // 使用連續索引
+			input.oninput = function () {
+				checkDateValidity(this); // 呼叫檢查日期有效性的函數
+			};
+			container.appendChild(input);
+			container.appendChild(document.createElement('br'));
+			adateIndex++; // 增加索引計數
 
-		    // 更新價格
-		    document.querySelector(".adprice-add").value = defaultPrice * adateIndex;
+			// 更新價格
+			document.querySelector(".adprice-add").value = defaultPrice * adateIndex;
 		}
 
 
 		function checkDateValidity(input) {
-			input.addEventListener("change", function() {
+			input.addEventListener("change", function () {
 				const selectedDate = new Date(input.value);
 				const currentDate = new Date();
 				// 只比對日期部分
 				if (selectedDate.toISOString().slice(0, 10) < currentDate
-						.toISOString().slice(0, 10)) {
+					.toISOString().slice(0, 10)) {
 					input.setCustomValidity("廣告日期不可小於當前日期");
 				} else {
 					input.setCustomValidity("");
@@ -360,8 +350,8 @@ form div div {
 
 			});
 		}
-		
-	
+
+
 		function clearInputField() {
 			document.getElementById('advertisements[0].adsDays').value = ''; // 將 input 欄位的值設置為空字符串
 		}
@@ -370,4 +360,5 @@ form div div {
 
 
 </body>
+
 </html>
