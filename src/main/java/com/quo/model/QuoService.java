@@ -32,6 +32,12 @@ public class QuoService {
 		repository.save(quoVO);
 	}
 	
+	
+	public void addQuo(QuoVO quoVO) {
+		repository.save(quoVO);
+	}
+	
+	
 	public void updateQuo(QuoVO quoVO) {
 		repository.save(quoVO);
 	}
