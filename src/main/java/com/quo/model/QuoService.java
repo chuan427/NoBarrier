@@ -25,9 +25,9 @@ public class QuoService {
 	@Autowired
 	ReqOrderRepository reqrepository;
 	
-	public void addQuo(QuoVO quoVO, UserVO loggingInUser, ReqOrderVO reqOrderVO) {
-		quoVO.setUserVO(loggingInUser);	
+	public void addQuo(QuoVO quoVO, UserVO sellerVO, ReqOrderVO reqOrderVO) {
 		quoVO.setReqOrderVO(reqOrderVO);
+		quoVO.setUserVO(sellerVO);	
 				
 		repository.save(quoVO);
 	}
