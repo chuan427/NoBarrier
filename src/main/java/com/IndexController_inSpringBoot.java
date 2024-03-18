@@ -105,12 +105,14 @@ public class IndexController_inSpringBoot {
 
 	@Autowired
 	LimitSaleService limitSaleSvc;
+	
+	@Autowired
+	AdministratorService administratorSvc;
 
 	@Autowired
 	OrderService orderSvc;
 	
-	@Autowired
-	AdministratorService administratorSvc;
+	
 //	@Autowired
 //	NotificationService notificationSvc;
 
@@ -436,6 +438,34 @@ public class IndexController_inSpringBoot {
 	}
 
 	// ----------------報價單--------------------
+//		@GetMapping("/userinformation/quotation_list")
+//		public String quotation_list(Model model, HttpServletRequest request) {
+//			HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//		    
+//		    if (userVO == null) {
+//		        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+//		    }
+//
+//		    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+//		    model.addAttribute("quoListData", list);
+//		    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+//			return "front-end/userinformation/quotation_list";
+//		}
+
+//	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
+//			HttpServletResponse response) {
+//		HttpSession session = request.getSession();
+//		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		if (userVO == null) {
+//			return null;
+//		} else {
+//			return quoSvc.getOneStatQuotation(userVO);
+//		}
+
+
 	
 	@ModelAttribute("quoListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
 	protected List<QuoVO> referenceListData_quotation(Model model, HttpServletRequest request,
@@ -450,9 +480,26 @@ public class IndexController_inSpringBoot {
 			return quoSvc.getOneStatQuotation(userVO);
 		}
 	}
+
 	
 		// -------------------order------------------------
 		
+
+//		@ModelAttribute("orderListData")
+//		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
+//		    HttpSession session = request.getSession();
+//		    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		    if (userVO == null) {
+//		        return null;
+//		    } else {
+////		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
+////				return list;
+//		        return orderSvc.getOneStatOrder(userVO);
+//		    }
+//		}
+//	}
+
 		@ModelAttribute("orderListData")
 		protected List<OrderVO> referenceListData_order(Model model, HttpServletRequest request, HttpServletResponse response) {
 		    HttpSession session = request.getSession();
@@ -465,6 +512,7 @@ public class IndexController_inSpringBoot {
 				return list;
 		    }
 		}
+
 
 	// -------------------------------------------------
 
@@ -855,10 +903,17 @@ public class IndexController_inSpringBoot {
   	
  // -------------------------------administrator-----------------------------------
 	
+
+//  	@GetMapping("/administrator/select_page")
+//	public String select_page(Model model) {
+//		return "back-end/administrator/select_page";
+//	}
+
   	@GetMapping("/administrator/select_page")
 	public String select_page1(Model model) {
 		return "back-end/administrator/select_page";
 	}
+
     
     @GetMapping("/administrator/listAllAdministrator")
 	public String listAllAdministrator(Model model) {
