@@ -26,6 +26,9 @@ public class TryWSHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         connectedSessions.add(session);
+        System.out.println("有一位使用者建立ws連線!");//確認使用者有連進來
+        System.out.println(connectedSessions);//確認使用者有被加入session集合
+
         String text = String.format("Session ID = %s, connected", session.getId());
         System.out.println(text);
     }

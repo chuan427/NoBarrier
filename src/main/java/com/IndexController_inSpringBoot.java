@@ -339,17 +339,6 @@ public class IndexController_inSpringBoot {
 		return "front-end/userinformation/customer_service"; // view
 	}
 
-	// 使用者修改 成功
-//	@GetMapping("/userinformation/memberCen")
-//	public String memberCen() {
-//		return "front-end/userinformation/memberCen"; // view
-//	}
-
-	// 報價單 成功
-	@GetMapping("/userinformation/quotation")
-	public String quotation() {
-		return "front-end/userinformation/quotation"; // view
-	}
 
 	// 註冊畫面 成功
 	@GetMapping("/userinformation/register1")
@@ -396,20 +385,42 @@ public class IndexController_inSpringBoot {
 	}
 
 	// -------------------需求單-----------------------
+//	@GetMapping("/userinformation/userpage")
+//	public String userpage(Model model, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+//
+//		if (userVO == null) {
+//			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+//		}
+//
+//		List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+//		model.addAttribute("reqOrderListData", list);
+//		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+//		return "front-end/userinformation/userpage";
+//	}
+	
 	@GetMapping("/userinformation/userpage")
-	public String userpage(Model model, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	public String showUserPage(HttpSession session, Model model) {
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	    if (userVO == null) {
+	        // 使用者未登入，重定向到登入頁面
+	        return "redirect:/login";
+	    }
 
-		if (userVO == null) {
-			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-		}
+	    // 這裡加載需要在使用者頁面顯示的資料
+	    model.addAttribute("userVO", userVO);
+	    
+	    // 假設你有方法來獲取相關資料列表
+	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+	    List<QuoVO> list1 = quoSvc.getOneStatQuotation(userVO);
+	    model.addAttribute("reqOrderListData", list);
+	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+	    model.addAttribute("quoListData", list1);
 
-		List<ReqOrderVO> list = reqOrderSvc.getOneStatReqOrder(userVO);
-		model.addAttribute("reqOrderListData", list);
-		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
-		return "front-end/userinformation/userpage";
+	    return "front-end/userinformation/userpage"; // 返回使用者頁面視圖名稱
 	}
+
 
 	@ModelAttribute("reqOrderListData")
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request,
@@ -422,7 +433,7 @@ public class IndexController_inSpringBoot {
 		} else {
 //	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
 //			return list;
-			return reqOrderSvc.getOneStatReqOrder(userVO);
+			return reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 		}
 	}
 
@@ -497,9 +508,8 @@ public class IndexController_inSpringBoot {
 		    if (userVO == null) {
 		        return null;
 		    } else {
-//		    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-//				return list;
-		        return orderSvc.getOneStatOrder(userVO);
+		    	List<OrderVO> list = orderSvc.getAll();
+				return list;
 		    }
 		}
 
@@ -940,29 +950,14 @@ public class IndexController_inSpringBoot {
 
 	// -------------------------------order-----------------------------------
 
- // 訂單明細 成功
- 	@GetMapping("/order/order_details")
- 	public String order_details() {
- 		return "front-end/order/order_details"; // view
- 	}
-
  	// 訂單檢舉 成功
  	@GetMapping("/order/reports")
  	public String reports() {
  		return "front-end/order/reports"; // view
  	}
 
- 	// 訂單交易確認 成功
- 	@GetMapping("/order/transaction_check")
- 	public String transaction_check() {
- 		return "front-end/order/transaction_check"; // view
- 	}
-
- 	// 訂單交易 成功
- 	@GetMapping("/order/transaction")
- 	public String transaction() {
- 		return "front-end/order/transaction"; // view
- 	}
+ 	
+ 	
  	
 	@ModelAttribute("orderListData")
 	protected List<OrderVO> referenceListOrderData() {
