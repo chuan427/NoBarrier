@@ -66,16 +66,6 @@ public class ReqOrderVO implements java.io.Serializable {
 		this.reqNum = reqNum;
 	}
 	
-//	@OneToOne
-//	@MapsId 
-//	@JoinColumn(name="reqNum", referencedColumnName = "ordNum")
-//	public OrderVO getOrderVO() {
-//		return orderVO;
-//	}
-//
-//	public void setOrderVO(OrderVO orderVO) {
-//		this.orderVO = orderVO;
-//	}
 
 	@ManyToOne
 	@JoinColumn(name = "reqUserid", referencedColumnName = "userid")   // 指定用來join table的column
@@ -156,24 +146,6 @@ public class ReqOrderVO implements java.io.Serializable {
 	public void setReqDes(String reqDes) {
 		this.reqDes = reqDes;
 	}
-
-//	@Column(name = "reqCategory")
-//	public Integer getReqCategory() {
-//		return this.reqCategory;
-//	}
-//
-//	public void setReqCategory(Integer reqCategory) {
-//		this.reqCategory = reqCategory;
-//	}
-//
-//	@Column(name = "reqUserid")
-//	public Integer getReqUserid() {
-//		return this.reqUserid;
-//	}
-//
-//	public void setReqUserid(Integer reqUserid) {
-//		this.reqUserid = reqUserid;
-//	}
 
 	@Column(name = "reqIsValid")
 	public Integer getReqIsValid() {

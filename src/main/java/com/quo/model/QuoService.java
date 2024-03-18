@@ -25,16 +25,18 @@ public class QuoService {
 	@Autowired
 	ReqOrderRepository reqrepository;
 	
-	public void addQuo(QuoVO quoVO, UserVO loggingInUser) {
-		quoVO.setUserVO(loggingInUser);
-		
-		Integer reqNum = 2;
-		
-		ReqOrderVO reqOrderVO = reqrepository.findById(reqNum).orElse(null);
+	public void addQuo(QuoVO quoVO, UserVO sellerVO, ReqOrderVO reqOrderVO) {
 		quoVO.setReqOrderVO(reqOrderVO);
+		quoVO.setUserVO(sellerVO);	
 				
 		repository.save(quoVO);
 	}
+	
+	
+	public void addQuo(QuoVO quoVO) {
+		repository.save(quoVO);
+	}
+	
 	
 	public void updateQuo(QuoVO quoVO) {
 		repository.save(quoVO);

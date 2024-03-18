@@ -2,264 +2,310 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>order_details</title>
-    <style>
-        /* 小型設備（手機） */
-        @media (max-width: 767.98px) {
-            /* 樣式設定 */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>order_details</title>
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
 
-        /* 中型設備（平板） */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            /* 樣式設定 */
-        }
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
 
-        /* 大型設備（桌面） */
-        @media (min-width: 992px) {
-            /* 樣式設定 */
-        }
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
 
-        .navbar-toggler-icon.small {
-            font-size: 0.6rem;
-        }
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
 
-        .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
-            background-color: #7e8287 !important;
-        }
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: #7e8287 !important;
+}
 
-        .list-group1 {
-            display: none;
-            /* 隱藏通知列表 */
-        }
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
 
-        .list-group1.show {
-            display: block;
-            /* 顯示通知列表 */
-        }
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
 
-        .notification-dropdown {
-            position: absolute;
-            top: 60px;
-            /* 距離 header 的頂部距離 */
-            right: 10px;
-            /* 距離 header 的右側距離 */
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1000;
-            /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
-        }
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000;
+	/* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
 
-        .notification-dropdown.show {
-            display: block;
-        }
+.notification-dropdown.show {
+	display: block;
+}
 
-        .notification-icon {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
 
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 12px;
-        }
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
 
-        section {
-            margin: 0 auto;
-            max-width: 1200px;
-            /* 设置section的最大宽度 */
-            background-color: rgb(230, 228, 228);
-        }
+section {
+	margin: 0 auto;
+	max-width: 1200px;
+	/* 设置section的最大宽度 */
+	background-color: rgb(230, 228, 228);
+}
 
-        table {
-            margin: 0 auto;
-            /* 将表格置于页面水平中央 */
-        }
+table {
+	margin: 0 auto;
+	/* 将表格置于页面水平中央 */
+}
 
-        th,
-        td {
-            padding-right: 200px;
-        }
+th, td {
+	padding-right: 200px;
+}
 
-        .rating {
-            unicode-bidi: bidi-override;
-            direction: rtl;
-            text-align: center;
-        }
+.rating {
+	unicode-bidi: bidi-override;
+	direction: rtl;
+	text-align: center;
+}
 
-        .rating>span {
-            display: inline-block;
-            position: relative;
-            width: 1.1em;
-        }
+.rating>span {
+	display: inline-block;
+	position: relative;
+	width: 1.1em;
+}
 
-        .rating>span:hover:before,
-        .rating>span:hover~span:before {
-            content: "\2605";
-            position: absolute;
-        }
+.rating>span:hover:before, .rating>span:hover ~span:before {
+	content: "\2605";
+	position: absolute;
+}
 
-        .rating>span:hover:before {
-            color: gold;
-        }
+.rating>span:hover:before {
+	color: gold;
+}
 
-        .rating>span:hover~span:before {
-            color: grey;
-        }
+.rating>span:hover ~span:before {
+	color: grey;
+}
 
-        .rating>input {
-            display: none;
-        }
+.rating>input {
+	display: none;
+}
 
-        .rating>label {
-            font-size: 0;
-        }
+.rating>label {
+	font-size: 0;
+}
 
-        .rating>label:before {
-            content: "\2605";
-            font-size: 30px;
-        }
+.rating>label:before {
+	content: "\2605";
+	font-size: 30px;
+}
 
-        .rating>input:checked~label:before,
-        .rating:not(:checked)>label:hover:before,
-        .rating:not(:checked)>label:hover~label:before {
-            color: gold;
-        }
+.rating>input:checked ~label:before, .rating:not(:checked)>label:hover:before,
+	.rating:not(:checked)>label:hover ~label:before {
+	color: gold;
+}
 
-        .rating>input:checked~label:hover:before,
-        .rating>label:hover~input:checked~label:before,
-        .rating>input:checked~label:hover~label:before {
-            color: grey;
-        }
-    </style>
+.rating>input:checked ~label:hover:before, .rating>label:hover ~input:checked
+	 ~label:before, .rating>input:checked ~label:hover ~label:before {
+	color: grey;
+}
+
+th {
+	font-size: 17px;
+}
+
+td {
+	font-size: 15px;
+}
+
+.wide-section {
+	max-width: 1500px; /* 设置您想要的最大宽度 */
+	margin: 0 auto; /* 将部分置于页面水平中央 */
+	padding: 0 20px; /* 可选的内边距 */
+}
+</style>
 </head>
 
 <body>
-    <!-- <header> -->
-    <head th:insert="~{/front-end/header_login}"></head>
+	<!-- <header> -->
+<head th:insert="~{/front-end/header_login}"></head>
 
-    <!-- order_details -->
+<!-- order_details -->
 
-    <section>
-        <div class="center-text" style="text-align: center;">
-            <h3>合計:NT$151,000</h3>
-            <h4>購物車(2件)</h4>
-        </div>
-        <hr>
-        <table>
-            <thead>
-                <th>商品資料</th>
-                <th>商品數量</th>
-                <th>單件商品價格</th>
-                <th>小計</th>
-            </thead>
-        </table>
-        <hr>
-        <table>
-            <tbody>
-                <td><img src="image/200x200.png" alt="Description of the image" style="width: 100px; height: 100px;">
-                </td>
-                <td>100</td>
-                <td>NT$800</td>
-                <td>NT$80,000</td>
-            </tbody>
-        </table>
-        <hr>
-        <table>
-            <tbody>
-                <td><img src="image/200x200.png" alt="Description of the image" style="width: 100px; height: 100px;">
-                </td>
-                <td>200</td>
-                <td>NT$350</td>
-                <td>NT$70,000</td>
-            </tbody>
-        </table>
-        <hr>
-        <h4 style="text-align: right;">合計:NT$150,000</h4>
-    </section>
+<form>
+	<section class="wide-section">
+		<div class="center-text" style="text-align: center;">
+			<h1>訂單明細</h1>
+		</div>
+		<hr>
+		<table>
+			<thead>
+				<th>訂單編號</th>
+				<th>商品資料</th>
+				<th>商品數量</th>
+				<th>單件商品價格</th>
+				<th>總價</th>
+			</thead>
+			<tbody>
+				<!-- 使用Thymeleaf循环渲染商品数据 -->
+				<tr>
+					<td th:text="${orderVO.ordNum}"></td>
+					<td th:text="${orderVO.ordProdname}"></td>
+					<td th:text="${orderVO.ordProdqty + orderVO.ordUnitname}"></td>
+					<td th:text="${'NT$' + orderVO.ordProdprice}"></td>
+					<td th:text="${'NT$' + orderVO.ordTotalamount}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+		<div style="margin-top: 50px;"></div>
 
-    <div style="margin-top: 50px;"></div>
-    <section>
-        <div class="row">
-            <div class="col-6">
-                <div style="margin-top: 30px;"></div>
-                <div style="font-size: 25px; padding-left: 50px;">訂單資訊:</div>
-                <div style="padding-left: 50px;">訂單編號:2024013001</div>
-                <div style="padding-left: 50px;">訂購E-mail:xxxxx@xxx.com</div>
-                <div style="padding-left: 50px;">訂購日期:2024/01/03 08:30PM</div>
-                <div style="padding-left: 50px;">訂購狀態:已完成</div>
-                <div style="margin-top: 30px;"></div>
+		<div class="row">
+			<div class="col-6">
+				<div style="margin-top: 30px;"></div>
+				<form th:object="${orderVO}" method="post">
+					<div th:style="'font-size: 25px; padding-left: 50px;'">訂單資訊:</div>
+					<div th:style="'padding-left: 50px;'">
+						訂單編號:<span th:text="${orderVO.ordNum}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">
+						訂購E-mail:<span
+							th:text="${orderVO.userVO != null ? orderVO.userVO.comMail : ''}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">
+						訂購日期:<span th:text="${orderVO.ordDate}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">
+						訂購狀態:<span th:switch="${orderVO.ordStat}"> <span
+							th:case="0">訂單異常</span> <span th:case="1">訂單完成</span>
+						</span>
+					</div>
+				</form>
 
-                <div style="font-size: 25px; padding-left: 50px;">運送資訊:</div>
-                <div style="padding-left: 50px;">收件人姓名:你好有限公司</div>
-                <div style="padding-left: 50px;">收件人電話號碼:268*-**13</div>
-                <div style="padding-left: 50px;">運送方式:新竹物流</div>
-                <div style="padding-left: 50px;">送貨狀態:訂單處理中</div>
-                <div style="margin-top: 30px;"></div>
-            </div>
+				<div style="margin-top: 30px;"></div>
+				<form th:object="${userVO}" method="post">
+					<div th:style="'font-size: 25px; padding-left: 50px;'">運送資訊:</div>
+					<div th:style="'padding-left: 50px;'">
+						公司名稱:<span th:text="${userVO.comName}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">
+						公司電話:<span th:text="${userVO.comPhone}"></span>
+					</div>
+					<div th:style="'padding-left: 50px;'">運送方式:新竹物流</div>
+					<div th:style="'padding-left: 50px;'">
+						送貨狀態: <span th:switch="${orderVO.ordTranstat}"> <span
+							th:case="0">配送中</span> <span th:case="1">已配送</span>
+						</span>
+					</div>
+					<div th:style="'margin-top: 30px;'"></div>
+				</form>
+			</div>
 
-            <div class="col-6" style="position: relative;">
-                <a href="reports.html">
-                    <div style="position: absolute; top: 0; right: 0; margin: 40px;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red"
-                            class="bi bi-exclamation-octagon" viewBox="0 0 16 16">
-                            <path
-                                d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1z" />
-                            <path
-                                d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                        </svg>
-                    </div>
-                </a>
-                <div style="margin-top: 20px;"></div>
-                <div style="font-size: 25px;">付款資訊:</div>
-                <div>付款方式:匯款</div>
-                <div>付款交易狀態:已付款</div>
-                <div style="margin-top: 80px;"></div>
-                <div style="font-size: 25px; display: inline-block;">訂單評分:</div>
-                <div class="rating" style="display: inline-block;">
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5"></label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4"></label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3"></label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2"></label>
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1"></label>
-                </div>
-                <div style="font-size: 25px;">訂單評價:</div>
-                <div class="input-group">
-                    <textarea class="form-control" aria-label="With textarea"
-                        style="height: 60px; padding-right: 20px;"></textarea>
-                </div>
-                <div style="margin-top: 50px;"></div>
 
-                <div class="d-flex justify-content-center">
-                    <a href="transaction_stat.html" class="btn btn-primary me-md-5" role="button">完成訂單</a>
-                    <a href="customer_service.html" class="btn btn-danger" role="button">商品問題回報</a>
-                </div>
-                
-            </div>
+			<div class="col-6" style="position: relative;">
+				
+				<div style="margin-top: 20px;"></div>
+				<form th:object="${orderVO}" method="post">
+					<div th:style="'font-size: 25px;'">付款資訊:</div>
+					<div>付款方式:匯款</div>
+					<div>
+						付款交易狀態: <span th:switch="${orderVO.ordPaystat}"> <span
+							th:case="0">未匯款</span> <span th:case="1">已匯款</span>
+						</span>
+					</div>
+				</form>
+				<div style="margin-top: 80px;"></div>
+				
+				<!-- <form form th:action="@{/order/rateOrder}" method="post">
+				<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}" />
+					<div class="modal-body">
+						星星評分（注意這裡的 name 屬性要和 RatingForm 中的屬性名稱一致）
+						<div class="ordRatstar">
+							<input type="radio" id="star5" name="ordRatstar" value="5"
+								th:field="*{ordRatstar}"><label for="star5"></label> <input
+								type="radio" id="star4" name="ordRatstar" value="4"
+								th:field="*{ordRatstar}"><label for="star4"></label> <input
+								type="radio" id="star3" name="ordRatstar" value="3"
+								th:field="*{ordRatstar}"><label for="star3"></label> <input
+								type="radio" id="star2" name="ordRatstar" value="2"
+								th:field="*{ordRatstar}"><label for="star2"></label> <input
+								type="radio" id="star1" name="ordRatstar" value="1"
+								th:field="*{ordRatstar}"><label for="star1"></label>
+						</div>
+						評價
+						<textarea class="form-control" name="ordComment" th:field="*{ordComment}"
+							aria-label="With textarea"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">關閉</button>
+						<button type="submit" class="btn btn-primary">提交評分</button>
+					</div>
+				</form> -->
 
-        </div>
-    </section>
-    <!-- <footer> -->
-	<head th:insert="~{/front-end/footer}"></head>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-	
+				<!-- <form>
+					<div style="font-size: 25px; display: inline-block;">訂單評分:</div>
+					<div class="rating" style="display: inline-block;">
+						<input type="radio" id="star5" name="rating" value="5"> <label
+							for="star5"></label> <input type="radio" id="star4" name="rating"
+							value="4"> <label for="star4"></label> <input
+							type="radio" id="star3" name="rating" value="3"> <label
+							for="star3"></label> <input type="radio" id="star2" name="rating"
+							value="2"> <label for="star2"></label> <input
+							type="radio" id="star1" name="rating" value="1"> <label
+							for="star1"></label>
+					</div>
+					<div style="font-size: 25px;">訂單評價:</div>
+					<div class="input-group">
+						<textarea class="form-control" aria-label="With textarea"
+							style="height: 60px; padding-right: 20px;"></textarea>
+					</div>
+					<div style="margin-top: 50px;"></div>
+
+					<div class="d-flex justify-content-center">
+						<a th:href="@{/order/transaction_stat}"
+							class="btn btn-primary me-md-5" role="button">完成訂單</a> <a
+							th:href="@{/userinformation/customer_service}"
+							class="btn btn-danger" role="button">商品問題回報</a>
+					</div>
+				</form> -->
+
+			</div>
+
+		</div>
+	</section>
+</form>
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
 
 <!--     <script src="js/notification.js"></script> -->
 <!--     <script src="js/home.js"></script> -->

@@ -1,3 +1,4 @@
+
 package com.user.controller;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.industry.model.IndustryService;
+import com.news.model.NewsVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
@@ -265,50 +267,75 @@ public class UserController {
 	
 	
 	//=====================updateBankInfo===============================
+	
 	@PostMapping("/updateBankInfo")
-	public String updateBankInfo(@Valid UserVO userVO, BindingResult result, ModelMap model ) throws IOException {
+	public String updateBankInfo(HttpSession session, @ModelAttribute("userVO") UserVO formUserVO, BindingResult result, Model model) {
+	    if (result.hasErrors()) {
+	        return "redirect:/userinformation/memberCen1"; // 或返回錯誤提示
+	    }
 
-		
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "userId");
+	    UserVO currentUser = (UserVO) session.getAttribute("loggingInUser");
+	    if (currentUser == null) {
+	        return "redirect:/login"; // 或其他登入頁面路徑
+	    }
 
-		if (result.hasErrors()) {
-			return "front-end/userinformation/memberCen1";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.updateUser(userVO);
+	    // 更新資料庫中的資訊
+	    try {
+	        userSvc.updateBankInfo(currentUser.getUserId(), formUserVO.getComContactPerson(), formUserVO.getComBank(), formUserVO.getAccountNumber());
+	    } catch (Exception e) {
+	        model.addAttribute("errorMessage", "更新失敗，請稍後再試。");
+	        return "front-end/userinformation/memberCen1";
+	    }
 
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-		model.addAttribute("userVO", userVO);
-		return "front-end/userinformation/memberCen"; // 修改成功後轉交listOneEmp.html
+	    // 從資料庫重新獲取更新後的用戶資訊
+	    UserVO updatedUserVO = userSvc.getOneUser(currentUser.getUserId());
+	    session.setAttribute("loggingInUser", updatedUserVO); // 更新session中的用戶資訊
+	    model.addAttribute("userVO", updatedUserVO);
+	    model.addAttribute("successMessage", "資料更新成功！");
+	    return "redirect:/userinformation/memberCen"; // 重定向到展示頁面
 	}
+
+	
 	
 	
 	//=====================changePassword===============================
 	@PostMapping("/changePassword")
-	public String changePassword(HttpSession session, @RequestParam("comPassword") String oldPassword,
-			@RequestParam("newPassword") String newPassword) {
-
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");// 假设用户已登录并存在session中
-
-		if (userVO == null) {
-			return "redirect:/login"; // 用户未登录，重定向到登录页面
-		}
- 
-		//如果輸入的舊密碼比對成功，進行新密碼的資料庫更新
-		if(oldPassword == userVO.getComPassword()) {
-			userVO.setComPassword(newPassword);
-			userSvc.updateUser(userVO);
-			return "front-end/userinformation/memberCen";
-		}
-		else {
+	public String changePassword(
+			@RequestParam("comAccount") String comAccount ,
+			@RequestParam("comPassword") String oldPassword,
+			@RequestParam("newPassword") String newPassword,
+			Model model) {
+		
+		if (model.containsAttribute("alertMessage")) {
+	        model.asMap().remove("alertMessage");
+	    }
+		
+		UserVO userVO = userSvc.getOneUserByAccount(comAccount);
+		
+		String encodeOldPassword = userVO.getComPassword();
+		
+		Boolean isSame = passwordEncoder.matches(oldPassword,encodeOldPassword);
+		
+		
+		if(newPassword.isEmpty()) {
+			model.addAttribute("alertMessage", "請確實填寫欄位。");
 			return "front-end/userinformation/memberCen2";
 		}
-		
+		if(isSame) {
+			String encodeNewPassword = passwordEncoder.encode(newPassword);
+			userVO.setComPassword(encodeNewPassword);
+			
+			userSvc.updateUser(userVO);
+			
+			model.addAttribute("alertMessage", "修改成功，請重新登入。");
+			return "front-end/userinformation/memberCen2";
+		}
+		if(!isSame){
+			model.addAttribute("alertMessage", "舊有密碼輸入錯誤。");
+			return "front-end/userinformation/memberCen2";
+		}
+		model.addAttribute("alertMessage", "發生問題，請稍後再試。");
+		return "front-end/userinformation/memberCen2";
 	}
 
 	
@@ -323,5 +350,11 @@ public class UserController {
 		}
 		return result;
 	}
+	
+	
+	
+	
+
+	
 
 }

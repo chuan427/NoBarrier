@@ -95,126 +95,146 @@
   <div class="wrapper-container">
     <h1>產業類別選擇</h1>
     <div class="container mt-5">
-      <form action="">
+      <form action="/userinformation/insertIndustry" method="post">
         <div class="button-container wrapper1">
           <div class="button-container-inner">
+          
+          <input type="hidden" th:value="${userVO.comAccount}" name="comAccount"/>
             <!-- Group 1 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(1)">
-                類別 1
+                工業加工
               </button>
 
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_1" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="1" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 2 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(2)">
-                類別 2
+                金屬物件
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_2" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="2" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 3 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(3)">
-                類別 3
+                機械材料
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_3" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="3" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 4 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(4)">
-                類別 4
+                螺絲和緊固件
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_4" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="4" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 5 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(5)">
-                類別 5
+                電子元件
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_5" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="5" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 6 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(6)">
-                類別 6
+                照明配件
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_6" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="6" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 7 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(7)">
-                類別 7
+                塑膠零件
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_7" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="7" name="industry-category" />
               </div>
             </div>
 
             <!-- Group 8 -->
             <div class="button-wrapper">
               <button type="button" class="btn btn-primary" onclick="updateInfo(8)">
-                類別 8
+                其他
               </button>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="XXXXXX_8" name="industry-catrgory" />
+                <input class="form-check-input" type="checkbox" value="8" name="industry-category" />
               </div>
             </div>
           </div>
 
           <!-- 這邊塞button -->
           <!-- <button style="margin-left: auto">提交</button>  -->
-          <a href="register3.html" class="btn btn-secondary" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</a>
+          <button type="submit" class="btn btn-secondary" id="submitBtn" style="margin-left: auto" onclick="return confirm('確定要提交嗎？')">提交</button>
+          
           
         </div>
       </form>
 
       <!-- 右邊文字顯示區塊 -->
       <div class="info-container" style="background-color: blanchedalmond">
-        <h3>Information Display</h3>
-        <p id="infoText">Select a button to display information.</p>
+        <h3>產業介紹</h3>
+        <p id="infoText">---點選左邊不同產業按鈕可以查看產業類別定義---</p>
       </div>
     </div>
   </div>
 
   <!-- Checkbox selection script -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const checkboxes = document.querySelectorAll(
-        '[name="industry-catrgory"]'
-      );
+  document.addEventListener("DOMContentLoaded", function () {
+	    const checkboxes = document.querySelectorAll('[name="industry-category"]');
+	    const submitButton = document.getElementById("submitBtn");
 
-      checkboxes.forEach(function (checkbox) {
-        checkbox.addEventListener("change", function () {
-          if (this.checked) {
-            // 如果目前 checkbox 被勾選，則取消其他 checkbox 的勾選狀態
-            checkboxes.forEach(function (otherCheckbox) {
-              if (otherCheckbox !== checkbox) {
-                otherCheckbox.checked = false;
-              }
-            });
-          }
-        });
-      });
-    });
+	    checkboxes.forEach(function (checkbox) {
+	      checkbox.addEventListener("change", function () {
+	        if (this.checked) {
+	          // 如果目前 checkbox 被勾選，則取消其他 checkbox 的勾選狀態
+	          checkboxes.forEach(function (otherCheckbox) {
+	            if (otherCheckbox !== checkbox) {
+	              otherCheckbox.checked = false;
+	            }
+	          });
+	        }
+	        checkSubmitButton();
+	      });
+	    });
+
+	    // 初始化提交按鈕狀態
+	    checkSubmitButton();
+
+	    function checkSubmitButton() {
+	      let atLeastOneChecked = false;
+	      checkboxes.forEach(function (checkbox) {
+	        if (checkbox.checked) {
+	          atLeastOneChecked = true;
+	        }
+	      });
+	      submitButton.disabled = !atLeastOneChecked;
+	    }
+	  });
+  
+  //-------------表單提交邏輯--------------
+  
+
   </script>
 
   <!-- Information update script -->
@@ -223,14 +243,14 @@
     function updateInfo(groupNumber) {
       // Define your eight sets of text content
       const textContents = [
-        "Information for Group 1",
-        "Information for Group 2",
-        "Information for Group 3",
-        "Information for Group 4",
-        "Information for Group 5",
-        "Information for Group 6",
-        "Information for Group 7",
-        "Information for Group 8",
+        "涉及對原材料進行機械或化學處理，以製造各種成品。這包括切削、鑄造、焊接等工藝，目的是滿足不同行業的需求。切削通常用於製造出特定形狀和尺寸的零件，而鑄造則將熔化的金屬注入模具中形成所需零件。焊接則是通過熱或壓力將零件連接在一起。這些工藝的選擇取決於原材料的性質和所需成品的規格。工業加工廣泛應用於汽車製造、機械製造、電子產品生產等各個領域。",
+        "廣泛應用於各種產品和行業中。這些零件的材料多樣，包括鋼鐵、鋁合金、銅等，其製造過程涉及切削、鍛造、壓製、沖壓等多種工藝。從機械裝置到汽車、飛機、建築結構，再到家用電器和電子設備，金屬零件都扮演著至關重要的角色。這些零件通常具有高強度、耐久性和優良的導熱性能，能夠在各種極端條件下工作。",
+        "用於製造機械組件或產品的材料，包括各種金屬和合金。這些材料具有高強度、優異的機械性能和耐久性，能夠承受機械運作中的各種力和環境條件。常見的機械材料包括鋼鐵、鋁合金、銅等，它們在製造機械組件時具有良好的加工性和可塑性，可應用於各種形狀和尺寸的零件製造。這些材料在工業中被廣泛應用，如汽車、航空航天、造船、機械制造等領域。",
+        "將零件或組件固定在一起的小型配件，常見於各種機械設備、建築結構和電子產品中。螺絲通常由金屬製成，具有螺紋狀的外表，能夠與螺母或孔配合使用，通過旋轉和壓力實現零件的固定。緊固件包括螺絲、螺栓、螺母、螺柱、螺釘等，具有不同的形狀和規格，用於不同的固定需求。",
+        "常見的電子元件包括電阻、電容、電感、晶體管、二極管、積體電路等。這些元件在各種電子設備中發揮著關鍵作用，如電腦、手機、電視、音響等。電阻用於限制電流的流動，電容用於存儲電荷，電感用於儲存磁能，晶體管用於放大或控制電流，二極管用於電流的單向導通，積體電路則集成了多種功能於一個晶片中。",
+        "製造照明設備的各種部件，其功能包括支撐、保護和美化照明設備，同時影響照明效果和美觀。這些配件包括燈罩、燈座、燈桿、燈座等。燈罩是安裝在燈具上的罩子，可以起到遮光、防塵、美化等作用，同時還能夠改善燈光的柔和度和均勻度。燈座是安裝在燈具上的零件，用於固定燈泡或光源，同時還能夠將電力傳輸到燈泡中。燈桿是用於安裝室外照明設備的支撐結構，能夠提供支撐和穩定性，同時還能夠調整照明方向和角度。",
+        "由塑料材料製成，應用範圍廣泛。這些零件包括塑膠外殼、按鈕、管道配件、容器和夾具等，用於各種產品和行業中。它們通常具有輕便、耐用、易於加工和成本效益等特點，同時還能夠提供良好的防護功能和美觀的外觀。塑膠外殼常用於覆蓋和保護電子產品內部零件，如手機殼、電視機殼等；塑膠按鈕用於操作和調節功能，如電視遙控器上的按鈕、打印機上的按鍵等。",
+        "如果以上類別皆不符合，請選擇「其他」。",
       ];
 
       // Update information based on the selected group

@@ -93,7 +93,7 @@ th, td {
 											"lengthMenu" : [ 5, 10, 20, 50, 100 ],
 											"searching" : true,
 											"paging" : true,
-											"ordering" : true,
+											"ordering" : true, 
 											"language" : {
 												"processing" : "處理中...",
 												"loadingRecords" : "載入中...",
@@ -258,30 +258,35 @@ th, td {
 					</thead>
 					<tbody>
 						<th:block th:each="reqOrderVO, stat : ${reqOrderListData}">
-							<tr>
-								<td th:text="${stat.count}"></td>
-								<td th:text="${reqOrderVO.reqOrderdate}"></td>
-								<td th:text="${reqOrderVO.industryVO.industryName}"></td>
-								<td
-									th:text="${reqOrderVO.userVO.userId + '-[' + reqOrderVO.userVO.comName + ']'}"></td>
-								<td th:text="${reqOrderVO.reqProdname}"></td>
-								<td th:text="${reqOrderVO.reqProdqty}"></td>
-								<td th:text="${reqOrderVO.reqUnitname}"></td>
-								<td th:text="${reqOrderVO.reqDes}"></td>
-								<td><img
-									th:src="@{/reqorder/DBGifReader(reqNum=${reqOrderVO.reqNum})}"
-									width="100px"></td>
-								<td><a
-									th:href="@{/userinformation/addQuotation(reqNum=${reqOrderVO.reqNum})}"><input
-										type="submit" value="報價"></a></td>
-								<td><form method="post"
-										th:action="@{/userinformation/userpage/complete}">
-										<input type="submit" value="忽略"><input type="hidden"
-											name="reqNum" th:value="${reqOrderVO.reqNum}">
-									</form></td>
-							</tr>
+							<th:if>
+								<tr>
+									<td th:text="${reqOrderVO.reqNum}"></td>
+									<td th:text="${reqOrderVO.reqOrderdate}"></td>
+									<td th:text="${reqOrderVO.industryVO.industryName}"></td>
+									<td
+										th:text="${reqOrderVO.userVO.userId + '-[' + reqOrderVO.userVO.comName + ']'}"></td>
+									<td th:text="${reqOrderVO.reqProdname}"></td>
+									<td th:text="${reqOrderVO.reqProdqty}"></td>
+									<td th:text="${reqOrderVO.reqUnitname}"></td>
+									<td th:text="${reqOrderVO.reqDes}"></td>
+									<td><img
+										th:src="@{/reqorder/DBGifReader(reqNum=${reqOrderVO.reqNum})}"
+										width="100px"></td>
+									<td><a
+										th:href="@{/userinformation/addQuotation(reqNum=${reqOrderVO.reqNum})}"><input
+											type="submit" value="報價"></a></td>
+									<td>
+										<form method="post"
+											th:action="@{/userinformation/userpage/complete}">
+											<input type="submit" value="忽略"> <input type="hidden"
+												name="reqNum" th:value="${reqOrderVO.reqNum}">
+										</form>
+									</td>
+								</tr>
+							</th:if>
 						</th:block>
 					</tbody>
+
 				</table>
 			</div>
 
@@ -318,10 +323,20 @@ th, td {
 								<td th:text="${quoVO.quoTotalprice}"></td>
 								<td th:text="${quoVO.quoInfo}"></td>
 
-								<td><a th:href="@{/order/transaction_check}"> <input
+								<td>
+								
+								
+								<a th:href="@{/order/transaction_check(quoNum=${quoVO.quoNum})}">直接購買</a>
+								<!-- <a th:href="@{/order/transaction_check}"> <input
 										type="submit" value="直接購買"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
-								</a></td>
+								</a>
+								 -->
+								
+								
+								
+								
+								</td>
 								<td><a th:href="@{/chat/privatechat}"> <input
 										type="submit" value="洽談"> <input type="hidden"
 										name="quoNum" th:value="${quoVO.quoNum}">
@@ -382,9 +397,50 @@ th, td {
 	</div>
 </div>
 
+<!-- 順序不能動，會影響websocket的連線關係 -->
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script>
+    // 獲取URL的參數
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // 是否存在成功消息
+    var successMessage = getParameterByName('successMessage');
+    if (successMessage) {
+        // 弹出成功消息提示框
+        alert("新增需求單成功");
+        
+        sendMsg();
+    }
+    
+    //-----------以下是使用在header建立的ws連線-------------
+    function sendMsg(){
+		var Msg = "有一份新增的需求單!" ;
+		
+		var jsonObj = {
+				"addReq":Msg
+		}
+		
+		
+		var jsonString = JSON.stringify(jsonObj);
+		
+		console.log(jsonString);
+		webSocket.send(jsonString);
+		console.log("有寄出ws訊息!");
+	}
+
+    
+</script>
+
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
-<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 
 
 </body>
