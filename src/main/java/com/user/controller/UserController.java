@@ -361,7 +361,7 @@ public class UserController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("userVO", userVO);
-		return "back-end/user/update_user_input"; // 查詢完成後轉交update_News_input.html
+		return "back-end/user/update_user_input1"; // 查詢完成後轉交update_News_input.html
 	}
 	
 	
@@ -385,7 +385,7 @@ public class UserController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "back-end/user/update_user_input";
+			return "back-end/user/update_user_input1";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService empSvc = new EmpService();
