@@ -1112,13 +1112,13 @@ public String chat(Model model) {
  	}
 
  	
- 	
- 	
-	@ModelAttribute("orderListData")
+	@ModelAttribute("orderAllListData")
 	protected List<OrderVO> referenceListOrderData() {
 		List<OrderVO> list = orderSvc.getAll();
 		return list;
 	}
+	
+	
 @GetMapping("addLimitSale")
 	public String addLimitSale(ModelMap model) {
 		LimitSaleVO limitSaleVO = new LimitSaleVO();

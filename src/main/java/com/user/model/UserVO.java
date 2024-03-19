@@ -310,7 +310,7 @@ import com.reqorder.model.ReqOrderVO;
 		}
 		
 		//--------------------------------------------
-		@NotEmpty(message="關於我們文字描述請勿空白!!")
+//		@NotEmpty(message="關於我們文字描述請勿空白!!")
 		@Column(name = "comAboutcontent")
 		public String getComAboutContent() {
 			return this.comAboutContent;
