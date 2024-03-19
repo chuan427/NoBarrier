@@ -46,7 +46,7 @@
         </h6>
         <p class="mb-0 text-sm">
           <span class="op-6">由</span>
-          <a href="#" th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
+          <a th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
           <span class="op-6">發布於</span>
           <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy/MM/dd')}"></span>
         </p>
@@ -101,15 +101,19 @@
                       forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
                       '其他'}"></span>
 			</p>
+			
+		<div class="views-comments">
+   		<i class="fa-regular fa-comment"> <span th:text="${forumPostVO.forumReply.size()}">留言數</span></i>
+		</div>
+			
+			
 
-		        
-              </div>    
+              </div>  
+              
             </div>
         </div>
     </div>
 
-
-	
 
 
 

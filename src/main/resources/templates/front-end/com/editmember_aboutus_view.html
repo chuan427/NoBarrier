@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>editmember_aboutus_view</title>
+    <title>廠商關於我編輯頁面</title>
 <!--     <link rel="stylesheet" -->
 <!-- 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" /> -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -89,7 +89,7 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;" th:text=${session.loggingInUser.comName}></span>
+                        <span class="fs-2" style="color: black;" th:text=${userVO.comName}></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -98,11 +98,11 @@
                                 廠商廣告
                             </a>
                         </li>
-                        <li>
-                            <a th:href="@{com/editmember_user_view}" class="nav-link text-white fs-4">
-                                聯絡資料
-                            </a>
-                        </li>
+<!--                         <li> -->
+<!--                             <a th:href="@{com/editmember_user_view}" class="nav-link text-white fs-4"> -->
+<!--                                 聯絡資料 -->
+<!--                             </a> -->
+<!--                         </li> -->
                         <li>
                             <a th:href="@{com/editmember_aboutus_view}" class="nav-link text-white fs-4">
                                 關於我們
@@ -128,7 +128,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="col-md-6">
-                         <img th:src="@{/user/DBGifReader} + '?userId=' + ${session.loggingInUser.userId}" height="200" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">                         
+                         <img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" height="200" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">                         
                         </div>
                     </div>
                 </div>
@@ -136,9 +136,11 @@
                 <div class="input-group">
                     <div class="col-7">
                         <span class="input-group-text">關於我們</span>
-                        <textarea class="form-control"   th:text="${session.loggingInUser.comAboutContent}" readonly></textarea>
+                        <textarea class="form-control"   th:text="${userVO.comAboutContent}" readonly></textarea>
                     </div>
                 </div>
+            </div>
+            </div>
             </div>
             
   <head th:insert="@{/front-end/footer}"></head>

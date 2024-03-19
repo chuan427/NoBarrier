@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import com.user.model.UserVO;
 
@@ -21,7 +22,7 @@ public class ProductInformationVO implements java.io.Serializable{
 //	private Integer pinfoUserid;
 	private byte[] pinfoImage;
 	private String pinfoDes;
-	private Integer pinfoIsValid;
+	private Integer pinfoIsValid =1;
 	
 
 	public ProductInformationVO() {
@@ -72,7 +73,7 @@ public class ProductInformationVO implements java.io.Serializable{
 		this.pinfoImage = pinfoImage;
 	}
 
-
+	@NotEmpty(message="產品資訊請勿空白")
 	@Column(name = "pinfoDes")
 	public String getPinfoDes() {
 		return this.pinfoDes;
@@ -82,7 +83,6 @@ public class ProductInformationVO implements java.io.Serializable{
 	public void setPinfoDes(String pinfoDes) {
 		this.pinfoDes = pinfoDes;
 	}
-
 
 	@Column(name = "pinfoIsValid")
 	public Integer getPinfoIsValid() {

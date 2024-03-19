@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.forumreply.model.ForumReplyVO;
 import com.forumreport.model.ForumReportVO;
-import com.questionList.model.QueListVO;
 import com.user.model.UserVO;
 
 @Service("forumPostService")
@@ -71,4 +70,9 @@ public class ForumPostService {
         return repository.findByComNameOrFpTitleContaining(searchTerm, pageable);
     }
      
+    
+    public List<ForumPostVO> getAllForumPostsSortedByFpTime() {
+        return repository.findAllByOrderByFpTimeDesc();
+    }
+    
 }

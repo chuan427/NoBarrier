@@ -73,4 +73,5 @@ public class QuoService {
 	        List<QuoVO> allQuotation = repository.findByQuoUseridAndQuoIsValid(quoUserid);
 	        return allQuotation;
 	    }
+	 
 }

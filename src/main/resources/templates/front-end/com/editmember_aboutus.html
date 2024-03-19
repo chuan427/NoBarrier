@@ -2,152 +2,235 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>editmember_aboutus</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* 小型設備（手機） */
-        @media (max-width: 767.98px) {
-            /* 樣式設定 */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>editmember_aboutus</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
 
-        /* 中型設備（平板） */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            /* 樣式設定 */
-        }
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
 
-        /* 大型設備（桌面） */
-        @media (min-width: 992px) {
-            /* 樣式設定 */
-        }
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
 
-        .navbar-toggler-icon.small {
-            font-size: 0.6rem;
-        }
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
 
-        .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
-            background-color: lightgray !important;
-        }
-        .list-group1 {
-            display: none;
-            /* 隱藏通知列表 */
-        }
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: lightgray !important;
+}
 
-        .list-group1.show {
-            display: block;
-            /* 顯示通知列表 */
-        }
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
 
-        .notification-dropdown {
-            position: absolute;
-            top: 60px;
-            /* 距離 header 的頂部距離 */
-            right: 10px;
-            /* 距離 header 的右側距離 */
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
-        }
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
 
-        .notification-dropdown.show {
-            display: block;
-        }
-        .notification-icon {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 12px;
-        }
-    </style>
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+</style>
 </head>
 
 <body>
-    <head th:insert="~{/front-end/header_login}"></head>
+<head th:insert="@{/front-end/header_login}"></head>
 
-    <!-- siderbar -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
-                    style="height: 500px; text-align: center;">
-                    <a href="/"
-                        class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
-                    </a>
-                    <hr>
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a th:href="@{/com/editmember_ad}" class="nav-link text-white fs-4">
-                                廠商廣告
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_user}" class="nav-link text-white fs-4">
-                                聯絡資料
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_aboutus}" class="nav-link text-white fs-4">
-                                關於我們
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_product}" class="nav-link text-white fs-4">
-                                產品資訊
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_sale}" class="nav-link text-white fs-4">
-                                限時商品
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!-- siderbar -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+				style="height: 500px; text-align: center;">
+				<a href="/"
+					class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+					<span class="fs-2" style="color: black;"
+					th:text="${userVO.comName}"></span>
+				</a>
+				<hr>
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item"><a th:href="@{/com/editmember_ad}"
+						class="nav-link text-white fs-4"> 廠商廣告 </a></li>
+<!-- 					<li><a th:href="@{/com/editmember_user}" -->
+<!-- 						class="nav-link text-white fs-4"> 聯絡資料 </a></li> -->
+					<li><a th:href="@{/com/editmember_aboutus}"
+						class="nav-link text-white fs-4"> 關於我們 </a></li>
+					<li><a th:href="@{/com/editmember_product}"
+						class="nav-link text-white fs-4"> 產品資訊 </a></li>
+					<li><a th:href="@{/com/editmember_sale}"
+						class="nav-link text-white fs-4"> 限時商品 </a></li>
+				</ul>
+			</div>
+		</div>
 
-            <div class="col-md-9">
-                <h3>關於我們</h3>
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top: 50px;"></div>
-                <div class="input-group">
-                    <div class="col-7">
-                        <span class="input-group-text">關於我們</span>
-                        <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" type="button">修改完成</button>
-              </div>
-	<head th:insert="@{/front-end/footer}"></head>
-	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/notification.js}"></script>
+		<div class="col-md-9">
+			<form th:action="@{updateAboutUs}" method="post"
+				th:object="${userVO}" enctype="multipart/form-data">
+				<h3>關於我們</h3>
+				<div style="margin-top: 50px;"></div>
+				<div class="row">
+					<div class="col-6">
+						<div class="input-group mb-3">
+							<div>
+								<div>
+									<input type="hidden" th:field="*{userId}"
+										style="border: 0px; font-weight: bold;" readonly /><br />
+								</div>
+
+<!-- 											<label>關於我們圖片:</label> -->
+								<input type="file"  class="form-control" name="comAboutImage" th:field="*{comAboutImage}" onclick="previewImage()" multiple="multiple" />
+								<br> 
+<!-- 								可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span>  -->
+								<div id="blob_holder">
+								<br>
+<!-- 									<img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}"width="100px"> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="margin-top: 50px;"></div>
+				<div class="input-group">
+					<div class="col-7">
+								<input type="hidden" th:field="*{comName}" onclick="hideContent('comName.errors');" />
+								<input type="hidden" th:field="*{comAddress}" onclick="hideContent('comName.errors');" />
+								<input type="hidden" th:field="*{comAccount}" onclick="hideContent('comAccount.errors');" />
+								<input type="hidden" th:field="*{comPassword}" onclick="hideContent('comPassword.errors');" />
+								<input type="hidden" th:field="*{comUniNumber}" onclick="hideContent('comUniNumber.errors');" />
+								<input type="hidden" th:field="*{comRegDate}" onclick="hideContent('comRegDate.errors');" />
+								<input type="hidden" th:field="*{comContactPerson}" onclick="hideContent('comContactPerson.errors');" />
+								<input type="hidden" th:field="*{comContactPhone}" onclick="hideContent('comContactPhone.errors');" />
+								<input type="hidden" th:field="*{comMail}" onclick="hideContent('comMail.errors');" />
+								<input type="hidden" th:field="*{comPhone}" onclick="hideContent('comPhone.errors');" />
+								<input type="hidden" th:field="*{comBank}" onclick="hideContent('comBank.errors');" />
+								<input type="hidden" th:field="*{comStat}" onclick="hideContent('comStat.errors');" />
+								<input type="hidden" th:field="*{comRatStars}" onclick="hideContent('comRatStars.errors');" />
+								<input type="hidden" th:field="*{accountNumber}" onclick="hideContent('comRatStars.errors');" />
+								<input type="hidden" th:field="*{comRatCount}" onclick="hideContent('comRatCount.errors');" />
+								<input type="hidden" th:field="*{comIsValid}" onclick="hideContent('comRatCount.errors');" />
+<!-- 								<input type="text" th:field="*{userVO.comIndustry}" onclick="hideContent('comIndustry1.errors');" /><br/> -->
+					
+						<label>關於我們文字描述:</label>
+						<textarea class="form-control" name='comAboutContent' th:field="*{comAboutContent}" 
+							aria-label="With textarea">文字敘述</textarea>
+						<span th:if="${#fields.hasErrors('comAboutContent')}" 
+							th:errors="*{comAboutContent}" class="error"
+							id="comAboutContent.errors"
+							style="color: red; font-weight: bold;"></span>
+					</div>
+				</div>
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<button class="btn btn-primary me-md-2" type="submit">送出編輯</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<head th:insert="@{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/notification.js}"></script>
 
 <!--             <script src="js/notification.js"></script> -->
 <!--             <script src="js/home.js"></script> -->
 <!--             <script src="js/popper.min.js"></script> -->
 <!--             <script src="js/bootstrap.min.js"></script> -->
+<script type="text/javascript">
+//清除提示信息
+function hideContent(d) {
+     document.getElementById(d).style.display = "none";
+}
+//照片上傳-預覽用
+var filereader_support = typeof FileReader != 'undefined';
+if (!filereader_support) {
+	alert("No FileReader support");
+}
+acceptedTypes = {
+		'image/png' : true,
+		'image/jpeg' : true,
+		'image/gif' : true
+};
+function previewImage() {
+	var upfile1 = document.getElementById("comAboutImage");
+    // 移除之前的事件监听器
+    upfile1.removeEventListener("change", handleFileSelect, false);
+    // 添加新的事件监听器
+    upfile1.addEventListener("change", handleFileSelect, false);
+}
+function handleFileSelect(event) {
+    // 清除之前的预览图像
+    blob_holder.innerHTML = "";
+    
+    var files = event.target.files || event.dataTransfer.files;
+    for (var i = 0; i < files.length; i++) {
+        previewfile(files[i]);
+    }
+}
+function previewfile(file) {
+	if (filereader_support === true && acceptedTypes[file.type] === true) {
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var image = new Image();
+			image.src = event.target.result;
+			image.width = 100;
+			image.height =95;
+			image.border = 2;
+			if (blob_holder.hasChildNodes()) {
+				blob_holder.removeChild(blob_holder.childNodes[0]);
+			}
+			blob_holder.appendChild(image);
+		};
+		reader.readAsDataURL(file);
+		document.getElementById('submit').disabled = false;
+	} else {
+		blob_holder.innerHTML = "<div  style='text-align: left;'>" + "● filename: " + file.name
+				+ "<br>" + "● ContentTyp: " + file.type
+				+ "<br>" + "● size: " + file.size + "bytes"
+				+ "<br>" + "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+		document.getElementById('submit').disabled = true;
+	}
+}
+</script>
 </body>
-
 </html>

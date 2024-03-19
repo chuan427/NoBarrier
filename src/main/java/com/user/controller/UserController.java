@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,9 @@ import com.user.model.UserVO;
 //import com.dept.model.DeptService;
 
 @Controller
+
 @RequestMapping("/userinformation")
+
 public class UserController {
 
 	private final PasswordEncoder passwordEncoder;
@@ -215,6 +218,7 @@ public class UserController {
 	 * This method will be called on listAllEmp.html form submission, handling POST
 	 * request
 	 */
+
 	@PostMapping("getOne_For_Update_user")
 	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
@@ -226,7 +230,6 @@ public class UserController {
 		model.addAttribute("userVO", userVO);
 		return "front-end/userinformation/memberCen2"; // 查詢完成後轉交update_user_input.html
 	}
-
 	/*
 	 * This method will be called on update_user_input.html form submission,
 	 * handling POST request It also validates the user input

@@ -1,6 +1,7 @@
 package com;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -124,6 +125,10 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
+
+private ReqOrderVO reqOrderVO;
+
+
 //	@GetMapping("/")
 //	public String index(Model model) {
 //		model.addAttribute("message", message);
@@ -189,7 +194,9 @@ public class IndexController_inSpringBoot {
 //		return "index"; // view
 //	}
 
+
 	// 廠商資訊 完成
+
 
 	@GetMapping("/com/com_homepage/{userId}")
 	public String homepage(@PathVariable("userId") String userId, Model model) {
@@ -216,14 +223,20 @@ public class IndexController_inSpringBoot {
 
 	// 廠商關於我預覽頁面 完成
 	@GetMapping("/com/editmember_aboutus_view")
-	public String editmember_aboutus_view() {
+	public String editmember_aboutus_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        model.addAttribute("userVO", userVO);
 		return "front-end/com/editmember_aboutus_view"; // view
 	}
 
-	// 廠商編輯頁面 完成
+//	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_aboutus")
-	public String editmember_aboutus() {
-		return "front-end/com/editmember_aboutus"; // view
+	public String editmember_aboutus(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_aboutus"; // 返回 view 的名稱
 	}
 
 	// 廠商廣告預覽頁面 完成
@@ -234,24 +247,43 @@ public class IndexController_inSpringBoot {
 
 	// 廠商廣告編輯頁面 完成
 	@GetMapping("/com/editmember_ad")
-	public String editmember_ad() {
+	public String editmember_ad(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        model.addAttribute("userVO", userVO);
 		return "front-end/com/editmember_ad"; // view
 	}
 
-	// 廠商產品預覽頁面 完成
-//	@GetMapping("/com/editmember_product_view")
-//	public String editmember_product_view(Model model) {
-//	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
-//	        // 添加到模型中
-//	        model.addAttribute("productInformationList", productInformationList);
-//	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
+	
+//	@GetMapping("/upProductInformation")
+//	public String addProductInformation(ModelMap model) {
+//		ProductInformationVO productInformationVO = new ProductInformationVO();
+//		model.addAttribute("productInformationVO", productInformationVO);
+//		return "back-end/productInformation/update_productInformation_input";
 //	}
 
-
-	// 廠商產品預覽頁面 完成
+//	 廠商產品預覽頁面 完成
+	@GetMapping("/com/editmember_product_view")
+	public String editmember_product_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+	        // 添加到模型中
+	        model.addAttribute("productInformationList", productInformationList);
+	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
+	}
+	
+	// 廠商產品編輯頁面 完成
 	@GetMapping("/com/editmember_product")
-	public String editmember_product() {
-		return "front-end/com/editmember_product"; // view
+	public String editmember_product(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+        // 添加到模型中
+        model.addAttribute("userVO", userVO);
+        model.addAttribute("productInformationVO",new ProductInformationVO());
+        model.addAttribute("productInformationList", productInformationList);
+    return "front-end/com/editmember_product"; // 返回 view 的名稱
 	}
 
 	// 廠商產品限時預覽頁面 完成
@@ -276,18 +308,39 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
 		return "front-end/com/editmember_sale"; // view
 	}
-
-	// 廠商聯絡資料預覽頁面 完成
-	@GetMapping("/com/editmember_user_view")
-	public String editmember_user_view() {
-		return "front-end/com/editmember_user_view"; // view
+	
+	//從session中取的userVO
+	@ModelAttribute("userVOlist")
+	protected List<UserVO> referenceListData_user(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		if (userVO == null) {
+			return null;
+		} else {
+			return userSvc.getOneStatUser(userVO);
+		}
 	}
+	
 
-	// 廠商聯絡資料編輯頁面 完成
-	@GetMapping("/com/editmember_user")
-	public String editmember_user() {
-		return "front-end/com/editmember_user"; // view
-	}
+//	// 廠商聯絡資料預覽頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user_view")
+//	public String editmember_user_view() {
+//		return "front-end/com/editmember_user_view"; // view
+//	}
+
+//	// 廠商聯絡資料編輯頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user")
+//	public String editmember_user() {
+//		return "front-end/com/editmember_user"; // view
+//	}
+//	  廠商聯絡資料編輯頁面 修改前暫時不用
+//    @GetMapping("/com/editmember_user/{userId}")
+//    public String editmember_user(@PathVariable("userId") String userId, Model model) {
+//        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+//        // 將相關數據添加到 Model 中，以便在視圖中使用
+//        model.addAttribute("userVO", userVO);
+//        return "front-end/com/editmember_user_view"; // view
+//    }
 
 	// 廠商產品資訊編輯頁面 完成
 	@GetMapping("/com/editmemeber_product")
@@ -298,6 +351,7 @@ public class IndexController_inSpringBoot {
 	// 廠商產品資訊編輯頁面 完成
 	@GetMapping("/com/member_AboutUs/{userId}")
 	public String member_AboutUs(@PathVariable("userId") UserVO userVO, Model model) {
+
 		// 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 		// 將相關數據添加到 Model 中，以便在視圖中使用
 		model.addAttribute("userVO", userVO);
@@ -311,6 +365,7 @@ public class IndexController_inSpringBoot {
 			}
 
 
+
 	// 廠商產品資訊 完成
 	@GetMapping("/com/member_Prod/{userId}")
 	public String member_Prod(@PathVariable("userId") UserVO userVO, Model model) {
@@ -321,8 +376,7 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("productInformationVO", productInformationVO);
 		return "front-end/com/member_Prod"; // view
 	}
-
-////	 廠商產品資訊編輯頁面 完成
+	
 //		@GetMapping("/com/member_Prod")
 //		public String member_Prod () {
 //				    return "front-end/com/member_Prod"; // view
@@ -424,9 +478,9 @@ public class IndexController_inSpringBoot {
 	    model.addAttribute("userVO", userVO);
 	    
 	    // 假設你有方法來獲取相關資料列表
-	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+//	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 	    List<QuoVO> list1 = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
-	    model.addAttribute("reqOrderListData", list);
+//	    model.addAttribute("reqOrderListData", list);
 	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 	    model.addAttribute("quoListData", list1);
 
@@ -436,17 +490,31 @@ public class IndexController_inSpringBoot {
 
 	@ModelAttribute("reqOrderListData")
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        HttpServletResponse response) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-		if (userVO == null) {
-			return null;
-		} else {
-//	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-//			return list;
-			return reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
-		}
+	    if (userVO == null) {
+	        return null;
+	    } else {
+	        List<ReqOrderVO> reqorder = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+	        List<QuoVO> quoAll = quoSvc.getAll();
+	        List<ReqOrderVO> list = new ArrayList<>();
+
+	        for (ReqOrderVO reqOrderVO : reqorder) {
+	            boolean shouldAddToList = true;
+	            for (QuoVO quoVO : quoAll) {
+	                if (quoVO.getReqOrderVO().getReqNum() == reqOrderVO.getReqNum() && quoVO.getUserVO().getUserId() == userVO.getUserId()) {
+	                    shouldAddToList = false;
+	                    break;
+	                }
+	            }
+	            if (shouldAddToList) {
+	                list.add(reqOrderVO);
+	            }
+	        }
+	        return list;
+	    }
 	}
 
 	// ----------------報價單--------------------
@@ -636,7 +704,6 @@ public class IndexController_inSpringBoot {
 		}
 	}
 
-
 //	-----------------------------------------------------------------------
 
 	@GetMapping("/ad/select_page")
@@ -687,9 +754,12 @@ public class IndexController_inSpringBoot {
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
 		forumPostVO = forumPostSvc.getLatestPost();
+		List<ForumPostVO> sortedPosts = forumPostSvc.getAllForumPostsSortedByFpTime();
+	    model.addAttribute("forumPostListData", sortedPosts);
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
+		
 
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {
@@ -826,6 +896,14 @@ public class IndexController_inSpringBoot {
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
+	
+	@ModelAttribute("newsListDatacheck") // for 最新消息
+	protected List<NewsVO> referenceListData_checknews(Model model) {
+
+		List<NewsVO> list = newsSvc.getAllAndHandleStatus();
+		return list;
+	}
+
 
 //	------------------------------chat-----------------------------------------
 	@GetMapping("/chat/privatechat")
@@ -1048,4 +1126,6 @@ public class IndexController_inSpringBoot {
 	}
 	
 }
+
+
 
