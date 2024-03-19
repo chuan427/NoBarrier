@@ -100,10 +100,7 @@ body {
 	color: #333;
 }
 
-.fabotton {
-	display: flex;
-	gap: 25px; /* 在圖標之間添加一些間隙 */
-}
+
 
 /* 留言 */
 .comment-section, .comments-display {
