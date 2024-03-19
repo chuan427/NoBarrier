@@ -70,4 +70,9 @@ public class ForumPostService {
         return repository.findByComNameOrFpTitleContaining(searchTerm, pageable);
     }
      
+    
+    public List<ForumPostVO> getAllForumPostsSortedByFpTime() {
+        return repository.findAllByOrderByFpTimeDesc();
+    }
+    
 }
