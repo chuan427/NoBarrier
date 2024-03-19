@@ -1,5 +1,5 @@
 html {
-	height: 100%;
+	height: Auto;
 }
 
 body {
@@ -93,11 +93,7 @@ body {
 	color: #333;
 }
 
-.fabotton {
-	display: flex;
-	justify-content: flex-end; /* 正確地將內容對齊到右邊 */
-	gap: 25px; /* 在圖標之間添加一些間隙 */
-}
+
 
 /* 側邊欄位 */
 .sidebar {

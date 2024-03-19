@@ -82,12 +82,12 @@ public class AdController {
 		    if (adv.getAdsDays() == null || !uniqueAdsDays.add(adv.getAdsDays())) {
 		        model.addAttribute("errorMessage2",
 		                adv.getAdsDays() == null ? "廣告日期: 請選擇日期" : "廣告日期重複: " + adv.getAdsDays() + "請重新選取");
-		        return "back-end/ad/addEmp";
+		        return "back-end/ad/addAd";
 		    }
 		}
 
 		if (parts[0].isEmpty() || addate.getAdPriceadd() == null) {
-			return "back-end/ad/addEmp";
+			return "back-end/ad/addAd";
 		}
 
 		// 开始新增数据
@@ -96,7 +96,7 @@ public class AdController {
 
 		// 新增完成，准备重定向到成功页面
 //		return  "redirect:/ad/listAllEmp";
-		return  "back-end/ad/addEmp";
+		return  "back-end/ad/addAd";
 
 	}
 

@@ -51,8 +51,6 @@ import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
-import com.rptdlist.model.RptdlistService;
-import com.rptdlist.model.RptdlistVO;
 import com.security.model.MailService;
 import com.security.model.RandomPasswordGenerator;
 import com.user.model.UserService;
@@ -67,8 +65,8 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	QuoService quoSvc;
 
-	@Autowired
-	RptdlistService rptdlistSvc;
+//	@Autowired
+//	RptdlistService rptdlistSvc;
 
 	@Autowired
 	ReqOrderService reqOrderSvc;
@@ -391,12 +389,12 @@ public class IndexController_inSpringBoot {
 		return "back-end/rptdlist/listAllRptdlist";
 	}
 
-	@ModelAttribute("rptdlistListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
-	protected List<RptdlistVO> referenceListData_rptdlist(Model model) {
-
-		List<RptdlistVO> list = rptdlistSvc.getAll();
-		return list;
-	}
+//	@ModelAttribute("rptdlistListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
+//	protected List<RptdlistVO> referenceListData_rptdlist(Model model) {
+//
+//		List<RptdlistVO> list = rptdlistSvc.getAll();
+//		return list;
+//	}
 
 	// -------------------需求單-----------------------
 //	@GetMapping("/userinformation/userpage")
@@ -427,7 +425,7 @@ public class IndexController_inSpringBoot {
 	    
 	    // 假設你有方法來獲取相關資料列表
 	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
-	    List<QuoVO> list1 = quoSvc.getOneStatQuotation(userVO);
+	    List<QuoVO> list1 = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 	    model.addAttribute("reqOrderListData", list);
 	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 	    model.addAttribute("quoListData", list1);
@@ -491,7 +489,7 @@ public class IndexController_inSpringBoot {
 		if (userVO == null) {
 			return null;
 		} else {
-			return quoSvc.getOneStatQuotation(userVO);
+			return quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 		}
 	}
 
@@ -655,7 +653,7 @@ public class IndexController_inSpringBoot {
 	public String addEmp1(Model model) {
 		AdDate adDate = new AdDate();
 		model.addAttribute("adDate", adDate);
-		return "back-end/ad/addEmp";
+		return "back-end/ad/addAd";
 	}
 
 	@ModelAttribute("adListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
