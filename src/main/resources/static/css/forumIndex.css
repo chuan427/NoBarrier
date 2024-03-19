@@ -10,6 +10,7 @@ body {
 	background-image: url('/images/abstract-painted.JPG');
 	background-size: cover;
 	background-position: center;
+	
 }
 
 /* footer 改成白色 */
@@ -71,6 +72,7 @@ body {
 	align-items: flex-start;
 	position: relative;
 	justify-content: space-between;
+	
 }
 
 .post-header i {
@@ -188,4 +190,14 @@ body {
 	background-color: grey; /* 滑鼠懸停時的背景色，可調整為淡灰色或其他顏色 */
 	border-color: #007bff; /* 滑鼠懸停時的邊框顏色變化 */
 	color: #007bff; /* 滑鼠懸停時文字顏色變化 */
+}
+
+
+.views-comments {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 680px; 
+  justify-content: flex-end;
+ 
 }
