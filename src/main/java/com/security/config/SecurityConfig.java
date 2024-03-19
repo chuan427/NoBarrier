@@ -99,6 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 				
+		
 				// 表單提交
 				http.formLogin()
 					// 自定義登入頁面
@@ -131,6 +132,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/userinformation/sendVerificationCode").permitAll()
 					.antMatchers("/userinformation/insertUser").permitAll()
 					.antMatchers("/userinformation/insertIndustry").permitAll()
+					
+					//後台管理員
+					.antMatchers("/authorization_new_member").hasRole("ADMIN")
 //					// 權限判斷
 //					// 必須要有 admin 權限才可以訪問
 //					.antMatchers("/adminpage").hasAuthority("admin")

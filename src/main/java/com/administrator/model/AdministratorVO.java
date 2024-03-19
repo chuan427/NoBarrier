@@ -19,6 +19,7 @@ public class AdministratorVO implements java.io.Serializable{
 	private String adminAccount;
 	private String adminPassword;
 	private Integer adminAuth;
+	private Integer adminStat;
 	private Integer adminIsValid;
 	
 	public AdministratorVO() {
@@ -69,6 +70,15 @@ public class AdministratorVO implements java.io.Serializable{
 		this.adminPassword = adminPassword;
 	}
 
+	@Column(name = "adminStat")
+	public Integer getAdminStat() {
+		return this.adminStat;
+	}
+
+	public void setAdminStat(Integer adminStat) {
+		this.adminStat = adminStat;
+	}
+	
 	@Column(name = "adminAuth")
 	public Integer getAdminAuth() {
 		return this.adminAuth;
@@ -77,6 +87,7 @@ public class AdministratorVO implements java.io.Serializable{
 	public void setAdminAuth(Integer adminAuth) {
 		this.adminAuth = adminAuth;
 	}
+
 
 	@Column(name = "adminIsValid")
 	public Integer getAdminIsValid() {
