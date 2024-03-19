@@ -1,0 +1,183 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>訂單新增 - addOrder.html</title>
+
+<head th:insert="~{/front-end/chat/included-fragment}" >
+<img th:src="@{/images/logo.png}" width="100" height="100" />
+</head>
+<style type="text/css">
+	
+	button {
+		padding: 5px;
+	}
+	form {
+		display: table;
+	}
+	form div {
+		display: table-row;
+	}
+	label, input, span, select {
+		display: table-cell;
+		margin: 5px;
+		text-align: left;		
+	}
+	input[type=text], input[type=password], select, textarea {
+		width: 200px;
+		margin: 5px;
+	}
+	form div div {
+		display: table-cell;
+	}
+	.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>訂單新增 - addOrder.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/userinformation/userpage}"><img th:src="@{/images/back1.gif}">回主頁</a></h3></div>
+</nav>
+
+	<div align="center">
+		<h3><b>請依洽談內容輸入，若商品有附加費用請一併加計在合計金額，本平台不負責仲裁附加費用項目</b></h3>
+		<form th:action="@{insert}" method="post" th:object="${orderVO}" enctype="multipart/form-data">
+			
+			
+			
+<!-- test -->
+
+<div>
+<!-- <label>賣家會員編號:</label> -->
+<!-- <select th:field="*{userVO.userId}"> -->
+<!-- <option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" /> -->
+<!-- </select> -->
+<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
+</div>
+	
+			
+			
+			
+			<div>
+			<label>商品名稱:</label>
+			<input type="text" th:field="*{ordProdname}" onclick="hideContent('ordProdname.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('ordProdname')}" th:errors="*{ordProdname}" class="error" id="ordProdname.errors"></span>
+			</div>
+		
+			
+			<div>
+			<label>商品數量:</label>
+			<input type="text" th:field="*{ordProdqty}" onclick="hideContent('ordProdqty.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('ordProdqty')}" th:errors="*{ordProdqty}" class="error" id="ordProdqty.errors"></span>
+			</div>
+			
+			<div>
+			<label>品項單位:</label>
+			<input type="text" th:field="*{ordUnitname}" onclick="hideContent('ordUnitname.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('ordUnitname')}" th:errors="*{ordUnitname}" class="error" id="ordUnitname.errors"></span>
+			</div>
+			
+			<div>
+			<label>單件商品價格:</label>
+			<input type="text" th:field="*{ordProdprice}" onclick="hideContent('ordProdprice.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('ordProdprice')}" th:errors="*{ordProdprice}" class="error" id="ordProdprice.errors"></span>
+			</div>
+
+			
+			<div>
+			<label>合計金額:</label>
+			<input type="text" th:field="*{ordTotalamount}" onclick="hideContent('ordTotalamount.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('ordTotalamount')}" th:errors="*{ordTotalamount}" class="error" id="ordTotalamount.errors"></span>
+			</div>
+			
+<!-- 			<div> -->
+<!-- 			<label>賣家會員編號:</label> -->
+<!-- 			<input type="text" th:field="*{ordSellerid}" onclick="hideContent('ordSellerid.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordSellerid')}" th:errors="*{ordSellerid}" class="error" id="ordSellerid.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>買家會員編號:</label> -->
+<!-- 			<input type="text" th:field="*{ordBuyerid}" onclick="hideContent('ordBuyerid.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordBuyerid')}" th:errors="*{ordBuyerid}" class="error" id="ordBuyerid.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>訂單狀態:</label> -->
+<!-- 			<input type="text" th:field="*{ordStat}" onclick="hideContent('ordStat.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordStat')}" th:errors="*{ordStat}" class="error" id="ordStat.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>物流狀態:</label> -->
+<!-- 			<input type="text" th:field="*{ordTranStat}" onclick="hideContent('ordTranStat.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordTranStat')}" th:errors="*{ordTranStat}" class="error" id="ordTranStat.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>交易狀態:</label> -->
+<!-- 			<input type="text" th:field="*{ordPaystat}" onclick="hideContent('ordPaystat.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordPaystat')}" th:errors="*{ordPaystat}" class="error" id="ordPaystat.errors"></span> -->
+<!-- 			</div> -->
+			
+			
+<!-- 			<div> -->
+<!-- 			<label>訂單評分:</label> -->
+<!-- 			<input type="text" th:field="*{ordRatstar}" onclick="hideContent('ordRatstar.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordRatstar')}" th:errors="*{ordRatstar}" class="error" id="ordRatstar.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>評價文字:</label> -->
+<!-- 			<input type="text" th:field="*{ordComment}" onclick="hideContent('ordComment.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordComment')}" th:errors="*{ordComment}" class="error" id="ordComment.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>限時特賣單號:</label> -->
+<!-- 			<input type="text" th:field="*{ordLimnum}" onclick="hideContent('ordLimnum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordLimnum')}" th:errors="*{ordLimnum}" class="error" id="ordLimnum.errors"></span> -->
+<!-- 			</div> -->
+<!-- 			<div> -->
+<!-- 			<label>需求編號:</label> -->
+<!-- 			<input type="text" th:field="*{ordReqnum}" onclick="hideContent('ordReqnum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordReqnum')}" th:errors="*{ordReqnum}" class="error" id="ordReqnum.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>報價編號:</label> -->
+<!-- 			<input type="text" th:field="*{ordQuonum}" onclick="hideContent('ordQuonum.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordQuonum')}" th:errors="*{ordQuonum}" class="error" id="ordQuonum.errors"></span> -->
+<!-- 			</div> -->
+			
+<!-- 			<div> -->
+<!-- 			<label>訂單存在狀態:</label> -->
+<!-- 			<input type="text" th:field="*{ordIsValid}" onclick="hideContent('ordIsValid.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('ordIsValid')}" th:errors="*{ordIsValid}" class="error" id="ordIsValid.errors"></span> -->
+<!-- 			</div> -->
+			
+			<div>
+				<div></div>
+				<div><button type="submit" id="submit"> 送出新增 </button></div>
+				<div></div>
+			</div>		
+		</form>
+	
+	</div>
+
+</body>
+</html>
