@@ -142,19 +142,23 @@
 				<span th:if="${#fields.hasErrors('comPhone')}" th:errors="*{comPhone}" class="error"
 					id="comPhone.errors"></span>
 			</div>
+			
+			
+				<div>
+				<label>銀行代碼:</label>
+				<input type="text" th:field="*{comBank}" onclick="hideContent('comBank.errors');" /><br />
+				<span th:if="${#fields.hasErrors('comBank')}" th:errors="*{comBank}" class="error"
+					id="comBank.errors"></span>
+				</div>
+			
+			
 			<div>
-				<label>我不知道:</label>
+				<label>銀行帳號:</label>
 				<input type="text" th:field="*{accountNumber}" onclick="hideContent('accountNumber.errors');" /><br />
 				<span th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}" class="error"
 					id="accountNumber.errors"></span>
 			</div>
 
-			<div>
-				<label>銀行帳號資訊:</label>
-				<input type="text" th:field="*{comBank}" onclick="hideContent('comBank.errors');" /><br />
-				<span th:if="${#fields.hasErrors('comBank')}" th:errors="*{comBank}" class="error"
-					id="comBank.errors"></span>
-			</div>
 
 
 			<div>
