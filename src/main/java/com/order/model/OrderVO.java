@@ -37,7 +37,7 @@ import com.user.model.UserVO;
 		private String ordUnitname;//訂單單位名稱
 		private Integer ordProdprice;//訂單產品價格
 		private Integer ordTotalamount;//訂單總價		private Integer ordBuyerid;
-		private Integer ordSellerid;
+//		private Integer ordSellerid;
 
 		private Integer ordStat;//訂單狀態
 		private Integer ordTranstat;//物流狀態
@@ -215,24 +215,24 @@ import com.user.model.UserVO;
 		public void setOrdTotalamount(Integer ordTotalamount) {
 			this.ordTotalamount = ordTotalamount;
 		}
-		@Column(name = "ordBuyerid")
-//		@NotEmpty(message="買家編號: 請勿空白")
-//		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
-		public Integer getOrdBuyerid() {
-			return this.ordBuyerid;
-		}
-		public void setOrdBuyerid(Integer ordBuyerid) {
-			this.ordBuyerid = ordBuyerid;
-		}
-		
-		@Column(name = "ordSellerid")
-//		@NotEmpty(message="賣家編號: 請勿空白")
-		public Integer getOrdSellerid() {
-			return this.ordSellerid;
-		}
-		public void setOrdSellerid(Integer ordSellerid) {
-			this.ordSellerid = ordSellerid;
-		}
+//		@Column(name = "ordBuyerid")
+////		@NotEmpty(message="買家編號: 請勿空白")
+////		@Size(min=2,max=20,message="買家編號: 長度必需在{min}到{max}之間")
+//		public Integer getOrdBuyerid() {
+//			return this.ordBuyerid;
+//		}
+//		public void setOrdBuyerid(Integer ordBuyerid) {
+//			this.ordBuyerid = ordBuyerid;
+//		}
+//		
+//		@Column(name = "ordSellerid")
+////		@NotEmpty(message="賣家編號: 請勿空白")
+//		public Integer getOrdSellerid() {
+//			return this.ordSellerid;
+//		}
+//		public void setOrdSellerid(Integer ordSellerid) {
+//			this.ordSellerid = ordSellerid;
+//		}
 		@Column(name = "ordStat")
 //		@NotEmpty(message="訂單狀態: 請勿空白")
 		public Integer getOrdStat() {

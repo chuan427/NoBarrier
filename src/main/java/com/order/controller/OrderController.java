@@ -70,34 +70,12 @@ public class OrderController {
 	public String insert(QuoVO quovo,OrderVO orderVO,HttpSession session, ModelMap model) throws IOException {
 		orderVO.setOrdPaystat(0);
 		orderVO.setOrdStat(0);
-		orderVO.setOrdTranStat(0);
+		orderVO.setOrdTranstat(0);
 		orderSvc.addChatOrder(orderVO);
 		model.addAttribute("success", "- (新增成功)");
 		return "redirect:/order/transaction_stat"; //轉去訂單狀態
 	}
 	
-	@PostMapping("addOrder")
-	public String insert(QuoVO quovo, HttpSession session) throws IOException {
-		UserVO userVO = (UserVO)session.getAttribute("loggingInUser");
-		ReqOrderVO reqOrderVO = quoSvc.getOrderByreqNum(quovo.getQuoNum());
-//		QuoVO quonums = quoSvc.getOneQuo(quovo.getQuoNum());
-		OrderVO orderVO = new OrderVO();
-		orderVO.setOrdBuyerid(userVO.getUserId());
-		orderVO.setOrdSellerid(quovo.getUserVO().getUserId());	
-		orderVO.setOrdProdname(quovo.getQuoProdname());
-		orderVO.setOrdProdprice(quovo.getQuoUnitprice());
-		orderVO.setOrdProdqty(quovo.getQuoProdqty());
-		orderVO.setOrdTotalamount(quovo.getQuoTotalprice());
-		orderVO.setOrdUnitname(quovo.getQuoUnitname());
-		orderVO.setOrdPaystat(0);
-		orderVO.setOrdStat(0);
-		orderVO.setOrdTranStat(0);
-		orderVO.setReqOrderVO(reqOrderVO);
-		orderVO.setOrdQuonum(quovo.getQuoNum());
-		orderVO.setOrdIsValid(1);
-		orderSvc.addOrder(orderVO,userVO,quovo);
-	 	return "redirect:/order/transaction";
-	}
 
 	// 訂單（報價單）內容確認
 	@GetMapping("/transaction_check")
@@ -204,18 +182,6 @@ public class OrderController {
 	}
 
 
-	// 直接購買
-//	@PostMapping("straightOrder")
-//	public String straightOrder(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
-//
-//		orderSvc.addOrder(orderVO);
-//		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-//		List<OrderVO> list = orderSvc.getAll();
-//		model.addAttribute("orderListData", list);
-//		model.addAttribute("success", "- (新增成功)");
-//		return "redirect:/order/listAllOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/order/listAllOrder")
-//	}
-
 	// 訂單完成
 	@GetMapping("complete")
 	public String complete(HttpServletRequest request,OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
@@ -224,7 +190,7 @@ public class OrderController {
 		// 改變訂單狀態 0改成1
 		int valid = 1;
 		completeOrder.setOrdStat(valid);
-		completeOrder.setOrdTranStat(valid);
+		completeOrder.setOrdTranstat(valid);
 		orderSvc.updateOrder(completeOrder);// 存檔
 
 		model.addAttribute("success", "- (完成訂單)");

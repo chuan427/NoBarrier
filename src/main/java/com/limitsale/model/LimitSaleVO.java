@@ -76,13 +76,14 @@ import com.user.model.UserVO;
 //		public void setOrderVO(OrderVO orderVO) {
 //			this.orderVO = orderVO;
 //		}
-//		//		@Id
-//		@GeneratedValue(strategy = GenerationType.IDENTITY)		public Integer getLimNum() {
-//			return limNum;
-//		}
-//		public void setLimNum(Integer limNum) {
-//			this.limNum = limNum;
-//		}
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)		
+		public Integer getLimNum() {
+			return limNum;
+		}
+		public void setLimNum(Integer limNum) {
+			this.limNum = limNum;
+		}
 		
 		
 //		public Integer getLimOrdernum() {

@@ -24,20 +24,20 @@ public class OrderService<OrdRatstar> {
 		@Autowired
 		OrderRepository repository;
 
-//		public void addOrder(OrderVO OrderVO) {
-//			
-//			repository.save(OrderVO);
-//		}
+		public void addOrder(OrderVO OrderVO) {
+			
+			repository.save(OrderVO);
+		}
 		
 		public void addChatOrder(OrderVO OrderVO) {
 		repository.save(OrderVO);
 	}
 		
-		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
-			OrderVO.setUserVO(loggingInUser);
-			OrderVO.setQuoVO(quoVO);
-			repository.save(OrderVO);
-		}
+//		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
+//			OrderVO.setUserVO(loggingInUser);
+//			OrderVO.setQuoVO(quoVO);
+//			repository.save(OrderVO);
+//		}
 
 		public void updateOrder(OrderVO OrderVO) {
 			repository.save(OrderVO);
