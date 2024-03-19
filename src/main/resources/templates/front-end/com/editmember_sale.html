@@ -2,228 +2,277 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>editmember_sale</title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet"
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>editmember_sale</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+<link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
-    <style>
-        /* 小型設備（手機） */
-        @media (max-width: 767.98px) {
-            /* 樣式設定 */
-        }
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
 
-        /* 中型設備（平板） */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            /* 樣式設定 */
-        }
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
 
-        /* 大型設備（桌面） */
-        @media (min-width: 992px) {
-            /* 樣式設定 */
-        }
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
 
-        .navbar-toggler-icon.small {
-            font-size: 0.6rem;
-        }
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
 
-        .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
-            background-color: lightgray !important;
-        }
-        .list-group1 {
-            display: none;
-            /* 隱藏通知列表 */
-        }
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: lightgray !important;
+}
 
-        .list-group1.show {
-            display: block;
-            /* 顯示通知列表 */
-        }
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
 
-        .notification-dropdown {
-            position: absolute;
-            top: 60px;
-            /* 距離 header 的頂部距離 */
-            right: 10px;
-            /* 距離 header 的右側距離 */
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-            z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
-        }
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
 
-        .notification-dropdown.show {
-            display: block;
-        }
-        .notification-icon {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 12px;
-        }
-    </style>
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+</style>
 </head>
 
 <body>
-    <!-- <header> -->
-    <head th:insert="~{/front-end/header_login}"></head>
-    
+	<!-- <header> -->
+<head th:insert="~{/front-end/header_login}"></head>
 
-    <!-- siderbar -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
-                    style="height: 500px; text-align: center;">
-                    <a href="/"
-                        class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;">xxx有限公司</span>
-                    </a>
-                    <hr>
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a th:href="@{editmember_ad}" class="nav-link text-white fs-4">
-                                廠商廣告
-                            </a>
-                        </li>
-<!--                         <li> -->
-<!--                             <a th:href="@{editmember_user}" class="nav-link text-white fs-4"> -->
-<!--                                 聯絡資料 -->
-<!--                             </a> -->
-<!--                         </li> -->
-                        <li>
-                            <a th:href="@{editmember_aboutus}" class="nav-link text-white fs-4">
-                                關於我們
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_product}" class="nav-link text-white fs-4">
-                                產品資訊
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_sale}" class="nav-link text-white fs-4">
-                                限時商品
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
 
-            <div class="col-md-9">
-                <h3>限時商品</h3>
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">NT$</span>
-                            <input type="text" class="form-control"
-                                aria-label="Dollar amount (with dot and two decimal places)">
-                        </div>
-                    </div>
-                    <div style="margin-top: 50px;"></div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">NT$</span>
-                            <input type="text" class="form-control"
-                                aria-label="Dollar amount (with dot and two decimal places)">
-                        </div>
-                    </div>
-                </div>
 
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">NT$</span>
-                            <input type="text" class="form-control"
-                                aria-label="Dollar amount (with dot and two decimal places)">
-                        </div>
-                    </div>
-                </div>
+<!-- siderbar -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+				style="height: 500px; text-align: center;">
+				<a href="/"
+					class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+					<span class="fs-2" style="color: black;">xxx有限公司</span>
+				</a>
+				<hr>
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item"><a th:href="@{editmember_ad}"
+						class="nav-link text-white fs-4"> 廠商廣告 </a></li>
+					<li><a th:href="@{editmember_user}"
+						class="nav-link text-white fs-4"> 聯絡資料 </a></li>
+					<li><a th:href="@{editmember_aboutus}"
+						class="nav-link text-white fs-4"> 關於我們 </a></li>
+					<li><a th:href="@{/com/editmember_product}"
+						class="nav-link text-white fs-4"> 產品資訊 </a></li>
+					<li><a th:href="@{/com/editmember_sale}"
+						class="nav-link text-white fs-4"> 限時商品 </a></li>
+				</ul>
+			</div>
+		</div>
 
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" id="inputGroupFile02">
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <div class="input-group">
-                            <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea">文字敘述</textarea>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">NT$</span>
-                            <input type="text" class="form-control"
-                                aria-label="Dollar amount (with dot and two decimal places)">
-                        </div>
-                    </div>
-                </div>
-            </div>
+		<div class="col-md-9">
+			<h3>限時商品</h3>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" type="button">修改完成</button>
-            </div>
+			<!-- 			 商品區塊迴圈開始 -->
+			<div th:each="product : ${limitSaleOneData2}" class="row">
+				
+				<div class="col-2">
+					<div class="input-group mb-3">
+						<span class="input-group-text">名稱</span> <input type="text"
+							class="form-control" placeholder="1000"
+							aria-label="Dollar amount (with dot and two decimal places)"
+							th:value="${product.limProdname}">
+					</div>
+				</div>
 
-            <!-- <footer> -->
-            <head th:insert="~{/front-end/footer}"></head>
-            <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+			<div class="col-2">
+				<div class="input-group mb-3">
+					 <input type="text"
+						class="form-control" placeholder="1000"
+						aria-label="Dollar amount (with dot and two decimal places)"
+						th:value="${product.limQty}">
+				</div>
+			</div>
+
+		<div class="col-2">
+			<div class="input-group mb-3">
+				 <input type="text"
+					class="form-control" placeholder="1000"
+					aria-label="Dollar amount (with dot and two decimal places)"
+					th:value="${product.limUnitname}">
+			</div>
+		</div>		
+		<div class="col-2">
+			<div class="input-group mb-3">
+				<span class="input-group-text">價格</span> <input type="text"
+					class="form-control" placeholder="1000"
+					aria-label="Dollar amount (with dot and two decimal places)"
+					th:value="${product.limPrice}">
+			</div>
+		</div>
+		
+				<div class="col-1">
+
+			<form method="post" th:action="@{getOne_For_Update}"
+				enctype="multipart/form-data" style="margin-bottom: 0px;">
+				<input type="submit" value="修改"> <input type="hidden"
+					name="limNum" th:value="${product.limNum}">
+			</form>
+		</div>
+		<div class="col-4">
+					<div class="col-md-7">
+						<img
+							th:src="@{/limitSale/DBGifReader} + '?limNum=' + ${product.limNum}"
+							class="img-fluid" width="100px">
+					</div>
+				</div>
+
+
+		<div class="col-5">
+			<div class="input-group">
+				<span class="input-group-text"></span>
+				<textarea class="form-control" aria-label="With textarea"
+					th:text="${product.limDes}"></textarea>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+	<div th:if="${limitSaleOneData2.size() &lt; 4}">
+		<form th:action="@{insertlimitSale}" method="post"
+			th:object="${limitSaleVO}" enctype="multipart/form-data">
+
+			<div style="margin-top: 50px;"></div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<span class="input-group-text">特賣商品名稱</span> <input type="text"
+						th:field="*{limProdname}" name='limProdname' class="form-control"
+						aria-label="With textarea"
+						onclick="hideContent('limProdname.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('limProdname')}"
+						th:errors="*{limProdname}" class="error" id="limProdname.errors"></span>
+				</div>
+			</div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<span class="input-group-text">特賣商品數量</span> <input type="text"
+						th:field="*{limQty}" naem='limQty' class="form-control"
+						aria-label="With textarea" onclick="hideContent('limQty.errors');" /><br />
+					<span th:if="${#fields.hasErrors('limQty')}" th:errors="*{limQty}"
+						class="error" id="limQty.errors"></span>
+				</div>
+			</div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<span class="input-group-text">特賣商品價格</span> <input type="text"
+						th:field="*{limPrice}" naem='limPrice' class="form-control"
+						aria-label="With textarea"
+						onclick="hideContent('limPrice.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('limPrice')}" th:errors="*{limPrice}"
+						class="error" id="limPrice.errors"></span>
+				</div>
+			</div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<span class="input-group-text">特賣商品單位</span> <input type="text"
+						th:field="*{limUnitname}" naem='limUnitname' class="form-control"
+						aria-label="With textarea"
+						onclick="hideContent('limUnitname.errors');" /><br /> <span
+						th:if="${#fields.hasErrors('limUnitname')}"
+						th:errors="*{limUnitname}" class="error" id="limUnitname.errors"></span>
+				</div>
+			</div>
+
+			<div class="col-5">
+				<div class="input-group">
+					<span class="input-group-text">特賣商品詳情</span>
+					<textarea th:field="*{limDes}" naem='limDes' class="form-control"
+						aria-label="With textarea" onclick="hideContent('limDes.errors');"></textarea>
+					<br /> <span th:if="${#fields.hasErrors('limDes')}"
+						th:errors="*{limDes}" class="error" id="limDes.errors"></span>
+				</div>
+			</div>
+			<div>
+				<label>特賣商品圖片:</label> <input type="file" th:field="*{limImage}"
+					onclick="previewImage()" multiple="multiple" name='limImage'
+					onchange="hideContent('limImage.errors');" />
+				<!-- 						<span -->
+				<!-- 						th:if="${#fields.hasErrors('limImage')}" th:errors="*{limImage}" -->
+				<!-- 						class="error" id="limImage.errors"></span>  -->
+				<span class="error" th:utext="${errorMessage}" id="limImage.errors"></span>
+				<h2 id="errorMessage"></h2>
+				<div id="blob_holder"></div>
+			</div>
+
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<button class="btn btn-primary me-md-2" type="submit">新增</button>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+</div>
+
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 <!-- 			<script th:src="@{/js/notification.js}"></script> -->
 <!--             <script th:src="js/home.js"></script> -->
 <!--             <script th:src="js/popper.min.js"></script> -->
 <!--             <script th:src="js/bootstrap.min.js"></script> -->
-</body>
 
+
+<script type="text/javascript">
+	//清除提示信息
+	function hideContent(d) {
+		document.getElementById(d).style.display = "none";
+	}
+</script>
+</body>
 </html>

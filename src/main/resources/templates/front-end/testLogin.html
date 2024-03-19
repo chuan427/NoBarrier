@@ -7,39 +7,39 @@
 <meta charset="UTF-8">
 <title>Login form</title>
 <style>
-        body {
-            padding: 20px;
-            display: flex;
-            min-height: 100vh;
-            justify-content: center;
-            align-items: center;
-        }
+body {
+	padding: 20px;
+	display: flex;
+	min-height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
 
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 70%;
-            font-size: 1.2em;
-            margin: 0 auto; /* 將表單置中 */
-        }
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 70%;
+	font-size: 1.2em;
+	margin: 0 auto; /* 將表單置中 */
+}
 
+.actions {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 10px;
+}
 
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .image {
-            margin: 0 auto;
-        }
-    </style>
+.image {
+	margin: 0 auto;
+}
+</style>
 </head>
 <body>
 	<form class="pure-form" method="post" action="/login">
-	<img th:src="@{/images/logo.png}" class="image" alt="Image" width="300" height="300"/>
+		<img th:src="@{/images/logo.png}" class="image" alt="Image"
+			width="300" height="300" />
 		<fieldset>
 			<legend>Login</legend>
 			<input type="text" placeholder="input username" name="username" />
@@ -56,9 +56,55 @@
 					in</button>
 				<a th:href="@{/forgetPasswordPage}">忘記密碼</a>
 			</div>
+
+			<div style="margin-top:30px;"></div>
+			<!-- 選擇登入身分 -->
+			<label for="role">選擇登入身分：</label> <select id="role" name="role">
+				<option value="user" selected>使用者</option>
+				<option value="admin">管理員</option>
+			</select>
+
+
 		</fieldset>
-		
+
 	</form>
+
+
+	<!-- <label for="role">選擇登入身分：</label>
+	<select id="role" name="role">
+		<option value="user" selected>使用者</option>
+		<option value="admin">管理員</option>
+	</select> -->
+
+
+	<script>
+		// 监听表单提交事件
+		document
+				.querySelector('form')
+				.addEventListener(
+						'submit',
+						function(event) {
+							// 获取选择的角色
+							var roleSelect = document.getElementById("role");
+							var selectedRole = roleSelect.options[roleSelect.selectedIndex].value;
+
+							// 获取用户名输入框
+							var usernameInput = document
+									.querySelector('input[name="username"]');
+
+							// 检查用户名是否为空
+							if (!usernameInput.value.trim()) {
+								alert('請輸入帳號！');
+								event.preventDefault(); // 阻止表单提交
+								return;
+							}
+
+							// 将选择的角色附加到用户名前
+							usernameInput.value = selectedRole + '-'
+									+ usernameInput.value;
+						});
+	</script>
+
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 html {
-	height: 100%;
+	height: Auto;
 }
 
 body {
@@ -10,6 +10,7 @@ body {
 	background-image: url('/images/abstract-painted.JPG');
 	background-size: cover;
 	background-position: center;
+	
 }
 
 /* footer 改成白色 */
@@ -71,6 +72,7 @@ body {
 	align-items: flex-start;
 	position: relative;
 	justify-content: space-between;
+	
 }
 
 .post-header i {
@@ -93,11 +95,7 @@ body {
 	color: #333;
 }
 
-.fabotton {
-	display: flex;
-	justify-content: flex-end; /* 正確地將內容對齊到右邊 */
-	gap: 25px; /* 在圖標之間添加一些間隙 */
-}
+
 
 /* 側邊欄位 */
 .sidebar {
@@ -111,7 +109,6 @@ body {
 	top: 185px;
 }
 
-/* 使用者及3個點點圖示 & USER顯示名稱 */
 
 /* 使用者及3個點點圖示 & USER顯示名稱 */
 
@@ -193,4 +190,14 @@ body {
 	background-color: grey; /* 滑鼠懸停時的背景色，可調整為淡灰色或其他顏色 */
 	border-color: #007bff; /* 滑鼠懸停時的邊框顏色變化 */
 	color: #007bff; /* 滑鼠懸停時文字顏色變化 */
+}
+
+
+.views-comments {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 680px; 
+  justify-content: flex-end;
+ 
 }

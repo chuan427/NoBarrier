@@ -2,147 +2,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>order_completed</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* 小型設備（手機） */
-        @media (max-width: 767.98px) {
-            /* 樣式設定 */
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>order_completed</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		/* 小型設備（手機） */
+		@media (max-width: 767.98px) {
+			/* 樣式設定 */
+		}
 
-        /* 中型設備（平板） */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            /* 樣式設定 */
-        }
+		/* 中型設備（平板） */
+		@media (min-width: 768px) and (max-width: 991.98px) {
+			/* 樣式設定 */
+		}
 
-        /* 大型設備（桌面） */
-        @media (min-width: 992px) {
-            /* 樣式設定 */
-        }
+		/* 大型設備（桌面） */
+		@media (min-width: 992px) {
+			/* 樣式設定 */
+		}
 
-        .form-floating {
-            max-width: 300px;
-            /* 設定最大寬度 */
-            margin: 0 auto;
-            /* 左右置中 */
-        }
+		.news-item {
+			b: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
 
-        .form-check {
-            max-width: 300px;
-            /* 設定最大寬度 */
-            margin: 0 auto;
-            /* 左右置中 */
-        }
-    </style>
+		.news-title {
+			font-size: 30px;
+			text-align: left;
+			color: darkgoldenrod;
+			font-weight: bold;
+		}
+
+		.accordion-button {
+			font-size: 30px;
+		}
+
+		.news-content {
+			font-size: 20px;
+		}
+
+		.form-floating,
+		.form-check {
+			max-width: 300px;
+			margin: 0 auto;
+		}
+
+		.sidebar {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓 sidebar 擁有整個寬度 */
+		}
+
+		.main-content {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓主內容區域擁有整個寬度 */
+		}
+	</style>
 </head>
 
 <body>
-    <!-- header -->
-    <head th:insert="~{/back-end/header}"></head>
+	<!-- header -->
 
-    <!-- siderbar -->
-    <head th:insert="~{/back-end/siderbar}"></head>
+	<header th:insert="~{/back-end/header}"></header>
 
-            <div class="col-8">
-                <div style="font-size: 40px; text-align: left; color:darkgoldenrod; font-weight: bold;">訂單完成</div>
-                <div style="margin-top: 30px;"></div>
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
-                                style="font-size: 30px;">
-                                訂單編號:AZ00000009527
-                                <i class="fas fa-check-circle" style="color: green; ">訂單完成</i>
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">訂單資訊:</div>
-                                <div class="row">
-                                    <div class="col-sm-6">
+	<div class="container">
+		<div class="row">
+			<!-- sidebar -->
+			<div class="col-md-3">
 
-                                        <div style="font-size: 20px;">
-                                            訂單編號: 20240103001<br>
-                                            訂購E-mail:XXXXX@XXXX.com<br>
-                                            訂單日期: 2024/01/03 8:30PM<br>
-                                            訂單狀態: 已完成<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+				<head th:insert="~{/back-end/sidebar}"></head>
+			</div>
 
-                    </div>
+			<!-- Main Content -->
+			<section class="main-content col-md-9">
+				<div class="news-item">
+					<h2 class="news-title">訂單完成</h2>
+					<div class="accordion" id="accordionExample">
+						<th:block th:each="orderVO : ${orderListData}">
+							<!-- 添加判斷條件 -->
+							<th:block th:if="${orderVO.ordStat == 1}">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										<span th:text="訂單編號+':'+${orderVO.ordNum}"></span>
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="news-content">
+											<span th:text="購買公司+':'+${orderVO.userVO.comName}"></span><br>
+											<span th:text="訂單日期+':'+${orderVO.ordDate}"></span><br>
+											<span th:text="商品名稱+':'+${orderVO.ordProdname}"></span><br>
+											<span th:text="訂購數量+':'+${orderVO.ordProdqty}"></span><br>
+											<span th:text="單位+':'+${orderVO.ordUnitname}"></span><br>
+											<span th:text="產品單價+':'+${orderVO.ordProdprice}"></span><br>
+											<span th:text="訂單總額+':'+${orderVO.ordTotalamount}"></span><br>
+											<div class="d-flex justify-content-end mb-3">
+											<form method="post" th:action="@{/order/getOne_For_Update}">
+												<input type="submit" class="btn btn-primary me-2" value="修改">
+												<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}">
+											</form>
+											<form method="post" th:action="@{/order/delete}">
+												<input type="submit" class="btn btn-danger" value="刪除">
+												<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}">
+											</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"
-                                style="font-size: 30px;">
-                                訂單編號:AZ00000009528
-                                <i class="fas fa-check-circle" style="color: green; ">訂單完成</i>
-                            </button>
-                        </h2>
-                        
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">訂單資訊:</div>
-                                <div class="row">
-                                    <div class="col-sm-6">
+	<!-- <footer> -->
 
-                                        <div style="font-size: 20px;">
-                                            訂單編號: 20240103001<br>
-                                            訂購E-mail:XXXXX@XXXX.com<br>
-                                            訂單日期: 2024/01/03 8:30PM<br>
-                                            訂單狀態: 已完成<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+	<footer th:insert="~{/back-end/footer}"></footer>
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
-                                style="font-size: 30px;">
-                                訂單編號:AZ00000009529
-                                <i class="fas fa-check-circle" style="color: green; ">訂單完成</i>
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="text-center" style="font-size: 30px;">訂單資訊:</div>
-                                <div class="row">
-
-                                    <div class="col-sm-6">
-
-                                        <div style="font-size: 20px;">
-                                            訂單編號: 20240103001<br>
-                                            訂購E-mail:XXXXX@XXXX.com<br>
-                                            訂單日期: 2024/01/03 8:30PM<br>
-                                            訂單狀態: 已完成<br>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- <footer> -->
-    <head th:insert="~{/back-end/footer}"></head>
-
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

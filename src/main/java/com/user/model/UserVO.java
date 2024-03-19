@@ -1,3 +1,4 @@
+
 package com.user.model;
 
 import java.sql.Date;

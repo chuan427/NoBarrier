@@ -113,17 +113,17 @@ public class UserControllerCom {
 //	==========================================================================================
 
 
-	@PostMapping("getOne_For_Update")
-	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		/*************************** 2.開始查詢資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
-
-		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("userVO", userVO);
-		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
-	}
+//	@PostMapping("getOne_For_Update")
+//	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		/*************************** 2.開始查詢資料 *****************************************/
+//		// EmpService empSvc = new EmpService();
+//		UserVO userVO = userSvc.getOneUser(Integer.valueOf(userId));
+//
+//		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+//		model.addAttribute("userVO", userVO);
+//		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
+//	}
 
 //	=======================================廠商編輯update====================
 	@PostMapping("updateAboutUs")
@@ -243,27 +243,7 @@ public class UserControllerCom {
 		  model.addAttribute("userVO", userVO);
 		  return "front-end/com/editmember_ad_view";
 		}
-	
-	/*********************************** 圖片上傳 *****************************************/
-	 @PostMapping("upload")
-	    public String handleFileUpload(@RequestParam("file") MultipartFile[] parts, HttpServletRequest request, ModelMap model) 
-	    		 throws IOException{
-	        // 在這裡處理文件上傳操作
-	        // 您可以使用 file.getBytes() 方法獲取文件的字節數據，並進行後續處理
-	        // 在這裡示例只是回傳一個簡單的成功訊息，您可以根據實際需求進行處理
-		 UserVO userVO = (UserVO) request.getSession().getAttribute("loggingInUser");
-		 for (MultipartFile part : parts) {
-		        // 处理每个文件
-		        if (!part.isEmpty()) {
-		            // 执行文件处理逻辑，例如保存到服务器或数据库
-		            byte[] imageData = part.getBytes();
-		            // 处理图片数据，这里假设将图片数据保存到 userVO 对象中的某个字段
-		            userVO.setComImage1(imageData);
-		        }
-		    }   
-	        return "File uploaded successfully";
-	    }
-	
+
 	 /*************************** 去除BindingResult *****************************************/
 	
 	// 去除BindingResult中某個欄位的FieldError紀錄

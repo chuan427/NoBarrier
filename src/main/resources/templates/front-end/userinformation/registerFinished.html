@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Register Finished</title>
+
+</head>
+<body>
+	<!-- <header> -->
+<head th:insert="~{/front-end/header}"></head>
+<!-- 註冊區塊 -->
+<main style="height: 480px;">
+<div style="text-align: center;">
+<p>恭喜您，註冊成功。
+<p>審核過後，方可登入，若有問題，將主動與您聯繫。
+<br>
+<br>
+<a th:href="@{/}" class="btn btn-secondary">返回首頁</a>
+</div>
+
+</main>
+
+<!-- <footer> -->
+<head th:insert="~{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
