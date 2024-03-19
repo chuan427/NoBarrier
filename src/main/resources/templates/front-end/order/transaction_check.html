@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>交易確認</title>
+<title>transaction_check</title>
 <style>
 /* 小型設備（手機） */
 @media ( max-width : 767.98px) { /* 樣式設定 */
@@ -91,7 +91,7 @@
 		<div class="col-sm-4 d-flex align-items-center">
 			<label for="quoDate" class="form-label" style="margin-right: 10px;">日期:</label>
 			<input type="date" class="form-control" id="quoDate" name="quoDate"
-th:field="${quoVO.quoDate}" readonly style="width: 300px;">
+				th:field="${quoVO.quoDate}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 
@@ -99,7 +99,7 @@ th:field="${quoVO.quoDate}" readonly style="width: 300px;">
 			<label for="quoUserid" class="form-label" style="margin-right: 10px;">廠商:</label>
 			<input type="text" class="form-control" id="quoUserid"
 				name="quoUserid" th:field="${quoVO.userVO.comName}" readonly
-				style="width: 300px;" readonly>
+				style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 	</div>
@@ -109,17 +109,7 @@ th:field="${quoVO.quoDate}" readonly style="width: 300px;">
 			<label for="quoProdname" class="form-label"
 				style="margin-right: 10px;">品項:</label> <input type="text"
 				class="form-control" id="quoProdname" name="quoProdname"
-th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
-			<div class="invalid-feedback"></div>
-		</div>
-		
-		<div style="margin-top: 30px;"></div>
-	<div class="row g-3 justify-content-center">
-		<div class="col-sm-4 d-flex align-items-center">
-			<label for="quoProdname" class="form-label"
-				style="margin-right: 10px;">品項:</label> <input type="text"
-				class="form-control" id="quoProdname" name="quoProdname"
-				th:field="${quoVO.quoUnitname}" required style="width: 300px;" readonly>
+				th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 
@@ -140,6 +130,7 @@ th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 				th:field="${quoVO.quoUnitprice}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
+
 		<div class="col-sm-4 d-flex align-items-center">
 			<label for="quoTotalprice" class="form-label"
 				style="margin-right: 10px;">總價:</label> <input type="text"
@@ -152,6 +143,7 @@ th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 <div style="margin-top: 30px;"></div>
 <div>
 	<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+	
 	<button type="submit" id="submit"> 送出新增 </button>
 	
 	
@@ -160,6 +152,7 @@ th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 			onclick="return confirm('確定要送出嗎？')">確認送出</a> <a
 			th:href="@{/userinformation/userpage}" class="btn btn-primary"
 			onclick="return confirm('確定要取消嗎？')">取消</a> -->
+
 	</div>
 </div>
 </form>
@@ -173,15 +166,6 @@ th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-
-<script>
-	const submit = () => {
-		const needSend = confirm('確定要送出嗎？');
-		if (!needSend) return;
-		const formElement = document.querySelector('#myForm');
-		formElement.submit();
-	}
-</script>
 
 <!--     <script src="js/chatroom.js"></script> -->
 <!--     <script src="js/notification.js"></script> -->

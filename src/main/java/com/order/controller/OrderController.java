@@ -1,5 +1,4 @@
 
-
 package com.order.controller;
 
 import java.io.IOException;
@@ -8,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,30 +52,12 @@ public class OrderController {
 	@Autowired
 	QuoService quoSvc;
 
-//	@GetMapping("addOrder")
-//	public String addOrder(ModelMap model) {
-//		OrderVO orderVO = new OrderVO();
-//		model.addAttribute("orderVO", orderVO);
-//		return "back-end/order/addOrder";
-//	}
-	
-	@GetMapping("chataddorder")
-	public String chatorder(Model model) {
+	@GetMapping("addOrder")
+	public String addOrder(ModelMap model) {
 		OrderVO orderVO = new OrderVO();
 		model.addAttribute("orderVO", orderVO);
-		return "front-end/chat/addOrder";
+		return "back-end/order/addOrder";
 	}
-	
-	@PostMapping("insert")
-	public String insert(QuoVO quovo,OrderVO orderVO,HttpSession session, ModelMap model) throws IOException {
-		orderVO.setOrdPaystat(0);
-		orderVO.setOrdStat(0);
-		orderVO.setOrdTranstat(0);
-		orderSvc.addChatOrder(orderVO);
-		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/order/transaction_stat"; //轉去訂單狀態
-	}
-	
 
 	// 訂單（報價單）內容確認
 	@GetMapping("/transaction_check")
@@ -181,16 +163,111 @@ public class OrderController {
 		return "front-end/order/order_details";
 	}
 
+	/*
+	 * This method will be called on addEmp.html form submission, handling POST
+	 * request It also validates the order input
+	 */
+	@PostMapping("insert")
+	public String insert(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
+
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+		result = removeFieldError(orderVO, result, "ordNum");
+
+		if (result.hasErrors()) {
+			return "back-end/order/addOrder";
+		}
+		/*************************** 2.開始新增資料 *****************************************/
+		orderSvc.addOrder(orderVO);
+		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
+		List<OrderVO> list = orderSvc.getAll();
+		model.addAttribute("orderListData", list);
+		model.addAttribute("success", "- (新增成功)");
+		return "redirect:/order/listAllOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/order/listAllOrder")
+	}
+
+	/*
+	 * This method will be called on listAllEmp.html form submission, handling POST
+	 * request
+	 */
+	@PostMapping("getOne_For_Update")
+	public String getOne_For_Update(@RequestParam("ordNum") String ordNum, ModelMap model) {
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		/*************************** 2.開始查詢資料 *****************************************/
+		// EmpService empSvc = new EmpService();
+		OrderVO orderVO = orderSvc.getOneOrder(Integer.valueOf(ordNum));
+
+		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("orderVO", orderVO);
+		return "back-end/order/update_order_input"; // 查詢完成後轉交update_order_input.html
+	}
+
+	/*
+	 * This method will be called on update_order_input.html form submission,
+	 * handling POST request It also validates the order input
+	 */
+	@PostMapping("update")
+	public String update(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
+
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+		result = removeFieldError(orderVO, result, "ordNum");
+
+		if (result.hasErrors()) {
+			return "back-end/order/update_order_input";
+		}
+		/*************************** 2.開始修改資料 *****************************************/
+		orderSvc.updateOrder(orderVO);
+
+		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("success", "- (修改成功)");
+		orderVO = orderSvc.getOneOrder(Integer.valueOf(orderVO.getOrdNum()));
+		model.addAttribute("orderVO", orderVO);
+		return "back-end/order/listOneOrder"; // 修改成功後轉交listOneorder.html
+	}
+
+	// 送出價格 轉去付款流程
+	@GetMapping("sentOrder")
+	public String sentOrder(ModelMap model) {
+		OrderVO orderVO = new OrderVO();
+		model.addAttribute("orderVO", orderVO);
+		return "front-end/order/transaction";
+	}
+
+	// 直接購買
+//	@PostMapping("straightOrder")
+//	public String straightOrder(@Valid OrderVO orderVO, BindingResult result, ModelMap model) throws IOException {
+//
+//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+//		result = removeFieldError(orderVO, result,"ordNum");
+//
+//		
+//		if (result.hasErrors()) {
+//			return "";
+//		}
+//		/*************************** 2.開始新增資料 *****************************************/
+//		orderSvc.addOrder(orderVO);
+//		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
+//		List<OrderVO> list = orderSvc.getAll();
+//		model.addAttribute("orderListData", list);
+//		model.addAttribute("success", "- (新增成功)");
+//		return "redirect:/order/listAllOrder"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/order/listAllOrder")
+//	}
 
 	// 訂單完成
-	@GetMapping("complete")
-	public String complete(HttpServletRequest request,OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
+	@PostMapping("complete")
+	public String complete(@Valid OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
 			throws IOException {
 		OrderVO completeOrder = orderSvc.getOneOrder(Integer.valueOf(ordNum));// 取出要改的VO號碼
-		// 改變訂單狀態 0改成1
+		// 無效改成有效 0改成1
 		int valid = 1;
 		completeOrder.setOrdStat(valid);
-		completeOrder.setOrdTranstat(valid);
+//		
+		// 有效改成無效 1改成0
+//		int invalid = 0;
+//		orderVO1.setOrdStat(invalid);
+//		
 		orderSvc.updateOrder(completeOrder);// 存檔
 
 		model.addAttribute("success", "- (完成訂單)");
@@ -200,19 +277,24 @@ public class OrderController {
 	}
 
 	// 付款流程
-	@GetMapping("payment")
-	public String payment(HttpServletRequest request,OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
+	@PostMapping("payment")
+	public String payment(@Valid OrderVO orderVO, @RequestParam("ordNum") String ordNum, ModelMap model)
 			throws IOException {
 		OrderVO payment = orderSvc.getOneOrder(Integer.valueOf(ordNum));// 取出要改的VO號碼
-		// 改變付款狀態 從0改成1
+		// 無效改成有效 0改成1
 		int valid = 1;
 		payment.setOrdPaystat(valid);
+//		
+		// 有效改成無效 1改成0
+//		int invalid = 0;
+//		orderVO1.setOrdStat(invalid);
+//		
 		orderSvc.updateOrder(payment);// 存檔
 
 		model.addAttribute("success", "- (匯款完成)");
 		payment = orderSvc.getOneOrder(Integer.valueOf(payment.getOrdNum()));
 		model.addAttribute("payment", payment);
-		return "redirect:/order/transaction_stat"; // 修改成功後轉交訂單狀態
+		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
 	}
 
 
@@ -258,5 +340,4 @@ public class OrderController {
 		}
 		return result;
 	}
-
 }

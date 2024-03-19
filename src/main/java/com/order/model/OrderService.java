@@ -25,19 +25,8 @@ public class OrderService<OrdRatstar> {
 		OrderRepository repository;
 
 		public void addOrder(OrderVO OrderVO) {
-			
 			repository.save(OrderVO);
 		}
-		
-		public void addChatOrder(OrderVO OrderVO) {
-		repository.save(OrderVO);
-	}
-		
-//		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
-//			OrderVO.setUserVO(loggingInUser);
-//			OrderVO.setQuoVO(quoVO);
-//			repository.save(OrderVO);
-//		}
 
 		public void updateOrder(OrderVO OrderVO) {
 			repository.save(OrderVO);
@@ -62,8 +51,8 @@ public class OrderService<OrdRatstar> {
 		public List<OrderVO> getAll() {
 			return repository.findAll();
 		}
-
-		//訂單對特賣多對一
+		
+		//訂單對特賣一對一
 
 //		public LimitSaleVO getLimitSaleByordLimnum(Integer limNum){
 //			return getOneOrder(limNum).getLimitsaleVO();

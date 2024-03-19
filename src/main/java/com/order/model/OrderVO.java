@@ -2,8 +2,6 @@ package com.order.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.limitsale.model.LimitSaleVO;
@@ -36,7 +35,8 @@ import com.user.model.UserVO;
 		private Integer ordProdqty;//訂單數量
 		private String ordUnitname;//訂單單位名稱
 		private Integer ordProdprice;//訂單產品價格
-		private Integer ordTotalamount;//訂單總價		private Integer ordBuyerid;
+		private Integer ordTotalamount;//訂單總價
+//		private Integer ordBuyerid;
 //		private Integer ordSellerid;
 
 		private Integer ordStat;//訂單狀態
@@ -56,6 +56,8 @@ import com.user.model.UserVO;
 		private QuoVO quoVO;//FK:報價單編號(Integer quoNum)
 //		private RptdlistVO rptdlistVO;//FK:檢舉編號(Integer rptdNum)
 //		private Integer rptdNum;
+		
+
 		
 		public OrderVO() { 
 		}
@@ -101,23 +103,10 @@ import com.user.model.UserVO;
 //		public void setLimitsaleVO(LimitSaleVO limitsaleVO) {
 //			this.limitsaleVO = limitsaleVO;
 //		}
-
-//		@OneToOne
-//		@MapsId 
-//		@JoinColumn(name="ordNum", referencedColumnName = "rptdOrdernum")
-//		public RptdlistVO getRptdlistVO() {
-//			return rptdlistVO;
-//		}
-//
-//	
-//
-//		public void setRptdlistVO(RptdlistVO rptdlistVO) {
-//			this.rptdlistVO = rptdlistVO;
-//		}
 		
 
 		@ManyToOne           //此VO資料庫對應的欄位                //參照的資料庫欄位
-		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid", insertable = false, updatable = false)
+		@JoinColumn(name = "ordBuyerid",referencedColumnName = "userid")
 		public UserVO getUserVO() {
 			return userVO;
 		}
@@ -224,7 +213,7 @@ import com.user.model.UserVO;
 //		public void setOrdBuyerid(Integer ordBuyerid) {
 //			this.ordBuyerid = ordBuyerid;
 //		}
-//		
+		
 //		@Column(name = "ordSellerid")
 ////		@NotEmpty(message="賣家編號: 請勿空白")
 //		public Integer getOrdSellerid() {
@@ -302,6 +291,7 @@ import com.user.model.UserVO;
 //		public void setOrdQuonum(Integer ordQuonum) {
 //			this.ordQuonum = ordQuonum;
 //		}
+
 		@Column(name = "ordIsValid")
 //		@NotEmpty(message="訂單表格有效狀態: 請勿空白")
 //		@Size(min=1,max=3,message="公司帳號狀態: 長度必需在{min}到{max}之間")
@@ -316,4 +306,7 @@ import com.user.model.UserVO;
 
 		
 		
+		
+		
 	}
+
