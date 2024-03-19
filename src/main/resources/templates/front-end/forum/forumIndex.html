@@ -23,9 +23,11 @@
 	<!-- header -->
 <head th:insert="~{/front-end/header_Dora}"></head>
 
+
+
      <!-- 新增搜尋欄位 -->
       <div class="search-container mb-3">
-        <form action="/search" method="GET" class="search-form">
+        <form action="/forum/search" method="GET" class="search-form">
           <input type="text" placeholder="請輸入搜尋內容" name="search" class="search-input">
           <button type="submit" class="search-button"><i class="fa fa-search"></i></button>
           
@@ -40,7 +42,7 @@
       <hr class="m-0" />
       <div th:each="post : ${forumPostVO}" class="pos-relative px-3 py-3">
         <h6 class="text-primary text-sm">
-          <a href="#" th:text="${forumPostVO.fpTitle}" class="text-primary"></a>
+          <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${post.fpNum})}" th:text="${post.fpTitle}" class="text-primary"></a>
         </h6>
         <p class="mb-0 text-sm">
           <span class="op-6">由</span>
@@ -86,7 +88,9 @@
              <p th:with="shortContent=${#strings.substring(forumPostVO.fpContent, 0, 20)}">
     		<span th:text="${shortContent}">文章開頭內容</span><a>...</a>
     		 <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${forumPostVO.fpNum})}" >閱讀全文</a>
-			</p>	
+			</p>
+			
+			<br>	
 			
 			<p>
    			 #<span th:text="${forumPostVO.fpCategory == 1 ? '工業加工' : 
@@ -97,18 +101,16 @@
                       forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
                       '其他'}"></span>
 			</p>
-			
-		      <br>
+
 		        
-              <div class="fabotton">
-                  <i class="fa-regular fa-heart fa-xl"></i>
-                  <i class="fa-regular fa-bookmark fa-xl"></i>
-              </div>
-              <br>      
+              </div>    
             </div>
         </div>
     </div>
-</div>
+
+
+	
+
 
 
 <!-- footer -->

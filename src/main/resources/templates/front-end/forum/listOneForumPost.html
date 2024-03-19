@@ -49,7 +49,14 @@
                         <h4 th:text="${forumPostVO.fpTitle}">文章標題</h4>
                         <span class="post-time">
                             <i class="fa-regular fa-clock fa-lg"></i>
-                            <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd HH:mm')}">發布時間</span>
+                             
+    <!-- 如果沒有更新，或更新時間和發布時間相同，則顯示發布時間 -->
+    <span th:if="${forumPostVO.fpUpdate == forumPostVO.fpTime}"
+          th:text="${#dates.format(forumPostVO.fpTime, 'yyyy-MM-dd HH:mm')}">文章發布時間</span>
+          
+        <span th:if="${forumPostVO.fpUpdate != forumPostVO.fpTime}">
+    		 <span th:text="${#dates.format(forumPostVO.fpUpdate, 'yyyy-MM-dd HH:mm')}">文章修改時間</span> 已編輯文章
+		</span>
                         </span>
                     </div>
                     <br>
@@ -106,7 +113,7 @@
     <div th:each="forumReplyVO : ${forumReplyListData}">
         <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
             <p class="comment-user" th:text="${forumReplyVO.userVO != null ? forumReplyVO.userVO.comName : '未知使用者'}"></p>
-            <p th:text="${forumReplyVO.frContent}"></p>
+           	 <pre th:utext="${forumReplyVO.frContent}"></pre>
             <img th:if="${forumReplyVO.frImage != null}" th:src="@{/forumReply/DBGifReader(frNum=${forumReplyVO.frNum})}"  width="200px"/>
             <br>
             <span class="comment-time" th:text="${#dates.format(forumReplyVO.frTime, 'yyyy-MM-dd HH:mm')}"></span>
