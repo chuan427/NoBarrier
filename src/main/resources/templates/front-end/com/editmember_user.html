@@ -89,7 +89,7 @@
                     style="height: 500px; text-align: center;">
                     <a href="/"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-2" style="color: black;"></span>
+                        <span class="fs-2" style="color: black;" th:text="${session.loggingInUser.comName}"></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
@@ -98,11 +98,11 @@
                                 廠商廣告
                             </a>
                         </li>
-                        <li>
-                            <a th:href="@{editmember_user}" class="nav-link text-white fs-4">
-                                聯絡資料
-                            </a>
-                        </li>
+<!--                         <li> -->
+<!--                             <a th:href="@{editmember_user}" class="nav-link text-white fs-4"> -->
+<!--                                 聯絡資料 -->
+<!--                             </a> -->
+<!--                         </li> -->
                         <li>
                             <a th:href="@{editmember_aboutus}" class="nav-link text-white fs-4">
                                 關於我們
@@ -122,31 +122,57 @@
                 </div>
             </div>
 
-
-            <div class="col-md-9">
-                <h3>聯絡資料</h3>
+			<div class="col-md-9">
+			<h3>聯絡資料</h3>
+			<form th:action="@{updateUser}" method="post" th:object="${userVO}" enctype="multipart/form-data">
+				
+               	<div>
+					<input type="hidden" name="userId" th:value="${session.loggingInUser.userId}" />
+				</div>
+	
                 <div style="margin-top: 50px;"></div>
                 <div class="col-8">
                     <label for="address" class="form-label">地址</label>
-                    <input type="text" class="form-control" id="address" placeholder="請輸入地址" required>
+                    <input type="text" class="form-control" id="address" name="comAddress" th:value="${session.loggingInUser.comAddress}">
                     <div class="invalid-feedback">
                     </div>
                 </div>
                 <div style="margin-top: 50px;"></div>
                 <div class="col-8">
                     <label for="address" class="form-label">電話</label>
-                    <input type="text" class="form-control" id="address" placeholder="請輸入電話" required>
+                    <input type="text" class="form-control" id="address"  name="comPhone" th:value="${session.loggingInUser.comPhone}">
                     <div class="invalid-feedback">
                     </div>
                 </div>
                 <div style="margin-top: 50px;"></div>
                 <div class="col-8">
                     <label for="address" class="form-label">E-mail</label>
-                    <input type="text" class="form-control" id="address" placeholder="請輸入email" required>
+                    <input type="text" class="form-control" id="address" name="comMail" th:value="${session.loggingInUser.comMail}">
                     <div class="invalid-feedback">
                     </div>
                 </div>
-            </div>
+                
+<!--             <div style="margin-top: 20px; margin-bottom: 20px;"> -->
+<!--     			<div></div> -->
+<!--     			<div><button type="submit" id="submit">送出修改</button></div> -->
+<!--     			<div></div> -->
+<!-- 			</div>	 -->
+          
+			</form>
+			</div>
+			
+ 
+
+
+
+
+
+				
+                
+                
+	
+
+            
             <!-- <footer> -->
             <head th:insert="@{/front-end/footer}"></head>
 			<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>

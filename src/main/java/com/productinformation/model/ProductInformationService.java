@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.user.model.UserVO;
+
 @Service("productInformationService")
 public class ProductInformationService {
 
@@ -37,9 +39,19 @@ public class ProductInformationService {
         return repository.findAll();
     }
     
+    public ProductInformationVO getProductInformationByUserIdVo(Integer userId) {
+        return (ProductInformationVO) repository.findByUserVOUserId(userId);
+    }
+    
     public List<ProductInformationVO> getProductInformationByUserId(Integer userId) {
         return repository.findByUserVOUserId(userId);
     }
+    
+	public ProductInformationVO getOnePinfoNum(Integer pinfoNum) {
+		Optional<ProductInformationVO> optional = repository.findById(pinfoNum);
+//		return optional.get();
+		return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
+	}
     
     public ProductInformationVO getOneProductInformation(Integer pinfoUserid) {
         Optional<ProductInformationVO> optional = repository.findById(pinfoUserid);

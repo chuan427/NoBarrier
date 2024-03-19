@@ -125,7 +125,9 @@ public class IndexController_inSpringBoot {
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
 
+
 private ReqOrderVO reqOrderVO;
+
 
 //	@GetMapping("/")
 //	public String index(Model model) {
@@ -192,7 +194,9 @@ private ReqOrderVO reqOrderVO;
 //		return "index"; // view
 //	}
 
+
 	// 廠商資訊 完成
+
 
 	@GetMapping("/com/com_homepage/{userId}")
 	public String homepage(@PathVariable("userId") String userId, Model model) {
@@ -219,14 +223,20 @@ private ReqOrderVO reqOrderVO;
 
 	// 廠商關於我預覽頁面 完成
 	@GetMapping("/com/editmember_aboutus_view")
-	public String editmember_aboutus_view() {
+	public String editmember_aboutus_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        model.addAttribute("userVO", userVO);
 		return "front-end/com/editmember_aboutus_view"; // view
 	}
 
-	// 廠商編輯頁面 完成
+//	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_aboutus")
-	public String editmember_aboutus() {
-		return "front-end/com/editmember_aboutus"; // view
+	public String editmember_aboutus(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_aboutus"; // 返回 view 的名稱
 	}
 
 	// 廠商廣告預覽頁面 完成
@@ -237,24 +247,43 @@ private ReqOrderVO reqOrderVO;
 
 	// 廠商廣告編輯頁面 完成
 	@GetMapping("/com/editmember_ad")
-	public String editmember_ad() {
+	public String editmember_ad(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        model.addAttribute("userVO", userVO);
 		return "front-end/com/editmember_ad"; // view
 	}
 
-	// 廠商產品預覽頁面 完成
-//	@GetMapping("/com/editmember_product_view")
-//	public String editmember_product_view(Model model) {
-//	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
-//	        // 添加到模型中
-//	        model.addAttribute("productInformationList", productInformationList);
-//	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
+	
+//	@GetMapping("/upProductInformation")
+//	public String addProductInformation(ModelMap model) {
+//		ProductInformationVO productInformationVO = new ProductInformationVO();
+//		model.addAttribute("productInformationVO", productInformationVO);
+//		return "back-end/productInformation/update_productInformation_input";
 //	}
 
-
-	// 廠商產品預覽頁面 完成
+//	 廠商產品預覽頁面 完成
+	@GetMapping("/com/editmember_product_view")
+	public String editmember_product_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+	        // 添加到模型中
+	        model.addAttribute("productInformationList", productInformationList);
+	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
+	}
+	
+	// 廠商產品編輯頁面 完成
 	@GetMapping("/com/editmember_product")
-	public String editmember_product() {
-		return "front-end/com/editmember_product"; // view
+	public String editmember_product(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+        // 添加到模型中
+        model.addAttribute("userVO", userVO);
+        model.addAttribute("productInformationVO",new ProductInformationVO());
+        model.addAttribute("productInformationList", productInformationList);
+    return "front-end/com/editmember_product"; // 返回 view 的名稱
 	}
 
 	// 廠商產品限時預覽頁面 完成
@@ -279,18 +308,39 @@ private ReqOrderVO reqOrderVO;
 		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
 		return "front-end/com/editmember_sale"; // view
 	}
-
-	// 廠商聯絡資料預覽頁面 完成
-	@GetMapping("/com/editmember_user_view")
-	public String editmember_user_view() {
-		return "front-end/com/editmember_user_view"; // view
+	
+	//從session中取的userVO
+	@ModelAttribute("userVOlist")
+	protected List<UserVO> referenceListData_user(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		if (userVO == null) {
+			return null;
+		} else {
+			return userSvc.getOneStatUser(userVO);
+		}
 	}
+	
 
-	// 廠商聯絡資料編輯頁面 完成
-	@GetMapping("/com/editmember_user")
-	public String editmember_user() {
-		return "front-end/com/editmember_user"; // view
-	}
+//	// 廠商聯絡資料預覽頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user_view")
+//	public String editmember_user_view() {
+//		return "front-end/com/editmember_user_view"; // view
+//	}
+
+//	// 廠商聯絡資料編輯頁面 修改前暫時不用
+//	@GetMapping("/com/editmember_user")
+//	public String editmember_user() {
+//		return "front-end/com/editmember_user"; // view
+//	}
+//	  廠商聯絡資料編輯頁面 修改前暫時不用
+//    @GetMapping("/com/editmember_user/{userId}")
+//    public String editmember_user(@PathVariable("userId") String userId, Model model) {
+//        // 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
+//        // 將相關數據添加到 Model 中，以便在視圖中使用
+//        model.addAttribute("userVO", userVO);
+//        return "front-end/com/editmember_user_view"; // view
+//    }
 
 	// 廠商產品資訊編輯頁面 完成
 	@GetMapping("/com/editmemeber_product")
@@ -301,6 +351,7 @@ private ReqOrderVO reqOrderVO;
 	// 廠商產品資訊編輯頁面 完成
 	@GetMapping("/com/member_AboutUs/{userId}")
 	public String member_AboutUs(@PathVariable("userId") UserVO userVO, Model model) {
+
 		// 根據 id 執行相應的邏輯，例如獲取特定的廠商資訊
 		// 將相關數據添加到 Model 中，以便在視圖中使用
 		model.addAttribute("userVO", userVO);
@@ -314,6 +365,7 @@ private ReqOrderVO reqOrderVO;
 			}
 
 
+
 	// 廠商產品資訊 完成
 	@GetMapping("/com/member_Prod/{userId}")
 	public String member_Prod(@PathVariable("userId") UserVO userVO, Model model) {
@@ -324,8 +376,7 @@ private ReqOrderVO reqOrderVO;
 		model.addAttribute("productInformationVO", productInformationVO);
 		return "front-end/com/member_Prod"; // view
 	}
-
-////	 廠商產品資訊編輯頁面 完成
+	
 //		@GetMapping("/com/member_Prod")
 //		public String member_Prod () {
 //				    return "front-end/com/member_Prod"; // view
@@ -653,7 +704,6 @@ private ReqOrderVO reqOrderVO;
 		}
 	}
 
-
 //	-----------------------------------------------------------------------
 
 	@GetMapping("/ad/select_page")
@@ -844,6 +894,14 @@ private ReqOrderVO reqOrderVO;
 		List<NewsVO> list = newsSvc.getAll();
 		return list;
 	}
+	
+	@ModelAttribute("newsListDatacheck") // for 最新消息
+	protected List<NewsVO> referenceListData_checknews(Model model) {
+
+		List<NewsVO> list = newsSvc.getAllAndHandleStatus();
+		return list;
+	}
+
 
 //	------------------------------chat-----------------------------------------
 	@GetMapping("/chat/privatechat")
@@ -1066,4 +1124,6 @@ private ReqOrderVO reqOrderVO;
 	}
 	
 }
+
+
 

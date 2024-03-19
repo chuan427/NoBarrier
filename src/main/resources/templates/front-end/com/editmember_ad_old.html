@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>editmember_ad</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.6rem;
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: lightgray !important;
+}
+
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
+
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
+
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+<head th:insert="@{/front-end/header_login}"></head>
+<!-- siderbar -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
+				style="height: 500px; text-align: center;">
+				<a href="/"
+					class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+					<span class="fs-2" style="color: black;" th:text=${userVO.comName}></span>
+				</a>
+				<hr>
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item"><a th:href="@{/com/editmember_ad}"
+						class="nav-link text-white fs-4"> 廠商廣告 </a></li>
+					<!--                         <li> -->
+					<!--                             <a th:href="@{/com/editmember_user}" class="nav-link text-white fs-4"> -->
+					<!--                                 聯絡資料 -->
+					<!--                             </a> -->
+					<!--                         </li> -->
+					<li><a th:href="@{/com/editmember_aboutus}"
+						class="nav-link text-white fs-4"> 關於我們 </a></li>
+					<li><a th:href="@{/com/editmember_product}"
+						class="nav-link text-white fs-4"> 產品資訊 </a></li>
+					<li><a th:href="@{/com/editmember_sale}"
+						class="nav-link text-white fs-4"> 限時商品 </a></li>
+				</ul>
+			</div>
+
+		</div>
+		<div class="col-md-9">
+			<form action="@{updateComImage}" id="uploadForm" th:object="${userVO}"  enctype="multipart/form-data">
+				<div>
+					<input type="hidden" th:field="*{userId}" style="border: 0px; font-weight: bold;" readonly /><br />
+				</div>
+				<div>
+					<input type="file" name="comImage1" id="comImage1">
+				</div>
+				<br>
+				<div>
+					<input type="file" name="comImage2" id="comImage2">
+				</div>
+				<br>
+				<div>
+					<input type="file" name="comImage3" id="comImage3">
+				</div>
+				<br>
+				<div>
+					<input type="file" name="comImage4" id="comImage4">
+				</div>
+				<!-- 新增送出按鈕 --><br>
+       			 <button type="submit" id="uploadButton" class="btn btn-primary">送出</button>
+			</form>
+			<div id="uploadResult"></div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--             <div class="col-md-9"> -->
+<!--             <form th:action="@{updateComImage}" method="post" th:object="${userVO}"	enctype="multipart/form-data"> -->
+<!-- 			<h3>廠商廣告</h3> -->
+
+							
+
+<!-- <!--                    <div style="margin-top: 50px;"></div> -->
+<!-- <!--                 <div class="row"> -->
+<!-- <!--                     <div class="col-6"> -->
+<!-- <!--                         <div class="input-group mb-3"> -->
+<!-- <!-- 				   			 <input type="file"  class="form-control" name="comImage3" th:field="*{comImage3}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--                         </div> -->
+<!-- <!--                     </div> -->
+<!-- <!--                     </div> -->
+
+<!-- <!--     				 <div style="margin-top: 50px;"></div> -->
+<!-- <!--                 <div class="row"> -->
+<!-- <!--                     <div class="col-6"> -->
+<!-- <!--                         <div class="input-group mb-3"> -->
+<!-- <!-- 				   			 <input type="file"  class="form-control" name="comImage2" th:field="*{comImage2}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--                         </div> -->
+<!-- <!--                     </div> -->
+<!-- <!--                     </div> -->
+
+<!-- <!-- 				    <div style="margin-top: 50px;"></div>  -->
+<!-- <!--                 <div class="row"> -->
+<!-- <!--                     <div class="col-6"> -->
+<!-- <!--                         <div class="input-group mb-3"> -->
+<!-- <!-- 				   			 <input type="file"  class="form-control" name="comImage3" th:field="*{comImage3}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--                         </div> -->
+<!-- <!--                     </div> -->
+
+<!-- <!--                     </div> -->
+
+<!-- <!-- 				    <div style="margin-top: 50px;"></div>   -->
+<!-- <!--                 <div class="row"> -->
+<!-- <!--                     <div class="col-6"> -->
+<!-- <!--                         <div class="input-group mb-3"> -->
+<!-- <!-- 				   			 <input type="file"  class="form-control" name="comImage4" th:field="*{comImage4}" onclick="previewImage()" multiple="multiple" /> -->
+<!-- <!--                         </div> -->
+<!-- <!--                     </div> -->
+<!-- <!--                     </div> -->
+
+
+<!--                   <div class="d-flex align-items-center"> -->
+<!--     				<label for="comImage1" class="me-3">廠商廣告圖片1:</label> -->
+<!--    					 <div class="input-group mb-3" style="width: 50%;"> -->
+<!-- 				    <input type="file"  class="form-control" name="comImage1" th:field="*{comImage1}" onclick="previewImage()" multiple="multiple" /> -->
+<!--     				</div> -->
+<!-- 				</div> -->
+
+<!-- 				  <div class="d-flex align-items-center"> -->
+<!--     				<label for="comImage2" class="me-3">廠商廣告圖片2:</label> -->
+<!--    					 <div class="input-group mb-3" style="width: 50%;"> -->
+<!-- 				    <input type="file"  class="form-control" name="comImage2" th:field="*{comImage2}" onclick="previewImage()" multiple="multiple" /> -->
+<!--     				</div> -->
+<!-- 				</div> -->
+
+<!-- 				  <div class="d-flex align-items-center"> -->
+<!--     				<label for="comImage3" class="me-3">廠商廣告圖片3:</label> -->
+<!--    					 <div class="input-group mb-3" style="width: 50%;"> -->
+<!-- 				    <input type="file"  class="form-control" name="comImage3" th:field="*{comImage3}" onclick="previewImage()" multiple="multiple" /> -->
+<!--     				</div> -->
+<!-- 				</div> -->
+
+<!-- 				  <div class="d-flex align-items-center"> -->
+<!--     				<label for="comImage4" class="me-3">廠商廣告圖片4:</label> -->
+<!--    					 <div class="input-group mb-3" style="width: 50%;"> -->
+<!-- 				    <input type="file"  class="form-control" name="comImage2" th:field="*{comImage4}" onclick="previewImage()" multiple="multiple" /> -->
+<!--     				</div> -->
+<!-- 				</div> -->
+
+
+<!-- 				  <div class="d-grid gap-2 d-md-flex justify-content-md-end"> -->
+<!--                 <button type="submit" id="submitBtn" class="btn btn-primary me-md-2">修改完成</button> -->
+<!--             	  </div>	 -->
+<!--          		 </form> -->
+
+
+<head th:insert="@{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/notification.js}"></script>
+
+<!-- 
+<script>
+	$(document).ready(function() {
+		$('#uploadButton').click(function() {
+			var formData = new FormData();
+			formData.append('userId', yourUserId); // 將使用者ID添加到表單數據中
+			formData.append('comImage1', $('#comImage1')[0].files[0]);
+			formData.append('comImage2', $('#comImage2')[0].files[0]);
+			formData.append('comImage3', $('#comImage3')[0].files[0]);
+			formData.append('comImage4', $('#comImage4')[0].files[0]);
+
+			$.ajax({
+				url :'http://localhost:8080/com/editmember_ad', // 請根據您的後端控制器路徑設置
+				type : 'POST',
+				data : formData,
+				processData : false,
+				contentType : false,
+				success : function(response) {
+					$('#uploadResult').text(response); // 顯示上傳結果
+				},
+				error : function(xhr, status, error) {
+					console.error(xhr.responseText);
+				}
+			});
+		});
+	});
+</script>-->
+</body>
+
+</html>
