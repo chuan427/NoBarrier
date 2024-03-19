@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.forumpost.model.ForumPostVO;
+
 public interface ForumReplyRepository extends JpaRepository<ForumReplyVO, Integer> {
 //	@Transactional
 //	@Modifying

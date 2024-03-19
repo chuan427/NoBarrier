@@ -45,39 +45,42 @@ public class QuoController {
 	OrderService orderSvc;
 	
 	@GetMapping("/addQuotation")
-	public String addQuo(ModelMap model, HttpServletRequest request) {
+	public String addQuo(ModelMap model, HttpServletRequest request,@RequestParam("reqNum") String reqNum) {
 		HttpSession session = request.getSession();
 	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
-	    
-	    if (userVO == null) {
-	        return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
-	    }
+		ReqOrderVO reqVO = reqOrderSvc.getOneReqOrder(Integer.parseInt(reqNum));
+		
 		QuoVO quoVO = new QuoVO();
-//		quoVO.setUserVO(userVO);
+		quoVO.setQuoProdname(reqVO.getReqProdname());
+		quoVO.setQuoUnitname(reqVO.getReqUnitname());
+		quoVO.setQuoProdqty(reqVO.getReqProdqty());
+		quoVO.setReqOrderVO(reqVO);
+		quoVO.setUserVO(userVO);
+		
+		System.out.println(reqVO.getReqProdname());
+		
 		model.addAttribute("quoVO", quoVO);
-		model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
+		
 		return "front-end/userinformation/addQuotation";
 	}
 	
 	//========================新增報價單=====================================
 	@PostMapping("insertQuo")
-	public String insertQuo(HttpServletRequest request, @Valid QuoVO quoVO, BindingResult result, ModelMap model, @RequestParam("reqNum") Integer reqNum) throws IOException {
-	    UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
+	public String insertQuo(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
 	    
-	    // 使用reqNum來獲取ReqOrderVO實例
-	    ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(reqNum);
+	    
 	    
 	    if (result.hasErrors()) {
 	        return "front-end/userinformation/addQuotation";
 	    }
 
 	    // 這裡加入您的邏輯來處理quoVO和userVO...
-	    quoSvc.addQuo(quoVO, userVO, reqOrderVO);
+	    quoSvc.addQuo(quoVO);
 
-	    List<QuoVO> list = quoSvc.getOneStatQuotation(userVO);
+	    List<QuoVO> list = quoSvc.getAll();
 	    model.addAttribute("quoListData", list);
 	    model.addAttribute("success", "- (新增成功)");
-	    return "front-end/userinformation/userpage";
+	    return "redirect:/userinformation/userpage";
 	}
 
 

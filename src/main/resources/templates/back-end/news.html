@@ -2,120 +2,133 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>news</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        /* 小型設備（手機） */
-        @media (max-width: 767.98px) {
-            /* 樣式設定 */
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>news</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+		/* 小型設備（手機） */
+		@media (max-width: 767.98px) {
+			/* 樣式設定 */
+		}
 
-        /* 中型設備（平板） */
-        @media (min-width: 768px) and (max-width: 991.98px) {
-            /* 樣式設定 */
-        }
+		/* 中型設備（平板） */
+		@media (min-width: 768px) and (max-width: 991.98px) {
+			/* 樣式設定 */
+		}
 
-        /* 大型設備（桌面） */
-        @media (min-width: 992px) {
-            /* 樣式設定 */
-        }
+		/* 大型設備（桌面） */
+		@media (min-width: 992px) {
+			/* 樣式設定 */
+		}
 
-        .news-item {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
+		.news-item {
+			border: 1px solid #ccc;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
 
-        .news-title {
-            font-size: 30px;
-            text-align: left;
-            color: darkgoldenrod;
-            font-weight: bold;
-        }
+		.news-title {
+			font-size: 30px;
+			text-align: left;
+			color: darkgoldenrod;
+			font-weight: bold;
+		}
 
-        .accordion-button {
-            font-size: 30px;
-        }
+		.accordion-button {
+			font-size: 30px;
+		}
 
-        .news-content {
-            font-size: 20px;
-        }
+		.news-content {
+			font-size: 20px;
+		}
 
-        .form-floating,
-        .form-check {
-            max-width: 300px;
-            margin: 0 auto;
-        }
+		.form-floating,
+		.form-check {
+			max-width: 300px;
+			margin: 0 auto;
+		}
 
-        .sidebar {
-            float: left;
-            width: 30%; /* 調整側邊欄寬度 */
-            margin-right: 30px; /* 給主內容區域留出空間 */
-        }
+		.sidebar {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓 sidebar 擁有整個寬度 */
+		}
 
-        .main-content {
-            float: left;
-            width: 70%; /* 調整主內容區域寬度 */
-        }
-    </style>
+		.main-content {
+			/* 移除 float 屬性 */
+			width: 100%;
+			/* 讓主內容區域擁有整個寬度 */
+		}
+	</style>
 </head>
 
 <body>
-    <!-- header -->
+	<!-- header -->
 
-    <header th:insert="~{/back-end/header}"></header>
+	<header th:insert="~{/back-end/header}"></header>
 
-    <div class="container">
-        <div class="row">
-            <!-- siderbar -->
-                <head th:insert="~{/back-end/sidebar}"></head>
-         
+	<div class="container">
+		<div class="row">
+			<!-- sidebar -->
+			<div class="col-md-3">
 
-            <!-- Main Content -->
-            <section class="main-content">
-                <div class="news-item">
-                    <h2 class="news-title">最新消息</h2>
-                    <div class="accordion" id="accordionExample">
-                        <th:block th:each="newsVO : ${newsListData}">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <span th:text="${newsVO.newsNum + ' ' + newsVO.newsTitle}"></span>
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <div class="news-content">
-                                            <span th:text="${newsVO.newsContent}"></span>
-                                            <form method="post" th:action="@{/news/getOne_For_Update}">
-                                                <input type="submit" class="btn btn-primary" value="修改">
-                                                <input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
-                                            </form>
-                                            <form method="post" th:action="@{/news/delete}">
-                                                <input type="submit" class="btn btn-danger" value="刪除">
-                                                <input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
+				<head th:insert="~{/back-end/sidebar}"></head>
+			</div>
 
-    <!-- <footer> -->
+			<!-- Main Content -->
+			<section class="main-content col-md-9">
+				<div class="news-item">
+					<h2 class="news-title">最新消息</h2>
+					<div class="accordion" id="accordionExample">
+						<th:block th:each="newsVO : ${newsListData}">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										<span th:text="${newsVO.newsNum + ' ' + newsVO.newsTitle}"></span>
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="news-content">
+											<span th:text="${newsVO.newsContent}"></span>
+											<div style="display: flex; justify-content: space-between;">
+												<form method="post" th:action="@{/news/getOne_For_Update}">
+													<input type="submit" class="btn btn-primary" value="修改">
+													<input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
+												</form>
+												<form method="post" th:action="@{/news/delete}">
+													<input type="submit" class="btn btn-danger" value="刪除">
+													<input type="hidden" name="newsNum" th:value="${newsVO.newsNum}">
+												</form>
+											</div>
 
-    <footer th:insert="~{/back-end/footer}"></footer>
+										</div>
+									</div>
+								</div>
+							</div>
+						</th:block>
+					</div>
+					<div class="d-flex justify-content-end mb-3">
+						<form method="get" th:action="@{/news/addNews}">
+							<input type="submit" class="btn btn-primary" value="新增">
+							
+						</form>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
+	<!-- <footer> -->
+
+	<footer th:insert="~{/back-end/footer}"></footer>
+
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -73,8 +73,9 @@ public class ReqOrderController {
         result = removeFieldError(reqOrderVO, result, "reqProdimage");
         
         UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
-        IndustryVO industryVO = reqOrderVO.getIndustryVO();
-        
+       
+        IndustryVO industryVO =reqOrderVO.getIndustryVO();
+      
         if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
 		} else {

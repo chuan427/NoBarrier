@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.limitsale.model.LimitSaleService;
 import com.limitsale.model.LimitSaleVO;
 import com.order.model.OrderService;
+import com.user.model.UserVO;
 
 @Controller
-@RequestMapping("/limitSale")
+@RequestMapping("/com")
 public class LimitSaleController {
 
 	@Autowired
@@ -35,23 +38,29 @@ public class LimitSaleController {
 	/*
 	 * This method will serve as addEmp.html handler.
 	 */
-	@GetMapping("addLimitSale")
-	public String addLimitSale(ModelMap model) {
-		LimitSaleVO limitSaleVO = new LimitSaleVO();
-		model.addAttribute("limitSaleVO", limitSaleVO);
-		return "back-end/limitSale/addLimitSale";
-	}
+//	@GetMapping("addLimitSale")
+//	public String addLimitSale(ModelMap model) {
+//		LimitSaleVO limitSaleVO = new LimitSaleVO();
+//		model.addAttribute("limitSaleVO", limitSaleVO);
+//		return "back-end/limitSale/addLimitSale";
+//	}
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("insert")
+	@PostMapping("insertlimitSale")
 	public String insert(@Valid LimitSaleVO limitSaleVO, BindingResult result, ModelMap model,
-			@RequestParam("limImage") MultipartFile[] parts) throws IOException {
+			@RequestParam("limImage") MultipartFile[] parts,HttpServletRequest request) throws IOException {
 
+		
+		
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(limitSaleVO, result, "limImage");
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+		limitSaleVO.setUserVO(userVO);
 
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
 			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
@@ -62,16 +71,21 @@ public class LimitSaleController {
 			}
 		}
 		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "back-end/limitSale/addLimitSale";
+//			return "back-end/limitsale/addLimitSale";
+			List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+			model.addAttribute("limitSaleOneData2", limitSaleOneData2);
+			return "front-end/com/editmember_sale";
+
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 		// EmpService empSvc = new EmpService();
 		limitSaleSvc.addLimitSale(limitSaleVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<LimitSaleVO> list = limitSaleSvc.getAll();
-		model.addAttribute("limitSaleListData", list);
-		model.addAttribute("success", "- (新增成功)");
-		return "redirect:/limitSale/listAllLimitSale"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
+//		List<LimitSaleVO> list = limitSaleSvc.getAll();
+//		model.addAttribute("limitSaleListData", list);
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(userVO);
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
+		return "front-end/com/editmember_sale_view"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
 	}
 
 	/*
@@ -92,11 +106,17 @@ public class LimitSaleController {
 	/*
 	 * This method will be called on update_user_input.html form submission, handling POST request It also validates the user input
 	 */
-	@PostMapping("update")
+	@PostMapping("updatelimitSale")
 	public String update(@Valid LimitSaleVO limitSaleVO, BindingResult result, ModelMap model,
 			@RequestParam("limImage") MultipartFile[] parts) throws IOException {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+//		
+//		LimitSaleVO limitSaleVO1 = limitSaleSvc.getOneLimitSale(Integer.valueOf(limNum));
+//		limitSaleVO1.setLimDes(limitSaleVO.getLimDes());
+//		limitSaleVO1.setLimPrice(limitSaleVO.getLimPrice());
+		
+
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(limitSaleVO, result, "limImage");
 
@@ -120,9 +140,9 @@ public class LimitSaleController {
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("success", "- (修改成功)");
-		limitSaleVO = limitSaleSvc.getOneLimitSale(Integer.valueOf(limitSaleVO.getLimNum()));
-		model.addAttribute("limitSaleVO", limitSaleVO);
-		return "back-end/limitSale/listOneLimitSale"; // 修改成功後轉交listOneUser.html
+		List<LimitSaleVO> limitSaleOneData2 = limitSaleSvc.getOneLimitSalebyUserid(limitSaleVO.getUserVO());
+		model.addAttribute("limitSaleOneData2", limitSaleOneData2);
+		return "front-end/com/editmember_sale_view"; // 修改成功後轉交listOneUser.html
 	}
 
 	/*

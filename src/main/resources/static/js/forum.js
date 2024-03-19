@@ -87,12 +87,6 @@ function deletePostAndRedirect(postId) {
 	}
 }
 
-//重置留言
-
-function resetForm() {
-	document.querySelector('.comment-input').value = '';
-}
-
 
 //修改文章
 
@@ -115,3 +109,34 @@ function validateContent() {
     // 如果驗證通過，提交表單
     document.getElementById('updateForm').submit();
 }
+
+//使用取消留言清空數據(frContent&frImage)
+
+function cancelFunction() {
+    document.getElementById('frContent').value = ''; // 清空留言內容
+    document.getElementById('frImage').value = ''; // 清空選擇的圖片
+}
+
+//使用者留言後重新加載畫面(Ajax)
+function submitForumReply() {
+    var formData = new FormData(document.getElementById("forumReplyForm")); // 假設你的表單ID是forumReplyForm
+    $.ajax({
+        url: '/forumReply/insert',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            // 留言成功後的操作，例如刷新留言列表
+            alert("留言成功！");
+            location.reload(); // 重新加載當前頁面
+        },
+        error: function() {
+            alert("留言失敗！");
+        }
+    });
+}
+
+
+
+
