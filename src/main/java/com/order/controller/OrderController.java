@@ -50,7 +50,7 @@ public class OrderController {
 	ReqOrderService reqOrderSvc;
 
 	@Autowired
-	QuoService quoOrderSvc;
+	QuoService quoSvc;
 
 	@GetMapping("addOrder")
 	public String addOrder(ModelMap model) {
@@ -58,6 +58,75 @@ public class OrderController {
 		model.addAttribute("orderVO", orderVO);
 		return "back-end/order/addOrder";
 	}
+
+	// 訂單（報價單）內容確認
+	@GetMapping("/transaction_check")
+	public String transaction_check(@RequestParam("quoNum") Integer quoNum, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+
+		QuoVO quoVO = quoSvc.getOneQuo(quoNum);
+
+		model.addAttribute("quoVO", quoVO);
+
+		return "front-end/order/transaction_check"; // view
+	}
+
+	// 訂單交易 成功
+	@PostMapping("/transaction")
+	public String transaction(@RequestParam Integer quoNum, Model model, HttpServletRequest request) {
+		
+		
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+
+		if (userVO == null) {
+			return "redirect:/login"; // 如果使用者未登入，將其重定向到登入頁面
+		}
+		//調出當前頁面的報價單 quoVO
+		QuoVO quoVO = quoSvc.getOneQuo(quoNum);
+		ReqOrderVO reqOrderVO = quoSvc.getOrderByreqNum(quoNum);
+		
+		
+	//建立訂單
+		
+		OrderVO orderVO = new OrderVO();
+		
+		orderVO.setOrdProdname(quoVO.getQuoProdname());
+		orderVO.setOrdProdqty(quoVO.getQuoProdqty());
+		orderVO.setOrdUnitname(quoVO.getQuoUnitname());
+		orderVO.setOrdProdprice(quoVO.getQuoUnitprice());
+		orderVO.setOrdTotalamount(quoVO.getQuoTotalprice());
+		orderVO.setOrdStat(1);
+		orderVO.setOrdTranstat(0);
+		orderVO.setOrdPaystat(0);
+		orderVO.setOrdIsValid(1);
+		orderVO.setUserVO(userVO);//
+		orderVO.setReqOrderVO(reqOrderVO);
+		orderVO.setQuoVO(quoVO);
+//		orderVO.setRptdlistVO(null);
+		
+		orderSvc.addOrder(orderVO);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		model.addAttribute("userVO", userVO);
+		return "front-end/order/transaction"; // view
+	}
+	
 
 	// 訂單交易狀態表 成功
 	@GetMapping("/transaction_stat")
@@ -73,25 +142,26 @@ public class OrderController {
 		model.addAttribute("orderListData", list);
 		return "front-end/order/transaction_stat"; // view
 	}
-	
-	//訂單明細
+
+	// 訂單明細
 	@GetMapping("/order_details")
-	public String order_details(Model model, HttpServletRequest request) {
-	    HttpSession session = request.getSession();
-	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	public String order_details(@RequestParam("ordNum") Integer ordNum, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-	    if (userVO == null) {
-	        return "redirect:/login"; // 如果用户未登录，将其重定向到登录页面
-	    }
+		if (userVO == null) {
+			return "redirect:/login"; // 如果用户未登录，将其重定向到登录页面
+		}
 
-	    // 根据当前登录用户的ID获取订单列表
-	    List<OrderVO> list = orderSvc.getOrderDetails(userVO.getUserId());
-	    model.addAttribute("orderListData", list);
+		// 根据当前登录用户的ID获取订单列表
+//		List<OrderVO> list = orderSvc.getOrderDetails(userVO.getUserId());
+//		model.addAttribute("orderListData", list);
 
-	    return "front-end/order/order_details";
+		OrderVO orderVO = orderSvc.getOneOrder(ordNum);
+		model.addAttribute("orderVO", orderVO);
+		model.addAttribute("userVO", userVO);
+		return "front-end/order/order_details";
 	}
-
-
 
 	/*
 	 * This method will be called on addEmp.html form submission, handling POST
@@ -227,6 +297,7 @@ public class OrderController {
 		return "front-end/order/transaction_stat"; // 修改成功後轉交listOneorder.html
 	}
 
+
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
@@ -253,26 +324,11 @@ public class OrderController {
 
 	@ModelAttribute("quoListData")
 	protected List<QuoVO> referenceListQuoOrderListData() {
-		List<QuoVO> list = quoOrderSvc.getAll();
+		List<QuoVO> list = quoSvc.getAll();
 		return list;
 	}
 
-	/*
-	 * This method will be called on listAllUser.html form submission, handling POST
-	 * request
-	 */
-//	@PostMapping("delete")
-//	public String delete(@RequestParam("userId") String userId, ModelMap model) {
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		/*************************** 2.開始刪除資料 *****************************************/
-//		// EmpService empSvc = new EmpService();
-//		userSvc.deleteUser(Integer.valueOf(userId));
-//		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
-//		List<UserVO> list = userSvc.getAll();
-//		model.addAttribute("userListData", list);
-//		model.addAttribute("success", "- (刪除成功)");
-//		return "back-end/user/listAllUser"; // 刪除完成後轉交listAllUser.html
-//	}
+	
 
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(OrderVO orderVO, BindingResult result, String removedFieldname) {

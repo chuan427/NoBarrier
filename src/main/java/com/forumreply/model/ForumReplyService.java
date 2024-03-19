@@ -8,7 +8,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.forumpost.model.ForumPostVO;
 import com.forumreport.model.ForumReportVO;
+import com.user.model.UserVO;
 
 
 @Service("forumReplyService")
@@ -17,6 +19,12 @@ public class ForumReplyService {
 
 		@Autowired
 		ForumReplyRepository repository;
+		
+		
+		public void addForumReply(ForumReplyVO ForumReplyVO ,UserVO loggingInUser) {        
+			ForumReplyVO.setUserVO(loggingInUser); 
+			repository.save(ForumReplyVO);
+		}
 
 		public void addForumReply(ForumReplyVO forumReplyVO) {
 			repository.save(forumReplyVO);
@@ -45,6 +53,7 @@ public class ForumReplyService {
 		public Set<ForumReportVO> getForumReportByfrpFpNum(Integer frpFrNum){
 			return getOneForumReply(frpFrNum).getForumReport();
 		}
-	
+		
+
 
 }

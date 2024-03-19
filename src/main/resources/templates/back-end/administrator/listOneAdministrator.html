@@ -1,0 +1,47 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>管理員資料 - listOneAdmin.html</title>
+
+<head th:insert="~{/back-end/administrator/included-fragment}"></head>
+<style type="text/css">
+	
+    span {
+		display: inline-block;
+		width: 150px;
+		text-align: left;
+		font-weight: bold;
+	}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
+		 <div align="center"> <h2>管理員資料 - listOneAdmin.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/authorization_new_member}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+</nav>
+
+	<div align="center" th:fragment="listOneNews-div"> <!-- 此div被select_page.html第128行insert用 -->
+		<h3><span>查詢結果 :</span></h3>
+		<span>編號:</span><span th:text="${administratorVO.adminNum}"></span><br/>
+		<span>名稱:</span><span th:text="${administratorVO.adminName}"></span><br/>
+		<span>帳號:</span><span th:text="${administratorVO.adminAccount}"></span><br/>
+		<span>密碼:</span><span th:text="${administratorVO.adminPassword}"></span><br/>
+		<span>權限:</span><span th:text="${administratorVO.adminAuth}"></span><br/>
+		<span>狀態:</span><span th:text="${administratorVO.adminIsValid}"></span><br/>
+	</div>
+
+
+</body>
+</html>

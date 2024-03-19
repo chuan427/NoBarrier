@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>論壇貼文修改 - update_forumPost_input.html</title>
 
-<head th:insert="~{/back-end/forumPost/included-fragment}"></head>
+
 <style type="text/css">
 	
 	button {
@@ -45,15 +45,17 @@
 </style>
 </head>
 <body>
+<!-- header -->
+	<header th:insert="~{/back-end/header}"></header>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		 <div align="center"> <h2>論壇貼文修改 - update_forumPost_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/forumPost/select_page1}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <h3><a class="navbar-brand" th:href="@{/forum}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update}" method="post" th:object="${forumPostVO}" enctype="multipart/form-data">
+		<form th:action="@{update_back}" method="post" th:object="${forumPostVO}" enctype="multipart/form-data">
 			
 			<div>
 			<label>文章編號:</label>

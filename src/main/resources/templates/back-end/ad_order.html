@@ -69,12 +69,13 @@
 
     <div class="container">
         <div class="row">
-            <!-- siderbar -->
+            <!-- sidebar -->
+            <div class="col-md-3">
                 <head th:insert="~{/back-end/sidebar}"></head>
-         
+            </div>
 
             <!-- Main Content -->
-            <section class="main-content">
+            <section class="main-content col-md-9">
                 <div class="ad-item">
                     <h2 class="ad-title">廣告訂單</h2>
                     <div class="accordion" id="accordionExample">
@@ -91,17 +92,20 @@
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="ad-content">
+											<span th:text="購買公司名稱+':'+${adVO.userVO.comName}"></span><br>
                                             <span th:text="價格+':'+${adVO.adPrice}"></span><br>
-                                            <span th:text="日期+':'+${adVO.adDate}"></span><br>
-                                            <span th:text="方案+':'+${adVO.adDuration}"></span><br>
-                                            <form method="post" th:action="@{/ad/getOne_For_Update}">
+                                            <span th:text="購買日期+':'+${adVO.adDate}"></span><br>
+                                            <span th:text="廣告方案+':'+${adVO.adDuration}"></span><br>
+                                            <div class="d-flex justify-content-end mb-3">
+                                            <form method="post" th:action="@{/ad/getOne_For_Update}" target="_blank">
                                                 <input type="submit" class="btn btn-primary" value="修改">
                                                 <input type="hidden" name="adOrdernum" th:value="${adVO.adOrdernum}">
                                             </form>
-                                            <form method="post" th:action="@{/ad/delete}">
-                                                <input type="submit" class="btn btn-danger" value="刪除">
-                                                <input type="hidden" name="adOrdernum" th:value="${adVO.adOrdernum}">
-                                            </form>
+                                            </div>
+<!--                                            <form method="post" th:action="@{/ad/delete}">-->
+<!--                                                <input type="submit" class="btn btn-danger" value="刪除" target="_blank">-->
+<!--                                                <input type="hidden" name="adOrdernum" th:value="${adVO.adOrdernum}">-->
+<!--                                            </form>-->
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,104 @@
+html {
+	height: Auto;
+}
+
+body {
+	margin-top: 20px;
+	background: #eee;
+	color: #708090;
+	min-height: 100vh; /* 確保至少與視窗一樣高 */
+	background-image: url('/images/abstract-painted.JPG');
+	background-size: cover;
+	background-position: center;
+}
+
+/* footer 改成白色 */
+.container footer.nav a, .container footer p {
+	color: #ffffff !important;
+}
+
+/* 針對所有在 .container 內的 .nav-link 應用白色文字 */
+.container .nav-link {
+	color: #ffffff !important;
+}
+
+/* 如果導航連結位於特定區域，如 footer，則可以更具體 */
+.container footer .nav-link {
+	color: #ffffff !important;
+}
+
+/* 針對所有狀態的導航連結：正常、懸停、聚焦 */
+.container .nav-link, .container .nav-link:hover, .container .nav-link:focus
+	{
+	color: #ffffff !important;
+}
+
+.search-result-title, .no-results {
+    color: white; /* 設置文字顏色為白色 */
+    text-align: center; /* 文字置中 */
+    margin-top: 20px; /* 上邊距，根據需要調整 */
+}
+
+.container header a {
+	color: #ffffff !important;
+}
+
+
+
+.transparent-box {
+	background-color: rgba(245, 233, 233, 0.5);
+	padding: 15px;
+	width: 70%;
+	max-width: 2000px;
+	margin-bottom: 15px;
+	border-radius: 15px;
+	margin-right: 50px; /* 添加右邊距，與側邊欄保持間距 */
+	margin-left: 200px; /* 添加右邊距，與側邊欄保持間距 */
+}
+
+
+.post {
+	flex-direction: column;
+	background-color: white;
+	padding: 15px;
+	border-radius: 15px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-time {
+	font-size: 0.9em;
+	color: black;
+}
+
+.post-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.post h5, .post p {
+	color: #333;
+}
+
+.user-name {
+    font-size: 0.7rem;
+    font-weight: normal;
+    font-family: 'Microsoft JhengHei', sans-serif; /* 加入微軟正黑體 */
+}
+
+.post-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 將時間對齊到右側 */
+}
+
+.title-time-container {
+	width: 100%; /* 確保容器佔滿整行 */
+	display: flex;
+	justify-content: space-between; /* 標題靠左，時間靠右 */
+	align-items: baseline;
+}
+
+.icon-left {
+    text-align: right; /* 確保圖標對齊到右邊 */
+}

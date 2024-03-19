@@ -16,6 +16,8 @@ public class TryWSConfig implements WebSocketConfigurer {
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
 		registry.addHandler(new TryWSHandler(), "/xxx")
 		.addInterceptors(new HttpSessionHandshakeInterceptor());
+		System.out.println("有建立一個ws端點");
+
 	}
 
 	

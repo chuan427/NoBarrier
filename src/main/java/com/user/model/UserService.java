@@ -1,3 +1,4 @@
+
 package com.user.model;
 
 
@@ -6,9 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,22 +85,34 @@ public class UserService {
 //			return optional.get();
 			return optional.orElse(null);  // public T orElse(T other) : 如果值存在就回傳其值，否則回傳other的值
 		}
+		
+		public UserVO getOneUserByAccount(String comAccount) {
+            UserVO userVO = repository.findByComAccount(comAccount);
+
+            if(userVO!=null) {
+                return userVO;
+            }else {
+                return null;
+            }
+        }
 
 		public List<UserVO> getAll() {
 			return repository.findAll();
 		}
 		
 		public List<UserVO> getOneStatUser(UserVO userVO) {
-	        List<UserVO> allUser = repository.findAll();
-	        List<UserVO> validUser = new ArrayList<>();
+		    List<UserVO> allUser = repository.findAll();
+		    List<UserVO> validUser = new ArrayList<>();
 
-	        for (UserVO User : allUser) {
-	            if (User.getUserId() == userVO.getUserId() && User.getComIsValid() == 1) {
-	                validUser.add(User);
-	            }
-	        }
-	        return validUser;
-	    }
+		    for (UserVO user : allUser) {
+		        // 添加空值检查
+		        if (user.getUserId() == userVO.getUserId() && user.getComIsValid() != null && user.getComIsValid() == 1) {
+		            validUser.add(user);
+		        }
+		    }
+		    return validUser;
+		}
+
 		
 	
 		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
@@ -149,5 +161,9 @@ public class UserService {
 		        throw new RuntimeException("User not found");
 		    }
 		}
-
+		
+		
+		
+		
+		
 }

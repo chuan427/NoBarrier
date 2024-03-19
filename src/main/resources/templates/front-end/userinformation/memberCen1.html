@@ -270,13 +270,13 @@ main {
 									<div class="card-body">
 										<h5 class="card-title">銀行帳號訊息</h5>
 										<p class="card-text">
-											自訂代稱: <span th:text="*{comContactPerson}"></span>
+											自訂代稱: <span th:text="${userVO.comContactPerson}"></span>
 										</p>
 										<p class="card-text">
-											銀行代碼: <span th:text="*{comBank}"></span>
+											銀行代碼: <span th:text="${userVO.comBank}"></span>
 										</p>
 										<p class="card-text">
-											帳號: <span th:text="*{accountNumber}"></span>
+											帳號: <span th:text="${userVO.accountNumber}"></span>
 										</p>
 										<!-- 如果有其他银行账号信息，可以继续添加 -->
 									</div>
