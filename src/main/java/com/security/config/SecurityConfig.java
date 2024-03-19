@@ -161,9 +161,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //					.accessDeniedHandler(myAccessDeniedHandler);
 				
 				// 勿忘我（remember-me）
-				http.rememberMe()
-					.userDetailsService(userDetailsService_impl)
-					.tokenValiditySeconds(60*60*24); // 通常都會大於 session timeout 的時間
+//				http.rememberMe()
+//					.userDetailsService(userDetailsService_impl)
+//					.tokenValiditySeconds(60*60*24); // 通常都會大於 session timeout 的時間
 	}
 
 
