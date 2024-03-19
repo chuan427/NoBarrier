@@ -180,9 +180,6 @@ public class ForumPostController {
 	}
 	
 	
-	
-	
-
 	@ModelAttribute("userListData")
 	protected List<UserVO> referenceListData() {
 		List<UserVO> list = userSvc.getAll();
