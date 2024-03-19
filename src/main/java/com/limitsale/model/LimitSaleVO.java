@@ -78,11 +78,11 @@ import com.user.model.UserVO;
 //		}
 //		//		@Id
 //		@GeneratedValue(strategy = GenerationType.IDENTITY)		public Integer getLimNum() {
-			return limNum;
-		}
-		public void setLimNum(Integer limNum) {
-			this.limNum = limNum;
-		}
+//			return limNum;
+//		}
+//		public void setLimNum(Integer limNum) {
+//			this.limNum = limNum;
+//		}
 		
 		
 //		public Integer getLimOrdernum() {
