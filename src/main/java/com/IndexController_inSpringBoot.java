@@ -248,6 +248,13 @@ public class IndexController_inSpringBoot {
 		return "front-end/com/editmember_ad"; // view
 	}
 
+	
+//	@GetMapping("/upProductInformation")
+//	public String addProductInformation(ModelMap model) {
+//		ProductInformationVO productInformationVO = new ProductInformationVO();
+//		model.addAttribute("productInformationVO", productInformationVO);
+//		return "back-end/productInformation/update_productInformation_input";
+//	}
 
 //	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_product_view")
@@ -256,7 +263,6 @@ public class IndexController_inSpringBoot {
 			UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 	        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
 	        // 添加到模型中
-	        model.addAttribute("userVO", userVO);
 	        model.addAttribute("productInformationList", productInformationList);
 	    return "front-end/com/editmember_product_view"; // 返回 view 的名稱
 	}
@@ -269,9 +275,9 @@ public class IndexController_inSpringBoot {
         List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
         // 添加到模型中
         model.addAttribute("userVO", userVO);
+        model.addAttribute("productInformationVO",new ProductInformationVO());
         model.addAttribute("productInformationList", productInformationList);
-    return "front-end/com/editmember_product"
-    		+ ""; // 返回 view 的名稱
+    return "front-end/com/editmember_product"; // 返回 view 的名稱
 	}
 
 	// 廠商產品限時預覽頁面 完成

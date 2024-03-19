@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.industry.model.IndustryService;
+import com.productinformation.model.ProductInformationService;
+import com.productinformation.model.ProductInformationVO;
 import com.quo.model.QuoService;
 import com.reqorder.model.ReqOrderService;
 import com.security.model.MailService;
@@ -60,24 +62,6 @@ public class UserControllerCom {
 	@Autowired
 	QuoService quoSvc;
 	
-	
-
-	/*
-	 * This method will serve as addEmp.html handler.
-	 */
-//	@GetMapping("/memberCen1")
-//	public String addUser(ModelMap model) {
-//		UserVO userVO = new UserVO();
-//		model.addAttribute("userVO", userVO);
-//		return "front-end/userinformation/memberCen1";
-//	}
-	
-//	@GetMapping("/memberCen1")
-//	public String memberCen1(ModelMap model) {
-//	    List<UserVO> userListData = userSvc.getAll(); // 假设这是您获取用户数据的方法
-//	    model.addAttribute("userListData", userListData);
-//	    return "front-end/userinformation/memberCen1"; // 返回到您的模板页面
-//	}
 	
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
@@ -126,61 +110,8 @@ public class UserControllerCom {
 		return ResponseEntity.ok("{\"verificationCode\": \"" + verificationCode + "\"}");
 	}
 
-	/*
-	 * This method will be called on addEmp.html form submission, handling POST
-	 * request It also validates the user input
-	 */
+//	==========================================================================================
 
-	@PostMapping("insertUser")
-	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
-		
-//	@PostMapping("insert")
-//	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
-
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		 //去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
-		
-		userVO.toString();
-
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				userVO.setComAboutImage(buf);
-			}
-		}
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "front-end/userinformation/memberCen";
-		}
-
-		String password = userVO.getComPassword();
-		String encodeNewPassword = passwordEncoder.encode(password);
-		
-		userVO.setComPassword(encodeNewPassword);
-
-		/*************************** 2.開始新增資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.addUser(userVO);
-		
-		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<UserVO> list = userSvc.getAll();
-		model.addAttribute("userListData", list);
-		model.addAttribute("success", "- (新增成功)");
-
-//		return "redirect:/userinformation/memberCen"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-//	}
-
-		return "redirect:/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-	}	//我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
-
-
-	/*
-	 * This method will be called on listAllEmp.html form submission, handling POST
-	 * request
-	 */
 
 	@PostMapping("getOne_For_Update")
 	public String getOne_For_Update(@RequestParam("userId") String userId, ModelMap model) {
@@ -194,106 +125,7 @@ public class UserControllerCom {
 		return "front-end/com/editmember_user"; // 查詢完成後轉交update_user_input.html
 	}
 
-	@PostMapping("update")
-	public String update(@Valid UserVO userVO, BindingResult result, ModelMap model,HttpServletRequest request,
-			@RequestParam("comAboutImage") MultipartFile part) throws IOException {
-		 System.out.println("Received UserVO: " + userVO);
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
-		  if (!part.isEmpty()) {
-		        byte[] comAboutImage = part.getBytes();
-		        userVO.setComAboutImage(comAboutImage);
-		    } else {
-		        // 如果用户未选择上传新图片，则保留原有图片
-		        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
-		        userVO.setComAboutImage(existingImage);
-		    }
-		  	
-		  
-		if (result.hasErrors()) {
-			System.out.println("123");
-			 for (FieldError error : result.getFieldErrors()) {
-			        System.out.println("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
-			    }
-			return "front-end/com/editmember_aboutus";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		userSvc.update(userVO);
-		 UserVO updatedUser = userSvc.getOneUser(userVO.getUserId());
-		request.getSession().setAttribute("loggingInUser", updatedUser);
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-		model.addAttribute("success", "- (修改成功)");
-		model.addAttribute("userVO", updatedUser);
-		return "front-end/com/editmember_aboutus_view"; // 修改成功後轉交editmember_aboutus_view
-	}
-//	
-	
-//	==========================================================================
-//	@PostMapping("updateUser")
-//	public String updateUser(@Valid UserVO userVO,BindingResult result, ModelMap model,HttpServletRequest request) throws IOException {
-//		result = removeFieldError(userVO, result, null);
-//		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-//		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-//		if (result.hasErrors()) {
-//			System.out.println("跳錯了");
-//			return "front-end/com/editmember_user";
-//		}
-//		
-//		UserVO userVO1 = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-//		userVO1.setComAddress(userVO.getComAddress());
-//		userVO1.setComPhone(userVO.getComPhone());
-//		userVO1.setComMail(userVO.getComMail());
-//		/*************************** 2.開始修改資料 *****************************************/
-//		// EmpService empSvc = new EmpService();
-//		userSvc.updateUser(userVO1);
-//		// 重新获取更新后的用户信息并将其存储到会话中
-//		UserVO updatedUser = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-//		request.getSession().setAttribute("loggingInUser", updatedUser);
-//		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-//		model.addAttribute("success", "- (修改成功)");
-//		model.addAttribute("userVO", updatedUser);
-//		return "front-end/com/editmember_user_view"; // 修改成功後轉交listOneUser.html
-//	}
-	
-	//修改關於我頁面====================================================================================
-//	@PostMapping("updateAboutUs")
-//	public String update(@RequestParam("userId") Integer userId,
-//	                     @RequestParam("comAboutImage") MultipartFile part,
-//	                     @RequestParam("comAboutContent") @NotBlank(message = "關於我們敘述請勿空白") String comAboutContent,
-//	                     HttpServletRequest request, ModelMap model, BindingResult result) throws IOException {
-//
-//		UserVO userVO = userSvc.getOneUser(userId);
-//	    // 检查是否有上传的新图片
-//	    if (!part.isEmpty()) {
-//	        byte[] comAboutImage = part.getBytes();
-//	        userVO.setComAboutImage(comAboutImage);
-//	    } else {
-//	        // 如果用户未选择上传新图片，则保留原有图片
-//	        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
-//	        userVO.setComAboutImage(existingImage);
-//	    }
-//	    
-//	    userVO.setComAboutContent(comAboutContent);
-//	    // 如果存在输入格式错误，返回编辑页面
-//	    if (result.hasErrors()) {
-//	    	 for (FieldError error : result.getFieldErrors()) {
-//			        System.out.println("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
-//			    }
-//	     return "front-end/com/editmember_aboutus";
-//		}
-//	    
-//	    // 执行修改数据的逻辑
-//	    userSvc.update(userVO);
-//		request.getSession().setAttribute("loggingInUser", userVO);
-//
-//	    // 修改完成，准备转交
-//	    model.addAttribute("success", "- (修改成功)");
-//	    model.addAttribute("userVO", userVO);
-//	    return "front-end/com/editmember_aboutus_view";
-//	}
-
-//	=======================================廠商資料update====================
+//	=======================================廠商編輯update====================
 	@PostMapping("updateAboutUs")
 	public String update(@Valid UserVO userVO, BindingResult result, HttpServletRequest request, ModelMap model, 
 			@RequestParam("comAboutImage") MultipartFile part) throws IOException {
@@ -312,23 +144,128 @@ public class UserControllerCom {
 		    }
 	    
 		if (result.hasErrors()) {
-			System.out.println("666");
 			 for (FieldError error : result.getFieldErrors()) {
 			        System.out.println("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
 			    }
 			return "front-end/com/editmember_aboutus";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
-		  userSvc.update(userVO);
+		  userSvc.updateUser(userVO);
 		  request.getSession().setAttribute("loggingInUser", userVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
 //		  model.addAttribute("success", "- (修改成功)");
 		  userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
 		  model.addAttribute("userVO", userVO);
-		  return "front-end/com/editmember_aboutus_views";
+		  return "front-end/com/editmember_aboutus_view";
+		}
+	
+//	==============================廣告圖片更新========================================
+	
+	@PostMapping("updateimage")
+	public String updateimage(
+			@RequestParam("comImage1") MultipartFile comImage1,
+            @RequestParam("comImage2") MultipartFile comImage2,
+            @RequestParam("comImage3") MultipartFile comImage3,
+            @RequestParam("comImage4") MultipartFile comImage4,@Valid UserVO userVO, BindingResult result, HttpServletRequest request, ModelMap model
+			) throws IOException {
+		
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
+		result = removeFieldError(userVO, result, "comImage1");
+		result = removeFieldError(userVO, result, "comImage2");
+		result = removeFieldError(userVO, result, "comImage3");
+		result = removeFieldError(userVO, result, "comImage4");
+
+		
+		// 检查是否有上传的新图片
+//		 if (!part.isEmpty()) {
+//		        byte[] comImage = part.getBytes();
+//		        userVO.setComImage1(comImage);
+//		    } else {
+//		        // 如果用户未选择上传新图片，则保留原有图片
+//		        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage1();
+//		        userVO.setComImage1(existingImage);
+//		    }
+		// 处理图片1
+		if (!comImage1.isEmpty()) {
+		    byte[] imageData = comImage1.getBytes();
+		    userVO.setComImage1(imageData);
+		} else {
+		    // 如果用户未选择上传新图片，则保留原有图片
+		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage1();
+		    userVO.setComImage1(existingImage);
 		}
 
+		// 处理图片2
+		if (!comImage2.isEmpty()) {
+		    byte[] imageData = comImage2.getBytes();
+		    userVO.setComImage2(imageData);
+		} else {
+		    // 如果用户未选择上传新图片，则保留原有图片
+		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage2();
+		    userVO.setComImage2(existingImage);
+		}
+
+		// 处理图片3
+		if (!comImage3.isEmpty()) {
+		    byte[] imageData = comImage3.getBytes();
+		    userVO.setComImage3(imageData);
+		} else {
+		    // 如果用户未选择上传新图片，则保留原有图片
+		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage3();
+		    userVO.setComImage3(existingImage);
+		}
+
+		// 处理图片4
+		if (!comImage4.isEmpty()) {
+		    byte[] imageData = comImage4.getBytes();
+		    userVO.setComImage4(imageData);
+		} else {
+		    // 如果用户未选择上传新图片，则保留原有图片
+		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage4();
+		    userVO.setComImage4(existingImage);
+		}
+	    
+		if (result.hasErrors()) {
+			 for (FieldError error : result.getFieldErrors()) {
+			        System.out.println("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
+			    }
+			return "front-end/com/editmember_ad";
+		}
+		/*************************** 2.開始修改資料 *****************************************/
+		  userSvc.updateUser(userVO);
+		  request.getSession().setAttribute("loggingInUser", userVO);
+
+		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+//		  model.addAttribute("success", "- (修改成功)");
+		  userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+		  model.addAttribute("userVO", userVO);
+		  return "front-end/com/editmember_ad_view";
+		}
+	
+	/*********************************** 圖片上傳 *****************************************/
+	 @PostMapping("upload")
+	    public String handleFileUpload(@RequestParam("file") MultipartFile[] parts, HttpServletRequest request, ModelMap model) 
+	    		 throws IOException{
+	        // 在這裡處理文件上傳操作
+	        // 您可以使用 file.getBytes() 方法獲取文件的字節數據，並進行後續處理
+	        // 在這裡示例只是回傳一個簡單的成功訊息，您可以根據實際需求進行處理
+		 UserVO userVO = (UserVO) request.getSession().getAttribute("loggingInUser");
+		 for (MultipartFile part : parts) {
+		        // 处理每个文件
+		        if (!part.isEmpty()) {
+		            // 执行文件处理逻辑，例如保存到服务器或数据库
+		            byte[] imageData = part.getBytes();
+		            // 处理图片数据，这里假设将图片数据保存到 userVO 对象中的某个字段
+		            userVO.setComImage1(imageData);
+		        }
+		    }   
+	        return "File uploaded successfully";
+	    }
+	
+	 /*************************** 去除BindingResult *****************************************/
+	
 	// 去除BindingResult中某個欄位的FieldError紀錄
 	public BindingResult removeFieldError(UserVO userVO, BindingResult result, String removedFieldname) {
 		List<FieldError> errorsListToKeep = result.getFieldErrors().stream()
@@ -339,5 +276,4 @@ public class UserControllerCom {
 		}
 		return result;
 	}
-
 }
