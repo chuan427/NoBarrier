@@ -20,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderVO;
@@ -97,6 +100,8 @@ public class QuoVO implements java.io.Serializable {
 	}
 
 	@Column(name = "quoUnitprice")
+	@NotNull(message="單價: 請勿空白")
+	@DecimalMin(value = "1", message = "數量: 不能小於{value}")
 	public Integer getQuoUnitprice() {
 		return quoUnitprice;
 	}
@@ -115,6 +120,7 @@ public class QuoVO implements java.io.Serializable {
 	}
 
 	@Column(name = "quoInfo", columnDefinition = "text")
+	@NotEmpty(message="文字敘述: 請勿空白")
 	public String getQuoInfo() {
 		return quoInfo;
 	}
