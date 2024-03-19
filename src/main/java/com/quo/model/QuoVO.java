@@ -20,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.order.model.OrderVO;
 import com.reqorder.model.ReqOrderVO;
@@ -33,16 +36,16 @@ public class QuoVO implements java.io.Serializable {
 
 	
 	private Integer quoNum;//PK 報價單Id
-	private Date quoDate = Date.valueOf(LocalDate.now());
-	private String quoProdname;
-	private String quoUnitname;
-	private Integer quoProdqty;
-	private Integer quoUnitprice;
-	private Integer quoTotalprice;
-	private String quoInfo;
-	private ReqOrderVO reqOrderVO;
+	private Date quoDate = Date.valueOf(LocalDate.now());//報價單建立時間
+	private String quoProdname;//產品名稱
+	private String quoUnitname;//單位名稱
+	private Integer quoProdqty;//產品數量
+	private Integer quoUnitprice;//產品單價
+	private Integer quoTotalprice;//產品總價
+	private String quoInfo;//文字敘述
+	private ReqOrderVO reqOrderVO;//需求單的VO
 	private UserVO userVO;//賣家VO
-	private Integer quoIsValid;
+	private Integer quoIsValid;//啟用狀態
 	private List<OrderVO> orders;
 
 	
@@ -97,6 +100,8 @@ public class QuoVO implements java.io.Serializable {
 	}
 
 	@Column(name = "quoUnitprice")
+	@NotNull(message="單價: 請勿空白")
+	@DecimalMin(value = "1", message = "數量: 不能小於{value}")
 	public Integer getQuoUnitprice() {
 		return quoUnitprice;
 	}
@@ -115,6 +120,7 @@ public class QuoVO implements java.io.Serializable {
 	}
 
 	@Column(name = "quoInfo", columnDefinition = "text")
+	@NotEmpty(message="文字敘述: 請勿空白")
 	public String getQuoInfo() {
 		return quoInfo;
 	}

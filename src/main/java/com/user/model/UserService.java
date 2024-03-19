@@ -101,16 +101,18 @@ public class UserService {
 		}
 		
 		public List<UserVO> getOneStatUser(UserVO userVO) {
-	        List<UserVO> allUser = repository.findAll();
-	        List<UserVO> validUser = new ArrayList<>();
+		    List<UserVO> allUser = repository.findAll();
+		    List<UserVO> validUser = new ArrayList<>();
 
-	        for (UserVO User : allUser) {
-	            if (User.getUserId() == userVO.getUserId() && User.getComIsValid() == 1) {
-	                validUser.add(User);
-	            }
-	        }
-	        return validUser;
-	    }
+		    for (UserVO user : allUser) {
+		        // 添加空值检查
+		        if (user.getUserId() == userVO.getUserId() && user.getComIsValid() != null && user.getComIsValid() == 1) {
+		            validUser.add(user);
+		        }
+		    }
+		    return validUser;
+		}
+
 		
 	
 		public Set<ReqOrderVO> getReqOrdersByUserId(Integer userId){
