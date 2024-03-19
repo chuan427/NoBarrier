@@ -122,7 +122,7 @@
 			</div>
 			
 			<div>
-				<label>评分:</label>
+				<label>評分:</label>
 				<input type="text" th:field="*{ordRatstar}" onclick="hideContent('ordRatstar.errors');" /><br />
 				<span th:if="${#fields.hasErrors('ordRatstar')}" th:errors="*{ordRatstar}" class="error"
 					id="ordRatstar.errors"></span>
@@ -136,14 +136,14 @@
 			</div>
 			
 			<div>
-				<label>限时特卖单号:</label>
+				<label>限時特賣編號:</label>
 				<input type="text" th:field="*{ordLimnum}" onclick="hideContent('ordLimnum.errors');" /><br />
 				<span th:if="${#fields.hasErrors('ordLimnum')}" th:errors="*{ordLimnum}" class="error"
 					id="ordLimnum.errors"></span>
 			</div>
 			
 			<div>
-				<label>订单表格有效状态:</label>
+				<label>訂單狀態:</label>
 				<input type="text" th:field="*{ordIsValid}" onclick="hideContent('ordIsValid.errors');" /><br />
 				<span th:if="${#fields.hasErrors('ordIsValid')}" th:errors="*{ordIsValid}" class="error"
 					id="ordIsValid.errors"></span>
