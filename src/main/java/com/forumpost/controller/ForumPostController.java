@@ -217,6 +217,58 @@ public class ForumPostController {
 		}
 		return result;
 	}
+	
+	@PostMapping("getOne_For_Update_back")
+	public String getOne_For_Update_back(@RequestParam("fpNum") String fpNum, ModelMap model) {
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		/*************************** 2.開始查詢資料 *****************************************/
+		// EmpService empSvc = new EmpService();
+		ForumPostVO forumPostVO = forumPostSvc.getOneForumPost(Integer.valueOf(fpNum));
+
+		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("forumPostVO", forumPostVO);
+		return "back-end/forumPost/update_ForumPost_input"; // 查詢完成後轉交update_user_input.html
+	}
+
+	@PostMapping("update_back")
+	public String update_back(@Valid ForumPostVO forumPostVO, BindingResult result, ModelMap model,
+			@RequestParam("fpImage") MultipartFile[] parts, RedirectAttributes redirectAttributes) throws IOException {
+
+		result = removeFieldError(forumPostVO, result, "fpImage");
+		// 檢查文章內容長度
+		if (forumPostVO.getFpContent().trim().length() < 20) {
+			result.rejectValue("fpContent", "error.fpContent", "文章內容不能少於20字");
+		}
+
+		// 檢查是否有其他驗證錯誤
+		if (result.hasErrors()) {
+			// 將有錯誤的forumPostVO和其他必要的model屬性添加到model中，以便返回到表單頁面時能夠顯示錯誤訊息和保留用戶輸入
+			model.addAttribute("forumPostVO", forumPostVO);
+			// 其他必要的model屬性...
+			return "back-end/forumPost/update_ForumPost_input";
+		}
+
+		// 處理圖片上傳
+		if (!parts[0].isEmpty()) {
+			byte[] buf = parts[0].getBytes();
+			forumPostVO.setFpImage(buf);
+		} else {
+			byte[] existingImage = forumPostSvc.getOneForumPost(forumPostVO.getFpNum()).getFpImage();
+			forumPostVO.setFpImage(existingImage);
+		}
+
+		// 更新文章
+		long currentTimeMillis = System.currentTimeMillis();
+		Timestamp currentTimestamp = new Timestamp(currentTimeMillis);
+		forumPostVO.setFpUpdate(currentTimestamp);
+		forumPostSvc.updateForumPost(forumPostVO);
+
+		// 使用RedirectAttributes傳遞成功訊息
+		redirectAttributes.addFlashAttribute("successMessage", "文章修改成功！");
+
+		// 重定向到該文章的詳細頁面，確保你的URL模式和@GetMapping相匹配
+		return "back-end/forumPost/listOneForumPost";
+	}
 }
 
 /*

@@ -29,7 +29,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		 <div align="center"> <h2>會員資料 - listOneUser.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/user/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
+		 <h3><a class="navbar-brand" th:href="@{/member_admin}"><img th:src="@{/images/back1.gif}">回查詢頁<label th:text="${success}"></label></a></h3></div>
 </nav>
 
 	<div align="center" th:fragment="listOneUser-div"> <!-- 此div被select_page.html第128行insert用 -->
@@ -49,7 +49,7 @@
 		<span>會員狀態:</span><span th:text="${userVO.comStat}"></span><br/>
 		<span>評價總星數:</span><span th:text="${userVO.comRatStars}"></span><br/>
 		<span>評價總筆數:</span><span th:text="${userVO.comRatCount}"></span><br/>
-		<span>產業類別:</span><span th:text="${userVO.comIndustry}"></span><br/>
+<!--		<span>產業類別:</span><span th:text="${userVO.industryVO.industryNum}"></span><br/>-->
 		
 <!-- 		<span>部門:</span><span th:text="${empVO.deptVO.deptno} + '-[' + ${empVO.deptVO.dname} + ']'"></span><br/> -->
 		<span>關於我們圖片:</span><span><img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" width="100px"></span><br/>
