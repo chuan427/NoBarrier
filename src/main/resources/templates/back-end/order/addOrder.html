@@ -7,14 +7,15 @@
 
 
 
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>員工資料修改 - update_emp_input.html</title>
+<title>最新消息新增 - addNews.html</title>
 
-<head th:insert="~{/back-end/ad/included-fragment}"></head>
+<head th:insert="~{/back-end/news/included-fragment}"></head>
 <style type="text/css">
 	
 	button {
@@ -47,61 +48,43 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>員工資料修改 - update_emp_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/ad/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>最新消息新增 - addNews.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/news/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update}" method="post" th:object="${adVO}" enctype="multipart/form-data">
+		<form th:action="@{insert}" method="post" th:object="${newsVO}" enctype="multipart/form-data">
+		
+		
+<!-- 			<div> -->
+<!-- 			<label>消息日期:</label> -->
+<!-- 			<input type="date" th:field="*{newsDate}" onclick="hideContent('newsDate.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('newsDate')}" th:errors="*{newsDate}" class="error" id="newsDate.errors"></span> -->
+<!-- 			</div> -->
+			
 			<div>
-			<label>廣告編號:</label>
-			<input type="text" th:field="*{adOrdernum}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			<label>消息標題:</label>
+			<input type="text" th:field="*{newsTitle}" onclick="hideContent('newsTitle.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('newsTitle')}" th:errors="*{newsTitle}" class="error" id="newsTitle.errors"></span>
 			</div>
 			
 			<div>
-			<label>廣告價格:</label>
-			<input type="text" th:field="*{adPrice}" onclick="hideContent('adPrice.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('adPrice')}" th:errors="*{adPrice}" class="error" id="adPrice.errors"></span>
-			</div>
-			
-			<div>
-			<label>廣告狀態:</label>
-			<input type="text" th:field="*{adStat}" onclick="hideContent('adStat.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('adStat')}" th:errors="*{adStat}" class="error" id="adStat.errors"></span>
-			</div>
-			
-			<div>
-			<label>廣告購買日期:</label>
-			<input type="date" th:field="*{adDate}" onclick="hideContent('adDate.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('adDate')}" th:errors="*{adDate}" class="error" id="adDate.errors"></span>
+			<label>消息內容:</label>
+			<input type="text" th:field="*{newsContent}" onclick="hideContent('newsContent.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('newsContent')}" th:errors="*{newsContent}" class="error" id="newsContent.errors"></span>
 			</div>
 
-			<div>
-			<label>廣告使用者:</label>
-			<input type="text" th:field="*{adUserid}" onclick="hideContent('adUserid.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('adUserid')}" th:errors="*{adUserid}" class="error" id="adUserid.errors"></span>
-			</div>
-			
-			<div>
-			<label>廣告天數:</label>
-			<input type="text" th:field="*{adDuration}" onclick="hideContent('adDuration.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('adDuration')}" th:errors="*{adDuration}" class="error" id="adDuration.errors"></span>
-			</div>
-			
-
-			<div>
-			<label>廣告圖片:</label>
-			<input type="file" th:field="*{adImage}" onclick="previewImage()" multiple="multiple" />
-            <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('ad_image')}" th:errors="*{ad_image}" class="error" id="ad_image.errors"></span> -->
-			<div id="blob_holder"><img th:src="@{/ad/DBGifReader} + '?adOrdernum=' + ${adVO.adOrdernum}" width="100px"></div>
-			</div>
-			
-
+<!-- 			<div> -->
+<!-- 			<label>消息是否有效:</label> -->
+<!-- 			<input type="text" th:field="*{newsIsValid}" onclick="hideContent('newsIsValid.errors');" /><br/> -->
+<!-- 			<span  th:if="${#fields.hasErrors('newsIsValid')}" th:errors="*{newsIsValid}" class="error" id="newsIsValid.errors"></span> -->
+<!-- 			</div> -->
+				
 			
 			<div>
 				<div></div>
-				<div><button type="submit" id="submit"> 送出修改 </button></div>
+				<div><button type="submit" id="submit"> 送出新增 </button></div>
 				<div></div>
 			</div>		
 		</form>
@@ -127,7 +110,7 @@ acceptedTypes = {
 		'image/gif' : true
 };
 function previewImage() {
-	var upfile1 = document.getElementById("ad_image");
+	var upfile1 = document.getElementById("upFiles");
 	upfile1.addEventListener("change", function(event) {
 		var files = event.target.files || event.dataTransfer.files;
 		for (var i = 0; i < files.length; i++) {

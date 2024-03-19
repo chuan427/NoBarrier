@@ -30,18 +30,20 @@
         <i class="fa-solid fa-user"></i>
         <span th:text="${forumPostVO.userVO?.comName}">使用者名稱</span>
     </div>
+    
     <div class="icon-wrapper">
         <i class="fa-solid fa-rotate-left fa-lg" onclick="window.location.href='/forum/forumIndex';"></i>
         <i class="fa-solid fa-ellipsis-vertical fa-lg" onclick="toggleMenu(this)"></i>
-        <div id="menu" class="menu" style="display: none;">
+           <div id="menu" class="menu" style="display: none;">
             <a th:href="@{/forum/getOne_For_Update(fpNum=${forumPostVO.fpNum})}">
                 <i class="fa-regular fa-pen-to-square fa-lg" style="color: black;"></i>編輯文章</a>
             <a href="javascript:void(0);" th:onclick="'deletePostAndRedirect(' + ${forumPostVO.fpNum} + ');'">
                 <i class="fa-solid fa-trash fa-lg" style="color: black;"></i> 刪除文章 
-            </a>
+         	 </a>
         </div>
     </div>
 </div>
+   		</div>
    		
                     
                     <br>
@@ -73,14 +75,10 @@
                                         forumPostVO.fpCategory == 6 ? '螺絲與緊固件' : 
                                         '其他'}"></span>
                     </p>
-                    <br>  
-                    <div class="fabotton">
-                        <i class="fa-regular fa-heart fa-lg"></i>
-                        <i class="fa-regular fa-bookmark fa-lg"></i>
-                        
-                    </div>                    
+                                    
             </div>
             </div>
+      
             
 		
 		<div class="article-comments">
@@ -121,7 +119,7 @@
     </div>
 </div>
  </div>
-    </div>
+    
 
 
 
