@@ -11,4 +11,6 @@ public interface AdministratorRepository extends JpaRepository<AdministratorVO, 
 	@Modifying
 	@Query(value = "delete from administrator where adminNum =?1", nativeQuery = true)
 	void deleteByAdminNum(int AdminNum);
+	
+	public AdministratorVO findByAdminAccount(String adminAccount);
 }
