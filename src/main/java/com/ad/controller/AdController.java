@@ -113,7 +113,7 @@ public class AdController {
 
 		/*************************** 3.查詢完成,準備轉交(Send the Success view) **************/
 		model.addAttribute("adVO", adVO);
-		return "back-end/ad/update_emp_input"; // 查詢完成後轉交update_emp_input.html
+		return "back-end/ad/update_ad_input"; // 查詢完成後轉交update_emp_input.html
 	}
 
 	/*
@@ -139,7 +139,7 @@ public class AdController {
 			}
 		}
 		if (result.hasErrors()) {
-			return "back-end/ad/update_emp_input";
+			return "back-end/ad/update_ad_input";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
 		// EmpService adSvc = new EmpService();
@@ -149,7 +149,7 @@ public class AdController {
 		model.addAttribute("success", "- (修改成功)");
 		adVO = adSvc.getOneEmp(Integer.valueOf(adVO.getAdOrdernum()));
 		model.addAttribute("adVO", adVO);
-		return "back-end/ad/listOneEmp"; // 修改成功後轉交listOneEmp.html
+		return "back-end/ad/listOneAd"; // 修改成功後轉交listOneEmp.html
 	}
 
 	/*
