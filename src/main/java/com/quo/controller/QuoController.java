@@ -1,6 +1,7 @@
 package com.quo.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +61,6 @@ public class QuoController {
 		quoVO.setUserVO(userVO);
 		
 		System.out.println(reqVO.getReqProdname());
-		
 		model.addAttribute("quoVO", quoVO);
 		
 		return "front-end/userinformation/addQuotation";
@@ -75,11 +75,12 @@ public class QuoController {
 	    if (result.hasErrors()) {
 	        return "front-end/userinformation/addQuotation";
 	    }
-
+	    
 	    // 這裡加入您的邏輯來處理quoVO和userVO...
 	    quoSvc.addQuo(quoVO);
 
 	    List<QuoVO> list = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
+
 	    model.addAttribute("quoListData", list);
 	    model.addAttribute("success", "- (新增成功)");
 	    return "redirect:/userinformation/userpage";
