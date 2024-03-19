@@ -655,7 +655,7 @@ public class IndexController_inSpringBoot {
 	public String addEmp1(Model model) {
 		AdDate adDate = new AdDate();
 		model.addAttribute("adDate", adDate);
-		return "back-end/ad/addEmp";
+		return "back-end/ad/addAd";
 	}
 
 	@ModelAttribute("adListData") // for select_page.html 第97 109行用 // for listAllEmp.html 第117 133行用
