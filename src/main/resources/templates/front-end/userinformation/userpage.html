@@ -258,7 +258,7 @@ th, td {
 					</thead>
 					<tbody>
 						<th:block th:each="reqOrderVO, stat : ${reqOrderListData}">
-							<th:if>
+							<th:if test="${reqOrderVO.reqIsValid == 1}">
 								<tr>
 									<td th:text="${reqOrderVO.reqNum}"></td>
 									<td th:text="${reqOrderVO.reqOrderdate}"></td>
@@ -314,6 +314,7 @@ th, td {
 					</thead>
 					<tbody>
 						<th:block th:each="quoVO : ${quoListData}">
+						<th:if test="${quoVO.quoIsValid == 1}">
 							<tr>
 								<td th:text="${quoVOStat.count}"></td>
 								<td th:text="${quoVO.quoDate}"></td>
@@ -338,6 +339,7 @@ th, td {
 										name="quoNum" th:value="${quoVO.quoNum}">
 								</a></td>
 							</tr>
+							</th:if>
 						</th:block>
 					</tbody>
 				</table>
