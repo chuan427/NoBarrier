@@ -63,9 +63,18 @@ public class OrderController {
 	public String chatorder(Model model) {
 		OrderVO orderVO = new OrderVO();
 		model.addAttribute("orderVO", orderVO);
-		return "front-end/order/chataddorder";
+		return "front-end/chat/addOrder";
 	}
 	
+	@PostMapping("insert")
+	public String insert(QuoVO quovo,OrderVO orderVO,HttpSession session, ModelMap model) throws IOException {
+		orderVO.setOrdPaystat(0);
+		orderVO.setOrdStat(0);
+		orderVO.setOrdTranStat(0);
+		orderSvc.addChatOrder(orderVO);
+		model.addAttribute("success", "- (新增成功)");
+		return "redirect:/order/transaction_stat"; //轉去訂單狀態
+	}
 	
 	@PostMapping("addOrder")
 	public String insert(QuoVO quovo, HttpSession session) throws IOException {

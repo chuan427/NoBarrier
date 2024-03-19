@@ -28,6 +28,10 @@ public class OrderService {
 //			repository.save(OrderVO);
 //		}
 		
+		public void addChatOrder(OrderVO OrderVO) {
+		repository.save(OrderVO);
+	}
+		
 		public void addOrder(OrderVO OrderVO,UserVO loggingInUser,QuoVO quoVO) {
 			OrderVO.setUserVO(loggingInUser);
 			OrderVO.setQuoVO(quoVO);
