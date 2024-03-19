@@ -36,50 +36,42 @@ html, body {
 	color: #ffffff;
 	border-radius: 5px;
 	position: absolute;
-	width: 100px;
+	width: 150px;
 	height: 40px; 
 	top : 50%;
 	left: 50%;
 	top: 50%; 
 	left : 50%;
-	margin: 20px 200px 0 -50px;
+	margin: 40px 200px 0 -70px;
 }
 </style>
 <title>Join Us</title>
 </head>
 <body>
 	<div id="outPopUp">
-		<h1 align="center">tibame最大的私聊上線囉～</h1>
-<!-- 		<form id="myForm" action="<%=request.getContextPath() %>/chat.do" method="POST"> -->
-<!-- 			<input id="userName" name="userName" class="text-field" type="text" placeholder="Input user name" />  -->
-<!-- 			<input type="submit" id="send" class="button" value="送出" onclick="sendName();" /> -->
-<!-- 		</form> -->
-<!-- 		<form id="myForm" th:action="<%=request.getContextPath() %>/chat.do" method="POST"> -->
-<!-- 			<input id="userName" name="userName" class="text-field" type="text" placeholder="Input user name" />  -->
-<!-- 			<input type="submit" id="send" class="button" value="送出" onclick="sendName();" /> -->
-<!-- 		</form> -->
-
-
+		<h1 align="center">洽談聊天室</h1>
+		<h2>洽談條款:為避免交易糾紛，所有聊天紀錄將會留存，若交易內容與洽談內容相符將不可再修改訂單</h2>
+		<h3>同意以上條款請點擊同意進入洽談聊天室</h3>
 		<form id="myForm" th:action="@{/chat/chat.do}" method="POST">
-			<input id="userName" name="userName" class="text-field" type="text" placeholder="Input user name" /> 
-			<input type="submit" id="send" class="button" value="送出" onclick="sendName();" />
+<!-- 			<input id="userName" name="userName" class="text-field" type="text" placeholder="Input user name" />  -->
+			<input type="submit" id="send" class="button" value="同意進入洽談聊天室" onclick="sendName();" />
 		</form>
 	</div>
 </body>
 <script>
-	var inputUserName = document.getElementById("userName");
-	inputUserName.focus();
+// 	var inputUserName = document.getElementById("userName");
+// 	inputUserName.focus();
 	
-	function sendName() {
-		var userName = inputUserName.value.trim();
-		if (userName === "") {
-			alert("Input a user name");
-			inputUserName.focus();
-			return;
-		} else {
-			document.getElementById("myForm").submit();
-		}
-	}
+// 	function sendName() {
+// 		var userName = inputUserName.value.trim();
+// 		if (userName === "") {
+// 			alert("Input a user name");
+// 			inputUserName.focus();
+// 			return;
+// 		} else {
+// 			document.getElementById("myForm").submit();
+// 		}
+// 	}
 </script>
 
 </html>

@@ -65,8 +65,8 @@ public class QuoService {
 		return repository.findAll();
 	}
 	
-	public ReqOrderVO getOrderByreqNum(Integer ordReqnum){
-		return getOneQuo(ordReqnum).getReqOrderVO();
+	public ReqOrderVO getOrderByreqNum(Integer quoNum){
+		return getOneQuo(quoNum).getReqOrderVO();
 	}
 	
 	 public List<QuoVO> getAllQuotationExceptMe(Integer quoUserid) {
