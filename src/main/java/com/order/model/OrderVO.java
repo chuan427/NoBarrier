@@ -3,22 +3,18 @@ package com.order.model;
 import java.sql.Date;
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import com.limitsale.model.LimitSaleVO;
 import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderVO;
 //import com.rptdlist.model.RptdlistVO;
@@ -159,8 +155,8 @@ import com.user.model.UserVO;
 			this.ordDate = ordDate;
 		}
 		@Column(name = "ordProdname")
-//		@NotEmpty(message="商品名稱: 請勿空白")
-//		@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$", message = "商品名稱: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間")
+		@NotEmpty(message="商品名稱: 請勿空白")
+		@Pattern(regexp = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$", message = "商品名稱: 只能是中、英文字母、數字和_ , 至少輸入一個字，建議為一個完整名詞")
 		public String getOrdProdname() {
 			return this.ordProdname;
 		}
@@ -169,7 +165,7 @@ import com.user.model.UserVO;
 		}		
 		@Column(name = "ordProdqty")
 //		@NotEmpty(message="商品數量: 請勿空白")
-//		@Size(min=2,max=50,message="商品數量: 長度必需在{min}到{max}之間")
+//		@Size(min=1,max=10000,message="商品數量: 長度必需在{min}到{max}之間，請與洽談內容相同")
 		public Integer getOrdProdqty() {
 			return this.ordProdqty;
 		}
@@ -178,7 +174,7 @@ import com.user.model.UserVO;
 		}
 		@Column(name = "ordUnitname")
 //		@NotEmpty(message="品項單位: 請勿空白")
-//		@Size(min=2,max=50,message="公司密碼: 長度必需在{min}到{max}之間")
+//		@Size(min=1,max=50,message="品項單位: 長度必需在{min}到{max}之間，請與洽談內容相同")
 		public String getOrdUnitname() {
 			return this.ordUnitname;
 		}
@@ -188,7 +184,7 @@ import com.user.model.UserVO;
 		
 		@Column(name = "ordProdprice")
 //		@NotEmpty(message="商品價格: 請勿空白")
-//		@Size(min=2,max=8,message="商品價格: 長度必需在{min}到{max}之間")
+//		@Size(min=1,max=10,message="商品價格: 長度必需在{min}到{max}之間，請與洽談內容相同")
 		public Integer getOrdProdprice() {
 			return this.ordProdprice;
 		}
@@ -197,7 +193,7 @@ import com.user.model.UserVO;
 		}
 		@Column(name = "ordTotalamount")
 //		@NotEmpty(message="總金額: 請勿空白")
-//		@Size(min=2,max=255,message="總金額: 長度必需在{min}到{max}之間")
+//		@Size(min=1,max=255,message="總金額: 長度必需在{min}到{max}之間，請與洽談內容相同，若商品有附加費用請一併加計在總金額，本平台不負責仲裁附加費用項目。")
 		public Integer getOrdTotalamount() {
 			return this.ordTotalamount;
 		}
