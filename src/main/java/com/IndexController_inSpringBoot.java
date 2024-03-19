@@ -895,12 +895,12 @@ private ReqOrderVO reqOrderVO;
 		return list;
 	}
 	
-//	@ModelAttribute("newsListDatacheck") // for 最新消息
-//	protected List<NewsVO> referenceListData_checknews(Model model) {
-//
-//		List<NewsVO> list = newsSvc.getAllAndHandleStatus();
-//		return list;
-//	}
+	@ModelAttribute("newsListDatacheck") // for 最新消息
+	protected List<NewsVO> referenceListData_checknews(Model model) {
+
+		List<NewsVO> list = newsSvc.getAllAndHandleStatus();
+		return list;
+	}
 
 
 //	------------------------------chat-----------------------------------------
