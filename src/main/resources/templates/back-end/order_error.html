@@ -96,11 +96,12 @@
 									<div class="accordion-body">
 										<div class="news-content">
 											<span th:text="購買公司+':'+${orderVO.userVO.comName}"></span><br>
-											
 											<span th:text="訂單日期+':'+${orderVO.ordDate}"></span><br>
 											<span th:text="商品名稱+':'+${orderVO.ordProdname}"></span><br>
 											<span th:text="訂購數量+':'+${orderVO.ordProdqty}"></span><br>
 											<span th:text="單位+':'+${orderVO.ordUnitname}"></span><br>
+											<span th:text="產品單價+':'+${orderVO.ordProdprice}"></span><br>
+											<span th:text="訂單總額+':'+${orderVO.ordTotalamount}"></span><br>
 											<form method="post" th:action="@{/order/getOne_For_Update}">
 												<input type="submit" class="btn btn-primary" value="修改">
 												<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}">
