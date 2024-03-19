@@ -102,14 +102,16 @@
 											<span th:text="單位+':'+${orderVO.ordUnitname}"></span><br>
 											<span th:text="產品單價+':'+${orderVO.ordProdprice}"></span><br>
 											<span th:text="訂單總額+':'+${orderVO.ordTotalamount}"></span><br>
+											<div class="d-flex justify-content-end mb-3">
 											<form method="post" th:action="@{/order/getOne_For_Update}">
-												<input type="submit" class="btn btn-primary" value="修改">
+												<input type="submit" class="btn btn-primary me-2" value="修改">
 												<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}">
 											</form>
 											<form method="post" th:action="@{/order/delete}">
 												<input type="submit" class="btn btn-danger" value="刪除">
 												<input type="hidden" name="ordNum" th:value="${orderVO.ordNum}">
 											</form>
+											</div>
 										</div>
 									</div>
 								</div>
