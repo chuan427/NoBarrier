@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>訂單資料修改 - update_order_input.html</title>
 
-	<head th:insert="~{/back-end/order/included-fragment}"></head>
+	
 	<style type="text/css">
 		button {
 			padding: 5px;
@@ -50,10 +50,13 @@
 
 <body>
 
+<!-- header -->
+	<header th:insert="~{/back-end/header}"></header>
+
 	<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
 		<div align="center">
 			<h2>訂單資料修改 - update_order_input.html</h2>
-			<h3><a class="navbar-brand" th:href="@{/order/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3>
+			<h3><a class="navbar-brand" th:href="@{/order_completed}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3>
 		</div>
 	</nav>
 
