@@ -1,16 +1,12 @@
 package com.limitsale.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -23,7 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;import com.order.model.OrderVO;
+import javax.persistence.Table;
+import com.order.model.OrderVO;
 import com.user.model.UserVO;
 
 
@@ -67,6 +64,24 @@ import com.user.model.UserVO;
 //		@JoinColumn(name="limNum", referencedColumnName = "ordNum")
 //		private OrderVO orderVO;
 		
+
+		
+//		public LimitSaleVO(Integer limNum, Integer limOrdernum, String limProdname, String limDes, Integer limQty,
+//				String limUnitname, Integer limPrice, byte[] limImage, Integer limSellerid) {
+//
+//			this.limNum = limNum;
+//			this.limOrdernum = limOrdernum;
+//			this.limProdname = limProdname;
+//			this.limDes = limDes;
+//			this.limQty = limQty;
+//			this.limUnitname = limUnitname;
+//			this.limPrice = limPrice;
+//			this.limImage = limImage;
+//			this.limSellerid = limSellerid;
+//		}
+		public LimitSaleVO() {
+			
+		}
 		
 		
 //		public OrderVO getOrderVO() {
@@ -76,8 +91,11 @@ import com.user.model.UserVO;
 //		public void setOrderVO(OrderVO orderVO) {
 //			this.orderVO = orderVO;
 //		}
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)		
+//		
+		
+		
+//		@Id
+//		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		public Integer getLimNum() {
 			return limNum;
 		}

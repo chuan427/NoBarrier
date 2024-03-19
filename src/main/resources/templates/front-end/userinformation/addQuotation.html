@@ -78,7 +78,7 @@
 			<div
 				class="d-flex flex-column align-items-center mb-0 mb-md-0 me-md-auto text-white text-decoration-none">
 				<span class="fs-1" style="color: black; padding-left: 60px;">Hi,
-					<span th:text="${comName}">User</span>!
+					<span th:text="${session.loggingInUser.comName}">User</span>!
 				</span>
 			</div>
 			<div class="user-profile">
@@ -116,10 +116,11 @@
 				<h2>報價單</h2>
 				<div style="margin-top: 30px;"></div>
 
-				<form th:action="@{insertQuo}" method="post" th:object="${quoVO}" enctype="multipart/form-data">
+				<form th:action="@{insertQuo}" method="post" th:object="${quoVO}"
+					enctype="multipart/form-data">
 
 					<div class="row">
-						 <div class="col-md-1">
+						<div class="col-md-1">
 							<!-- <div class="d-flex align-items-center" style="font-size: 25px;">
 								<label class="me-3" th:text="'需求品項: ' + ${quoVO.quoProdname}"></label>
 							</div>
@@ -145,70 +146,75 @@
 
 						<div class="col-md-8">
 							<div class="d-flex align-items-center">
-								<label for="quoProdname" class="me-3">商品名稱:</label> 
-								<br>
-								<input type="text" th:field="*{quoProdname}" th:value="${quoVO.quoProdname}" id="quoProdname" readonly="readonly" /><br>
+								<label for="quoProdname" class="me-3">商品名稱:</label> <br> <input
+									type="text" th:field="*{quoProdname}"
+									th:value="${quoVO.quoProdname}" id="quoProdname"
+									readonly="readonly" /><br>
 							</div>
-							
-							
-							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center">
-								<label for="quoUnitname" class="me-3">單位:</label>
-								<br>
-								<input type="text" th:field="*{quoUnitname}" th:value="${quoVO.quoUnitname}" id="quoUnitname" readonly="readonly" /><br>
-							</div>
-							
-						
-							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center">
-								<label for="quoProdqty" class="me-3">數量:</label>
-								<br>
-								<input type="text" th:field="*{quoProdqty}" th:value="${quoVO.quoProdqty}" id="quoProdqty" readonly="readonly" /><br>
-							</div>
-							
-							
-<!-- 							以上不用使用者輸入 -->
-							
-							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center">
-								<label for="quoUnitprice" class="me-3">每單位價格:</label>
-								<br>
-								<input type="text" name="quoUnitprice" id="quoUnitprice" th:field="*{quoUnitprice}">新台幣TWD<br>
-							</div>
-							
-							
-							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center">
-								<label for="quoTotalprice" class="me-3">總價格:</label>
-								<br>
-								<input type="text" name="quoTotalprice" id="quoTotalprice" th:field="*{quoTotalprice}" readonly="readonly">新台幣TWD<br>
-							</div>
-							
-							
-							<div style="margin-top: 30px;"></div>
-							<div class="d-flex align-items-center">
-								<label for="quoInfo" class="me-3">方案詳情:</label>
-								<br>
-								<textarea class="form-control" name="quoInfo" id="quoInfo" th:field="*{quoInfo}" style="resize: vertical; height: 100px;"></textarea>
-								<br>
-							</div>
-														
-							
-<!-- 							以下是隱藏的input -->
-							<input type="hidden" th:field="*{quoDate}" id="quoDate"/>
-							<input type="hidden" th:field="*{quoIsValid}" id="quoIsValid"/>
-							
-							<input type="hidden" th:field="*{reqOrderVO}" th:value="${quoVO.reqOrderVO.reqNum}" id="quoReqnum"/>
-							<input type="hidden" th:field="*{userVO}" th:value="${quoVO.userVO.userId}" id="quoUserid"/>
-							
-							
-														
 
+
+							<div style="margin-top: 30px;"></div>
+							<div class="d-flex align-items-center">
+								<label for="quoUnitname" class="me-3">單位:</label> <br> <input
+									type="text" th:field="*{quoUnitname}"
+									th:value="${quoVO.quoUnitname}" id="quoUnitname"
+									readonly="readonly" /><br>
+							</div>
+
+
+							<div style="margin-top: 30px;"></div>
+							<div class="d-flex align-items-center">
+								<label for="quoProdqty" class="me-3">數量:</label> <br> <input
+									type="text" th:field="*{quoProdqty}"
+									th:value="${quoVO.quoProdqty}" id="quoProdqty"
+									readonly="readonly" /><br>
+							</div>
+
+
+							<!-- 							以上不用使用者輸入 -->
+
+							<div style="margin-top: 30px;"></div>
+							<div class="d-flex align-items-center">
+								<label for="quoUnitprice" class="me-3">每單位價格:</label> <br>
+								<input type="text" name="quoUnitprice" id="quoUnitprice"
+									th:field="*{quoUnitprice}">新台幣TWD
+								<small class="text-danger" th:if="${#fields.hasErrors('quoUnitprice')}" th:errors="*{quoUnitprice}"></small><br>
+							</div>
+
+
+							<div style="margin-top: 30px;"></div>
+							<div class="d-flex align-items-center">
+								<label for="quoTotalprice" class="me-3">總價格:</label> <br> <input
+									type="text" name="quoTotalprice" id="quoTotalprice"
+									th:field="*{quoTotalprice}" readonly="readonly">新台幣TWD<br>
+							</div>
+
+
+							<div style="margin-top: 30px;"></div>
+							<div class="d-flex align-items-center">
+								<label for="quoInfo" class="me-3">方案詳情:</label> <br>
+								<textarea class="form-control" name="quoInfo" id="quoInfo"
+									th:field="*{quoInfo}" style="resize: vertical; height: 100px;"></textarea>
+								<small class="text-danger" th:if="${#fields.hasErrors('quoInfo')}" th:errors="*{quoInfo}"></small><br>
+							</div>
+
+
+							<!-- 							以下是隱藏的input -->
+							<input type="hidden" th:field="*{quoDate}" id="quoDate" /> <input
+								type="hidden" th:field="*{quoIsValid}" id="quoIsValid" /> <input
+								type="hidden" th:field="*{reqOrderVO}"
+								th:value="${quoVO.reqOrderVO.reqNum}" id="quoReqnum" /> <input
+								type="hidden" th:field="*{userVO}"
+								th:value="${quoVO.userVO.userId}" id="quoUserid" />
+
+
+
+							<div style="margin-top: 30px;"></div>
 							<div class="d-flex justify-content-center">
 								<button type="submit" id="submitBtn" class="btn btn-primary">報價</button>
 							</div>
 						</div>
-						</div>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -220,45 +226,42 @@
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
 <script>
-var currentDate = new Date();
-var formattedDate = currentDate.toLocaleDateString('en-CA', {
-	year : 'numeric',
-	month : '2-digit',
-	day : '2-digit'
-});
+	var currentDate = new Date();
+	var formattedDate = currentDate.toLocaleDateString('en-CA', {
+		year : 'numeric',
+		month : '2-digit',
+		day : '2-digit'
+	});
 
-document.getElementById('quoDate').value = formattedDate;
-document.getElementById("quoIsValid").value = 1;
+	document.getElementById('quoDate').value = formattedDate;
+	document.getElementById("quoIsValid").value = 1;
 
+	//----------------------以下是計算總金額----------------------
 
-//----------------------以下是計算總金額----------------------
+	//在頁面載入完成後執行
+	window.onload = function() {
+		// 獲取單位價格和數量輸入框
+		var unitPriceInput = document.getElementById('quoUnitprice');
+		var quantityInput = document.getElementById('quoProdqty');
+		var totalPriceInput = document.getElementById('quoTotalprice');
 
+		// 監聽單位價格和數量輸入框的變化
+		unitPriceInput.addEventListener('input', updateTotalPrice);
+		quantityInput.addEventListener('input', updateTotalPrice);
 
-//在頁面載入完成後執行
-window.onload = function() {
-    // 獲取單位價格和數量輸入框
-    var unitPriceInput = document.getElementById('quoUnitprice');
-    var quantityInput = document.getElementById('quoProdqty');
-    var totalPriceInput = document.getElementById('quoTotalprice');
+		// 定義更新總價格的函數
+		function updateTotalPrice() {
+			// 獲取單位價格和數量
+			var unitPrice = parseInt(unitPriceInput.value);
+			var quantity = parseInt(quantityInput.value);
 
-    // 監聽單位價格和數量輸入框的變化
-    unitPriceInput.addEventListener('input', updateTotalPrice);
-    quantityInput.addEventListener('input', updateTotalPrice);
+			// 計算總價格
+			var totalPrice = unitPrice * quantity;
 
-    // 定義更新總價格的函數
-    function updateTotalPrice() {
-        // 獲取單位價格和數量
-        var unitPrice = parseInt(unitPriceInput.value);
-        var quantity = parseInt(quantityInput.value);
-
-        // 計算總價格
-        var totalPrice = unitPrice * quantity;
-
-        // 將計算結果顯示在總價格輸入框中
-        totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice;
-    }
-};
-
+			// 將計算結果顯示在總價格輸入框中
+			totalPriceInput.value = isNaN(totalPrice) ? '' : totalPrice;
+		}
+	};
 </script>
 </body>
 

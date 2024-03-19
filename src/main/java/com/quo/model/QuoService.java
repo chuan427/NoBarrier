@@ -65,21 +65,12 @@ public class QuoService {
 		return repository.findAll();
 	}
 	
-	public List<QuoVO> getOneStatQuotation(UserVO userVO) {
-        List<QuoVO> allQuotation = repository.findAll();
-        List<QuoVO> validQuotation = new ArrayList<>();
-
-        for (QuoVO quotation : allQuotation) {
-            if (quotation.getUserVO().getUserId() == userVO.getUserId() && quotation.getQuoIsValid() == 1) {
-                validQuotation.add(quotation);
-            }
-        }
-        return validQuotation;
-    }
-//	public OrderVO getOrderByquoNum(Integer ordQuonum){
-//		return getOneQuo(ordQuonum).getOrderVO();
-//	}
 	public ReqOrderVO getOrderByreqNum(Integer quoNum){
 		return getOneQuo(quoNum).getReqOrderVO();
 	}
+	
+	 public List<QuoVO> getAllQuotationExceptMe(Integer quoUserid) {
+	        List<QuoVO> allQuotation = repository.findByQuoUseridAndQuoIsValid(quoUserid);
+	        return allQuotation;
+	    }
 }

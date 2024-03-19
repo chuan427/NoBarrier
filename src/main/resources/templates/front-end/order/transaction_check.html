@@ -91,14 +91,14 @@
 		<div class="col-sm-4 d-flex align-items-center">
 			<label for="quoDate" class="form-label" style="margin-right: 10px;">日期:</label>
 			<input type="date" class="form-control" id="quoDate" name="quoDate"
-				th:field="${quoVO.quoDate}" required style="width: 300px;" readonly>
+th:field="${quoVO.quoDate}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 
 		<div class="col-sm-4 d-flex align-items-center">
 			<label for="quoUserid" class="form-label" style="margin-right: 10px;">廠商:</label>
 			<input type="text" class="form-control" id="quoUserid"
-				name="quoUserid" th:field="${quoVO.userVO.userId}" required
+				name="quoUserid" th:field="${quoVO.userVO.comName}" readonly
 				style="width: 300px;" readonly>
 			<div class="invalid-feedback"></div>
 		</div>
@@ -109,7 +109,7 @@
 			<label for="quoProdname" class="form-label"
 				style="margin-right: 10px;">品項:</label> <input type="text"
 				class="form-control" id="quoProdname" name="quoProdname"
-				th:field="${quoVO.quoProdname}" required style="width: 300px;" readonly>
+th:field="${quoVO.quoProdname}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 		
@@ -127,7 +127,7 @@
 			<label for="quoProdqty" class="form-label"
 				style="margin-right: 10px;">數量:</label> <input type="text"
 				class="form-control" id="quoProdqty" name="quoProdqty"
-				th:field="${quoVO.quoProdqty}" required style="width: 300px;" readonly>
+				th:field="${quoVO.quoProdqty}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 	</div>
@@ -137,14 +137,14 @@
 			<label for="quoUnitprice" class="form-label"
 				style="margin-right: 10px;">單價:</label> <input type="text"
 				class="form-control" id="quoUnitprice" name="quoUnitprice"
-				th:field="${quoVO.quoUnitprice}" required style="width: 300px;" readonly>
+				th:field="${quoVO.quoUnitprice}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 		<div class="col-sm-4 d-flex align-items-center">
 			<label for="quoTotalprice" class="form-label"
 				style="margin-right: 10px;">總價:</label> <input type="text"
 				class="form-control" id="quoTotalprice" name="quoTotalprice"
-				th:field="${quoVO.quoTotalprice}" required style="width: 300px;" readonly>
+				th:field="${quoVO.quoTotalprice}" readonly style="width: 300px;">
 			<div class="invalid-feedback"></div>
 		</div>
 	</div>

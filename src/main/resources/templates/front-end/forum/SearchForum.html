@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http ://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>NoBerrierTech Search</title>
+
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.13.5/css/dataTables.jqueryui.min.css}" />
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>                                  
+<script	src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>            
+
+<!-- 引入css -->
+
+<link rel="stylesheet" th:href="@{/css/searchForum.css}" />
+</head>
+
+
+<body>
+<head th:insert="~{/front-end/header_Dora}"></head>
+
+            <h3 class="search-result-title">搜尋結果</h3>
+            <div th:if="${searchResults.empty}">
+             <p class="no-results">沒有找到相關結果。</p>
+            </div>
+
+  <div class="transparent-box">
+        <div class="content">
+            <div th:unless="${searchResults.empty}">
+                <div th:each="result : ${searchResults}" class="post">
+                    <div class="post-header">
+                    
+                    
+                        <div class="icon-wrapper">
+                            <i class="fa-solid fa-user">
+                                <span th:text="${result.userVO.comName}" class="user-name"></span>
+                            </i>
+                            </div>
+                            
+                             <div class="icon-left">
+        					<i class="fa-solid fa-rotate-left fa-lg" onclick="window.location.href='/forum/forumIndex';"></i>
+              				 </div>
+                                  
+                             <div class="title-time-container">
+                            <h4 th:text="${result.fpTitle}">文章標題</h4>
+                            <span class="post-time"><i class="fa-regular fa-clock fa-lg"></i> <span th:text="${#dates.format(result.fpTime, 'yyyy-MM-dd')}">發布時間</span></span>
+                        </div>
+                 
+                 <br>
+                 
+                        <p th:with="shortContent=${#strings.substring(result.fpContent, 0, 20)}">
+                            <span th:text="${shortContent}">文章開頭內容</span><a>...</a>
+                            <a th:href="@{/forum/listOneForumPost/{fpNum}(fpNum=${result.fpNum})}">閱讀全文</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+       
+    
+    
+
+<!--       <div> -->
+<!--                 <a th:if="${currentPage > 0}" th:href="@{/search(search=${search}, page=${currentPage - 1}, size=${size})}">上一頁</a> -->
+<!--                 <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}"> -->
+<!--                     <a th:href="@{/search(search=${search}, page=${i}, size=${size})}" th:text="${i + 1}">1</a> -->
+<!--                 </span> -->
+<!--                 <a th:if="${currentPage < totalPages - 1}" th:href="@{/search(search=${search}, page=${currentPage + 1}, size=${size})}">下一頁</a> -->
+<!--             </div> -->
+
+
+
+
+
+<!-- footer -->
+<head th:insert="~{/front-end/footer}"></head>
+<!-- JS -->
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/forum.js}"></script>
+
+</body>
+</html>

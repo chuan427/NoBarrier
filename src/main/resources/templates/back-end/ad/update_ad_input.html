@@ -12,9 +12,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>論壇貼文修改 - update_forumPost_input.html</title>
+<title>廣告資料修改 - update_ad_input.html</title>
 
-<head th:insert="~{/back-end/forumPost/included-fragment}"></head>
+<head th:insert="~{/back-end/ad/included-fragment}"></head>
 <style type="text/css">
 	
 	button {
@@ -47,67 +47,57 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>論壇貼文修改 - update_forumPost_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/forumPost/select_page1}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
+		 <div align="center"> <h2>廣告資料修改 - update_ad_input.html</h2>
+		 <h3><a class="navbar-brand" th:href="@{/ad/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
 </nav>
 
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{update_back}" method="post" th:object="${forumPostVO}" enctype="multipart/form-data">
-			
+		<form th:action="@{update}" method="post" th:object="${adVO}" enctype="multipart/form-data">
 			<div>
-			<label>文章編號:</label>
-			<input type="text" th:field="*{fpNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
-			</div>			
-			
-			
-			<div>
-			<label>會員編號:</label>
-			<input type="text" th:field="*{userVO.userId}" style="border:0px ; font-weight: bold;" readonly /><br/>
+			<label>廣告編號:</label>
+			<input type="text" th:field="*{adOrdernum}" style="border:0px ; font-weight: bold;" readonly /><br/>
 			</div>
 			
 			<div>
-   			 <label for="fpCategory">檢舉類型:</label>
-    			<select id="fpCategory" th:field="*{fpCategory}">
-    			<option value="1">請選擇產業類別</option>
-        		<option value="2">工業加工</option>
-        		<option value="3">照明配件</option>
-        		<option value="4">金屬物件</option>
-        		<option value="5">機械材料</option>
-       			<option value="6">電子元件</option>
-       		 	<option value="7">螺絲與緊固件</option>
-       		 	<option value="8">其他</option>
-    			</select><br/>
-    		</div>
-    		
-		
-			<div>
-			<label>文章標題:</label>
-			<input type="text" th:field="*{fpTitle}" onclick="hideContent('fpTitle.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('fpTitle')}" th:errors="*{fpTitle}" class="error" id="fpTitle.errors"></span>
+			<label>廣告價格:</label>
+			<input type="text" th:field="*{adPrice}" onclick="hideContent('adPrice.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('adPrice')}" th:errors="*{adPrice}" class="error" id="adPrice.errors"></span>
 			</div>
 			
 			<div>
-			<label>文章內容:</label>
-			<input type="text" th:field="*{fpContent}" onclick="hideContent('fpContent.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('fpContent')}" th:errors="*{fpContent}" class="error" id="fpContent.errors"></span>
+			<label>廣告狀態:</label>
+			<input type="text" th:field="*{adStat}" onclick="hideContent('adStat.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('adStat')}" th:errors="*{adStat}" class="error" id="adStat.errors"></span>
 			</div>
-			
 			
 			<div>
-			<label>修改文章圖片:</label>
-			<input type="file" th:field="*{fpImage}" onclick="previewImage()" multiple="multiple" />
-			<span class="error" th:utext="${errorMessage}" id="fpImage.errors">${errorMessage}</span>
-			<div id="blob_holder"><img th:src="@{/forumPost/DBGifReader} + '?fpNum=' + ${forumPostVO.fpNum}" width="100px"></div>
+			<label>廣告購買日期:</label>
+			<input type="date" th:field="*{adDate}" onclick="hideContent('adDate.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('adDate')}" th:errors="*{adDate}" class="error" id="adDate.errors"></span>
 			</div>
-				
-					
+
+			<div>
+			<label>廣告使用者:</label>
+			<input type="text" th:field="*{userVO.userId}" onclick="hideContent('userVO.userId.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
+			</div>
 			
-			<!-- 不要被修改的欄位 -->
-			<input type="text" th:field="*{fpLike}" hidden onclick="hideContent('fpLike.errors');" /><br/>
+			<div>
+			<label>廣告天數:</label>
+			<input type="text" th:field="*{adDuration}" onclick="hideContent('adDuration.errors');" /><br/>
+			<span  th:if="${#fields.hasErrors('adDuration')}" th:errors="*{adDuration}" class="error" id="adDuration.errors"></span>
+			</div>
 			
 
+			<div>
+			<label>廣告圖片:</label>
+			<input type="file" th:field="*{adImage}" onclick="previewImage()" multiple="multiple" />
+            <!-- 可以不修改圖片 <span  th:if="${#fields.hasErrors('ad_image')}" th:errors="*{ad_image}" class="error" id="ad_image.errors"></span> -->
+			<div id="blob_holder"><img th:src="@{/ad/DBGifReader} + '?adOrdernum=' + ${adVO.adOrdernum}" width="100px"></div>
+			</div>
 			
+
 			
 			<div>
 				<div></div>
@@ -137,7 +127,7 @@ acceptedTypes = {
 		'image/gif' : true
 };
 function previewImage() {
-	var upfile1 = document.getElementById("fpImage");
+	var upfile1 = document.getElementById("ad_image");
 	upfile1.addEventListener("change", function(event) {
 		var files = event.target.files || event.dataTransfer.files;
 		for (var i = 0; i < files.length; i++) {

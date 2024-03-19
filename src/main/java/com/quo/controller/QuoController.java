@@ -50,6 +50,8 @@ public class QuoController {
 	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 		ReqOrderVO reqVO = reqOrderSvc.getOneReqOrder(Integer.parseInt(reqNum));
 		
+		List<QuoVO> list = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
+		
 		QuoVO quoVO = new QuoVO();
 		quoVO.setQuoProdname(reqVO.getReqProdname());
 		quoVO.setQuoUnitname(reqVO.getReqUnitname());
@@ -66,9 +68,9 @@ public class QuoController {
 	
 	//========================新增報價單=====================================
 	@PostMapping("insertQuo")
-	public String insertQuo(@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
+	public String insertQuo(HttpServletRequest request,@Valid QuoVO quoVO, BindingResult result, ModelMap model) throws IOException {
 	    
-	    
+		UserVO userVO = (UserVO)request.getSession().getAttribute("loggingInUser");
 	    
 	    if (result.hasErrors()) {
 	        return "front-end/userinformation/addQuotation";
@@ -77,11 +79,35 @@ public class QuoController {
 	    // 這裡加入您的邏輯來處理quoVO和userVO...
 	    quoSvc.addQuo(quoVO);
 
-	    List<QuoVO> list = quoSvc.getAll();
+	    List<QuoVO> list = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
 	    model.addAttribute("quoListData", list);
 	    model.addAttribute("success", "- (新增成功)");
 	    return "redirect:/userinformation/userpage";
 	}
+	
+//	//========================已提出報價後會改變狀態=====================================
+//	@PostMapping("/quocomplete")
+//    public String quocomplete(@RequestParam(name = "quoNum", required = false) String quoNum, ModelMap model) {
+//        if (quoNum == null) {
+//            return "errorPage"; // 如果 quoNum 為空，返回一個錯誤頁面
+//        }
+//
+//        // 根據 quoNum 從數據庫中獲取相應的 QuoVO 對象
+//        QuoVO quoVO = quoSvc.getOneQuo(Integer.valueOf(quoNum));
+//
+//        // 將 quoIsValid 設置為 1，表示已完成報價
+//        int valid = 1;
+//        quoVO.setQuoIsValid(valid);
+//
+//        // 更新數據庫中的 QuoVO 對象
+//        quoSvc.updateQuo(quoVO);
+//
+//        // 添加成功消息到模型中
+//        model.addAttribute("success", "- (完成需求)");
+//
+//        // 返回到 userpage 頁面
+//        return "redirect:/userinformation/userpage";
+//    }
 
 
 
