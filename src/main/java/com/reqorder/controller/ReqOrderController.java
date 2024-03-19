@@ -26,6 +26,7 @@ import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.order.model.OrderService;
 import com.order.model.OrderVO;
+import com.quo.model.QuoVO;
 import com.reqorder.model.ReqOrderService;
 import com.reqorder.model.ReqOrderVO;
 import com.user.model.UserService;
@@ -122,6 +123,31 @@ public class ReqOrderController {
         // 返回到 userpage 頁面
         return "redirect:/userinformation/userpage";
     }
+
+    
+//  //========================已提出報價後會改變狀態=====================================
+//  	@PostMapping("/quocomplete")
+//      public String quocomplete(@RequestParam(name = "reqNum", required = false) String reqNum, ModelMap model) {
+//          if (reqNum == null) {
+//              return "errorPage"; // 如果 quoNum 為空，返回一個錯誤頁面
+//          }
+//
+//       // 根據 reqNum 從數據庫中獲取相應的 ReqOrderVO 對象
+//          ReqOrderVO reqOrderVO = reqOrderSvc.getOneReqOrder(Integer.valueOf(reqNum));
+//
+//          // 將 reqIsValid 設置為 1，表示已完成需求
+//          int valid = 0;
+//          reqOrderVO.setReqIsValid(valid);
+//
+//          // 更新數據庫中的 ReqOrderVO 對象
+//          reqOrderSvc.updateReqOrder(reqOrderVO);
+//
+//          // 添加成功消息到模型中
+//          model.addAttribute("success", "- (完成需求)");
+//
+//          // 返回到 userpage 頁面
+//          return "redirect:/userinformation/userpage";
+//      }
 
 
     @ModelAttribute("userListData")

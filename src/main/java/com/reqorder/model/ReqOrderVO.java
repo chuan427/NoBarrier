@@ -20,7 +20,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.industry.model.IndustryVO;
@@ -120,6 +122,8 @@ public class ReqOrderVO implements java.io.Serializable {
 	}
 
 	@Column(name = "reqProdqty")
+	@NotNull(message="數量: 請勿空白")
+	@DecimalMin(value = "1", message = "數量: 不能小於{value}")
 	public Integer getReqProdqty() {
 		return this.reqProdqty;
 	}

@@ -132,6 +132,7 @@
 					<option th:value="7" th:text="工業加工">工業加工</option>
 					<option th:value="8" th:text="其他">其他</option>
 				</select>
+				<small class="text-danger" th:if="${#fields.hasErrors('industryVO.industryNum')}" th:errors="*{industryVO.industryNum}"></small>
 			</div>
 
 			<div style="margin-top: 30px;"></div>
@@ -139,7 +140,8 @@
 			<div class="d-flex align-items-center">
 				<label for="reqProdname" class="me-3">商品名稱:</label> <input
 					type="text" name="reqProdname" id="reqProdname"
-					th:field="*{reqProdname}"><br>
+					th:field="*{reqProdname}">
+					<small class="text-danger" th:if="${#fields.hasErrors('reqProdname')}" th:errors="*{reqProdname}"></small><br>
 			</div>
 
 			<div style="margin-top: 30px;"></div>
@@ -147,7 +149,8 @@
 			<div class="d-flex align-items-center">
 				<label for="reqProdqty" class="me-3">商品數量:</label> <input
 					type="text" name="reqProdqty" id="reqProdqty"
-					th:field="*{reqProdqty}"><br>
+					th:field="*{reqProdqty}">
+					<small class="text-danger" th:if="${#fields.hasErrors('reqProdqty')}" th:errors="*{reqProdqty}"></small><br>
 			</div>
 
 			<div style="margin-top: 30px;"></div>
@@ -155,7 +158,8 @@
 			<div class="d-flex align-items-center">
 				<label for="reqUnitname" class="me-3">商品單位:</label> <input
 					type="text" name="reqUnitname" id="reqUnitname"
-					th:field="*{reqUnitname}"><br>
+					th:field="*{reqUnitname}">
+					<small class="text-danger" th:if="${#fields.hasErrors('reqUnitname')}" th:errors="*{reqUnitname}"></small><br>
 			</div>
 
 			<div style="margin-top: 30px;"></div>
@@ -164,6 +168,7 @@
 				<label for="reqDes" class="me-3">文字敘述:</label>
 				<textarea class="form-control" name="reqDes" id="reqDes"
 					th:field="*{reqDes}" style="resize: vertical; height: 100px;"></textarea>
+				<small class="text-danger" th:if="${#fields.hasErrors('reqDes')}" th:errors="*{reqDes}"></small>
 				<br>
 			</div>
 
