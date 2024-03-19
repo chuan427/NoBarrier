@@ -754,11 +754,13 @@ private ReqOrderVO reqOrderVO;
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
 		forumPostVO = forumPostSvc.getLatestPost();
+		List<ForumPostVO> sortedPosts = forumPostSvc.getAllForumPostsSortedByFpTime();
+	    model.addAttribute("forumPostListData", sortedPosts);
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
-	
-	
+		
+
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {
 
