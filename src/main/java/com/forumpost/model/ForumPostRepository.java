@@ -34,7 +34,9 @@ public interface ForumPostRepository extends JpaRepository<ForumPostVO, Integer>
 		       "fp.fpTitle LIKE %:searchTerm%")
 		Page<ForumPostVO> findByComNameOrFpTitleContaining(@Param("searchTerm") String searchTerm, Pageable pageable);
 	 
-	 //觀看數 & 留言數
 	 
-
+	 //按照文章時間排序
+	 
+	 List<ForumPostVO> findAllByOrderByFpTimeDesc();
+	 
 }

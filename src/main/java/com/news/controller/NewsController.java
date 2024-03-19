@@ -96,7 +96,7 @@ public class NewsController {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 //		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-//		result = removeFieldError(newsVO, result, "upFiles");
+		result = removeFieldError(newsVO, result, "upFiles");
 //
 //		if (parts[0].isNewsty()) { // 使用者未選擇要上傳的新圖片時
 //			// NewsService NewsSvc = new NewsService();

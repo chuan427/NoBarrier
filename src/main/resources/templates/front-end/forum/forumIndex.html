@@ -46,7 +46,7 @@
         </h6>
         <p class="mb-0 text-sm">
           <span class="op-6">由</span>
-          <a href="#" th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
+          <a th:text="${forumPostVO.userVO.comName}" class="text-black"></a>
           <span class="op-6">發布於</span>
           <span th:text="${#dates.format(forumPostVO.fpTime, 'yyyy/MM/dd')}"></span>
         </p>

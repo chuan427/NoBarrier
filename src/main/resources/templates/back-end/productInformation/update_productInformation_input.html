@@ -1,22 +1,77 @@
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>產品資訊修改 - update_productInformation_input.html</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>產品資訊修改</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
 
-<head th:insert="~{/back-end/productInformation/included-fragment}"></head>
-<style type="text/css">
-	
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.1rem;
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: lightgray !important;
+}
+
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
+
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
+
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}	
 	button {
 		padding: 5px;
 	}
@@ -43,60 +98,66 @@
         margin-right: auto;
     }
 </style>
+
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-success fixed-top justify-content-center">
-		 <div align="center"> <h2>產品資訊修改 - update_productInformation_input.html</h2>
-		 <h3><a class="navbar-brand" th:href="@{/productInformation/select_page}"><img th:src="@{/images/back1.gif}">回查詢頁</a></h3></div>
-</nav>
+<head th:insert="@{/front-end/header_login}"></head>
 
-	<div align="center">
-		<h3><b>所有欄位皆為必填欄位</b></h3>
+	<div class="container"  align="center">
+		<h4><b>產品資訊修改</b></h4>
 		<form th:action="@{update}" method="post" th:object="${productInformationVO}" enctype="multipart/form-data">
 			<div>
-			<label>產品訊息編號:</label>
+			<label>產品編號:</label>
 			<input type="text" th:field="*{pinfoNum}" style="border:0px ; font-weight: bold;" readonly /><br/>
 			</div>
 			
 			
 			<div>
-			<label>買家會員:</label>
-			<select th:field="*{userVO.userId}">
-				<option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" />
-			</select>
-			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span>
+			<label>會員編號</label>
+			    <input type="text" th:field="${productInformationVO.userVO.userId}" style="border:0px ; font-weight: bold;" readonly /><br/>
+<!-- 			<select th:field="*{userVO.userId}"> -->
+<!-- 				<option th:each="userVO : ${userListData}" th:value="${userVO.userId}" th:text="${userVO.comName}" /> -->
+<!-- 			</select> -->
+<!-- 			<span th:if="${#fields.hasErrors('userVO.userId')}" th:errors="*{userVO.userId}" class="error" id="userVO.userId.errors"></span> -->
 			</div>
 			
 			<div>
 			<label>產品圖片:</label>
-			<input type="file" th:field="*{pinfoImage}" onclick="previewImage()" multiple="multiple" onchange="hideContent('pinfoImage.errors');" />
-<!-- 			<span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span> -->
-			<span class="error" th:utext="${errorMessage}" id="pinfoImage.errors">${errorMessage}</span>
-<!-- 			<h2 id="errorMessage">${errorMessage}</h2>  -->
+<!-- 			<input type="file" th:field="*{pinfoImage}" onclick="previewImage()" multiple="multiple" onchange="hideContent('pinfoImage.errors');" /> -->
+			<input type="file"  class="form-control" th:field="*{pinfoImage}" onclick="previewImage()" multiple="multiple"  onchange="hideContent('pinfoImage.errors');"/>
+<!-- 			<span  th:if="${#fields.hasErrors('pinfoImage')}" th:errors="*{pinfoImage}" class="error" id="pinfoImage.errors"></span> -->
+<!-- 			<span class="error" th:text="${errorMessage}" id="pinfoImage.errors" style="color: red; font-weight: bold;">${errorMessage}</span> -->
+			<br> 
 			<div id="blob_holder"></div>
 			</div>
 			
 			<div>
 			<label>產品敘述:</label>
-			<input type="text" th:field="*{pinfoDes}" onclick="hideContent('pinfoDes.errors');" /><br/>
-			<span  th:if="${#fields.hasErrors('pinfoDes')}" th:errors="*{pinfoDes}" class="error" id="pinfoDes.errors"></span>
+		    <textarea class="form-control" th:field="*{pinfoDes}" aria-label="With textarea" onclick="hideContent('pinfoDes.errors');">文字敘述</textarea>
+<!-- 			<input type="text" th:field="*{pinfoDes}"  /><br/> -->
+			<span  th:if="${#fields.hasErrors('pinfoDes')}" th:errors="*{pinfoDes}" class="error" id="pinfoDes.errors" style="color: red; font-weight: bold;"></span>
 			</div>
 			
 			<div>
-			<label>產品狀態:</label>
-			<input type="text" th:field="*{pinfoIsValid}" onclick="hideContent('pinfoIsValid.errors');" /><br/>
+<!-- 			<label>產品狀態:</label> -->
+			<input type="hidden" th:field="*{pinfoIsValid}" onclick="hideContent('pinfoIsValid.errors');" /><br/>
 			<span  th:if="${#fields.hasErrors('pinfoIsValid')}" th:errors="*{pinfoIsValid}" class="error" id="pinfoIsValid.errors"></span>
 			</div>
 			
 			<div>
-				<div></div>
-				<div><button type="submit" id="submit"> 送出修改 </button></div>
-				<div></div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<button class="btn btn-primary me-md-2" type="submit">送出編輯</button>
+				</div>
 			</div>		
 		</form>
-	
+		<br>
+			 <h6><a class="navbar-brand" th:href="@{/com/editmember_product}">回上一頁</a></h6>
 	</div>
+	<head th:insert="@{/front-end/footer}"></head>
+	<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/notification.js}"></script>
+	
 
 
 <!-- JavaScript part -->
@@ -117,13 +178,20 @@ acceptedTypes = {
 		'image/gif' : true
 };
 function previewImage() {
-	var upfile1 = document.getElementById("reqProdimage");
-	upfile1.addEventListener("change", function(event) {
-		var files = event.target.files || event.dataTransfer.files;
-		for (var i = 0; i < files.length; i++) {
-			previewfile(files[i])
-		}
-	}, false);
+	var upfile1 = document.getElementById("pinfoImage");
+    // 移除之前的事件监听器
+    upfile1.removeEventListener("change", handleFileSelect, false);
+    // 添加新的事件监听器
+    upfile1.addEventListener("change", handleFileSelect, false);
+}
+function handleFileSelect(event) {
+    // 清除之前的预览图像
+    blob_holder.innerHTML = "";
+    
+    var files = event.target.files || event.dataTransfer.files;
+    for (var i = 0; i < files.length; i++) {
+        previewfile(files[i]);
+    }
 }
 function previewfile(file) {
 	if (filereader_support === true && acceptedTypes[file.type] === true) {

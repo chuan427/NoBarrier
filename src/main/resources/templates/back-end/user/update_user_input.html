@@ -63,7 +63,8 @@
 	<!-- 24個欄位 -->
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{updateBack}" method="post" th:object="${userVO}" enctype="multipart/form-data">
+		<form th:action="@{updateAboutUs}" method="post" th:object="${userVO}" enctype="multipart/form-data">
+
 			<div>
 				<label>會員編號:</label>
 				<input type="text" th:field="*{userId}" style="border:0px ; font-weight: bold;" readonly /><br />
