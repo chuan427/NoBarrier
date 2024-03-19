@@ -1,6 +1,7 @@
 package com;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -124,6 +125,8 @@ public class IndexController_inSpringBoot {
 			"直接使用官方現成的 @SpringBootApplication + SpringBootServletInitializer 組態檔",
 			"依賴注入(DI) HikariDataSource (官方建議的連線池)", "Thymeleaf",
 			"Java WebApp (<font color=red>快速完成 Spring Boot Web MVC</font>)");
+
+private ReqOrderVO reqOrderVO;
 
 //	@GetMapping("/")
 //	public String index(Model model) {
@@ -425,9 +428,9 @@ public class IndexController_inSpringBoot {
 	    model.addAttribute("userVO", userVO);
 	    
 	    // 假設你有方法來獲取相關資料列表
-	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+//	    List<ReqOrderVO> list = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
 	    List<QuoVO> list1 = quoSvc.getAllQuotationExceptMe(userVO.getUserId());
-	    model.addAttribute("reqOrderListData", list);
+//	    model.addAttribute("reqOrderListData", list);
 	    model.addAttribute("comName", userVO.getComName()); // 將公司名稱添加到模型中
 	    model.addAttribute("quoListData", list1);
 
@@ -437,17 +440,31 @@ public class IndexController_inSpringBoot {
 
 	@ModelAttribute("reqOrderListData")
 	protected List<ReqOrderVO> referenceListData_reqorder(Model model, HttpServletRequest request,
-			HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+	        HttpServletResponse response) {
+	    HttpSession session = request.getSession();
+	    UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 
-		if (userVO == null) {
-			return null;
-		} else {
-//	    	List<ReqOrderVO> list = reqOrderSvc.findByReqIsValid();
-//			return list;
-			return reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
-		}
+	    if (userVO == null) {
+	        return null;
+	    } else {
+	        List<ReqOrderVO> reqorder = reqOrderSvc.getAllReqOrderExceptMe(userVO.getUserId());
+	        List<QuoVO> quoAll = quoSvc.getAll();
+	        List<ReqOrderVO> list = new ArrayList<>();
+
+	        for (ReqOrderVO reqOrderVO : reqorder) {
+	            boolean shouldAddToList = true;
+	            for (QuoVO quoVO : quoAll) {
+	                if (quoVO.getReqOrderVO().getReqNum() == reqOrderVO.getReqNum() && quoVO.getUserVO().getUserId() == userVO.getUserId()) {
+	                    shouldAddToList = false;
+	                    break;
+	                }
+	            }
+	            if (shouldAddToList) {
+	                list.add(reqOrderVO);
+	            }
+	        }
+	        return list;
+	    }
 	}
 
 	// ----------------報價單--------------------
