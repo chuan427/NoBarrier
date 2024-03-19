@@ -84,6 +84,30 @@ public class QuoController {
 	    model.addAttribute("success", "- (新增成功)");
 	    return "redirect:/userinformation/userpage";
 	}
+	
+//	//========================已提出報價後會改變狀態=====================================
+//	@PostMapping("/quocomplete")
+//    public String quocomplete(@RequestParam(name = "quoNum", required = false) String quoNum, ModelMap model) {
+//        if (quoNum == null) {
+//            return "errorPage"; // 如果 quoNum 為空，返回一個錯誤頁面
+//        }
+//
+//        // 根據 quoNum 從數據庫中獲取相應的 QuoVO 對象
+//        QuoVO quoVO = quoSvc.getOneQuo(Integer.valueOf(quoNum));
+//
+//        // 將 quoIsValid 設置為 1，表示已完成報價
+//        int valid = 1;
+//        quoVO.setQuoIsValid(valid);
+//
+//        // 更新數據庫中的 QuoVO 對象
+//        quoSvc.updateQuo(quoVO);
+//
+//        // 添加成功消息到模型中
+//        model.addAttribute("success", "- (完成需求)");
+//
+//        // 返回到 userpage 頁面
+//        return "redirect:/userinformation/userpage";
+//    }
 
 
 
