@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.industry.model.IndustryService;
+import com.industry.model.IndustryVO;
 import com.news.model.NewsVO;
 import com.quo.model.QuoService;
 import com.quo.model.QuoVO;
@@ -121,8 +122,8 @@ public class UserController {
 
 	// 先把register1的值保存到model中
 	@PostMapping("storeRegister1Data")
-	public String storeRegister1Data(@ModelAttribute("userVO") @Valid UserVO userVO, ModelMap model,
-			BindingResult result) throws IOException {
+	public String storeRegister1Data(@ModelAttribute("userVO") @Valid UserVO userVO, BindingResult result, ModelMap model
+			) throws IOException {
 
 		model.addAttribute("userVO", userVO);// 儲存錯誤的值以免使用者還要再輸入一次
 
@@ -172,47 +173,37 @@ public class UserController {
 	 */
 
 	@PostMapping("insertUser")
-	public String insert(@Valid UserVO userVO, BindingResult result, ModelMap model,
-			@RequestParam("comAboutImage") MultipartFile[] parts) throws IOException {
+    public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
 
-//	@PostMapping("insert")
-//	public String insert(@ModelAttribute("userVO") UserVO userVO, ModelMap model) throws IOException {
+            String password = userVO.getComPassword();
+            String encodeNewPassword = passwordEncoder.encode(password);
 
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comAboutImage");
+            userVO.setComPassword(encodeNewPassword);
+            userSvc.addUser(userVO);
+            List<UserVO> list = userSvc.getAll();
+            model.addAttribute("userListData", list);
+            model.addAttribute("success", "- (新增成功)");
+            return "front-end/userinformation/register3";
+    }
 
-		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "關於我們圖片: 請上傳照片");
-		} else {
-			for (MultipartFile multipartFile : parts) {
-				byte[] buf = multipartFile.getBytes();
-				userVO.setComAboutImage(buf);
-			}
-		}
-		if (result.hasErrors() || parts[0].isEmpty()) {
-			return "front-end/userinformation/memberCen";
-		}
+    @PostMapping("insertIndustry")
+    public String insertIndustry(@RequestParam String comAccount, @RequestParam(name = "industry-category") String industryCategory) {
 
-		String password = userVO.getComPassword();
-		String encodeNewPassword = passwordEncoder.encode(password);
+        System.out.println(comAccount+"    00");
+        System.out.println(industryCategory+"    00");
+        UserVO userVO= userSvc.getOneUserByAccount(comAccount);
 
-		userVO.setComPassword(encodeNewPassword);
+        int industryNum = Integer.parseInt(industryCategory);
+        IndustryVO industryVO = industrySvc.getOneIndustry(industryNum);
 
-		/*************************** 2.開始新增資料 *****************************************/
-		// EmpService empSvc = new EmpService();
-		userSvc.addUser(userVO);
+        userVO.setIndustryVO(industryVO);
 
-		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
-		List<UserVO> list = userSvc.getAll();
-		model.addAttribute("userListData", list);
-		model.addAttribute("success", "- (新增成功)");
+        userSvc.updateUser(userVO);
 
-//		return "redirect:/userinformation/memberCen"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-//	}
 
-		return "redirect:/userinformation/register3"; // 新增成功後重導至IndexController_inSpringBoot.java的第50行@GetMapping("/user/listAllUser")
-	} // 我覺得上面可能不該用redirect，用forward可能比較好，register3如果是呼叫update他也要知道是要更新哪一筆，forward可以知道是哪個使用者就可以知道更新哪個人的comIndustry
+
+        return "front-end/userinformation/registerFinished";
+    }
 
 	/*
 	 * This method will be called on listAllEmp.html form submission, handling POST

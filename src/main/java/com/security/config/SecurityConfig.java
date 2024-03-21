@@ -132,7 +132,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/userinformation/sendVerificationCode").permitAll()
 					.antMatchers("/userinformation/insertUser").permitAll()
 					.antMatchers("/userinformation/insertIndustry").permitAll()
-					
+					.antMatchers("/com/com").permitAll()
 					//後台管理員
 					.antMatchers("/authorization_new_member").hasRole("ADMIN")
 //					// 權限判斷

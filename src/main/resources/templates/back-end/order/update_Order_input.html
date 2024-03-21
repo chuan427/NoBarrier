@@ -83,7 +83,7 @@
 			</div>
 			
 			<div>
-				<label>品项单位:</label>
+				<label>品項單位:</label>
 				<input type="text" th:field="*{ordUnitname}" onclick="hideContent('ordUnitname.errors');" /><br />
 				<span th:if="${#fields.hasErrors('ordUnitname')}" th:errors="*{ordUnitname}" class="error"
 					id="ordUnitname.errors"></span>
@@ -145,12 +145,12 @@
 					id="ordLimnum.errors"></span>
 			</div>
 			
-			<div>
-				<label>訂單狀態:</label>
-				<input type="text" th:field="*{ordIsValid}" onclick="hideContent('ordIsValid.errors');" /><br />
-				<span th:if="${#fields.hasErrors('ordIsValid')}" th:errors="*{ordIsValid}" class="error"
-					id="ordIsValid.errors"></span>
-			</div>
+<!-- 			<div> -->
+<!-- 				<label>訂單狀態:</label> -->
+<!-- 				<input type="text" th:field="*{ordIsValid}" onclick="hideContent('ordIsValid.errors');" /><br /> -->
+<!-- 				<span th:if="${#fields.hasErrors('ordIsValid')}" th:errors="*{ordIsValid}" class="error" -->
+<!-- 					id="ordIsValid.errors"></span> -->
+<!-- 			</div> -->
 			
 			<div>
 				<label>購買人:</label>
