@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>廠商產品資訊編輯</title>
+    <title>廠商產品資訊預覽頁</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
-        /* 小型設備（手機） */
+        /* 小型设备（手机） */
         @media (max-width: 767.98px) {
             /* 樣式設定 */
         }
 
-        /* 中型設備（平板） */
+        /* 中型设备（平板） */
         @media (min-width: 768px) and (max-width: 991.98px) {
             /* 樣式設定 */
         }
 
-        /* 大型設備（桌面） */
+        /* 大型设备（桌面） */
         @media (min-width: 992px) {
             /* 樣式設定 */
         }
@@ -29,6 +29,7 @@
         .d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
             background-color: lightgray !important;
         }
+
         .list-group1 {
             display: none;
             /* 隱藏通知列表 */
@@ -42,26 +43,29 @@
         .notification-dropdown {
             position: absolute;
             top: 60px;
-            /* 距離 header 的頂部距離 */
+            /* 距离 header 的顶部距离 */
             right: 10px;
-            /* 距離 header 的右側距離 */
+            /* 距离 header 的右侧距离 */
             background-color: white;
             border: 1px solid #ddd;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none;
-            z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+            z-index: 1000;
+            /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
         }
 
         .notification-dropdown.show {
             display: block;
         }
+
         .notification-icon {
             position: relative;
             display: inline-block;
             cursor: pointer;
         }
+
         .notification-badge {
             position: absolute;
             top: -5px;
@@ -72,90 +76,77 @@
             padding: 5px;
             font-size: 12px;
         }
+
+        /* 修改样式，使图片和文字水平对齐 */
+        .product {
+            display: flex;
+            align-items: center;
+            /* 垂直居中对齐 */
+            margin-top: 20px;
+        }
+
+        .product img {
+            margin-right: 20px;
+            /* 图片与文字之间的间距 */
+        }
+
+        .product .product-info {
+            flex: 1;
+            /* 让文字区域占据剩余空间 */
+        }
     </style>
 </head>
 
 <body>
     <head th:insert="@{/front-end/header_login}"></head>
-    
 
-    <!-- siderbar -->
+    <!-- sidebar -->
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
-                    style="height: 500px; text-align: center;">
-                    <a href="/"
-                        class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <!-- 侧边栏内容 -->
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="height: 500px; text-align: center;">
+                    <a th:href="@{/com/com_homepage/{userId}(userId=${session.loggingInUser.userId})}" class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <span class="fs-2" style="color: black;" th:text="${session.loggingInUser.comName}"></span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a th:href="@{editmember_ad_view}" class="nav-link text-white fs-4">
-                                廠商廣告
-                            </a>
-                        </li>
-<!--                         <li> -->
-<!--                             <a th:href="@{/com/editmember_user_view}" class="nav-link text-white fs-4"> -->
-<!--                                 聯絡資料 -->
-<!--                             </a> -->
-<!--                         </li> -->
-                        <li>
-                            <a th:href="@{/com/editmember_aboutus_view}" class="nav-link text-white fs-4">
-                                關於我們
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_product_view}" class="nav-link text-white fs-4">
-                                產品資訊
-                            </a>
-                        </li>
-                        <li>
-                            <a th:href="@{/com/editmember_sale_view}" class="nav-link text-white fs-4">
-                                限時商品
-                            </a>
-                        </li>
+                        <li class="nav-item"><a th:href="@{editmember_ad_view}" class="nav-link text-white fs-4"> 廠商廣告 </a></li>
+                        <!-- <li> -->
+                        <!-- <a th:href="@{/com/editmember_user_view}" class="nav-link text-white fs-4"> -->
+                        <!-- 聯絡資料 -->
+                        <!-- </a> -->
+                        <!-- </li> -->
+                        <li><a th:href="@{/com/editmember_aboutus_view}" class="nav-link text-white fs-4"> 關於我們 </a></li>
+                        <li><a th:href="@{/com/editmember_product_view}" class="nav-link text-white fs-4"> 產品資訊 </a></li>
+                        <li><a th:href="@{/com/editmember_sale_view}" class="nav-link text-white fs-4"> 限時商品 </a></li>
                     </ul>
                 </div>
             </div>
-          
-         
 
-
-
-
-            <div class="col-md-6"> <h3>產品資訊</h3>
-            <div th:each="productInfo : ${productInformationList}">
-    <div class="product">
-               
-                <div style="margin-top: 50px;"></div>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="col-md-7">
-                            <img th:src="@{'/productInformation/DBGifReader?pinfoNum=' + ${productInfo.pinfoNum}}" class="img-fluid" alt="圖片顯示有誤,請與客服聯繫">
-                        </div>
-                    </div>
-                    <div class="col-7">
-                        <div class="input-group">
+            <div class="col-md-6">
+                <h3>產品資訊</h3>
+                <span><a th:href="@{/com/editmember_product}">回廠商廣告編輯頁面</a></span>
+                <div th:each="productInfo : ${productInformationList}">
+                    <div class="product">
+                        <img th:src="@{'/productInformation/DBGifReader?pinfoNum=' + ${productInfo.pinfoNum}}" class="img-fluid" alt="圖片顯示有誤,請與客服聯繫" height="100" width="100">
+                        <div class="product-info">
                             <span class="input-group-text">產品資訊</span>
-                            <textarea class="form-control" aria-label="With textarea"  th:text=${productInfo.pinfoDes}></textarea>
+                            <textarea class="form-control" th:text="${productInfo.pinfoDes}" rows="4" cols="150" readonly></textarea>
                         </div>
                     </div>
                 </div>
-                
             </div>
-        </div>    
-       </div>
-</div>
- </div>
-		<head th:insert="@{/front-end/footer}"></head>
-		<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-<!-- 		<script th:src="@{/js/notification.js}"></script> -->
-<!--             <script src="js/notification.js"></script> -->
-<!--             <script src="js/home.js"></script> -->
-<!--             <script src="js/popper.min.js"></script> -->
-<!--             <script src="js/bootstrap.min.js"></script> -->
+        </div>
+    </div>
+
+    <head th:insert="@{/front-end/footer}"></head>
+    <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+    <!-- <script th:src="@{/js/notification.js}"></script> -->
+    <!-- <script src="js/notification.js"></script> -->
+    <!-- <script src="js/home.js"></script> -->
+    <!-- <script src="js/popper.min.js"></script> -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
 </body>
 
 </html>

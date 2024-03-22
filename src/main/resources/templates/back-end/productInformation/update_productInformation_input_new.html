@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>產品資訊修改</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+/* 小型設備（手機） */
+@media ( max-width : 767.98px) { /* 樣式設定 */
+}
+
+/* 中型設備（平板） */
+@media ( min-width : 768px) and (max-width: 991.98px) { /* 樣式設定 */
+}
+
+/* 大型設備（桌面） */
+@media ( min-width : 992px) { /* 樣式設定 */
+}
+
+.navbar-toggler-icon.small {
+	font-size: 0.1rem;
+}
+
+.d-flex.flex-column.flex-shrink-0.p-3.text-bg-dark {
+	background-color: lightgray !important;
+}
+
+.list-group1 {
+	display: none;
+	/* 隱藏通知列表 */
+}
+
+.list-group1.show {
+	display: block;
+	/* 顯示通知列表 */
+}
+
+.notification-dropdown {
+	position: absolute;
+	top: 60px;
+	/* 距離 header 的頂部距離 */
+	right: 10px;
+	/* 距離 header 的右側距離 */
+	background-color: white;
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	display: none;
+	z-index: 1000; /* 设置一个比较大的值，确保通知内容显示在其他内容的上方 */
+}
+
+.notification-dropdown.show {
+	display: block;
+}
+
+.notification-icon {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.notification-badge {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
+	font-size: 12px;
+}
+
+button {
+	padding: 5px;
+}
+
+form {
+	display: table;
+}
+
+form div {
+	display: table-row;
+}
+
+label, input, span, select {
+	display: table-cell;
+	margin: 5px;
+	text-align: left;
+}
+
+input[type=text], input[type=password], select, textarea {
+	width: 200px;
+	margin: 5px;
+}
+
+form div div {
+	display: table-cell;
+}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+
+</head>
+<body>
+<head th:insert="@{/front-end/header_login}"></head>
+
+<div class="container" align="center">
+	<h4>
+		<b>產品資訊新增</b>
+	</h4>
+	<div>
+		<a th:if="${success}" th:text="${success}"
+			style="color: red; font-weight: bold;"
+			th:href="@{/com/update_productInformation_input_new}"></a>
+	</div>
+	<form th:action="@{insertProduct}" method="post"
+		th:object="${productInformationVO}" enctype="multipart/form-data">
+		<div>
+			<!-- 							<label>會員編號:</label> -->
+			<input type="hidden" th:field="${productInformationVO.userVO.userId}"
+				style="border: 0px; font-weight: bold;" />
+		</div>
+
+		<div>
+			<label>產品圖片:</label> <input type="file" class="form-control"
+				th:field="*{pinfoImage}" onclick="previewImage()"
+				multiple="multiple" onchange="hideContent('pinfoImage.errors');" />
+			<br>
+			<div id="blob_holder"></div>
+		</div>
+
+		<div>
+			<label>產品敘述:</label>
+			<div class="d-flex align-items-center">
+				<textarea class="form-control" th:field="*{pinfoDes}"
+					aria-label="With textarea"
+					onclick="hideContent('pinfoDes.errors');">文字敘述</textarea>
+				<div class="ms-2">
+					<button class="btn btn-primary" id="submit" type="submit">新增</button>
+				</div>
+			</div>
+			<span th:if="${#fields.hasErrors('pinfoDes')}"
+				th:errors="*{pinfoDes}" class="error" id="pinfoDes.errors"
+				style="color: red; font-weight: bold;"></span>
+		</div>
+	</form>
+	<br>
+	<h6>
+		<a class="navbar-brand" th:href="@{/com/editmember_product}">回上一頁</a>
+	</h6>
+</div>
+<head th:insert="@{/front-end/footer}"></head>
+<script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/notification.js}"></script>
+
+
+
+<!-- JavaScript part -->
+<script type="text/javascript">
+	//清除提示信息
+	function hideContent(d) {
+		document.getElementById(d).style.display = "none";
+	}
+
+	//照片上傳-預覽用
+	var filereader_support = typeof FileReader != 'undefined';
+	if (!filereader_support) {
+		alert("No FileReader support");
+	}
+	acceptedTypes = {
+		'image/png' : true,
+		'image/jpeg' : true,
+		'image/gif' : true
+	};
+	function previewImage() {
+		var upfile1 = document.getElementById("pinfoImage");
+		// 移除之前的事件监听器
+		upfile1.removeEventListener("change", handleFileSelect, false);
+		// 添加新的事件监听器
+		upfile1.addEventListener("change", handleFileSelect, false);
+	}
+	function handleFileSelect(event) {
+		// 清除之前的预览图像
+		blob_holder.innerHTML = "";
+
+		var files = event.target.files || event.dataTransfer.files;
+		for (var i = 0; i < files.length; i++) {
+			previewfile(files[i]);
+		}
+	}
+	function previewfile(file) {
+		if (filereader_support === true && acceptedTypes[file.type] === true) {
+			var reader = new FileReader();
+			reader.onload = function(event) {
+				var image = new Image();
+				image.src = event.target.result;
+				image.width = 100;
+				image.height = 75;
+				image.border = 2;
+				if (blob_holder.hasChildNodes()) {
+					blob_holder.removeChild(blob_holder.childNodes[0]);
+				}
+				blob_holder.appendChild(image);
+			};
+			reader.readAsDataURL(file);
+			document.getElementById('submit').disabled = false;
+		} else {
+			blob_holder.innerHTML = "<div  style='text-align: left;'>"
+					+ "● filename: "
+					+ file.name
+					+ "<br>"
+					+ "● ContentTyp: "
+					+ file.type
+					+ "<br>"
+					+ "● size: "
+					+ file.size
+					+ "bytes"
+					+ "<br>"
+					+ "● 上傳ContentType限制: <b> <font color=red>image/png、image/jpeg、image/gif </font></b></div>";
+			document.getElementById('submit').disabled = true;
+		}
+	}
+	document.getElementById('submit').addEventListener('click', function(event) {
+		// 弹出确认修改的警告框
+		var confirmEdit = confirm("确定要修改吗？");
+
+		// 如果用户点击取消，则阻止表单的默认提交行为
+		if (!confirmEdit) {
+			event.preventDefault();
+		}
+	});
+</script>
+
+</body>
+</html>

@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.industry.model.IndustryService;
-import com.productinformation.model.ProductInformationService;
-import com.productinformation.model.ProductInformationVO;
 import com.quo.model.QuoService;
 import com.reqorder.model.ReqOrderService;
 import com.security.model.MailService;
@@ -128,11 +126,17 @@ public class UserControllerCom {
 //	=======================================廠商編輯update====================
 	@PostMapping("updateAboutUs")
 	public String update(@Valid UserVO userVO, BindingResult result, HttpServletRequest request, ModelMap model, 
-			@RequestParam("comAboutImage") MultipartFile part) throws IOException {
+			@RequestParam("comAboutImage") MultipartFile part,
+			@RequestParam(value = "comImage1", required = false) MultipartFile comImage1,
+            @RequestParam(value = "comImage2", required = false) MultipartFile comImage2,
+            @RequestParam(value = "comImage3", required = false) MultipartFile comImage3,
+            @RequestParam(value = "comImage4", required = false) MultipartFile comImage4) throws IOException {
 		
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
 		result = removeFieldError(userVO, result, "comAboutImage");
+		UserVO updatedUserVO = new UserVO();
+	    updatedUserVO.setComAboutImage(userVO.getComAboutImage());
 		// 检查是否有上传的新图片
 		 if (!part.isEmpty()) {
 		        byte[] comAboutImage = part.getBytes();
@@ -142,6 +146,29 @@ public class UserControllerCom {
 		        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComAboutImage();
 		        userVO.setComAboutImage(existingImage);
 		    }
+		 // 处理 comImage1 字段
+		    if (comImage1 == null || comImage1.isEmpty()) {
+		        byte[] existingImage1 = userSvc.getOneUser(userVO.getUserId()).getComImage1();
+		        userVO.setComImage1(existingImage1);
+		    }
+
+		    // 处理 comImage2 字段
+		    if (comImage2 == null || comImage2.isEmpty()) {
+		        byte[] existingImage2 = userSvc.getOneUser(userVO.getUserId()).getComImage2();
+		        userVO.setComImage2(existingImage2);
+		    }
+
+		    // 处理 comImage3 字段
+		    if (comImage3 == null || comImage3.isEmpty()) {
+		        byte[] existingImage3 = userSvc.getOneUser(userVO.getUserId()).getComImage3();
+		        userVO.setComImage3(existingImage3);
+		    }
+
+		    // 处理 comImage4 字段
+		    if (comImage4 == null || comImage4.isEmpty()) {
+		        byte[] existingImage4 = userSvc.getOneUser(userVO.getUserId()).getComImage4();
+		        userVO.setComImage4(existingImage4);
+		    }
 	    
 		if (result.hasErrors()) {
 			 for (FieldError error : result.getFieldErrors()) {
@@ -150,99 +177,70 @@ public class UserControllerCom {
 			return "front-end/com/editmember_aboutus";
 		}
 		/*************************** 2.開始修改資料 *****************************************/
-		  userSvc.updateUser(userVO);
+		  userSvc.addUser(userVO);
 		  request.getSession().setAttribute("loggingInUser", userVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-//		  model.addAttribute("success", "- (修改成功)");
+		  model.addAttribute("success", "編輯成功,請前往預覽頁面查看");
+		  model.addAttribute("editSuccess", true);
 		  userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
 		  model.addAttribute("userVO", userVO);
-		  return "front-end/com/editmember_aboutus_view";
+		  return "front-end/com/editmember_aboutus";
 		}
 	
 //	==============================廣告圖片更新========================================
-	
+
 	@PostMapping("updateimage")
-	public String updateimage(
-			@RequestParam("comImage1") MultipartFile comImage1,
-            @RequestParam("comImage2") MultipartFile comImage2,
-            @RequestParam("comImage3") MultipartFile comImage3,
-            @RequestParam("comImage4") MultipartFile comImage4,@Valid UserVO userVO, BindingResult result, HttpServletRequest request, ModelMap model
-			) throws IOException {
-		
-		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
-		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		result = removeFieldError(userVO, result, "comImage1");
-		result = removeFieldError(userVO, result, "comImage2");
-		result = removeFieldError(userVO, result, "comImage3");
-		result = removeFieldError(userVO, result, "comImage4");
+	public String updateimage(@RequestParam("comImage1") MultipartFile comImage1,
+	                          @RequestParam("comImage2") MultipartFile comImage2,
+	                          @RequestParam("comImage3") MultipartFile comImage3,
+	                          @RequestParam("comImage4") MultipartFile comImage4,
+	                          @Valid UserVO userVO, BindingResult result,
+	                          HttpServletRequest request, ModelMap model) throws IOException {
 
-		
-		// 检查是否有上传的新图片
-//		 if (!part.isEmpty()) {
-//		        byte[] comImage = part.getBytes();
-//		        userVO.setComImage1(comImage);
-//		    } else {
-//		        // 如果用户未选择上传新图片，则保留原有图片
-//		        byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage1();
-//		        userVO.setComImage1(existingImage);
-//		    }
-		// 处理图片1
-		if (!comImage1.isEmpty()) {
-		    byte[] imageData = comImage1.getBytes();
-		    userVO.setComImage1(imageData);
-		} else {
-		    // 如果用户未选择上传新图片，则保留原有图片
-		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage1();
-		    userVO.setComImage1(existingImage);
-		}
+	    // 处理图片
+		handleImageUpload(comImage1, userVO, "comImage1");
+		handleImageUpload(comImage2, userVO, "comImage2");
+		handleImageUpload(comImage3, userVO, "comImage3");
+		handleImageUpload(comImage4, userVO, "comImage4");
 
-		// 处理图片2
-		if (!comImage2.isEmpty()) {
-		    byte[] imageData = comImage2.getBytes();
-		    userVO.setComImage2(imageData);
-		} else {
-		    // 如果用户未选择上传新图片，则保留原有图片
-		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage2();
-		    userVO.setComImage2(existingImage);
-		}
+	    // 更新用户信息
+	    userSvc.updateUser(userVO);
+	    request.getSession().setAttribute("loggingInUser", userVO);
 
-		// 处理图片3
-		if (!comImage3.isEmpty()) {
-		    byte[] imageData = comImage3.getBytes();
-		    userVO.setComImage3(imageData);
-		} else {
-		    // 如果用户未选择上传新图片，则保留原有图片
-		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage3();
-		    userVO.setComImage3(existingImage);
-		}
-
-		// 处理图片4
-		if (!comImage4.isEmpty()) {
-		    byte[] imageData = comImage4.getBytes();
-		    userVO.setComImage4(imageData);
-		} else {
-		    // 如果用户未选择上传新图片，则保留原有图片
-		    byte[] existingImage = userSvc.getOneUser(userVO.getUserId()).getComImage4();
-		    userVO.setComImage4(existingImage);
-		}
-	    
-		if (result.hasErrors()) {
-			 for (FieldError error : result.getFieldErrors()) {
-			        System.out.println("Field: " + error.getField() + ", Message: " + error.getDefaultMessage());
-			    }
-			return "front-end/com/editmember_ad";
-		}
-		/*************************** 2.開始修改資料 *****************************************/
-		  userSvc.updateUser(userVO);
-		  request.getSession().setAttribute("loggingInUser", userVO);
-
-		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
-//		  model.addAttribute("success", "- (修改成功)");
-		  userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
-		  model.addAttribute("userVO", userVO);
-		  return "front-end/com/editmember_ad_view";
-		}
+	    // 设置成功信息并准备转发到预览页面
+	    model.addAttribute("success", "編輯成功,請前往預覽頁面查看");
+	    model.addAttribute("editSuccess", true);
+	    userVO = userSvc.getOneUser(Integer.valueOf(userVO.getUserId()));
+	    model.addAttribute("userVO", userVO);
+	    return "front-end/com/editmember_ad";
+	}
+	private void handleImageUpload(MultipartFile file, UserVO userVO, String fieldName) throws IOException {
+	    if (!file.isEmpty()) {
+	        byte[] imageData = file.getBytes();
+	        switch (fieldName) {
+	            case "comAboutImage":
+	                userVO.setComAboutImage(imageData);
+	                break;
+	            case "comImage1":
+	                userVO.setComImage1(imageData);
+	                break;
+	            case "comImage2":
+	                userVO.setComImage2(imageData);
+	                break;
+	            case "comImage3":
+	                userVO.setComImage3(imageData);
+	                break;
+	            case "comImage4":
+	                userVO.setComImage4(imageData);
+	                break;
+	            default:
+	                // 如果fieldName不匹配任何已知字段名，则不进行处理
+	                // 可以选择在这里抛出异常或执行其他适当的处理
+	                break;
+	        }
+	    }
+	}
 
 	 /*************************** 去除BindingResult *****************************************/
 	
