@@ -130,7 +130,7 @@ public class UserController {
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		if (userSvc.userIsExist(userVO.getComAccount())) {
 
-			result.rejectValue("comCccount", "error.userVO", "此帳號已存在");
+			result.rejectValue("comAccount", "error.userVO", "此帳號已存在");
 
 			return "front-end/userinformation/register1";
 		}

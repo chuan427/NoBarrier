@@ -11,17 +11,17 @@
 	<!-- <header> -->
 <head th:insert="~{/front-end/header}"></head>
 <!-- 註冊區塊 -->
-<main>
+<main style = "display: flex; align-items: center; justify-content: center; height: 480px;">
 	<input type="text" th:value="${userVO.comMail}" id="emailInput" readonly="readonly" />
 	
 	<button type="button" id="sendVerificationCode">寄送驗證碼</button>
-
+	
 	<!-- 驗證碼輸入框 -->
 	<input type="text" id="verificationCodeInput" placeholder="請輸入驗證碼">
-
+	
 	<!-- 提交驗證碼的按鈕 -->
 	<button type="button" id="submitVerificationCode">提交驗證碼</button>
-
+	
 	<form th:action="@{insertUser}" method="post" th:object="${userVO}">
 	
 						

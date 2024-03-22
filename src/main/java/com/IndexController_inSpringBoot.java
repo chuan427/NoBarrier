@@ -149,9 +149,8 @@ private ReqOrderVO reqOrderVO;
 	}
 
 	@RequestMapping("/loginfail")
-	@ResponseBody
 	public String toFailLogin() {
-		return "Login Failed!"; // view
+		return "/front-end/failLogin"; // view
 	}
 
 	@RequestMapping("/loginsuccess")
