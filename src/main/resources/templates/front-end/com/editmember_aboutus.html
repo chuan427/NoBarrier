@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>editmember_aboutus</title>
+<title>關於我編輯頁面</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <style>
 /* 小型設備（手機） */
@@ -84,7 +84,7 @@
 		<div class="col-md-3">
 			<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
 				style="height: 500px; text-align: center;">
-				<a href="/"
+			    <a th:href="@{/com/com_homepage/{userId}(userId=${session.loggingInUser.userId})}"
 					class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 					<span class="fs-2" style="color: black;"
 					th:text="${userVO.comName}"></span>
@@ -108,10 +108,10 @@
 		<div class="col-md-9">
 			<form th:action="@{updateAboutUs}" method="post"
 				th:object="${userVO}" enctype="multipart/form-data">
-				<h3>關於我們</h3>
-				<div style="margin-top: 50px;"></div>
+				<h3 >廠商關於我編輯頁面</h3><div><a th:if="${success}" th:text="${success}" style="color: red; font-weight: bold;" th:href="@{/com/editmember_aboutus_view}"></a></div>
+				<div style="margin-top: 1px;"></div>
 				<div class="row">
-					<div class="col-6">
+					<div class="col-4">
 						<div class="input-group mb-3">
 							<div>
 								<div>
@@ -120,18 +120,16 @@
 								</div>
 
 <!-- 											<label>關於我們圖片:</label> -->
-								<input type="file"  class="form-control" name="comAboutImage" th:field="*{comAboutImage}" onclick="previewImage()" multiple="multiple" />
+								<input type="file"  class="form-control" name="comAboutImage" th:field="*{comAboutImage}" onclick="previewImage()" multiple="multiple" onchange="hideContent('pinfoImage.errors');"/>
 								<br> 
-<!-- 								可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span>  -->
 								<div id="blob_holder">
-								<br>
-<!-- 									<img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}"width="100px"> -->
+									<img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}" width="280px" height="160px">
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div style="margin-top: 50px;"></div>
+				<div style="margin-top: 1px;"></div>
 				<div class="input-group">
 					<div class="col-7">
 								<input type="hidden" th:field="*{comName}" onclick="hideContent('comName.errors');" />
@@ -151,21 +149,42 @@
 								<input type="hidden" th:field="*{comRatCount}" onclick="hideContent('comRatCount.errors');" />
 								<input type="hidden" th:field="*{comIsValid}" onclick="hideContent('comRatCount.errors');" />
 <!-- 								<input type="text" th:field="*{userVO.comIndustry}" onclick="hideContent('comIndustry1.errors');" /><br/> -->
-					
+								<input type="hidden"  class="form-control" name="comImage1"
+									th:field="*{comImage1}" onclick="previewImage()"
+									multiple="multiple" /> 
+								<input type="hidden" class="form-control" name="comImage2"
+									th:field="*{comImage2}" onclick="previewImage()"
+									multiple="multiple"  /> 
+
+								<input type="hidden" class="form-control" name="comImage3"
+									th:field="*{comImage3}" onclick="previewImage()"
+									multiple="multiple" /> 
+									
+								<input type="hidden" class="form-control" name="comImage4"
+									th:field="*{comImage4}" onclick="previewImage()"
+									multiple="multiple" /> 
+
 						<label>關於我們文字描述:</label>
 						<textarea class="form-control" name='comAboutContent' th:field="*{comAboutContent}" 
-							aria-label="With textarea">文字敘述</textarea>
+							aria-label="With textarea" rows="5" cols="150">文字敘述 </textarea>
 						<span th:if="${#fields.hasErrors('comAboutContent')}" 
 							th:errors="*{comAboutContent}" class="error"
-							id="comAboutContent.errors"
-							style="color: red; font-weight: bold;"></span>
+							id="comAboutContent.errors" 
+							style="color: red; font-weight: bold ;" ></span>
+							  <div th:unless="${editSuccess}" class="edit-button">
+                   		 <!-- 如果不是编辑成功状态，显示提交按钮 -->
+                   		 <br>
+                   	<div class="d-flex align-items-start">
+                        <div class="flex-grow-1"></div> <!-- 空白占位符 -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-end">
+                            <button class="btn btn-primary me-md-2" id="submit" type="submit">送出</button>
+                        </div>
 					</div>
-				</div>
-				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button class="btn btn-primary me-md-2" type="submit">送出編輯</button>
-				</div>
+					</div>
+						</div>
+					</div>
 			</form>
-		</div>
+		</div> 
 	</div>
 </div>
 <head th:insert="@{/front-end/footer}"></head>
@@ -213,8 +232,8 @@ function previewfile(file) {
 		reader.onload = function(event) {
 			var image = new Image();
 			image.src = event.target.result;
-			image.width = 100;
-			image.height =95;
+			image.width = 280;
+			image.height =160;
 			image.border = 2;
 			if (blob_holder.hasChildNodes()) {
 				blob_holder.removeChild(blob_holder.childNodes[0]);
@@ -231,6 +250,15 @@ function previewfile(file) {
 		document.getElementById('submit').disabled = true;
 	}
 }
+document.getElementById('submit').addEventListener('click', function(event) {
+	// 弹出确认修改的警告框
+	var confirmEdit = confirm("确定要修改吗？");
+
+	// 如果用户点击取消，则阻止表单的默认提交行为
+	if (!confirmEdit) {
+		event.preventDefault();
+	}
+});
 </script>
 </body>
 </html>

@@ -241,8 +241,11 @@ private ReqOrderVO reqOrderVO;
 
 	// 廠商廣告預覽頁面 完成
 	@GetMapping("/com/editmember_ad_view")
-	public String editmember_ad_view() {
-		return "front-end/com/editmember_ad_view"; // view
+	public String editmember_ad_view(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        model.addAttribute("userVO", userVO);; // view
+        return "front-end/com/editmember_ad_view";
 	}
 
 	// 廠商廣告編輯頁面 完成
@@ -255,12 +258,17 @@ private ReqOrderVO reqOrderVO;
 	}
 
 	
-//	@GetMapping("/upProductInformation")
-//	public String addProductInformation(ModelMap model) {
-//		ProductInformationVO productInformationVO = new ProductInformationVO();
-//		model.addAttribute("productInformationVO", productInformationVO);
-//		return "back-end/productInformation/update_productInformation_input";
-//	}
+	@GetMapping("/com/editmember_product_insert")
+	public String update_productInformation_input_new(Model model, HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
+        List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
+        // 添加到模型中
+        model.addAttribute("userVO", userVO);
+        model.addAttribute("productInformationVO",new ProductInformationVO());
+        model.addAttribute("productInformationList", productInformationList);
+    return "front-end/com/editmember_product_insert"; // 返回 view 的名稱
+	}
 
 //	 廠商產品預覽頁面 完成
 	@GetMapping("/com/editmember_product_view")
@@ -613,11 +621,12 @@ private ReqOrderVO reqOrderVO;
 		return list;
 	}
 	// ------------------------------------
-
+	
 	@GetMapping("/productInformation/select_page")
 	public String select_page_productInformation(Model model) {
 		return "back-end/productInformation/select_page";
 	}
+	
 
 	@GetMapping("/productInformation/listAllProductInformation")
 	public String listAllProductInformation(Model model) {
