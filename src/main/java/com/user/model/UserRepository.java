@@ -14,4 +14,13 @@ public interface UserRepository extends JpaRepository<UserVO, Integer>{
 	public UserVO findByComAccount(String comAccount);
 	public UserVO findByComUniNumber(String ComUniNumber);
 	public UserVO findByComContactPerson(String comContactPerson);
+	
+	
+	
+	@Transactional
+	@Modifying
+	@Query(value = "update userInformation set comStat = 1 where userid = ?0", nativeQuery = true)
+	void reviewBycomStat(int userId);
+	
+	
 	}

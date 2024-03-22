@@ -162,9 +162,9 @@ public class UserService {
 		    }
 		}
 		
-		
-		
-		
+		public void reviewUserByComStat(int userId) {
+		    repository.reviewBycomStat(userId);
+		}
 		
 }
 
