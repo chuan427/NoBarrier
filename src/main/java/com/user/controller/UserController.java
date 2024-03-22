@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.forumpost.model.ForumPostVO;
 import com.industry.model.IndustryService;
 import com.industry.model.IndustryVO;
 import com.news.model.NewsVO;
@@ -391,13 +392,6 @@ public class UserController {
 		model.addAttribute("userVO", userVO);
 		return "back-end/user/listOneUser"; // 修改成功後轉交listOneUser.html
 	}
-	
-
-	
-	
-	
-	
-
-	
+		
 
 }

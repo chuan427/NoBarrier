@@ -6,6 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>forum</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 	<style>
 		/* 小型設備（手機） */
 		@media (max-width: 767.98px) {
@@ -72,7 +74,6 @@
 		<div class="row">
 			<!-- sidebar -->
 			<div class="col-md-3">
-
 				<head th:insert="~{/back-end/sidebar}"></head>
 			</div>
 
@@ -82,35 +83,36 @@
 					<h2 class="news-title">論壇管理</h2>
 					<div class="accordion" id="accordionExample">
 						<th:block th:each="forumPostVO : ${forumPostListData}">
-							<div class="accordion-item">
-								<h2 class="accordion-header">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse"
-										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-										<span th:text="${forumPostVO.fpNum + ' ' + forumPostVO.fpTitle}"></span>
-									</button>
-								</h2>
-								<div id="collapseOne" class="accordion-collapse collapse"
-									data-bs-parent="#accordionExample">
-									<div class="accordion-body">
-										<div class="news-content">
-											<span th:text="發問人+':'+${forumPostVO.userVO.comName}"></span><br>
-											<span th:text="貼文時間+':'+${forumPostVO.fpTime}"></span><br>
-											<span th:text="內容+':'+${forumPostVO.fpContent}"></span><br>
-											<span th:text="貼文狀態+':'+${forumPostVO.fpStat}"></span>
-											<div class="d-flex justify-content-end mb-3">
-											<form method="post" th:action="@{/forum/getOne_For_Update_back}">
-												<input type="submit" class="btn btn-primary me-2" value="修改">
-												<input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
-											</form>
-											<form method="post" th:action="@{/forumPost/delete}">
-												<input type="submit" class="btn btn-danger" value="刪除">
-												<input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
-											</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+                            <th:block th:if="${forumPostVO.fpStat == 1}">
+							    <div class="accordion-item">
+								    <h2 class="accordion-header">
+									    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+										    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										    <span th:text="${forumPostVO.fpNum + ' ' + forumPostVO.fpTitle}"></span>
+									    </button>
+								    </h2>
+								    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+									    <div class="accordion-body">
+										    <div class="news-content">
+											    <span th:text="發問人+':'+${forumPostVO.userVO.comName}"></span><br>
+											    <span th:text="貼文時間+':'+${forumPostVO.fpTime}"></span><br>
+											    <span th:text="內容+':'+${forumPostVO.fpContent}"></span><br>
+											    <span th:text="貼文狀態+':'+${forumPostVO.fpStat}"></span>
+											    <div class="d-flex justify-content-end mb-3">
+												    <form method="post" th:action="@{/forum/getOne_For_Update_back}">
+													    <input type="submit" class="btn btn-primary me-2" value="修改">
+													    <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
+												    </form>
+                                                    <form method="post" th:action="@{/forum/delete_back}">
+                                                        <input type="submit" class="btn btn-danger" value="刪除">
+                                                        <input type="hidden" name="fpNum" th:value="${forumPostVO.fpNum}">
+                                                    </form>
+											    </div>
+										    </div>
+									    </div>
+								    </div>
+							    </div>
+                            </th:block>
 						</th:block>
 					</div>
 				</div>

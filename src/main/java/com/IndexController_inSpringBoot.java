@@ -434,6 +434,24 @@ private ReqOrderVO reqOrderVO;
 		return "front-end/userinformation/register3"; // view
 	}
 
+	
+	@PostMapping("backReview")
+	public String backReview(@RequestParam("userId") Integer userId, ModelMap model) {
+	    // 接收請求參數 - 輸入格式的錯誤處理
+
+	    // 開始審核資料
+	    userSvc.reviewUserByComStat(userId);
+
+	    // 審核完成，準備轉交
+	    List<UserVO> list = userSvc.getAll();
+	    model.addAttribute("userListData", list);
+	    model.addAttribute("success", "審核成功");
+	    return "back-end/member_admin"; // 審核完成後轉交listAllUser.html
+	}
+	
+	
+	
+	
 	// 聯絡我們
 //	@GetMapping("/")      			
 //	public String customer_service() {

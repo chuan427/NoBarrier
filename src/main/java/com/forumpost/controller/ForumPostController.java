@@ -267,6 +267,20 @@ public class ForumPostController {
 		// 重定向到該文章的詳細頁面，確保你的URL模式和@GetMapping相匹配
 		return "back-end/forumPost/listOneForumPost";
 	}
+	
+	@PostMapping("delete_back")
+	public String delete_back(@RequestParam("fpNum") String fpNum, ModelMap model) {
+		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
+		/*************************** 2.開始刪除資料 *****************************************/
+		// EmpService empSvc = new EmpService();
+		forumPostSvc.deleteForumPost(Integer.valueOf(fpNum));
+		/*************************** 3.刪除完成,準備轉交(Send the Success view) **************/
+		List<ForumPostVO> list = forumPostSvc.getAll();
+		model.addAttribute("forumPostListData", list);
+		model.addAttribute("success", "- (刪除成功)");
+		return "back-end/forum"; // 刪除完成後轉交listAllUser.html
+	}
+	
 }
 
 /*
