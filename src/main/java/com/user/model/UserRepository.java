@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<UserVO, Integer>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "update userInformation set comStat = 1 where userid = ?0", nativeQuery = true)
-	void reviewBycomStat(int userId);
+	@Query(value = "UPDATE userInformation SET comStat = 1 WHERE userid = ?1 AND comStat = 0", nativeQuery = true)
+	void reviewBycomStatIfZero(int userId);
 	
 	
 	}
