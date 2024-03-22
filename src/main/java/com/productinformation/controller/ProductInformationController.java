@@ -10,10 +10,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +42,7 @@ public class ProductInformationController {
 //		model.addAttribute("productInformationVO", productInformationVO);
 //		return "back-end/productInformation/addProductInformation";
 //	}
-	
+
 	@PostMapping("insertProduct")
 	public String insert(@Valid ProductInformationVO ProductInformationVO,BindingResult result, HttpServletRequest request , ModelMap model,
 			@RequestParam("pinfoImage") MultipartFile[] parts) throws IOException {
@@ -52,7 +54,7 @@ public class ProductInformationController {
 		result = removeFieldError(ProductInformationVO, result, "pinfoImage");
 
 		if (parts[0].isEmpty()) { // 使用者未選擇要上傳的圖片時
-			model.addAttribute("errorMessage", "產品資訊: 請上傳照片");
+			model.addAttribute("errorMessage", "產品圖片空白: 請上傳照片");
 		} else {
 			for (MultipartFile multipartFile : parts) {
 				byte[] buf = multipartFile.getBytes();
@@ -61,20 +63,19 @@ public class ProductInformationController {
 		}
 		
 		if (result.hasErrors() || parts[0].isEmpty()) {
-			System.out.println("123");
-			return "front-end/com/editmember_product";
+			System.out.println("23");
+			return "front-end/com/editmember_product_insert";
 		}
 		/*************************** 2.開始新增資料 *****************************************/
 	    productInformationSvc.addProductInformation(ProductInformationVO);
 		/*************************** 3.新增完成,準備轉交(Send the Success view) **************/
 	    List<ProductInformationVO> productInformationlist = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
 	    model.addAttribute("productInformationList", productInformationlist);
-//	    model.addAttribute("userVO",userVO);
-	    return "front-end/com/editmember_product_view";
+	    model.addAttribute("success", "編輯成功,請前往預覽頁面查看");
+		model.addAttribute("editSuccess", true);
+	    model.addAttribute("userVO",userVO);
+	    return "front-end/com/editmember_product_insert";
 	}
-	
-	
-	
 	
 	/*********************************** 產品資訊更新 *****************************************/
 	
@@ -94,7 +95,7 @@ public class ProductInformationController {
 
 		/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 ************************/
 		// 去除BindingResult中upFiles欄位的FieldError紀錄 --> 見第172行
-		
+		result = removeFieldError(ProductInformationVO, result, "pinfoImage");
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("loggingInUser");
 		result = removeFieldError(ProductInformationVO, result, "pinfoImage");
@@ -124,10 +125,11 @@ public class ProductInformationController {
 		productInformationSvc.updateProductInformation(ProductInformationVO);
 
 		/*************************** 3.修改完成,準備轉交(Send the Success view) **************/
+		model.addAttribute("success", "編輯成功,請前往預覽頁面查看");
 	    List<ProductInformationVO> productInformationList = productInformationSvc.getProductInformationByUserId(userVO.getUserId());
         model.addAttribute("productInformationList", productInformationList);
 //        model.addAttribute("userVO", userVO);
-		return "front-end/com/editmember_product_view"; // 修改成功後轉交editmember_product_view.html
+		return "back-end/productInformation/update_productInformation_input"; // 修改成功後轉交editmember_product_view.html
 	}
 		
 	 /*********************************** 錯誤處理部分 *****************************************/

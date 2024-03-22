@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>廠商廣告編輯頁面</title>
+    <title>廠商廣告預覽頁面</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
         /* 小型設備（手機） */
@@ -82,7 +82,7 @@
             <div class="col-md-3">
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
                     style="height: 500px; text-align: center;">
-                    <a href="/"
+                    <a th:href="@{/com/com_homepage/{userId}(userId=${session.loggingInUser.userId})}"
                         class="d-flex flex-column align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <span class="fs-2" style="color: black;" th:text=${session.loggingInUser.comName}></span>
                     </a>
@@ -118,27 +118,38 @@
             </div>
 
             <div class="col-md-9">
-                <h3>廠商廣告</h3>
+                <h3>廠商廣告</h3><span><a th:href="@{/com/editmember_ad}" >回廠商廣告編輯頁面</a></span>
                 <div style="margin-top: 50px;">
                     <div class="row mx-auto">
-                        <div class="col-md-6">
-                            <div class="col-md-6 px-1">
-								<img th:src="@{/user/DBGifReader1} + '?userId=' + ${session.loggingInUser.userId}" height="250" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
+                        <div class="col-md-5">
+                            <div class="col-md-6 px-1"><span style="color: red; font-weight: bold;"><b>廣告圖片一</b></span>
+								<img th:src="@{/user/DBGifReader1} + '?userId=' + ${userVO.userId}" height="150" class="d-block w-60" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
                             </div>
-                            <div class="col-md-6 px-1">
-								<img th:src="@{/user/DBGifReader2} + '?userId=' + ${session.loggingInUser.userId}" height="250" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="col-md-6 px-1">
-								<img th:src="@{/user/DBGifReader3} + '?userId=' + ${session.loggingInUser.userId}" height="250" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
-                            </div>
-                            <div class="col-md-6 px-1">
-								<img th:src="@{/user/DBGifReader4} + '?userId=' + ${session.loggingInUser.userId}" height="250" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
+                            <div class="col-md-6 px-1"><span style="color: red; font-weight: bold;"><b>廣告圖片二</b></span>
+								<img th:src="@{/user/DBGifReader2} + '?userId=' + ${userVO.userId}" height="150" class="d-block w-60" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
                             </div>
                         </div>
+                        <div class="col-md-5">
+                            <div class="col-md-6 px-1"><span style="color: red; font-weight: bold;"><b>廣告圖片三</b></span>
+								<img th:src="@{/user/DBGifReader2} + '?userId=' + ${userVO.userId}" height="150" class="d-block w-60" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
+                            </div>
+                            <div class="col-md-6 px-1"><span style="color: red; font-weight: bold;"><b>廣告圖片四</b></span>
+								<img th:src="@{/user/DBGifReader2} + '?userId=' + ${userVO.userId}" height="150" class="d-block w-60" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;">
+                            </div>
+                        </div>
+        
+<!--                         <div class="col-md-6"> -->
+<!--                             <div class="col-md-6 px-1"> -->
+<!-- 								<img th:src="@{/user/DBGifReader3} + '?userId=' + ${userVO.userId}" height="200" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;"> -->
+<!--                             </div> -->
+<!--                             <div class="col-md-6 px-1"> -->
+<!-- 								<img th:src="@{/user/DBGifReader4} + '?userId=' + ${userVO.userId}" height="200" class="d-block w-30" alt="圖片顯示有誤,請與客服聯繫" style="margin: 0 auto;"> -->
+<!--                             </div> -->
+<!--                         </div> -->
                     </div>
                 </div>
+            </div>
+            </div>
             </div>
  
             <head th:insert="@{/front-end/footer}"></head>
