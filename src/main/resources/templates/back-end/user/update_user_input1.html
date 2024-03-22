@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>會員資料修改 - update_user_input.html</title>
 
-	<head th:insert="~{/back-end/user/included-fragment}"></head>
 	<style type="text/css">
 		button {
 			padding: 5px;
@@ -63,8 +62,7 @@
 	<!-- 24個欄位 -->
 	<div align="center">
 		<h3><b>所有欄位皆為必填欄位</b></h3>
-		<form th:action="@{updateAboutUs}" method="post" th:object="${userVO}" enctype="multipart/form-data">
-
+		<form th:action="@{updateBack}" method="post" th:object="${userVO}" enctype="multipart/form-data">
 			<div>
 				<label>會員編號:</label>
 				<input type="text" th:field="*{userId}" style="border:0px ; font-weight: bold;" readonly /><br />
@@ -145,12 +143,13 @@
 					id="comPhone.errors"></span>
 			</div>
 			
-			<div>
+			
+				<div>
 				<label>銀行代碼:</label>
 				<input type="text" th:field="*{comBank}" onclick="hideContent('comBank.errors');" /><br />
 				<span th:if="${#fields.hasErrors('comBank')}" th:errors="*{comBank}" class="error"
 					id="comBank.errors"></span>
-			</div>
+				</div>
 			
 			
 			<div>
@@ -159,6 +158,7 @@
 				<span th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}" class="error"
 					id="accountNumber.errors"></span>
 			</div>
+
 
 
 			<div>

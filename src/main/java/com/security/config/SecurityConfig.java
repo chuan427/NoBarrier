@@ -132,7 +132,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/userinformation/sendVerificationCode").permitAll()
 					.antMatchers("/userinformation/insertUser").permitAll()
 					.antMatchers("/userinformation/insertIndustry").permitAll()
-					
+					.antMatchers("/com/com").permitAll()
 					//後台管理員
 					.antMatchers("/authorization_new_member").hasRole("ADMIN")
 //					// 權限判斷
@@ -161,9 +161,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //					.accessDeniedHandler(myAccessDeniedHandler);
 				
 				// 勿忘我（remember-me）
-				http.rememberMe()
-					.userDetailsService(userDetailsService_impl)
-					.tokenValiditySeconds(60*60*24); // 通常都會大於 session timeout 的時間
+//				http.rememberMe()
+//					.userDetailsService(userDetailsService_impl)
+//					.tokenValiditySeconds(60*60*24); // 通常都會大於 session timeout 的時間
 	}
 
 

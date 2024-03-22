@@ -109,8 +109,12 @@
     <br>
     <!-- 留言展示 -->
     <div th:each="forumReplyVO : ${forumReplyListData}">
-        <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
-            <p class="comment-user" th:text="${forumReplyVO.userVO != null ? forumReplyVO.userVO.comName : '未知使用者'}"></p>
+     
+    <div class="comment" th:if="${forumReplyVO.forumPostVO.fpNum == forumPostVO.fpNum}">
+		<p class="comment-user">
+    		<i class="fa-solid fa-user"></i>
+    			<span th:text="${forumReplyVO.userVO != null ? forumReplyVO.userVO.comName : '未知使用者'}"></span>
+					</p>
            	 <pre th:utext="${forumReplyVO.frContent}"></pre>
             <img th:if="${forumReplyVO.frImage != null}" th:src="@{/forumReply/DBGifReader(frNum=${forumReplyVO.frNum})}"  width="200px"/>
             <br>

@@ -252,13 +252,13 @@ main {
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-6">
-								<label for="accountNumber" class="form-label">帳號</label> <input
-									type="text" class="form-control form-control-sm"
-									id="accountNumber" name="accountNumber" placeholder=""
-									th:field="*{accountNumber}" />
-							</div>
-						</div>
+                                <div class="col-6">
+                                    <label for="accountNumber" class="form-label">帳號</label>
+                                    <input type="text" class="form-control form-control-sm" id="accountNumber"
+                                        name="accountNumber" placeholder="" th:field="*{accountNumber}" />
+                                    
+                                </div>
+                            </div>
 						<div style="margin-top: 30px"></div>
 						
 						<button type="submit" id="submit" class="btn btn-secondary">修改帳戶</button>
@@ -277,7 +277,9 @@ main {
 										</p>
 										<p class="card-text">
 											帳號: <span th:text="${userVO.accountNumber}"></span>
+											
 										</p>
+										
 										<!-- 如果有其他银行账号信息，可以继续添加 -->
 									</div>
 								</div>
@@ -292,7 +294,12 @@ main {
 <!-- <footer> -->
 <head th:insert="~{/front-end/footer}"></head>
 <script th:src="@{/webjars/bootstrap/5.3.2/js/bootstrap.min.js}"></script>
-
+<script>
+document.getElementById('accountNumber').addEventListener('input', function(evt) {
+    // 只保留數字
+    this.value = this.value.replace(/\D/g, '');
+});
+</script>
 </body>
 
 </html>

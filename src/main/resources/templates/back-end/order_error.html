@@ -81,7 +81,7 @@
 				<div class="news-item">
 					<h2 class="news-title">訂單異常</h2>
 					<div class="accordion" id="accordionExample">
-						<th:block th:each="orderVO : ${orderListData}">
+						<th:block th:each="orderVO : ${orderAllListData}">
 							<!-- 添加判斷條件 -->
 							<th:block th:if="${orderVO.ordStat == 0}">
 							<div class="accordion-item">

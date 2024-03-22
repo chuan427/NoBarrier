@@ -191,7 +191,7 @@ import com.reqorder.model.ReqOrderVO;
 		//--------------------------------------------
 
 		@Column(name = "comBank")
-		@Size(min=2,max=50,message="銀行代碼: 長度必需在{min}到{max}之間")
+//		@Size(min=2,max=50,message="銀行代碼: 長度必需在{min}到{max}之間")
 		public String getComBank() {
 			return this.comBank;
 		}
@@ -200,7 +200,7 @@ import com.reqorder.model.ReqOrderVO;
 		}
 		
 		@Column(name = "accountNumber")
-		@Size(min=2,max=50,message="銀行帳號: 長度必需在{min}到{max}之間")
+//		@Size(min=2,max=50,message="銀行帳號: 長度必需在{min}到{max}之間")
 		public String getAccountNumber() {
 			return accountNumber;
 		}

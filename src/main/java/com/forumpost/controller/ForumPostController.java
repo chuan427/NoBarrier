@@ -176,8 +176,9 @@ public class ForumPostController {
 	    model.addAttribute("searchResults", searchResults.getContent());
 	    model.addAttribute("currentPage", page);
 	    model.addAttribute("totalPages", searchResults.getTotalPages());
-	    return "front-end/forum/searchForum"; // 指向顯示搜索結果的頁面
+	    return "front-end/forum/searchForum"; 
 	}
+	
 	
 	
 	@ModelAttribute("userListData")

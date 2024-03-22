@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ad.model.AdService;
 import com.ad.model.AdVO;
@@ -763,11 +764,13 @@ private ReqOrderVO reqOrderVO;
 	public String listAllForumPost(Model model) {
 		ForumPostVO forumPostVO = new ForumPostVO();
 		forumPostVO = forumPostSvc.getLatestPost();
+		List<ForumPostVO> sortedPosts = forumPostSvc.getAllForumPostsSortedByFpTime();
+	    model.addAttribute("forumPostListData", sortedPosts);
 		model.addAttribute("forumPostVO", forumPostVO);
 		return "front-end/forum/forumIndex";
 	}
-	
-	
+		
+
 	@ModelAttribute("forumPostListData") // for select_page.html 第行用 // for listAllUser.html 第行用
 	protected List<ForumPostVO> referenceListData1(Model model) {
 
@@ -913,11 +916,14 @@ private ReqOrderVO reqOrderVO;
 
 
 //	------------------------------chat-----------------------------------------
+//	@GetMapping("/chat/privatechat")
+//   	public String chat(Model model) {
+//   		return "front-end/chat/privatechat";
+//   	}
 	@GetMapping("/chat/privatechat")
-	public String chat(Model model) {
+public String chat(Model model) {
 		return "front-end/chat/privatechat";
 	}
-
 	@PostMapping("/chat/chat.do")
 	public String gochat(Model model) {
 		return "front-end/chat/chat";
@@ -1086,7 +1092,6 @@ private ReqOrderVO reqOrderVO;
 		return list;
 	}
 
-
 //	@ModelAttribute("limitSaleOneData") // for select_page.html 第行用 // for listAllUser.html 第行用
 //	protected List<LimitSaleVO> referenceListData_limitsale1(Model model,HttpServletRequest request) {
 //	HttpSession session = request.getSession();
@@ -1116,23 +1121,19 @@ private ReqOrderVO reqOrderVO;
  	}
 
  	
- 	
- 	
-	@ModelAttribute("orderListData")
+	@ModelAttribute("orderAllListData")
 	protected List<OrderVO> referenceListOrderData() {
 		List<OrderVO> list = orderSvc.getAll();
 		return list;
 	}
 	
 	
-	@GetMapping("addLimitSale")
+@GetMapping("addLimitSale")
 	public String addLimitSale(ModelMap model) {
 		LimitSaleVO limitSaleVO = new LimitSaleVO();
 		model.addAttribute("limitSaleVO", limitSaleVO);
 		return "back-end/limitSale/addLimitSale";
-	}
-	
-}
+	}}
 
 
 

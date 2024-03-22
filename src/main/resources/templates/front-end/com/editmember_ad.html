@@ -145,11 +145,13 @@
 								</div>
 								<input type="file" class="form-control" th:field="*{comImage4}"
 									onclick="previewImage()" multiple="multiple" />
+
 								<!-- 								可以不修改圖片 <span  th:if="${#fields.hasErrors('comAboutImage')}" th:errors="*{comAboutImage}" class="error" id="comAboutImage.errors"></span>  -->
 								<div id="blob_holder">
 									<br>
 									<!-- <img th:src="@{/user/DBGifReader} + '?userId=' + ${userVO.userId}"width="100px"> -->
 								</div>
+
 								<input type="hidden" class="form-control" name="comAboutImage"
 									th:field="*{comAboutImage}" onclick="previewImage()"
 									multiple="multiple" />
@@ -191,7 +193,25 @@
 							type="hidden" th:field="*{comIsValid}"
 							onclick="hideContent('comRatCount.errors');" /> <input
 							type="hidden" th:field="*{comAboutContent}"
+<<<<<<< HEAD
 							onclick="hideContent('comRatCount.errors');" />
+=======
+							onclick="hideContent('comRatCount.errors');" /> <input
+							type="hidden" class="form-control" name="comAboutImage"
+							th:field="*{comAboutImage}" onclick="previewImage()"
+							multiple="multiple" />
+												
+							
+						<!-- 								<input type="text" th:field="*{userVO.comIndustry}" onclick="hideContent('comIndustry1.errors');" /><br/> -->
+
+						<!-- 						<label>關於我們文字描述:</label> -->
+						<!-- 						<textarea class="form-control" type="hidden" name='comAboutContent' th:field="*{comAboutContent}"  -->
+						<!-- 							aria-label="With textarea">文字敘述</textarea> -->
+						<!-- 						<span th:if="${#fields.hasErrors('comAboutContent')}"  -->
+						<!-- 							th:errors="*{comAboutContent}" class="error" -->
+						<!-- 							id="comAboutContent.errors" -->
+						<!-- 							style="color: red; font-weight: bold;"></span> -->
+>>>>>>> refs/heads/dev
 					</div>
 				</div>
 			
